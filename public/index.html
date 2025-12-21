@@ -115,7 +115,6 @@
       });
     }
 
-    // Active les boutons quand un fichier est choisi
     document.getElementById('combatlog').addEventListener('change', function () {
       const hasFile = !!this.files[0];
       document.getElementById('discordBtn').disabled = !hasFile;
@@ -123,7 +122,6 @@
       showStatus('', '');
     });
 
-    // Lit la 2e ligne et renvoie infos + contenu
     function parseHeaderFromFile(file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -163,7 +161,6 @@
       return { niceDate, newName };
     }
 
-    // ⬇️ Télécharger le log renommé
     async function downloadRenamed() {
       const input = document.getElementById('combatlog');
       const file = input.files[0];
@@ -190,7 +187,6 @@
       }
     }
 
-    // 💬 Envoyer à Discord
     async function sendToDiscord() {
       const fileInput = document.getElementById('combatlog');
       const file = fileInput.files[0];
