@@ -46,3 +46,4 @@ app.get('/logs/:name', (req, res) => {
 
 // Route d'upload avec renommage + lien de DL
 app.post('/upload', upload.single('combatlog'), (req, res) => {
+});
