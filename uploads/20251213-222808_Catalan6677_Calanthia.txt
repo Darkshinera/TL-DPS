@@ -1,0 +1,1045 @@
+CombatLogVersion,4
+20251213-22:28:08:598,DamageDone,Ruée déferlante,950111829,701,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:08:610,DamageDone,Ascension du dragon,950282680,806,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:08:610,DamageDone,Ascension du dragon,950282680,159,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:08:610,DamageDone,Colère mortelle,950313055,768,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:08:723,DamageDone,Taillade,964298274,171,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:08:933,DamageDone,Taillade,963774712,128,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:09:193,DamageDone,Givre tranchant,940587142,3201,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:09:314,DamageDone,Ascension du dragon,950282680,854,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:09:314,DamageDone,Ascension du dragon,950282680,154,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:09:541,DamageDone,Taillade,963643674,301,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:10:241,DamageDone,Givre tranchant,940587142,5506,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:10:266,DamageDone,Coup fatal,940579344,13156,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:10:414,DamageDone,Ascension du dragon,950282680,469,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:10:414,DamageDone,Ascension du dragon,950282680,157,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:10:679,DamageDone,Taillade,964298274,185,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:10:835,DamageDone,Taillade,963774712,480,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:11:191,DamageDone,Taillade,963643674,260,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:11:489,DamageDone,Taillade,964036892,486,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:11:827,DamageDone,Taillade,964298274,0,0,0,kMiss,Catalan6677,Calanthia
+20251213-22:28:12:036,DamageDone,Taillade,963774712,199,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:12:480,DamageDone,Taillade,963643674,489,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:12:788,DamageDone,Taillade,964036892,492,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:13:871,DamageDone,Taillade,964298274,230,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:14:120,DamageDone,Taillade,963774712,208,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:14:500,DamageDone,Taillade,963643674,291,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:14:830,DamageDone,Fureur cyclonique,950311148,1517,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:14:865,DamageDone,Fureur cyclonique,950311148,1636,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:14:910,DamageDone,Fureur cyclonique,950311148,829,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:14:935,DamageDone,Ascension du dragon,950282680,245,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:14:935,DamageDone,Ascension du dragon,950282680,161,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:14:965,DamageDone,Fureur cyclonique,950311148,3626,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:15:021,DamageDone,Fureur cyclonique,950311148,3626,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:15:069,DamageDone,Colère mortelle,950313055,1108,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:15:344,DamageDone,Coup étourdissant,955867768,1309,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:15:403,DamageDone,Ascension du dragon,950282680,1226,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:15:403,DamageDone,Ascension du dragon,950282680,158,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:15:751,DamageDone,Taillade,964298274,148,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:15:970,DamageDone,Taillade,963774712,641,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:16:118,DamageDone,Fureur brutale,951299308,1602,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:16:172,DamageDone,Fureur brutale,951299308,3371,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:16:221,DamageDone,Ascension du dragon,950282680,1242,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:16:221,DamageDone,Ascension du dragon,950282680,159,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:16:239,DamageDone,Fureur brutale,951299308,1602,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:16:322,DamageDone,Fureur brutale,951299308,738,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:16:380,DamageDone,Fureur brutale,951299308,672,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:16:583,DamageDone,Fureur brutale,948285468,34104,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:16:583,DamageDone,Ascension du dragon,950282680,11830,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:16:583,DamageDone,Ascension du dragon,950282680,973,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:16:645,DamageDone,Fureur brutale,948285468,8713,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:16:723,DamageDone,Fureur brutale,948285468,32226,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:16:790,DamageDone,Fureur brutale,948285468,15010,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:16:857,DamageDone,Fureur brutale,948285468,13553,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:16:979,DamageDone,Fureur brutale,947958044,8927,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:16:979,DamageDone,Ascension du dragon,950282680,11830,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:16:979,DamageDone,Ascension du dragon,950282680,951,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:17:012,DamageDone,Fureur brutale,947958044,32226,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:17:093,DamageDone,Fureur brutale,947958044,4637,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:17:148,DamageDone,Fureur brutale,947958044,6179,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:17:209,DamageDone,Fureur brutale,947958044,14329,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:18:177,DamageDone,Lame guillotine,940609889,336080,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:18:282,DamageDone,Ascension du dragon,950282680,4352,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:18:282,DamageDone,Ascension du dragon,950282680,959,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:18:282,DamageDone,Colère mortelle,950313055,7001,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:18:604,DamageDone,Taillade,964298274,4352,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:18:604,DamageDone,Combat acharné,956175664,19361,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:18:618,DamageDone,Ascension du dragon,950282680,4601,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:18:618,DamageDone,Ascension du dragon,950282680,937,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:18:696,DamageDone,Combat acharné,956241200,6705,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:18:753,DamageDone,Ascension du dragon,950282680,2544,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:18:754,DamageDone,Ascension du dragon,950282680,909,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:18:848,DamageDone,Combat acharné,955258160,16942,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:18:953,DamageDone,Ascension du dragon,950282680,1496,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:18:953,DamageDone,Ascension du dragon,950282680,885,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:19:093,DamageDone,Entaille mutilante,950305597,85296,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:19:114,DamageDone,Ascension du dragon,950282680,9162,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:19:114,DamageDone,Ascension du dragon,950282680,842,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:19:210,DamageDone,Entaille mutilante,950438753,19532,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:19:227,DamageDone,Ascension du dragon,950282680,9162,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:19:227,DamageDone,Ascension du dragon,950282680,818,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:19:327,DamageDone,Entaille mutilante,950111723,8306,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:19:362,DamageDone,Ascension du dragon,950282680,3916,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:19:362,DamageDone,Ascension du dragon,950282680,795,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:19:477,DamageDone,Entaille mutilante,950046202,19070,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:19:498,DamageDone,Ascension du dragon,950282680,8351,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:19:498,DamageDone,Ascension du dragon,950282680,773,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:19:498,DamageDone,Colère mortelle,950313055,5260,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:19:614,DamageDone,Entaille mutilante,950242822,8306,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:19:736,DamageDone,Entaille mutilante,950177299,8306,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:19:857,DamageDone,Arc d'abattage,950828882,19244,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:19:988,DamageDone,Arc d'abattage,950828882,19244,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:20:109,DamageDone,Ascension du dragon,950282680,3916,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:20:109,DamageDone,Ascension du dragon,950282680,770,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:20:126,DamageDone,Entaille tournoyante,950272669,8382,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:20:249,DamageDone,Entaille tournoyante,950272669,6078,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:20:502,DamageDone,Ruée précise,955968982,1921,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:20:713,DamageDone,Ruée précise,963183484,7835,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:20:713,DamageDone,Colère mortelle,950313055,7972,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:20:791,DamageDone,Taillade,963774712,4237,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:21:129,DamageDone,Entaille tournoyante,950272669,222,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:21:146,DamageDone,Taillade,963643674,4237,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:21:464,DamageDone,Taillade,964036892,2004,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:21:840,DamageDone,Taillade,964298274,1914,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:22:015,DamageDone,Taillade,963774712,1914,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:22:169,DamageDone,Entaille tournoyante,950272669,227,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:23:131,DamageDone,Entaille tournoyante,950272669,228,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:24:158,DamageDone,Entaille tournoyante,950272669,228,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:25:128,DamageDone,Entaille tournoyante,950272669,218,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:26:122,DamageDone,Entaille tournoyante,950272669,223,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:26:196,DamageDone,Taillade,964298274,1475,0,1,kNormalHit,Catalan6677,Orbe de magie chaotique
+20251213-22:28:26:397,DamageDone,Taillade,963774712,742,0,0,kNormalHit,Catalan6677,Orbe de magie chaotique
+20251213-22:28:26:574,DamageDone,Combat acharné,956175664,3493,1,0,kMaxDamageByCriticalDecision,Catalan6677,Orbe de magie chaotique
+20251213-22:28:26:589,DamageDone,Ascension du dragon,950282680,1008,0,0,kNormalHit,Catalan6677,Orbe de magie chaotique
+20251213-22:28:26:589,DamageDone,Ascension du dragon,950282680,492,0,0,kNormalHit,Catalan6677,Orbe de magie chaotique
+20251213-22:28:26:654,DamageDone,Combat acharné,956241200,7345,1,1,kMaxDamageByCriticalDecision,Catalan6677,Orbe de magie chaotique
+20251213-22:28:26:711,DamageDone,Ascension du dragon,950282680,2306,1,0,kMaxDamageByCriticalDecision,Catalan6677,Orbe de magie chaotique
+20251213-22:28:26:711,DamageDone,Ascension du dragon,950282680,478,0,0,kNormalHit,Catalan6677,Orbe de magie chaotique
+20251213-22:28:26:826,DamageDone,Combat acharné,955258160,3759,0,1,kNormalHit,Catalan6677,Orbe de magie chaotique
+20251213-22:28:27:134,DamageDone,Entaille tournoyante,950272669,224,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:27:325,DamageDone,Fureur cyclonique,950311148,1517,0,0,kNormalHit,Catalan6677,Orbe de magie chaotique
+20251213-22:28:27:369,DamageDone,Fureur cyclonique,950311148,3037,1,0,kMaxDamageByCriticalDecision,Catalan6677,Orbe de magie chaotique
+20251213-22:28:27:411,DamageDone,Fureur cyclonique,950311148,6459,1,1,kMaxDamageByCriticalDecision,Catalan6677,Orbe de magie chaotique
+20251213-22:28:27:461,DamageDone,Fureur cyclonique,950311148,6459,1,1,kMaxDamageByCriticalDecision,Catalan6677,Orbe de magie chaotique
+20251213-22:28:27:526,DamageDone,Fureur cyclonique,950311148,1592,0,0,kNormalHit,Catalan6677,Orbe de magie chaotique
+20251213-22:28:27:761,DamageDone,Taillade,964298274,0,0,0,kMiss,Catalan6677,Orbe de magie chaotique
+20251213-22:28:27:841,DamageDone,Coup étourdissant,955867768,2979,0,1,kNormalHit,Catalan6677,Orbe de magie chaotique
+20251213-22:28:28:162,DamageDone,Entaille tournoyante,950272669,179,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:28:240,DamageDone,Taillade,964298274,2924,1,1,kMaxDamageByCriticalDecision,Catalan6677,Orbe de magie chaotique
+20251213-22:28:28:471,DamageDone,Fureur brutale,951299308,4949,0,1,kNormalHit,Catalan6677,Orbe de magie chaotique
+20251213-22:28:28:539,DamageDone,Fureur brutale,951299308,2279,0,0,kNormalHit,Catalan6677,Orbe de magie chaotique
+20251213-22:28:28:597,DamageDone,Colère mortelle,950313055,5317,1,0,kMaxDamageByCriticalDecision,Catalan6677,Orbe de magie chaotique
+20251213-22:28:28:639,DamageDone,Fureur brutale,951299308,3045,0,1,kNormalHit,Catalan6677,Orbe de magie chaotique
+20251213-22:28:28:688,DamageDone,Fureur brutale,951299308,3941,0,1,kNormalHit,Catalan6677,Orbe de magie chaotique
+20251213-22:28:28:748,DamageDone,Fureur brutale,951299308,2026,0,0,kNormalHit,Catalan6677,Orbe de magie chaotique
+20251213-22:28:29:065,DamageDone,Taillade,964298274,2941,1,1,kMaxDamageByCriticalDecision,Catalan6677,Orbe de magie chaotique
+20251213-22:28:29:125,DamageDone,Entaille tournoyante,950272669,169,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:29:293,DamageDone,Taillade,963774712,2959,1,1,kMaxDamageByCriticalDecision,Catalan6677,Orbe de magie chaotique
+20251213-22:28:39:013,DamageDone,Givre tranchant,940587142,15479,1,0,kMaxDamageByCriticalDecision,Catalan6677,Zombie léthargique
+20251213-22:28:39:013,DamageDone,Givre tranchant,940587142,33234,1,1,kMaxDamageByCriticalDecision,Catalan6677,Zombie léthargique
+20251213-22:28:39:013,DamageDone,Givre tranchant,940587142,10767,0,0,kNormalHit,Catalan6677,Zombie léthargique
+20251213-22:28:39:117,DamageDone,Colère mortelle,950313055,4937,1,0,kMaxDamageByCriticalDecision,Catalan6677,Zombie léthargique
+20251213-22:28:39:117,DamageDone,Ascension du dragon,950282680,2444,1,0,kMaxDamageByCriticalDecision,Catalan6677,Zombie léthargique
+20251213-22:28:39:118,DamageDone,Ascension du dragon,950282680,537,0,0,kNormalHit,Catalan6677,Zombie léthargique
+20251213-22:28:40:005,DamageDone,Givre tranchant,940587142,16595,1,0,kMaxDamageByCriticalDecision,Catalan6677,Zombie léthargique
+20251213-22:28:40:005,DamageDone,Givre tranchant,940587142,15331,0,1,kNormalHit,Catalan6677,Zombie léthargique
+20251213-22:28:40:005,DamageDone,Givre tranchant,940587142,35637,1,1,kMaxDamageByCriticalDecision,Catalan6677,Zombie léthargique
+20251213-22:28:40:005,DamageDone,Givre tranchant,940587142,12350,0,1,kNormalHit,Catalan6677,Zombie léthargique
+20251213-22:28:48:364,DamageDone,Taillade,964298274,4020,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:48:624,DamageDone,Taillade,963774712,1916,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:48:966,DamageDone,Fureur cyclonique,950311148,24227,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:49:004,DamageDone,Fureur cyclonique,950311148,12451,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:49:063,DamageDone,Fureur cyclonique,950311148,5331,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:49:076,DamageDone,Ascension du dragon,950282680,8752,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:49:077,DamageDone,Ascension du dragon,950282680,934,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:49:077,DamageDone,Colère mortelle,950313055,8330,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:49:128,DamageDone,Fureur cyclonique,950311148,10173,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:49:173,DamageDone,Fureur cyclonique,950311148,12606,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:49:520,DamageDone,Taillade,964298274,2160,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:49:597,DamageDone,Coup étourdissant,955867768,10127,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:49:655,DamageDone,Ascension du dragon,950282680,2047,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:49:655,DamageDone,Ascension du dragon,950282680,899,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:50:008,DamageDone,Taillade,964298274,2249,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:50:228,DamageDone,Fureur brutale,951299308,15423,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:50:290,DamageDone,Fureur brutale,951299308,27267,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:50:351,DamageDone,Ascension du dragon,950282680,2486,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:50:351,DamageDone,Ascension du dragon,950282680,897,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:50:351,DamageDone,Colère mortelle,950313055,19836,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:50:405,DamageDone,Fureur brutale,951299308,27267,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:50:454,DamageDone,Fureur brutale,951299308,27430,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:50:509,DamageDone,Fureur brutale,951299308,27430,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:50:750,DamageDone,Fureur brutale,948285468,13327,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:50:750,DamageDone,Ascension du dragon,950282680,2456,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:50:750,DamageDone,Ascension du dragon,950282680,872,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:50:789,DamageDone,Fureur brutale,948285468,12514,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:50:859,DamageDone,Fureur brutale,948285468,12514,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:50:925,DamageDone,Fureur brutale,948285468,26853,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:50:977,DamageDone,Fureur brutale,948285468,10224,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:51:180,DamageDone,Fureur brutale,947958044,8758,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:51:180,DamageDone,Ascension du dragon,950282680,4722,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:51:181,DamageDone,Ascension du dragon,950282680,867,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:51:204,DamageDone,Fureur brutale,947958044,27501,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:51:277,DamageDone,Fureur brutale,947958044,27501,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:51:316,DamageDone,Fureur brutale,947958044,8361,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:51:383,DamageDone,Fureur brutale,947958044,27501,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:52:367,DamageDone,Lame guillotine,940609889,143800,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:52:483,DamageDone,Ascension du dragon,950282680,2579,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:52:483,DamageDone,Ascension du dragon,950282680,835,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:52:483,DamageDone,Colère mortelle,950313055,21748,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:52:752,DamageDone,Taillade,964298274,4710,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:53:016,DamageDone,Taillade,963774712,1137,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:53:119,DamageDone,Entaille mutilante,950305597,44591,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:53:119,DamageDone,Ascension du dragon,950282680,2004,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:53:120,DamageDone,Ascension du dragon,950282680,773,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:53:224,DamageDone,Entaille mutilante,950438753,20122,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:53:224,DamageDone,Ascension du dragon,950282680,4434,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:53:224,DamageDone,Ascension du dragon,950282680,749,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:53:335,DamageDone,Entaille mutilante,950111723,9386,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:53:469,DamageDone,Entaille mutilante,950046202,4356,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:53:488,DamageDone,Ascension du dragon,950282680,4045,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:53:488,DamageDone,Ascension du dragon,950282680,730,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:53:630,DamageDone,Entaille mutilante,950242822,14907,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:53:745,DamageDone,Entaille mutilante,950177299,6962,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:53:857,DamageDone,Arc d'abattage,950828882,9257,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:53:994,DamageDone,Arc d'abattage,950828882,2721,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:54:138,DamageDone,Entaille tournoyante,950272669,5294,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:54:249,DamageDone,Entaille tournoyante,950272669,18522,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:54:689,DamageDone,Combat acharné,956175664,14300,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:54:710,DamageDone,Colère mortelle,950313055,3049,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:54:788,DamageDone,Combat acharné,956241200,14024,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:54:948,DamageDone,Combat acharné,955258160,15112,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:55:243,DamageDone,Entaille tournoyante,950272669,489,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:55:282,DamageDone,Taillade,964298274,2127,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:55:534,DamageDone,Taillade,963774712,2127,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:55:908,DamageDone,Taillade,963643674,2155,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:56:224,DamageDone,Taillade,964036892,2127,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:56:270,DamageDone,Entaille tournoyante,950272669,470,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:56:583,DamageDone,Taillade,964298274,1360,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:56:837,DamageDone,Taillade,963774712,2868,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:57:194,DamageDone,Taillade,963643674,2004,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:28:57:254,DamageDone,Entaille tournoyante,950272669,461,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:58:252,DamageDone,Entaille tournoyante,950272669,503,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:28:59:243,DamageDone,Entaille tournoyante,950272669,496,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:00:254,DamageDone,Entaille tournoyante,950272669,497,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:01:262,DamageDone,Entaille tournoyante,950272669,458,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:02:276,DamageDone,Entaille tournoyante,950272669,438,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:03:233,DamageDone,Entaille tournoyante,950272669,416,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:09:533,DamageDone,Entaille mutilante,950305597,11344,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:09:534,DamageDone,Ascension du dragon,950282680,5335,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:09:534,DamageDone,Ascension du dragon,950282680,734,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:09:651,DamageDone,Entaille mutilante,950438753,5343,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:09:698,DamageDone,Ascension du dragon,950282680,3036,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:09:698,DamageDone,Ascension du dragon,950282680,842,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:09:761,DamageDone,Entaille mutilante,950111723,3880,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:09:776,DamageDone,Ascension du dragon,950282680,2109,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:09:776,DamageDone,Ascension du dragon,950282680,814,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:09:776,DamageDone,Colère mortelle,950313055,13283,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:09:881,DamageDone,Entaille mutilante,950046202,14883,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:09:907,DamageDone,Ascension du dragon,950282680,6502,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:09:907,DamageDone,Ascension du dragon,950282680,788,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:10:053,DamageDone,Entaille mutilante,950242822,6511,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:10:053,DamageDone,Ascension du dragon,950282680,3077,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:10:053,DamageDone,Ascension du dragon,950282680,763,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:10:173,DamageDone,Entaille mutilante,950177299,14030,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:10:174,DamageDone,Ascension du dragon,950282680,3098,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:10:174,DamageDone,Ascension du dragon,950282680,739,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:10:296,DamageDone,Taillade,964298274,706,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:10:474,DamageDone,Taillade,963774712,1620,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:10:881,DamageDone,Taillade,963643674,1631,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:27:447,DamageDone,Entaille mutilante,950305597,3116,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:27:447,DamageDone,Ascension du dragon,950282680,5335,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:27:447,DamageDone,Ascension du dragon,950282680,713,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:27:448,DamageDone,Colère mortelle,950313055,10887,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:27:550,DamageDone,Entaille mutilante,950438753,1844,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:27:562,DamageDone,Ascension du dragon,950282680,1132,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:27:575,DamageDone,Ascension du dragon,950282680,690,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:27:687,DamageDone,Entaille mutilante,950111723,4249,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:27:700,DamageDone,Ascension du dragon,950282680,1272,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:27:701,DamageDone,Ascension du dragon,950282680,669,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:27:701,DamageDone,Colère mortelle,950313055,5094,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:27:968,DamageDone,Entaille mutilante,950046202,5708,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:27:968,DamageDone,Ascension du dragon,950282680,5335,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:27:969,DamageDone,Ascension du dragon,950282680,648,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:28:018,DamageDone,Entaille mutilante,950242822,1676,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:28:073,DamageDone,Ascension du dragon,950282680,3126,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:28:074,DamageDone,Ascension du dragon,950282680,628,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:28:139,DamageDone,Arc d'abattage,950828882,7802,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:28:264,DamageDone,Ascension du dragon,950282680,2180,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:28:264,DamageDone,Ascension du dragon,950282680,603,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:28:295,DamageDone,Arc d'abattage,950828882,5392,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:28:449,DamageDone,Entaille tournoyante,950272669,5369,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:28:570,DamageDone,Ascension du dragon,950282680,5573,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:28:571,DamageDone,Ascension du dragon,950282680,601,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:28:571,DamageDone,Entaille tournoyante,950272669,6011,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:29:134,DamageDone,Taillade,964298274,2824,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:29:303,DamageDone,Taillade,963774712,2843,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:29:461,DamageDone,Coup étourdissant,955867768,1984,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:29:500,DamageDone,Ascension du dragon,950282680,2887,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:29:500,DamageDone,Ascension du dragon,950282680,578,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:29:501,DamageDone,Colère mortelle,950313055,7018,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:29:598,DamageDone,Entaille tournoyante,950272669,353,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:29:822,DamageDone,Taillade,964298274,1146,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:30:120,DamageDone,Fureur cyclonique,950311148,8901,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:30:181,DamageDone,Fureur cyclonique,950311148,9788,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:30:214,DamageDone,Fureur cyclonique,950311148,20987,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:30:275,DamageDone,Fureur cyclonique,950311148,21115,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:30:340,DamageDone,Fureur cyclonique,950311148,9906,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:30:580,DamageDone,Entaille tournoyante,950272669,347,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:31:579,DamageDone,Entaille tournoyante,950272669,348,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:32:597,DamageDone,Entaille tournoyante,950272669,334,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:33:592,DamageDone,Entaille tournoyante,950272669,329,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:34:604,DamageDone,Entaille tournoyante,950272669,339,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:35:591,DamageDone,Entaille tournoyante,950272669,323,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:36:590,DamageDone,Entaille tournoyante,950272669,329,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:37:598,DamageDone,Entaille tournoyante,950272669,334,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:52:384,DamageDone,Entaille mutilante,950305597,13651,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:52:384,DamageDone,Ascension du dragon,950282680,6414,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:52:384,DamageDone,Ascension du dragon,950282680,810,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:52:517,DamageDone,Entaille mutilante,950438753,13746,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:52:517,DamageDone,Ascension du dragon,950282680,6458,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:52:518,DamageDone,Ascension du dragon,950282680,784,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:52:660,DamageDone,Entaille mutilante,950111723,6467,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:52:660,DamageDone,Ascension du dragon,950282680,4135,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:52:660,DamageDone,Ascension du dragon,950282680,759,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:52:763,DamageDone,Entaille mutilante,950046202,6898,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:52:763,DamageDone,Ascension du dragon,950282680,3077,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:52:763,DamageDone,Ascension du dragon,950282680,735,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:52:915,DamageDone,Entaille mutilante,950242822,13935,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:52:916,DamageDone,Ascension du dragon,950282680,6546,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:52:916,DamageDone,Ascension du dragon,950282680,712,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:52:974,DamageDone,Entaille mutilante,950177299,6555,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:53:043,DamageDone,Ascension du dragon,950282680,6591,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:53:043,DamageDone,Ascension du dragon,950282680,690,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:53:413,DamageDone,Fureur cyclonique,950311148,21757,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:53:454,DamageDone,Fureur cyclonique,950311148,3170,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:53:522,DamageDone,Fureur cyclonique,950311148,23798,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:53:522,DamageDone,Ascension du dragon,950282680,3427,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:53:522,DamageDone,Ascension du dragon,950282680,648,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:53:565,DamageDone,Fureur cyclonique,950311148,11157,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:53:622,DamageDone,Fureur cyclonique,950311148,11157,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:53:873,DamageDone,Coup étourdissant,955867768,9866,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:54:320,DamageDone,Fureur brutale,951299308,12146,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:54:379,DamageDone,Fureur brutale,951299308,26063,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:54:455,DamageDone,Fureur brutale,951299308,26063,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:54:497,DamageDone,Fureur brutale,951299308,26063,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:54:554,DamageDone,Fureur brutale,951299308,26063,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:54:761,DamageDone,Fureur brutale,948285468,27016,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:54:841,DamageDone,Fureur brutale,948285468,25975,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:54:871,DamageDone,Fureur brutale,948285468,12106,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:54:929,DamageDone,Fureur brutale,948285468,12106,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:54:961,DamageDone,Ascension du dragon,950282680,9510,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:54:961,DamageDone,Ascension du dragon,950282680,766,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:54:992,DamageDone,Fureur brutale,948285468,6852,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:55:994,DamageDone,Lame guillotine,940609889,159156,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:56:420,DamageDone,Taillade,964298274,0,0,0,kMiss,Catalan6677,Calanthia
+20251213-22:29:56:656,DamageDone,Taillade,963774712,2161,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:57:011,DamageDone,Taillade,963643674,4433,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:57:340,DamageDone,Ruée déferlante,950111829,7642,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:57:384,DamageDone,Taillade,964036892,4433,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:57:962,DamageDone,Taillade,963774712,1880,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:58:348,DamageDone,Givre tranchant,940587142,25600,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:58:698,DamageDone,Taillade,963643674,3970,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:59:007,DamageDone,Taillade,964036892,1059,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:29:59:335,DamageDone,Givre tranchant,940587142,24840,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:29:59:366,DamageDone,Taillade,964298274,1880,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:00:392,DamageDone,Taillade,964298274,3237,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:00:608,DamageDone,Taillade,963774712,860,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:00:935,DamageDone,Taillade,963643674,1972,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:01:343,DamageDone,Blocage patient,951429481,15578,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:01:370,DamageDone,Ascension du dragon,950282680,7106,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:01:370,DamageDone,Ascension du dragon,950282680,592,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:02:184,DamageDone,Taillade,964298274,1331,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:02:377,DamageDone,Taillade,963774712,1732,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:02:767,DamageDone,Taillade,963643674,1760,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:03:027,DamageDone,Combat acharné,956175664,25671,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:03:044,DamageDone,Ascension du dragon,950282680,7476,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:03:044,DamageDone,Ascension du dragon,950282680,580,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:03:132,DamageDone,Combat acharné,956241200,13333,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:03:329,DamageDone,Combat acharné,955258160,11260,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:03:621,DamageDone,Entaille mutilante,950305597,14847,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:03:621,DamageDone,Colère mortelle,950313055,6656,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:03:712,DamageDone,Entaille mutilante,950438753,7370,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:03:867,DamageDone,Entaille mutilante,950111723,15482,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:03:883,DamageDone,Ascension du dragon,950282680,3413,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:03:883,DamageDone,Ascension du dragon,950282680,604,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:04:039,DamageDone,Entaille mutilante,950046202,15482,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:04:105,DamageDone,Entaille mutilante,950242822,16460,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:04:225,DamageDone,Entaille mutilante,950177299,2717,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:04:279,DamageDone,Ascension du dragon,950282680,1164,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:04:279,DamageDone,Ascension du dragon,950282680,725,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:04:386,DamageDone,Arc d'abattage,950828882,19218,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:04:512,DamageDone,Arc d'abattage,950828882,4564,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:04:790,DamageDone,Taillade,964298274,2378,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:05:005,DamageDone,Taillade,963774712,981,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:05:348,DamageDone,Fureur cyclonique,950311148,13536,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:05:348,DamageDone,Arc d'abattage,950828882,262,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:05:389,DamageDone,Fureur cyclonique,950311148,31412,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:05:446,DamageDone,Fureur cyclonique,950311148,9022,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:05:498,DamageDone,Fureur cyclonique,950311148,31412,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:05:550,DamageDone,Colère mortelle,950313055,19850,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:05:550,DamageDone,Fureur cyclonique,950311148,31412,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:05:638,DamageDone,Ascension du dragon,950282680,4627,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:05:639,DamageDone,Ascension du dragon,950282680,747,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:05:843,DamageDone,Taillade,964298274,4644,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:05:892,DamageDone,Coup étourdissant,955867768,10153,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:06:290,DamageDone,Taillade,964298274,4575,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:06:343,DamageDone,Arc d'abattage,950828882,261,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:06:491,DamageDone,Taillade,963774712,2161,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:06:598,DamageDone,Fureur brutale,951299308,13567,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:06:665,DamageDone,Fureur brutale,951299308,11957,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:06:731,DamageDone,Fureur brutale,951299308,11957,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:06:789,DamageDone,Fureur brutale,951299308,25656,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:06:849,DamageDone,Fureur brutale,951299308,25656,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:07:104,DamageDone,Fureur brutale,948285468,26509,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:07:143,DamageDone,Fureur brutale,948285468,6425,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:07:143,DamageDone,Ascension du dragon,950282680,3824,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:07:143,DamageDone,Ascension du dragon,950282680,740,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:07:208,DamageDone,Fureur brutale,948285468,11600,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:07:291,DamageDone,Fureur brutale,948285468,24887,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:07:344,DamageDone,Fureur brutale,948285468,11600,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:07:361,DamageDone,Arc d'abattage,950828882,268,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:07:484,DamageDone,Fureur brutale,947958044,24887,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:07:534,DamageDone,Colère mortelle,950313055,2735,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:07:535,DamageDone,Fureur brutale,947958044,24887,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:07:607,DamageDone,Fureur brutale,947958044,24887,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:07:656,DamageDone,Fureur brutale,947958044,6078,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:07:672,DamageDone,Ascension du dragon,950282680,4270,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:07:672,DamageDone,Ascension du dragon,950282680,738,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:07:722,DamageDone,Fureur brutale,947958044,11600,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:08:361,DamageDone,Arc d'abattage,950828882,265,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:08:726,DamageDone,Lame guillotine,940609889,130005,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:08:825,DamageDone,Colère mortelle,950313055,22641,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:09:088,DamageDone,Taillade,964298274,5158,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:09:361,DamageDone,Taillade,963774712,5158,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:09:361,DamageDone,Arc d'abattage,950828882,266,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:09:521,DamageDone,Ruée déferlante,950111829,4207,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:09:654,DamageDone,Taillade,963643674,5158,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:10:216,DamageDone,Taillade,964036892,0,0,0,kMiss,Catalan6677,Calanthia
+20251213-22:30:10:348,DamageDone,Arc d'abattage,950828882,269,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:10:492,DamageDone,Givre tranchant,940587142,29305,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:10:817,DamageDone,Taillade,964298274,1063,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:11:028,DamageDone,Taillade,963774712,2610,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:11:352,DamageDone,Arc d'abattage,950828882,274,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:11:499,DamageDone,Givre tranchant,940587142,29305,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:11:637,DamageDone,Coup fatal,940579344,174801,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:11:753,DamageDone,Colère mortelle,950313055,17690,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:12:338,DamageDone,Taillade,964298274,1828,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:12:374,DamageDone,Arc d'abattage,950828882,306,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:12:535,DamageDone,Taillade,963774712,1828,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:12:868,DamageDone,Taillade,963643674,4211,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:13:134,DamageDone,Taillade,964036892,830,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:13:281,DamageDone,Combat acharné,956175664,31123,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:13:281,DamageDone,Ascension du dragon,950282680,3905,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:13:281,DamageDone,Ascension du dragon,950282680,643,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:13:281,DamageDone,Colère mortelle,950313055,2988,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:13:343,DamageDone,Combat acharné,956241200,32630,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:13:343,DamageDone,Arc d'abattage,950828882,241,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:13:391,DamageDone,Ascension du dragon,950282680,5394,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:13:392,DamageDone,Ascension du dragon,950282680,625,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:13:392,DamageDone,Colère mortelle,950313055,4919,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:13:483,DamageDone,Combat acharné,955258160,13911,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:13:792,DamageDone,Arc d'abattage,950828882,25325,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:13:870,DamageDone,Colère mortelle,950313055,21505,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:13:887,DamageDone,Arc d'abattage,950828882,3798,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:13:995,DamageDone,Ascension du dragon,950282680,4534,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:13:995,DamageDone,Ascension du dragon,950282680,745,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:14:039,DamageDone,Entaille tournoyante,950272669,29079,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:14:131,DamageDone,Colère mortelle,950313055,5708,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:14:192,DamageDone,Entaille tournoyante,950272669,29079,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:14:485,DamageDone,Taillade,964298274,5416,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:14:687,DamageDone,Taillade,963774712,2440,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:15:055,DamageDone,Taillade,963643674,2440,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:15:182,DamageDone,Entaille tournoyante,950272669,246,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:15:394,DamageDone,Taillade,964036892,949,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:15:599,DamageDone,Fureur cyclonique,950311148,34636,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:15:667,DamageDone,Fureur cyclonique,950311148,16201,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:15:707,DamageDone,Fureur cyclonique,950311148,16201,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:15:721,DamageDone,Colère mortelle,950313055,10812,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:15:764,DamageDone,Fureur cyclonique,950311148,16201,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:15:809,DamageDone,Fureur cyclonique,950311148,38017,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:16:089,DamageDone,Taillade,964298274,1427,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:16:144,DamageDone,Entaille tournoyante,950272669,242,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:16:367,DamageDone,Taillade,963774712,5911,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:16:709,DamageDone,Coup étourdissant,955867768,14297,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:16:773,DamageDone,Colère mortelle,950313055,10850,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:17:086,DamageDone,Taillade,964298274,2618,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:17:166,DamageDone,Entaille tournoyante,950272669,241,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:17:375,DamageDone,Fureur brutale,951299308,15003,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:17:424,DamageDone,Fureur brutale,951299308,35198,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:17:505,DamageDone,Fureur brutale,951299308,15003,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:17:546,DamageDone,Colère mortelle,950313055,6276,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:17:589,DamageDone,Fureur brutale,951299308,11292,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:17:635,DamageDone,Fureur brutale,951299308,5080,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:17:860,DamageDone,Fureur brutale,948285468,30463,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:17:860,DamageDone,Colère mortelle,950313055,3942,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:17:908,DamageDone,Fureur brutale,948285468,30463,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:17:995,DamageDone,Fureur brutale,948285468,3176,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:18:043,DamageDone,Fureur brutale,948285468,30463,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:18:113,DamageDone,Fureur brutale,948285468,30463,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:18:133,DamageDone,Ascension du dragon,950282680,1409,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:18:133,DamageDone,Ascension du dragon,950282680,767,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:18:152,DamageDone,Entaille tournoyante,950272669,246,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:18:242,DamageDone,Fureur brutale,947958044,13834,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:18:297,DamageDone,Fureur brutale,947958044,13834,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:18:360,DamageDone,Fureur brutale,947958044,32449,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:18:377,DamageDone,Colère mortelle,950313055,5320,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:18:436,DamageDone,Fureur brutale,947958044,8464,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:18:485,DamageDone,Fureur brutale,947958044,13834,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:18:701,DamageDone,Taillade,964298274,5366,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:19:155,DamageDone,Entaille tournoyante,950272669,246,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:19:730,DamageDone,Lame guillotine,940609889,400244,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:19:859,DamageDone,Colère mortelle,950313055,23763,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:20:118,DamageDone,Taillade,964298274,2018,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:20:164,DamageDone,Entaille tournoyante,950272669,250,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:20:395,DamageDone,Taillade,963774712,2018,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:20:711,DamageDone,Taillade,963643674,1128,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:21:155,DamageDone,Entaille tournoyante,950272669,241,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:21:445,DamageDone,Taillade,964036892,4266,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:21:499,DamageDone,Entaille mutilante,950305597,72451,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:21:499,DamageDone,Entaille mutilante,950305597,29818,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:21:499,DamageDone,Ascension du dragon,950282680,2542,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:21:499,DamageDone,Ascension du dragon,950282680,741,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:21:499,DamageDone,Colère mortelle,950313055,9486,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:21:628,DamageDone,Entaille mutilante,950438753,7454,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:21:643,DamageDone,Ascension du dragon,950282680,4598,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:21:643,DamageDone,Ascension du dragon,950282680,723,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:21:643,DamageDone,Colère mortelle,950313055,10026,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:21:742,DamageDone,Entaille mutilante,950111723,10219,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:21:760,DamageDone,Colère mortelle,950313055,7915,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:21:855,DamageDone,Entaille mutilante,950046202,8498,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:22:004,DamageDone,Entaille mutilante,950242822,19043,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:22:004,DamageDone,Ascension du dragon,950282680,2293,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:22:004,DamageDone,Ascension du dragon,950282680,740,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:22:004,DamageDone,Colère mortelle,950313055,5537,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:22:120,DamageDone,Entaille mutilante,950177299,17774,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:22:173,DamageDone,Colère mortelle,950313055,17056,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:22:229,DamageDone,Combat acharné,956175664,32118,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:22:263,DamageDone,Colère mortelle,950313055,8892,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:22:362,DamageDone,Combat acharné,956241200,36084,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:22:395,DamageDone,Colère mortelle,950313055,19059,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:22:512,DamageDone,Combat acharné,955258160,4807,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:22:615,DamageDone,Ascension du dragon,950282680,4464,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:22:615,DamageDone,Ascension du dragon,950282680,783,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:22:846,DamageDone,Taillade,964298274,2099,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:22:982,DamageDone,Arc d'abattage,950828882,8943,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:23:095,DamageDone,Colère mortelle,950313055,8501,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:23:095,DamageDone,Arc d'abattage,950828882,5169,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:23:224,DamageDone,Ascension du dragon,950282680,2365,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:23:224,DamageDone,Ascension du dragon,950282680,778,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:23:260,DamageDone,Entaille tournoyante,950272669,9579,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:23:375,DamageDone,Colère mortelle,950313055,8501,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:23:397,DamageDone,Entaille tournoyante,950272669,20539,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:24:343,DamageDone,Ruée précise,955968982,1214,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:24:392,DamageDone,Ascension du dragon,950282680,4954,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:24:392,DamageDone,Ascension du dragon,950282680,736,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:24:392,DamageDone,Entaille tournoyante,950272669,830,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:24:672,DamageDone,Taillade,964298274,1824,0,1,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:24:809,DamageDone,Ruée déferlante,950111829,3344,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:24:907,DamageDone,Taillade,963774712,4360,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia
+20251213-22:30:25:424,DamageDone,Entaille tournoyante,950272669,761,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:25:468,DamageDone,Taillade,964036892,579,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:26:405,DamageDone,Entaille tournoyante,950272669,775,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:27:395,DamageDone,Entaille tournoyante,950272669,761,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:28:426,DamageDone,Entaille tournoyante,950272669,772,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:29:395,DamageDone,Entaille tournoyante,950272669,759,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:30:414,DamageDone,Entaille tournoyante,950272669,567,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:31:401,DamageDone,Entaille tournoyante,950272669,561,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:32:394,DamageDone,Entaille tournoyante,950272669,560,0,0,kNormalHit,Catalan6677,Calanthia
+20251213-22:30:48:638,DamageDone,Ruée déferlante,950111829,4165,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:30:48:655,DamageDone,Ascension du dragon,950282680,4848,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:30:48:655,DamageDone,Ascension du dragon,950282680,639,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:48:763,DamageDone,Taillade,964298274,1599,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:49:009,DamageDone,Taillade,963774712,3229,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:30:49:610,DamageDone,Taillade,963643674,825,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:49:977,DamageDone,Givre tranchant,940587142,32965,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:50:101,DamageDone,Ascension du dragon,950282680,8051,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:30:50:102,DamageDone,Ascension du dragon,950282680,848,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:50:350,DamageDone,Taillade,964036892,4151,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:30:51:005,DamageDone,Givre tranchant,940587142,17990,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:51:057,DamageDone,Taillade,964298274,1977,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:30:51:213,DamageDone,Combat acharné,956175664,29334,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:30:51:269,DamageDone,Ascension du dragon,950282680,1250,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:51:270,DamageDone,Ascension du dragon,950282680,888,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:51:330,DamageDone,Combat acharné,956241200,15487,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:30:51:350,DamageDone,Ascension du dragon,950282680,4037,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:30:51:351,DamageDone,Ascension du dragon,950282680,861,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:51:441,DamageDone,Combat acharné,955258160,31171,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:30:51:553,DamageDone,Ascension du dragon,950282680,8669,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:30:51:553,DamageDone,Ascension du dragon,950282680,842,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:51:694,DamageDone,Taillade,963774712,4497,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:30:51:874,DamageDone,Arc d'abattage,950828882,10432,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:51:979,DamageDone,Ascension du dragon,950282680,8261,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:30:51:979,DamageDone,Ascension du dragon,950282680,821,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:52:010,DamageDone,Arc d'abattage,950828882,17731,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:30:52:175,DamageDone,Entaille tournoyante,950272669,9210,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:52:265,DamageDone,Ascension du dragon,950282680,1003,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:52:265,DamageDone,Ascension du dragon,950282680,800,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:52:279,DamageDone,Entaille tournoyante,950272669,4034,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:52:491,DamageDone,Entaille mutilante,950305597,7811,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:52:491,DamageDone,Entaille mutilante,950305597,6873,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:52:491,DamageDone,Ascension du dragon,950282680,8727,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:30:52:492,DamageDone,Ascension du dragon,950282680,802,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:52:584,DamageDone,Entaille mutilante,950438753,8653,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:30:52:585,DamageDone,Ascension du dragon,950282680,8727,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:30:52:585,DamageDone,Ascension du dragon,950282680,782,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:52:695,DamageDone,Entaille mutilante,950111723,19871,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:30:52:712,DamageDone,Ascension du dragon,950282680,8727,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:30:52:712,DamageDone,Ascension du dragon,950282680,759,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:52:802,DamageDone,Entaille mutilante,950046202,2482,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:53:017,DamageDone,Taillade,964298274,2166,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:30:53:017,DamageDone,Ruée précise,955968982,4235,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:53:069,DamageDone,Ascension du dragon,950282680,3835,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:53:069,DamageDone,Ascension du dragon,950282680,738,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:53:253,DamageDone,Ruée précise,963183484,8659,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:30:53:379,DamageDone,Taillade,963774712,4585,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:30:53:747,DamageDone,Taillade,963643674,4585,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:30:56:757,DamageDone,Taillade,964298274,1260,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:57:027,DamageDone,Fureur cyclonique,950311148,2883,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:57:076,DamageDone,Fureur cyclonique,950311148,5782,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:57:117,DamageDone,Fureur cyclonique,950311148,9949,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:30:57:117,DamageDone,Ascension du dragon,950282680,6997,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:30:57:117,DamageDone,Ascension du dragon,950282680,588,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:57:185,DamageDone,Fureur cyclonique,950311148,8722,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:57:227,DamageDone,Fureur cyclonique,950311148,9949,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:30:57:581,DamageDone,Taillade,964298274,3838,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:30:57:751,DamageDone,Taillade,963774712,3547,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:30:58:071,DamageDone,Coup étourdissant,955867768,1363,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:58:099,DamageDone,Ascension du dragon,950282680,6930,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:30:58:100,DamageDone,Ascension du dragon,950282680,577,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:58:390,DamageDone,Fureur brutale,951299308,9906,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:30:58:450,DamageDone,Fureur brutale,951299308,7032,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:58:531,DamageDone,Fureur brutale,951299308,21242,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:30:58:614,DamageDone,Fureur brutale,951299308,8691,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:58:669,DamageDone,Ascension du dragon,950282680,1852,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:58:669,DamageDone,Ascension du dragon,950282680,587,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:58:669,DamageDone,Fureur brutale,951299308,21801,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:30:58:864,DamageDone,Fureur brutale,948285468,5147,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:58:924,DamageDone,Fureur brutale,948285468,9262,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:30:59:011,DamageDone,Fureur brutale,948285468,7853,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:30:59:074,DamageDone,Fureur brutale,948285468,19855,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:30:59:121,DamageDone,Fureur brutale,948285468,5083,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:00:122,DamageDone,Lame guillotine,940609889,139807,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:00:484,DamageDone,Taillade,964298274,0,0,0,kMiss,Catalan6677,Calanthia destructrice
+20251213-22:31:00:705,DamageDone,Taillade,963774712,4903,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:03:115,DamageDone,Taillade,964298274,1667,0,1,kNormalHit,Catalan6677,Orbe de magie chaotique
+20251213-22:31:03:329,DamageDone,Taillade,963774712,1217,1,0,kMaxDamageByCriticalDecision,Catalan6677,Orbe de magie chaotique
+20251213-22:31:03:730,DamageDone,Taillade,963643674,1143,0,1,kNormalHit,Catalan6677,Orbe de magie chaotique
+20251213-22:31:03:976,DamageDone,Taillade,964036892,791,0,0,kNormalHit,Catalan6677,Orbe de magie chaotique
+20251213-22:31:04:358,DamageDone,Taillade,964298274,2774,1,1,kMaxDamageByCriticalDecision,Catalan6677,Orbe de magie chaotique
+20251213-22:31:04:396,DamageDone,Combat acharné,956175664,4458,0,1,kNormalHit,Catalan6677,Orbe de magie chaotique
+20251213-22:31:04:469,DamageDone,Ascension du dragon,950282680,2446,1,0,kMaxDamageByCriticalDecision,Catalan6677,Orbe de magie chaotique
+20251213-22:31:04:469,DamageDone,Ascension du dragon,950282680,505,0,0,kNormalHit,Catalan6677,Orbe de magie chaotique
+20251213-22:31:04:469,DamageDone,Colère mortelle,950313055,4940,1,0,kMaxDamageByCriticalDecision,Catalan6677,Orbe de magie chaotique
+20251213-22:31:04:520,DamageDone,Combat acharné,956241200,8880,1,1,kMaxDamageByCriticalDecision,Catalan6677,Orbe de magie chaotique
+20251213-22:31:04:584,DamageDone,Ascension du dragon,950282680,832,0,0,kNormalHit,Catalan6677,Orbe de magie chaotique
+20251213-22:31:04:584,DamageDone,Ascension du dragon,950282680,509,0,0,kNormalHit,Catalan6677,Orbe de magie chaotique
+20251213-22:31:04:683,DamageDone,Combat acharné,955258160,5373,0,1,kNormalHit,Catalan6677,Orbe de magie chaotique
+20251213-22:31:04:804,DamageDone,Ascension du dragon,950282680,1567,0,0,kNormalHit,Catalan6677,Orbe de magie chaotique
+20251213-22:31:04:804,DamageDone,Ascension du dragon,950282680,497,0,0,kNormalHit,Catalan6677,Orbe de magie chaotique
+20251213-22:31:04:951,DamageDone,Taillade,963774712,1273,1,0,kMaxDamageByCriticalDecision,Catalan6677,Orbe de magie chaotique
+20251213-22:31:05:067,DamageDone,Arc d'abattage,950828882,3521,1,0,kMaxDamageByCriticalDecision,Catalan6677,Orbe de magie chaotique
+20251213-22:31:05:223,DamageDone,Arc d'abattage,950828882,2123,0,1,kNormalHit,Catalan6677,Orbe de magie chaotique
+20251213-22:31:05:333,DamageDone,Ascension du dragon,950282680,2379,1,0,kMaxDamageByCriticalDecision,Catalan6677,Orbe de magie chaotique
+20251213-22:31:05:333,DamageDone,Ascension du dragon,950282680,488,0,0,kNormalHit,Catalan6677,Orbe de magie chaotique
+20251213-22:31:05:440,DamageDone,Entaille tournoyante,950272669,3290,1,0,kMaxDamageByCriticalDecision,Catalan6677,Orbe de magie chaotique
+20251213-22:31:05:568,DamageDone,Entaille tournoyante,950272669,3290,1,0,kMaxDamageByCriticalDecision,Catalan6677,Orbe de magie chaotique
+20251213-22:31:05:884,DamageDone,Taillade,964298274,1583,0,1,kNormalHit,Catalan6677,Orbe de magie chaotique
+20251213-22:31:06:153,DamageDone,Taillade,963774712,845,0,0,kNormalHit,Catalan6677,Orbe de magie chaotique
+20251213-22:31:06:539,DamageDone,Taillade,963643674,0,0,0,kMiss,Catalan6677,Orbe de magie chaotique
+20251213-22:31:06:771,DamageDone,Ruée précise,955968982,765,0,0,kNormalHit,Catalan6677,Orbe de magie chaotique
+20251213-22:31:06:771,DamageDone,Ascension du dragon,950282680,5905,1,1,kMaxDamageByCriticalDecision,Catalan6677,Orbe de magie chaotique
+20251213-22:31:06:772,DamageDone,Ascension du dragon,950282680,488,0,0,kNormalHit,Catalan6677,Orbe de magie chaotique
+20251213-22:31:07:028,DamageDone,Ruée précise,963183484,3734,1,0,kMaxDamageByCriticalDecision,Catalan6677,Orbe de magie chaotique
+20251213-22:31:07:177,DamageDone,Entaille mutilante,950305597,2816,1,0,kMaxDamageByCriticalDecision,Catalan6677,Orbe de magie chaotique
+20251213-22:31:07:282,DamageDone,Entaille mutilante,950438753,6535,1,1,kMaxDamageByCriticalDecision,Catalan6677,Orbe de magie chaotique
+20251213-22:31:07:297,DamageDone,Colère mortelle,950313055,11240,1,1,kMaxDamageByCriticalDecision,Catalan6677,Orbe de magie chaotique
+20251213-22:31:07:405,DamageDone,Entaille mutilante,950111723,3805,0,1,kNormalHit,Catalan6677,Orbe de magie chaotique
+20251213-22:31:07:420,DamageDone,Colère mortelle,950313055,10722,1,1,kMaxDamageByCriticalDecision,Catalan6677,Orbe de magie chaotique
+20251213-22:31:07:524,DamageDone,Entaille mutilante,950046202,1830,0,1,kNormalHit,Catalan6677,Orbe de magie chaotique
+20251213-22:31:07:553,DamageDone,Colère mortelle,950313055,10722,1,1,kMaxDamageByCriticalDecision,Catalan6677,Orbe de magie chaotique
+20251213-22:31:20:094,DamageDone,Givre tranchant,940587142,7630,0,0,kNormalHit,Catalan6677,Zombie léthargique
+20251213-22:31:20:211,DamageDone,Ascension du dragon,950282680,907,0,0,kNormalHit,Catalan6677,Zombie léthargique
+20251213-22:31:20:212,DamageDone,Ascension du dragon,950282680,561,0,0,kNormalHit,Catalan6677,Zombie léthargique
+20251213-22:31:21:087,DamageDone,Givre tranchant,940587142,6772,0,0,kNormalHit,Catalan6677,Zombie léthargique
+20251213-22:31:26:036,DamageDone,Ruée déferlante,950111829,1203,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:26:036,DamageDone,Ascension du dragon,950282680,2963,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:26:036,DamageDone,Ascension du dragon,950282680,770,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:26:251,DamageDone,Taillade,964298274,0,0,0,kMiss,Catalan6677,Calanthia destructrice
+20251213-22:31:26:460,DamageDone,Taillade,963774712,1024,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:27:034,DamageDone,Coup fatal,940579344,156406,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:27:159,DamageDone,Ascension du dragon,950282680,2459,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:27:159,DamageDone,Ascension du dragon,950282680,745,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:27:456,DamageDone,Taillade,963643674,4123,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:27:786,DamageDone,Taillade,964036892,1022,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:28:009,DamageDone,Entaille mutilante,950305597,5904,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:28:009,DamageDone,Ascension du dragon,950282680,7572,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:28:009,DamageDone,Ascension du dragon,950282680,727,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:28:083,DamageDone,Entaille mutilante,950438753,16082,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:28:099,DamageDone,Ascension du dragon,950282680,7572,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:28:099,DamageDone,Ascension du dragon,950282680,706,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:28:181,DamageDone,Entaille mutilante,950111723,7882,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:28:212,DamageDone,Ascension du dragon,950282680,7949,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:28:212,DamageDone,Ascension du dragon,950282680,713,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:28:313,DamageDone,Entaille mutilante,950046202,8523,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:28:427,DamageDone,Entaille mutilante,950242822,6036,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:28:543,DamageDone,Entaille mutilante,950177299,5084,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:28:655,DamageDone,Arc d'abattage,950828882,18566,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:28:785,DamageDone,Arc d'abattage,950828882,6139,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:28:930,DamageDone,Ascension du dragon,950282680,2639,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:28:930,DamageDone,Ascension du dragon,950282680,715,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:28:998,DamageDone,Combat acharné,956175664,14199,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:29:073,DamageDone,Combat acharné,956241200,14984,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:29:210,DamageDone,Combat acharné,955258160,34902,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:29:509,DamageDone,Taillade,963774712,1894,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:29:643,DamageDone,Arc d'abattage,950828882,72,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:29:792,DamageDone,Taillade,963643674,1484,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:30:438,DamageDone,Taillade,964036892,4473,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:30:674,DamageDone,Arc d'abattage,950828882,71,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:30:943,DamageDone,Ruée précise,955968982,2033,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:30:943,DamageDone,Ascension du dragon,950282680,9093,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:30:943,DamageDone,Ascension du dragon,950282680,750,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:31:156,DamageDone,Ruée précise,963183484,7826,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:31:311,DamageDone,Taillade,964298274,1763,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:31:635,DamageDone,Arc d'abattage,950828882,71,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:31:771,DamageDone,Fureur cyclonique,950311148,28018,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:31:826,DamageDone,Fureur cyclonique,950311148,14240,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:31:874,DamageDone,Fureur cyclonique,950311148,16508,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:31:927,DamageDone,Fureur cyclonique,950311148,7795,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:31:962,DamageDone,Fureur cyclonique,950311148,29156,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:32:098,DamageDone,Ascension du dragon,950282680,3425,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:32:098,DamageDone,Ascension du dragon,950282680,582,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:32:256,DamageDone,Taillade,964298274,1963,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:32:365,DamageDone,Coup étourdissant,955867768,3087,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:32:680,DamageDone,Arc d'abattage,950828882,70,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:32:746,DamageDone,Taillade,964298274,723,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:33:635,DamageDone,Arc d'abattage,950828882,57,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:34:066,DamageDone,Fureur brutale,951299308,11737,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:34:134,DamageDone,Fureur brutale,951299308,25182,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:34:178,DamageDone,Ascension du dragon,950282680,1737,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:34:179,DamageDone,Ascension du dragon,950282680,733,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:34:214,DamageDone,Fureur brutale,951299308,11737,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:34:269,DamageDone,Fureur brutale,951299308,12817,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:34:333,DamageDone,Fureur brutale,951299308,25182,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:34:574,DamageDone,Fureur brutale,948285468,6242,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:34:604,DamageDone,Fureur brutale,948285468,24427,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:34:604,DamageDone,Ascension du dragon,950282680,2275,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:34:604,DamageDone,Ascension du dragon,950282680,725,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:34:650,DamageDone,Arc d'abattage,950828882,70,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:34:665,DamageDone,Fureur brutale,948285468,11386,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:34:714,DamageDone,Fureur brutale,948285468,24427,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:34:787,DamageDone,Fureur brutale,948285468,5533,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:35:670,DamageDone,Arc d'abattage,950828882,71,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:35:702,DamageDone,Lame guillotine,940609889,80992,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:36:068,DamageDone,Taillade,964298274,2057,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:36:332,DamageDone,Taillade,963774712,3970,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:36:664,DamageDone,Arc d'abattage,950828882,71,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:36:664,DamageDone,Taillade,963643674,2247,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:36:959,DamageDone,Taillade,964036892,4044,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:37:293,DamageDone,Taillade,964298274,4044,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:37:514,DamageDone,Taillade,963774712,2612,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:37:608,DamageDone,Arc d'abattage,950828882,67,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:37:864,DamageDone,Taillade,963643674,4044,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:38:210,DamageDone,Entaille mutilante,950305597,68814,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:38:210,DamageDone,Ascension du dragon,950282680,3427,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:38:210,DamageDone,Ascension du dragon,950282680,764,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:38:303,DamageDone,Entaille mutilante,950438753,17983,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:38:320,DamageDone,Ascension du dragon,950282680,3696,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:38:321,DamageDone,Ascension du dragon,950282680,740,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:38:425,DamageDone,Entaille mutilante,950111723,16784,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:38:425,DamageDone,Ascension du dragon,950282680,3074,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:38:426,DamageDone,Ascension du dragon,950282680,722,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:38:588,DamageDone,Entaille mutilante,950046202,16784,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:38:713,DamageDone,Entaille mutilante,950242822,8392,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:38:832,DamageDone,Entaille mutilante,950177299,7835,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:38:833,DamageDone,Arc d'abattage,950828882,16937,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:38:981,DamageDone,Arc d'abattage,950828882,7906,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:39:193,DamageDone,Entaille tournoyante,950272669,18702,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:39:288,DamageDone,Entaille tournoyante,950272669,5155,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:39:382,DamageDone,Ascension du dragon,950282680,3807,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:39:382,DamageDone,Ascension du dragon,950282680,750,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:39:538,DamageDone,Taillade,964298274,2195,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:39:808,DamageDone,Taillade,963774712,3970,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:40:161,DamageDone,Entaille tournoyante,950272669,359,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:40:620,DamageDone,Taillade,963643674,3970,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:41:144,DamageDone,Entaille tournoyante,950272669,345,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:41:269,DamageDone,Ruée déferlante,950111829,3285,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:41:341,DamageDone,Ascension du dragon,950282680,7968,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:41:341,DamageDone,Ascension du dragon,950282680,733,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:41:372,DamageDone,Taillade,964036892,1880,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:41:783,DamageDone,Taillade,964298274,3970,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:42:100,DamageDone,Taillade,963774712,3970,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:42:163,DamageDone,Entaille tournoyante,950272669,352,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:42:657,DamageDone,Givre tranchant,940587142,55014,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:42:989,DamageDone,Taillade,964036892,1880,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:43:151,DamageDone,Entaille tournoyante,950272669,346,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:43:635,DamageDone,Givre tranchant,940587142,55014,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:43:879,DamageDone,Coup fatal,940579344,184406,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:44:153,DamageDone,Entaille tournoyante,950272669,346,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:44:208,DamageDone,Taillade,963774712,0,0,0,kMiss,Catalan6677,Calanthia destructrice
+20251213-22:31:44:552,DamageDone,Taillade,963643674,1587,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:44:805,DamageDone,Taillade,964036892,1880,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:45:163,DamageDone,Entaille tournoyante,950272669,352,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:45:183,DamageDone,Taillade,964298274,1227,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:45:468,DamageDone,Fureur cyclonique,950311148,9815,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:45:527,DamageDone,Fureur cyclonique,950311148,9399,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:45:577,DamageDone,Fureur cyclonique,950311148,8612,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:45:616,DamageDone,Fureur cyclonique,950311148,26732,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:45:703,DamageDone,Fureur cyclonique,950311148,3796,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:45:774,DamageDone,Ascension du dragon,950282680,1135,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:45:774,DamageDone,Ascension du dragon,950282680,741,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:45:943,DamageDone,Taillade,964298274,2057,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:46:159,DamageDone,Entaille tournoyante,950272669,345,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:46:273,DamageDone,Coup étourdissant,955867768,10485,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:46:677,DamageDone,Fureur brutale,951299308,13572,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:46:772,DamageDone,Fureur brutale,951299308,13572,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:46:819,DamageDone,Fureur brutale,951299308,11347,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:46:890,DamageDone,Fureur brutale,951299308,29130,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:46:965,DamageDone,Fureur brutale,951299308,13572,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:47:068,DamageDone,Ascension du dragon,950282680,2350,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:47:068,DamageDone,Ascension du dragon,950282680,759,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:47:162,DamageDone,Entaille tournoyante,950272669,351,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:47:162,DamageDone,Fureur brutale,948285468,3252,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:47:218,DamageDone,Fureur brutale,948285468,10963,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:47:293,DamageDone,Fureur brutale,948285468,26088,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:47:356,DamageDone,Fureur brutale,948285468,5718,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:47:426,DamageDone,Fureur brutale,948285468,12158,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:47:529,DamageDone,Fureur brutale,947958044,12158,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:47:580,DamageDone,Fureur brutale,947958044,5886,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:47:655,DamageDone,Fureur brutale,947958044,12158,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:47:709,DamageDone,Fureur brutale,947958044,10639,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:47:729,DamageDone,Ascension du dragon,950282680,4479,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:47:729,DamageDone,Ascension du dragon,950282680,739,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:47:797,DamageDone,Fureur brutale,947958044,8954,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:47:978,DamageDone,Taillade,964298274,609,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:48:147,DamageDone,Entaille tournoyante,950272669,340,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:48:841,DamageDone,Lame guillotine,940609889,341936,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:49:216,DamageDone,Taillade,964298274,1058,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:49:488,DamageDone,Taillade,963774712,2155,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:49:808,DamageDone,Taillade,963643674,2012,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:50:685,DamageDone,Combat acharné,956175664,14413,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:50:743,DamageDone,Ascension du dragon,950282680,9901,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:50:743,DamageDone,Ascension du dragon,950282680,781,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:50:802,DamageDone,Combat acharné,956241200,20336,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:50:850,DamageDone,Ascension du dragon,950282680,3662,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:50:850,DamageDone,Ascension du dragon,950282680,759,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:50:955,DamageDone,Combat acharné,955258160,10088,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:51:203,DamageDone,Arc d'abattage,950828882,11983,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:51:337,DamageDone,Arc d'abattage,950828882,25711,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:51:553,DamageDone,Entaille tournoyante,950272669,25711,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:51:647,DamageDone,Ascension du dragon,950282680,9342,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:51:647,DamageDone,Ascension du dragon,950282680,756,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:51:647,DamageDone,Entaille tournoyante,950272669,10910,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:52:524,DamageDone,Entaille tournoyante,950272669,787,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:53:554,DamageDone,Entaille tournoyante,950272669,857,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:54:517,DamageDone,Entaille tournoyante,950272669,851,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:55:531,DamageDone,Entaille tournoyante,950272669,864,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:56:101,DamageDone,Ruée précise,963183484,4758,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:56:101,DamageDone,Ascension du dragon,950282680,3640,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:56:101,DamageDone,Ascension du dragon,950282680,665,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:56:272,DamageDone,Taillade,964298274,4583,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:56:533,DamageDone,Entaille tournoyante,950272669,740,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:56:548,DamageDone,Ruée déferlante,950111829,7723,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:56:567,DamageDone,Ascension du dragon,950282680,3864,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:56:567,DamageDone,Ascension du dragon,950282680,710,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:56:617,DamageDone,Taillade,963774712,4646,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:57:197,DamageDone,Taillade,963643674,0,0,0,kMiss,Catalan6677,Calanthia destructrice
+20251213-22:31:57:492,DamageDone,Givre tranchant,940587142,8942,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:57:531,DamageDone,Entaille tournoyante,950272669,849,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:57:982,DamageDone,Taillade,964036892,3812,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:58:203,DamageDone,Taillade,964298274,1310,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:58:483,DamageDone,Givre tranchant,940587142,19458,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:58:527,DamageDone,Entaille tournoyante,950272669,677,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:58:847,DamageDone,Coup fatal,940579344,71945,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:59:254,DamageDone,Taillade,964298274,1492,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:59:483,DamageDone,Entaille mutilante,950305597,23796,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:59:483,DamageDone,Entaille mutilante,950305597,9726,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:31:59:583,DamageDone,Entaille mutilante,950438753,14787,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:59:708,DamageDone,Entaille mutilante,950111723,15961,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:59:802,DamageDone,Entaille mutilante,950046202,6408,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:31:59:931,DamageDone,Entaille mutilante,950242822,15080,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:00:006,DamageDone,Taillade,963774712,3532,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:22:710,DamageDone,Fureur cyclonique,950311148,24145,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:22:752,DamageDone,Fureur cyclonique,950311148,7822,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:22:825,DamageDone,Fureur cyclonique,950311148,11375,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:22:826,DamageDone,Ascension du dragon,950282680,3745,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:22:826,DamageDone,Ascension du dragon,950282680,1121,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:22:826,DamageDone,Colère mortelle,950313055,17833,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:22:859,DamageDone,Fureur cyclonique,950311148,26832,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:22:913,DamageDone,Fureur cyclonique,950311148,11446,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:23:193,DamageDone,Taillade,964298274,1242,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:23:578,DamageDone,Coup étourdissant,955867768,10264,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:23:629,DamageDone,Ascension du dragon,950282680,9584,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:23:630,DamageDone,Ascension du dragon,950282680,1094,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:23:630,DamageDone,Colère mortelle,950313055,19560,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:23:971,DamageDone,Fureur brutale,951299308,3155,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:24:031,DamageDone,Fureur brutale,951299308,14959,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:24:110,DamageDone,Ascension du dragon,950282680,4477,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:24:110,DamageDone,Ascension du dragon,950282680,1098,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:24:128,DamageDone,Fureur brutale,951299308,29259,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:24:145,DamageDone,Colère mortelle,950313055,6172,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:24:211,DamageDone,Fureur brutale,951299308,29259,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:24:248,DamageDone,Fureur brutale,951299308,12478,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:24:463,DamageDone,Fureur brutale,948285468,13752,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:24:464,DamageDone,Ascension du dragon,950282680,11104,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:24:464,DamageDone,Ascension du dragon,950282680,1071,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:24:508,DamageDone,Fureur brutale,948285468,12981,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:24:577,DamageDone,Fureur brutale,948285468,13058,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:24:646,DamageDone,Fureur brutale,948285468,13058,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:24:707,DamageDone,Fureur brutale,948285468,13058,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:24:842,DamageDone,Fureur brutale,947958044,4681,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:24:842,DamageDone,Ascension du dragon,950282680,10287,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:24:842,DamageDone,Ascension du dragon,950282680,1042,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:24:869,DamageDone,Fureur brutale,947958044,28024,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:24:891,DamageDone,Colère mortelle,950313055,5298,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:24:947,DamageDone,Fureur brutale,947958044,14663,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:24:990,DamageDone,Fureur brutale,947958044,28024,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:25:074,DamageDone,Fureur brutale,947958044,13005,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:25:984,DamageDone,Lame guillotine,940609889,140239,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:26:108,DamageDone,Ascension du dragon,950282680,5085,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:26:108,DamageDone,Ascension du dragon,950282680,1003,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:26:109,DamageDone,Colère mortelle,950313055,5491,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:26:355,DamageDone,Taillade,964298274,0,0,0,kMiss,Catalan6677,Calanthia destructrice
+20251213-22:32:26:537,DamageDone,Taillade,963774712,2388,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:26:909,DamageDone,Taillade,963643674,2321,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:27:180,DamageDone,Entaille mutilante,950305597,11898,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:27:198,DamageDone,Ascension du dragon,950282680,9598,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:27:198,DamageDone,Ascension du dragon,950282680,936,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:27:265,DamageDone,Entaille mutilante,950438753,8662,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:27:286,DamageDone,Ascension du dragon,950282680,4101,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:27:287,DamageDone,Ascension du dragon,950282680,905,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:27:396,DamageDone,Entaille mutilante,950111723,18565,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:27:431,DamageDone,Ascension du dragon,950282680,2265,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:27:431,DamageDone,Ascension du dragon,950282680,876,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:27:431,DamageDone,Colère mortelle,950313055,5431,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:27:542,DamageDone,Entaille mutilante,950046202,3366,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:27:542,DamageDone,Ascension du dragon,950282680,8749,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:27:542,DamageDone,Ascension du dragon,950282680,848,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:27:699,DamageDone,Entaille mutilante,950242822,18565,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:27:699,DamageDone,Ascension du dragon,950282680,3873,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:27:699,DamageDone,Ascension du dragon,950282680,821,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:27:699,DamageDone,Colère mortelle,950313055,3840,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:27:783,DamageDone,Entaille mutilante,950177299,8662,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:27:819,DamageDone,Ascension du dragon,950282680,8749,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:27:819,DamageDone,Ascension du dragon,950282680,799,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:28:063,DamageDone,Combat acharné,956175664,35696,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:28:081,DamageDone,Combat acharné,956241200,17537,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:28:126,DamageDone,Ascension du dragon,950282680,9719,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:28:126,DamageDone,Ascension du dragon,950282680,800,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:28:126,DamageDone,Colère mortelle,950313055,9217,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:28:126,DamageDone,Ascension du dragon,950282680,9719,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:28:127,DamageDone,Ascension du dragon,950282680,774,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:28:127,DamageDone,Colère mortelle,950313055,10738,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:28:225,DamageDone,Combat acharné,955258160,16265,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:28:358,DamageDone,Ascension du dragon,950282680,9719,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:28:358,DamageDone,Ascension du dragon,950282680,756,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:28:784,DamageDone,Arc d'abattage,950828882,15991,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:28:879,DamageDone,Colère mortelle,950313055,9356,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:28:926,DamageDone,Arc d'abattage,950828882,15991,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:29:022,DamageDone,Ascension du dragon,950282680,3503,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:29:022,DamageDone,Ascension du dragon,950282680,615,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:29:143,DamageDone,Entaille tournoyante,950272669,19670,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:29:225,DamageDone,Colère mortelle,950313055,18676,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:29:261,DamageDone,Entaille tournoyante,950272669,9176,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:29:922,DamageDone,Ruée précise,955968982,3590,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:30:197,DamageDone,Ruée déferlante,950111829,8686,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:30:225,DamageDone,Colère mortelle,950313055,19247,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:30:307,DamageDone,Entaille tournoyante,950272669,1032,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:30:307,DamageDone,Taillade,964298274,2220,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:30:495,DamageDone,Taillade,963774712,1563,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:30:907,DamageDone,Taillade,963643674,4487,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:31:211,DamageDone,Givre tranchant,940587142,61403,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:31:276,DamageDone,Entaille tournoyante,950272669,1038,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:31:330,DamageDone,Colère mortelle,950313055,19423,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:31:552,DamageDone,Taillade,964036892,4487,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:31:998,DamageDone,Taillade,964298274,2291,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:32:194,DamageDone,Taillade,963774712,4600,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:32:211,DamageDone,Givre tranchant,940587142,28569,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:32:274,DamageDone,Entaille tournoyante,950272669,1018,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:32:326,DamageDone,Ascension du dragon,950282680,9243,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:32:326,DamageDone,Ascension du dragon,950282680,741,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:32:827,DamageDone,Coup fatal,940579344,45154,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:33:211,DamageDone,Taillade,964298274,4266,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:33:255,DamageDone,Entaille tournoyante,950272669,1016,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:33:470,DamageDone,Taillade,963774712,944,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:33:777,DamageDone,Taillade,963643674,552,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:34:097,DamageDone,Fureur cyclonique,950311148,28027,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:34:133,DamageDone,Fureur cyclonique,950311148,14244,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:34:176,DamageDone,Fureur cyclonique,950311148,14244,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:34:233,DamageDone,Ascension du dragon,950282680,2416,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:34:233,DamageDone,Ascension du dragon,950282680,747,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:34:233,DamageDone,Colère mortelle,950313055,8947,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:34:233,DamageDone,Fureur cyclonique,950311148,14244,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:34:275,DamageDone,Entaille tournoyante,950272669,1032,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:34:294,DamageDone,Fureur cyclonique,950311148,30578,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:34:587,DamageDone,Taillade,964298274,2209,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:34:755,DamageDone,Coup étourdissant,955867768,3740,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:34:802,DamageDone,Colère mortelle,950313055,20460,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:35:087,DamageDone,Taillade,964298274,1247,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:35:249,DamageDone,Entaille tournoyante,950272669,1019,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:35:380,DamageDone,Fureur brutale,951299308,12594,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:35:435,DamageDone,Fureur brutale,951299308,27027,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:35:495,DamageDone,Ascension du dragon,950282680,9615,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:35:496,DamageDone,Ascension du dragon,950282680,734,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:35:518,DamageDone,Fureur brutale,951299308,27027,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:35:539,DamageDone,Colère mortelle,950313055,9143,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:35:581,DamageDone,Fureur brutale,951299308,13033,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:35:653,DamageDone,Fureur brutale,951299308,27027,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:35:831,DamageDone,Fureur brutale,948285468,13296,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:35:909,DamageDone,Fureur brutale,948285468,26791,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:35:909,DamageDone,Ascension du dragon,950282680,4785,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:35:909,DamageDone,Ascension du dragon,950282680,726,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:35:909,DamageDone,Colère mortelle,950313055,11830,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:35:994,DamageDone,Fureur brutale,948285468,8088,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:36:036,DamageDone,Fureur brutale,948285468,4314,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:36:098,DamageDone,Fureur brutale,948285468,10154,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:36:200,DamageDone,Fureur brutale,947958044,21776,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:36:221,DamageDone,Colère mortelle,950313055,6375,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:36:265,DamageDone,Entaille tournoyante,950272669,955,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:36:265,DamageDone,Fureur brutale,947958044,21776,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:36:333,DamageDone,Fureur brutale,947958044,21776,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:36:423,DamageDone,Fureur brutale,947958044,9153,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:36:480,DamageDone,Fureur brutale,947958044,21776,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:36:505,DamageDone,Ascension du dragon,950282680,7998,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:36:506,DamageDone,Ascension du dragon,950282680,604,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:37:250,DamageDone,Entaille tournoyante,950272669,784,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:38:035,DamageDone,Blocage patient,951429481,5957,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:38:035,DamageDone,Ascension du dragon,950282680,7910,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:38:035,DamageDone,Ascension du dragon,950282680,594,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:38:253,DamageDone,Entaille tournoyante,950272669,772,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:38:595,DamageDone,Taillade,964298274,2075,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:38:797,DamageDone,Combat acharné,956175664,8807,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:38:815,DamageDone,Ascension du dragon,950282680,10049,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:38:816,DamageDone,Ascension du dragon,950282680,734,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:38:884,DamageDone,Combat acharné,956241200,36183,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:38:944,DamageDone,Colère mortelle,950313055,4450,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:39:070,DamageDone,Combat acharné,955258160,16849,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:39:355,DamageDone,Taillade,963774712,770,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:39:458,DamageDone,Entaille mutilante,950305597,30557,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:39:458,DamageDone,Colère mortelle,950313055,8941,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:39:576,DamageDone,Entaille mutilante,950438753,9316,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:39:704,DamageDone,Entaille mutilante,950111723,7645,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:39:724,DamageDone,Ascension du dragon,950282680,4396,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:39:724,DamageDone,Ascension du dragon,950282680,731,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:39:724,DamageDone,Colère mortelle,950313055,19165,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:39:829,DamageDone,Entaille mutilante,950046202,6453,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:39:830,DamageDone,Colère mortelle,950313055,7756,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:40:007,DamageDone,Entaille mutilante,950242822,5349,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:40:064,DamageDone,Arc d'abattage,950828882,20167,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:40:182,DamageDone,Colère mortelle,950313055,19165,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:40:211,DamageDone,Arc d'abattage,950828882,5014,0,1,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:40:370,DamageDone,Entaille tournoyante,950272669,21442,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:40:513,DamageDone,Colère mortelle,950313055,8941,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:40:513,DamageDone,Entaille tournoyante,950272669,9999,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:40:613,DamageDone,Ascension du dragon,950282680,9385,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:40:613,DamageDone,Ascension du dragon,950282680,726,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:41:507,DamageDone,Entaille tournoyante,950272669,405,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:42:046,DamageDone,Fureur cyclonique,950311148,26696,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:42:093,DamageDone,Fureur cyclonique,950311148,29000,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:42:143,DamageDone,Fureur cyclonique,950311148,29000,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:42:180,DamageDone,Colère mortelle,950313055,9044,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:42:180,DamageDone,Fureur cyclonique,950311148,5073,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:42:220,DamageDone,Fureur cyclonique,950311148,4636,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:42:513,DamageDone,Taillade,964298274,4980,1,1,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:42:532,DamageDone,Entaille tournoyante,950272669,408,0,0,kNormalHit,Catalan6677,Calanthia destructrice
+20251213-22:32:42:741,DamageDone,Fureur brutale,951299308,10799,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice
+20251213-22:32:42:799,DamageDone,Fureur brutale,951299308,10544,1,0,kMaxDamageByCriticalDecision,Catalan6677,Calanthia destructrice

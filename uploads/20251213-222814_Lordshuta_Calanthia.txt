@@ -1,0 +1,1165 @@
+CombatLogVersion,4
+20251213-22:28:14:091,DamageDone,Volonté brisée,967262495,278,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:14:242,DamageDone,Ascension du dragon,950282680,440,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:14:242,DamageDone,Ascension du dragon,950282680,197,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:14:393,DamageDone,Entaille double,947954158,173,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:14:505,DamageDone,Combat acharné,956175664,1531,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:14:528,DamageDone,Ascension du dragon,950282680,1044,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:14:528,DamageDone,Ascension du dragon,950282680,210,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:14:623,DamageDone,Combat acharné,956241200,1769,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:14:645,DamageDone,Ascension du dragon,950282680,1061,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:14:645,DamageDone,Ascension du dragon,950282680,204,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:14:764,DamageDone,Combat acharné,955258160,1828,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:14:880,DamageDone,Ascension du dragon,950282680,1107,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:14:881,DamageDone,Ascension du dragon,950282680,199,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:15:018,DamageDone,Arc d'abattage,950828882,954,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:15:127,DamageDone,Ascension du dragon,950282680,545,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:15:127,DamageDone,Ascension du dragon,950282680,193,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:15:177,DamageDone,Arc d'abattage,950828882,2241,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:15:345,DamageDone,Entaille tournoyante,950272669,825,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:15:500,DamageDone,Ascension du dragon,950282680,1110,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:15:501,DamageDone,Ascension du dragon,950282680,188,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:15:501,DamageDone,Entaille tournoyante,950272669,1110,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:15:501,DamageDone,Fleur filante,968446634,685,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:15:736,DamageDone,Entaille double,947954158,617,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:15:838,DamageDone,Coup étourdissant,955867768,219,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:15:877,DamageDone,Ascension du dragon,950282680,1249,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:15:877,DamageDone,Ascension du dragon,950282680,182,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:16:179,DamageDone,Arc d'abattage,950828882,29,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:16:986,DamageDone,Lame guillotine,940609889,247600,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:17:112,DamageDone,Ascension du dragon,950282680,6618,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:17:112,DamageDone,Ascension du dragon,950282680,1370,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:17:112,DamageDone,Colère mortelle,950313055,27316,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:17:180,DamageDone,Arc d'abattage,950828882,302,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:18:014,DamageDone,Coup fatal,940579344,82565,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:18:080,DamageDone,Ascension du dragon,950282680,11102,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:18:080,DamageDone,Ascension du dragon,950282680,1274,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:18:198,DamageDone,Arc d'abattage,950828882,321,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:18:360,DamageDone,Entaille double,947954158,5323,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:18:729,DamageDone,Fureur cyclonique,950311148,12374,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:18:751,DamageDone,Fureur cyclonique,950311148,13700,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:18:813,DamageDone,Fureur cyclonique,950311148,36960,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:18:836,DamageDone,Ascension du dragon,950282680,11239,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:18:836,DamageDone,Ascension du dragon,950282680,1218,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:18:863,DamageDone,Fureur cyclonique,950311148,6605,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:18:919,DamageDone,Fureur cyclonique,950311148,13244,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:19:206,DamageDone,Arc d'abattage,950828882,326,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:19:277,DamageDone,Fureur brutale,951299308,3618,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:19:354,DamageDone,Fureur brutale,951299308,29636,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:19:397,DamageDone,Ascension du dragon,950282680,10865,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:19:397,DamageDone,Ascension du dragon,950282680,1153,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:19:435,DamageDone,Fureur brutale,951299308,12993,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:19:470,DamageDone,Fureur brutale,951299308,10992,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:19:554,DamageDone,Fureur brutale,951299308,20549,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:19:844,DamageDone,Fureur brutale,948285468,29636,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:19:844,DamageDone,Ascension du dragon,950282680,4050,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:19:844,DamageDone,Ascension du dragon,950282680,1123,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:19:844,DamageDone,Fureur brutale,948285468,5975,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:19:908,DamageDone,Fureur brutale,948285468,29636,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:20:010,DamageDone,Fureur brutale,948285468,17986,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:20:081,DamageDone,Fureur brutale,948285468,4886,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:20:238,DamageDone,Arc d'abattage,950828882,324,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:20:238,DamageDone,Fureur brutale,947958044,11063,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:20:238,DamageDone,Ascension du dragon,950282680,10865,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:20:239,DamageDone,Ascension du dragon,950282680,1096,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:20:239,DamageDone,Colère mortelle,950313055,22136,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:20:315,DamageDone,Fureur brutale,947958044,18901,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:20:377,DamageDone,Fureur brutale,947958044,5999,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:20:431,DamageDone,Fureur brutale,947958044,32507,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:20:482,DamageDone,Fureur brutale,947958044,5680,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:20:599,DamageDone,Entaille mutilante,950305597,54964,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:20:599,DamageDone,Entaille mutilante,950305597,14132,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:20:600,DamageDone,Ascension du dragon,950282680,1173,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:20:600,DamageDone,Ascension du dragon,950282680,1083,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:20:721,DamageDone,Entaille mutilante,950438753,23504,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:20:721,DamageDone,Ascension du dragon,950282680,4125,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:20:721,DamageDone,Ascension du dragon,950282680,1051,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:20:721,DamageDone,Colère mortelle,950313055,22554,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:20:847,DamageDone,Entaille mutilante,950111723,25304,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:20:924,DamageDone,Entaille mutilante,950046202,7093,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:20:957,DamageDone,Colère mortelle,950313055,22554,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:21:148,DamageDone,Entaille mutilante,950242822,5964,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:21:195,DamageDone,Entaille mutilante,950177299,25304,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:21:196,DamageDone,Colère mortelle,950313055,22554,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:21:312,DamageDone,Arc d'abattage,950828882,14479,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:21:470,DamageDone,Arc d'abattage,950828882,10438,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:21:595,DamageDone,Ascension du dragon,950282680,11069,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:21:595,DamageDone,Ascension du dragon,950282680,1046,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:21:646,DamageDone,Entaille tournoyante,950272669,9104,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:21:736,DamageDone,Colère mortelle,950313055,4248,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:21:771,DamageDone,Fleur filante,968446634,1854,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:21:771,DamageDone,Entaille tournoyante,950272669,10824,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:22:017,DamageDone,Entaille double,947954158,5925,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:22:066,DamageDone,Combat acharné,956175664,24862,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:22:214,DamageDone,Combat acharné,956241200,16697,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:22:339,DamageDone,Combat acharné,955258160,45063,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:22:457,DamageDone,Colère mortelle,950313055,8818,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:22:616,DamageDone,Entaille double,948412997,6210,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:23:421,DamageDone,Lame guillotine,940609889,343358,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:23:758,DamageDone,Entaille double,947954158,5063,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:24:125,DamageDone,Coup fatal,940579344,130608,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:24:417,DamageDone,Entaille double,948412997,0,0,0,kMiss,Lordshuta,Calanthia
+20251213-22:28:26:213,DamageDone,Ruée précise,963183484,9940,1,1,kMaxDamageByCriticalDecision,Lordshuta,Orbe de magie chaotique
+20251213-22:28:26:213,DamageDone,Ascension du dragon,950282680,1616,0,0,kNormalHit,Lordshuta,Orbe de magie chaotique
+20251213-22:28:26:214,DamageDone,Ascension du dragon,950282680,639,0,0,kNormalHit,Lordshuta,Orbe de magie chaotique
+20251213-22:28:26:349,DamageDone,Entaille double,947954158,3084,1,1,kMaxDamageByCriticalDecision,Lordshuta,Orbe de magie chaotique
+20251213-22:28:26:617,DamageDone,Entaille double,948412997,3084,1,1,kMaxDamageByCriticalDecision,Lordshuta,Orbe de magie chaotique
+20251213-22:28:27:322,DamageDone,Fureur cyclonique,950311148,7214,1,1,kMaxDamageByCriticalDecision,Lordshuta,Orbe de magie chaotique
+20251213-22:28:27:322,DamageDone,Fureur cyclonique,950311148,1847,0,0,kNormalHit,Lordshuta,Orbe de magie chaotique
+20251213-22:28:27:323,DamageDone,Fureur cyclonique,950311148,3219,1,0,kMaxDamageByCriticalDecision,Lordshuta,Orbe de magie chaotique
+20251213-22:28:27:361,DamageDone,Fureur cyclonique,950311148,3219,1,0,kMaxDamageByCriticalDecision,Lordshuta,Orbe de magie chaotique
+20251213-22:28:27:423,DamageDone,Fureur cyclonique,950311148,1452,0,0,kNormalHit,Lordshuta,Orbe de magie chaotique
+20251213-22:28:27:713,DamageDone,Fureur brutale,951299308,3169,1,0,kMaxDamageByCriticalDecision,Lordshuta,Orbe de magie chaotique
+20251213-22:28:27:791,DamageDone,Fureur brutale,951299308,7860,1,1,kMaxDamageByCriticalDecision,Lordshuta,Orbe de magie chaotique
+20251213-22:28:27:846,DamageDone,Fureur brutale,951299308,7860,1,1,kMaxDamageByCriticalDecision,Lordshuta,Orbe de magie chaotique
+20251213-22:28:27:887,DamageDone,Colère mortelle,950313055,4537,1,0,kMaxDamageByCriticalDecision,Lordshuta,Orbe de magie chaotique
+20251213-22:28:46:232,DamageDone,Ruée précise,963183484,6614,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:46:232,DamageDone,Ascension du dragon,950282680,5779,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:46:232,DamageDone,Ascension du dragon,950282680,874,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:46:261,DamageDone,Fleur filante,968446634,9034,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:46:397,DamageDone,Entaille double,947954158,3163,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:46:742,DamageDone,Entaille double,948412997,1401,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:47:174,DamageDone,Volonté brisée,967262495,4612,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:47:253,DamageDone,Ascension du dragon,950282680,7743,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:47:253,DamageDone,Ascension du dragon,950282680,971,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:47:463,DamageDone,Entaille double,948544088,4310,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:47:499,DamageDone,Combat acharné,956175664,30289,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:47:535,DamageDone,Ascension du dragon,950282680,3838,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:47:535,DamageDone,Ascension du dragon,950282680,1092,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:47:536,DamageDone,Colère mortelle,950313055,9183,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:47:603,DamageDone,Combat acharné,956241200,22166,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:47:675,DamageDone,Ascension du dragon,950282680,9825,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:47:675,DamageDone,Ascension du dragon,950282680,1085,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:47:675,DamageDone,Colère mortelle,950313055,13229,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:47:864,DamageDone,Combat acharné,955258160,27475,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:47:938,DamageDone,Colère mortelle,950313055,10069,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:48:115,DamageDone,Arc d'abattage,950828882,19501,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:48:286,DamageDone,Arc d'abattage,950828882,12924,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:48:526,DamageDone,Entaille double,947954158,0,0,0,kMiss,Lordshuta,Calanthia
+20251213-22:28:48:596,DamageDone,Entaille tournoyante,950272669,21167,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:48:726,DamageDone,Entaille tournoyante,950272669,4475,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:48:991,DamageDone,Entaille double,947954158,1407,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:49:067,DamageDone,Coup étourdissant,955867768,2894,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:49:576,DamageDone,Entaille tournoyante,950272669,566,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:50:268,DamageDone,Lame guillotine,940609889,176031,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:50:616,DamageDone,Entaille tournoyante,950272669,556,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:50:948,DamageDone,Entaille double,947954158,1959,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:51:273,DamageDone,Entaille double,948412997,1959,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:51:617,DamageDone,Entaille tournoyante,950272669,602,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:51:618,DamageDone,Entaille double,948347469,5213,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:51:895,DamageDone,Entaille double,948544088,1959,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:52:208,DamageDone,Coup fatal,940579344,116118,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:52:327,DamageDone,Fleur filante,968446634,15274,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:52:523,DamageDone,Entaille double,947954158,5213,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:52:592,DamageDone,Entaille tournoyante,950272669,610,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:52:894,DamageDone,Fureur cyclonique,950311148,28840,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:52:967,DamageDone,Fureur cyclonique,950311148,12998,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:53:006,DamageDone,Fureur cyclonique,950311148,11657,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:53:039,DamageDone,Fureur cyclonique,950311148,32203,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:53:080,DamageDone,Fureur cyclonique,950311148,32203,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:53:432,DamageDone,Fureur brutale,951299308,5627,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:53:521,DamageDone,Fureur brutale,951299308,10668,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:53:629,DamageDone,Ascension du dragon,950282680,10545,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:53:629,DamageDone,Ascension du dragon,950282680,1002,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:53:629,DamageDone,Entaille tournoyante,950272669,601,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:53:629,DamageDone,Fureur brutale,951299308,29636,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:53:661,DamageDone,Fureur brutale,951299308,29636,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:53:729,DamageDone,Fureur brutale,951299308,29636,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:54:003,DamageDone,Fureur brutale,948285468,9282,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:54:003,DamageDone,Fureur brutale,948285468,5421,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:54:069,DamageDone,Fureur brutale,948285468,11831,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:54:121,DamageDone,Fureur brutale,948285468,11831,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:54:201,DamageDone,Fureur brutale,948285468,18817,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:54:201,DamageDone,Ascension du dragon,950282680,5272,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:54:201,DamageDone,Ascension du dragon,950282680,975,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:54:343,DamageDone,Fureur brutale,947958044,10412,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:54:395,DamageDone,Fureur brutale,947958044,15760,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:54:469,DamageDone,Fureur brutale,947958044,10412,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:54:499,DamageDone,Fureur brutale,947958044,10412,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:54:573,DamageDone,Fureur brutale,947958044,5644,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:54:607,DamageDone,Entaille tournoyante,950272669,621,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:54:738,DamageDone,Entaille double,947954158,5816,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:54:977,DamageDone,Combat acharné,956175664,39953,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:55:066,DamageDone,Combat acharné,956241200,45100,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:55:211,DamageDone,Combat acharné,955258160,41890,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:55:488,DamageDone,Arc d'abattage,950828882,29722,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:55:549,DamageDone,Colère mortelle,950313055,9187,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:55:599,DamageDone,Arc d'abattage,950828882,29722,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:55:717,DamageDone,Ascension du dragon,950282680,10790,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:55:718,DamageDone,Ascension du dragon,950282680,1026,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:55:773,DamageDone,Entaille tournoyante,950272669,31998,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:55:893,DamageDone,Entaille tournoyante,950272669,17387,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:56:134,DamageDone,Volonté brisée,967262495,8335,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:56:208,DamageDone,Colère mortelle,950313055,24125,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:56:348,DamageDone,Entaille double,947954158,2328,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:56:693,DamageDone,Entaille double,948412997,5754,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:56:763,DamageDone,Entaille tournoyante,950272669,1638,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:57:035,DamageDone,Entaille double,948347469,1565,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:57:736,DamageDone,Entaille tournoyante,950272669,1604,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:58:779,DamageDone,Entaille tournoyante,950272669,1633,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:59:583,DamageDone,Entaille mutilante,950305597,25895,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:59:584,DamageDone,Entaille mutilante,950305597,26166,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:59:605,DamageDone,Colère mortelle,950313055,17004,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:59:726,DamageDone,Entaille mutilante,950438753,3749,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:59:726,DamageDone,Ascension du dragon,950282680,8352,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:28:59:726,DamageDone,Ascension du dragon,950282680,954,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:59:834,DamageDone,Entaille mutilante,950111723,3937,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:28:59:962,DamageDone,Entaille mutilante,950046202,3008,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:00:148,DamageDone,Entaille double,947954158,4284,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:17:665,DamageDone,Ruée précise,955968982,4552,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:17:665,DamageDone,Ascension du dragon,950282680,1685,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:17:666,DamageDone,Ascension du dragon,950282680,848,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:17:875,DamageDone,Ruée précise,963183484,5314,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:17:875,DamageDone,Ascension du dragon,950282680,6170,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:17:875,DamageDone,Ascension du dragon,950282680,810,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:17:894,DamageDone,Fleur filante,968446634,9629,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:17:991,DamageDone,Entaille double,947954158,3298,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:18:340,DamageDone,Entaille double,948412997,1401,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:18:451,DamageDone,Combat acharné,956175664,24067,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:18:451,DamageDone,Ascension du dragon,950282680,2835,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:18:452,DamageDone,Ascension du dragon,950282680,795,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:18:559,DamageDone,Combat acharné,956241200,27391,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:18:766,DamageDone,Combat acharné,955258160,7114,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:19:069,DamageDone,Arc d'abattage,950828882,13928,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:19:244,DamageDone,Arc d'abattage,950828882,8102,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:19:335,DamageDone,Ascension du dragon,950282680,6493,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:19:335,DamageDone,Ascension du dragon,950282680,778,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:19:412,DamageDone,Entaille double,947954158,3598,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:19:521,DamageDone,Entaille tournoyante,950272669,15117,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:19:623,DamageDone,Entaille tournoyante,950272669,15117,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:20:205,DamageDone,Entaille double,947954158,1467,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:20:331,DamageDone,Coup étourdissant,955867768,4567,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:20:630,DamageDone,Entaille tournoyante,950272669,605,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:20:906,DamageDone,Entaille double,947954158,3598,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:21:174,DamageDone,Entaille double,948412997,3598,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:21:478,DamageDone,Entaille double,948347469,2261,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:21:632,DamageDone,Entaille tournoyante,950272669,595,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:21:708,DamageDone,Entaille double,948544088,3434,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:22:626,DamageDone,Entaille tournoyante,950272669,606,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:23:643,DamageDone,Entaille tournoyante,950272669,605,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:24:520,DamageDone,Entaille double,947954158,3361,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:24:654,DamageDone,Entaille tournoyante,950272669,596,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:25:585,DamageDone,Lame guillotine,940609889,220246,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:25:629,DamageDone,Entaille tournoyante,950272669,595,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:25:688,DamageDone,Colère mortelle,950313055,13335,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:26:533,DamageDone,Coup fatal,940579344,96294,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:26:622,DamageDone,Entaille tournoyante,950272669,597,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:26:656,DamageDone,Fleur filante,968446634,3949,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:26:822,DamageDone,Entaille double,947954158,1412,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:27:156,DamageDone,Entaille double,948412997,3361,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:27:636,DamageDone,Entaille tournoyante,950272669,597,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:28:619,DamageDone,Entaille tournoyante,950272669,597,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:51:205,DamageDone,Ruée précise,963183484,6890,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:51:224,DamageDone,Ascension du dragon,950282680,6002,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:51:224,DamageDone,Ascension du dragon,950282680,940,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:51:348,DamageDone,Entaille double,947954158,1082,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:51:407,DamageDone,Volonté brisée,967262495,2847,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:51:533,DamageDone,Ascension du dragon,950282680,7546,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:51:533,DamageDone,Ascension du dragon,950282680,1068,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:51:710,DamageDone,Combat acharné,956175664,28277,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:51:758,DamageDone,Ascension du dragon,950282680,3461,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:51:758,DamageDone,Ascension du dragon,950282680,1070,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:51:843,DamageDone,Combat acharné,956241200,33519,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:51:888,DamageDone,Ascension du dragon,950282680,8592,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:51:888,DamageDone,Ascension du dragon,950282680,1033,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:51:888,DamageDone,Colère mortelle,950313055,8108,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:52:065,DamageDone,Combat acharné,955258160,12361,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:52:161,DamageDone,Ascension du dragon,950282680,2674,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:52:162,DamageDone,Ascension du dragon,950282680,999,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:52:329,DamageDone,Entaille double,948412997,1785,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:52:530,DamageDone,Arc d'abattage,950828882,17020,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:52:642,DamageDone,Ascension du dragon,950282680,3198,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:52:642,DamageDone,Ascension du dragon,950282680,961,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:52:642,DamageDone,Colère mortelle,950313055,12514,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:52:726,DamageDone,Arc d'abattage,950828882,7034,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:52:985,DamageDone,Entaille double,947954158,0,0,0,kMiss,Lordshuta,Calanthia
+20251213-22:29:53:326,DamageDone,Entaille tournoyante,950272669,17538,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:53:395,DamageDone,Colère mortelle,950313055,16651,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:53:435,DamageDone,Entaille tournoyante,950272669,20168,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:53:559,DamageDone,Ascension du dragon,950282680,2686,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:53:559,DamageDone,Ascension du dragon,950282680,1090,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:53:666,DamageDone,Entaille double,947954158,755,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:53:690,DamageDone,Coup étourdissant,955867768,4383,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:53:966,DamageDone,Entaille double,947954158,3870,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:54:440,DamageDone,Entaille tournoyante,950272669,1071,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:54:773,DamageDone,Lame guillotine,940609889,345849,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:55:076,DamageDone,Entaille double,947954158,4817,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:55:430,DamageDone,Entaille tournoyante,950272669,1053,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:55:705,DamageDone,Coup fatal,940579344,214604,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:55:825,DamageDone,Fleur filante,968446634,5904,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:56:072,DamageDone,Entaille double,947954158,4713,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:56:101,DamageDone,Combat acharné,956175664,17759,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:56:236,DamageDone,Combat acharné,956241200,37055,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:56:415,DamageDone,Combat acharné,955258160,40225,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:56:434,DamageDone,Entaille tournoyante,950272669,1059,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:56:874,DamageDone,Fureur cyclonique,950311148,28002,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:56:942,DamageDone,Fureur cyclonique,950311148,20804,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:56:997,DamageDone,Fureur cyclonique,950311148,14691,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:57:028,DamageDone,Fureur cyclonique,950311148,3699,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:57:057,DamageDone,Fureur cyclonique,950311148,14266,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:57:535,DamageDone,Fureur brutale,951299308,16132,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:57:535,DamageDone,Entaille tournoyante,950272669,1158,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:57:535,DamageDone,Fureur brutale,951299308,27410,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:57:565,DamageDone,Fureur brutale,951299308,7867,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:57:565,DamageDone,Fureur brutale,951299308,27410,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:57:633,DamageDone,Fureur brutale,951299308,12731,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:57:924,DamageDone,Fureur brutale,948285468,30981,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:57:959,DamageDone,Fureur brutale,948285468,30981,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:58:016,DamageDone,Fureur brutale,948285468,30981,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:58:093,DamageDone,Fureur brutale,948285468,3294,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:58:176,DamageDone,Fureur brutale,948285468,13474,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:58:304,DamageDone,Fureur brutale,947958044,28778,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:58:366,DamageDone,Fureur brutale,947958044,28778,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:58:408,DamageDone,Fureur brutale,947958044,3449,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:58:457,DamageDone,Entaille tournoyante,950272669,942,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:58:492,DamageDone,Fureur brutale,947958044,14993,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:58:566,DamageDone,Fureur brutale,947958044,28778,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:58:697,DamageDone,Entaille double,947954158,5649,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:58:781,DamageDone,Entaille mutilante,950305597,91848,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:58:782,DamageDone,Entaille mutilante,950305597,36985,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:58:861,DamageDone,Entaille mutilante,950438753,11013,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:59:001,DamageDone,Entaille mutilante,950111723,22402,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:59:118,DamageDone,Entaille mutilante,950046202,2725,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:59:259,DamageDone,Entaille mutilante,950242822,24835,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:59:369,DamageDone,Entaille mutilante,950177299,23070,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:59:535,DamageDone,Combat acharné,956175664,12708,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:29:59:622,DamageDone,Combat acharné,956241200,8858,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:29:59:771,DamageDone,Combat acharné,955258160,35938,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:00:044,DamageDone,Arc d'abattage,950828882,19873,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:00:161,DamageDone,Ascension du dragon,950282680,3457,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:00:161,DamageDone,Ascension du dragon,950282680,884,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:00:193,DamageDone,Arc d'abattage,950828882,19873,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:00:370,DamageDone,Entaille tournoyante,950272669,13004,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:00:453,DamageDone,Entaille tournoyante,950272669,21394,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:00:749,DamageDone,Entaille double,947954158,1866,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:01:438,DamageDone,Impact empalant,950324262,3002,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:01:492,DamageDone,Entaille tournoyante,950272669,846,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:01:519,DamageDone,Ascension du dragon,950282680,9079,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:01:519,DamageDone,Ascension du dragon,950282680,841,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:01:824,DamageDone,Entaille double,947954158,661,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:02:159,DamageDone,Entaille double,948412997,1641,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:02:471,DamageDone,Entaille tournoyante,950272669,786,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:03:102,DamageDone,Lame guillotine,940609889,49177,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:03:199,DamageDone,Fleur filante,968446634,14314,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:03:445,DamageDone,Arc d'abattage,950828882,20402,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:03:603,DamageDone,Arc d'abattage,950828882,7577,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:03:866,DamageDone,Volonté brisée,967262495,2562,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:04:113,DamageDone,Combat acharné,956175664,15666,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:04:213,DamageDone,Combat acharné,956241200,22046,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:04:372,DamageDone,Combat acharné,955258160,16424,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:04:603,DamageDone,Entaille tournoyante,950272669,24507,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:04:719,DamageDone,Entaille tournoyante,950272669,2694,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:04:968,DamageDone,Entaille double,947954158,6307,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:04:969,DamageDone,Coup étourdissant,955867768,14176,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:05:044,DamageDone,Colère mortelle,950313055,23205,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:05:302,DamageDone,Entaille double,947954158,1855,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:05:517,DamageDone,Entaille double,948412997,0,0,0,kMiss,Lordshuta,Calanthia
+20251213-22:30:05:619,DamageDone,Entaille tournoyante,950272669,1303,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:06:222,DamageDone,Coup fatal,940579344,216718,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:06:601,DamageDone,Entaille tournoyante,950272669,1207,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:06:791,DamageDone,Fureur cyclonique,950311148,29148,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:06:842,DamageDone,Fureur cyclonique,950311148,32547,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:06:872,DamageDone,Fureur cyclonique,950311148,19618,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:06:926,DamageDone,Colère mortelle,950313055,8701,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:06:926,DamageDone,Fureur cyclonique,950311148,32547,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:06:984,DamageDone,Fureur cyclonique,950311148,32547,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:07:302,DamageDone,Fureur brutale,951299308,3642,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:07:378,DamageDone,Fureur brutale,951299308,11950,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:07:417,DamageDone,Ascension du dragon,950282680,2316,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:07:417,DamageDone,Ascension du dragon,950282680,1036,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:07:455,DamageDone,Fureur brutale,951299308,29847,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:07:496,DamageDone,Fureur brutale,951299308,29847,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:07:554,DamageDone,Colère mortelle,950313055,20709,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:07:581,DamageDone,Fureur brutale,951299308,18399,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:07:616,DamageDone,Entaille tournoyante,950272669,1225,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:07:787,DamageDone,Fureur brutale,948285468,27724,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:07:788,DamageDone,Colère mortelle,950313055,8300,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:07:821,DamageDone,Fureur brutale,948285468,27724,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:07:926,DamageDone,Fureur brutale,948285468,27724,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:07:963,DamageDone,Fureur brutale,948285468,27724,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:08:032,DamageDone,Fureur brutale,948285468,14538,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:08:216,DamageDone,Fureur brutale,947958044,26488,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:08:216,DamageDone,Colère mortelle,950313055,19786,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:08:217,DamageDone,Fureur brutale,947958044,26488,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:08:313,DamageDone,Fureur brutale,947958044,26488,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:08:313,DamageDone,Ascension du dragon,950282680,9714,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:08:313,DamageDone,Ascension du dragon,950282680,992,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:08:359,DamageDone,Fureur brutale,947958044,7264,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:08:425,DamageDone,Fureur brutale,947958044,4918,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:08:749,DamageDone,Entaille tournoyante,950272669,1384,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:08:749,DamageDone,Entaille mutilante,950305597,36469,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:08:750,DamageDone,Entaille mutilante,950305597,104774,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:08:789,DamageDone,Colère mortelle,950313055,19786,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:08:860,DamageDone,Entaille mutilante,950438753,20620,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:08:922,DamageDone,Colère mortelle,950313055,19786,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:08:996,DamageDone,Entaille mutilante,950111723,8641,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:09:035,DamageDone,Colère mortelle,950313055,19786,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:09:134,DamageDone,Entaille mutilante,950046202,8332,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:09:174,DamageDone,Colère mortelle,950313055,8393,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:09:254,DamageDone,Entaille mutilante,950242822,13800,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:09:255,DamageDone,Colère mortelle,950313055,7932,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:09:403,DamageDone,Entaille mutilante,950177299,20620,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:09:403,DamageDone,Ascension du dragon,950282680,9714,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:09:403,DamageDone,Ascension du dragon,950282680,994,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:09:403,DamageDone,Colère mortelle,950313055,4162,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:09:514,DamageDone,Arc d'abattage,950828882,22442,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:09:618,DamageDone,Colère mortelle,950313055,7932,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:09:679,DamageDone,Arc d'abattage,950828882,22442,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:09:859,DamageDone,Combat acharné,956175664,35462,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:09:901,DamageDone,Colère mortelle,950313055,21024,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:09:943,DamageDone,Combat acharné,956241200,19809,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:09:982,DamageDone,Colère mortelle,950313055,22197,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:10:119,DamageDone,Combat acharné,955258160,42263,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:10:255,DamageDone,Colère mortelle,950313055,7732,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:10:458,DamageDone,Entaille tournoyante,950272669,13856,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:10:514,DamageDone,Colère mortelle,950313055,22119,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:10:515,DamageDone,Entaille tournoyante,950272669,23292,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:10:825,DamageDone,Entaille double,947954158,2190,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:11:527,DamageDone,Entaille tournoyante,950272669,934,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:11:727,DamageDone,Lame guillotine,940609889,197210,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:11:852,DamageDone,Colère mortelle,950313055,6483,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:12:496,DamageDone,Entaille tournoyante,950272669,748,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:13:033,DamageDone,Coup fatal,940579344,164506,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:13:127,DamageDone,Colère mortelle,950313055,16640,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:13:416,DamageDone,Volonté brisée,967262495,2294,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:13:492,DamageDone,Entaille tournoyante,950272669,747,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:13:741,DamageDone,Combat acharné,956175664,14002,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:13:851,DamageDone,Combat acharné,956241200,42996,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:13:898,DamageDone,Colère mortelle,950313055,22390,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:13:995,DamageDone,Combat acharné,955258160,39607,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:14:088,DamageDone,Colère mortelle,950313055,16431,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:14:278,DamageDone,Arc d'abattage,950828882,7892,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:14:387,DamageDone,Colère mortelle,950313055,2981,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:14:453,DamageDone,Arc d'abattage,950828882,7892,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:14:555,DamageDone,Ascension du dragon,950282680,5590,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:14:556,DamageDone,Ascension du dragon,950282680,1052,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:14:609,DamageDone,Entaille double,947954158,5463,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:14:768,DamageDone,Entaille tournoyante,950272669,8563,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:14:853,DamageDone,Colère mortelle,950313055,7038,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:14:853,DamageDone,Entaille tournoyante,950272669,21254,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:15:140,DamageDone,Coup étourdissant,955867768,11452,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:15:169,DamageDone,Colère mortelle,950313055,21728,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:15:169,DamageDone,Fleur filante,968446634,16013,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:15:452,DamageDone,Entaille double,947954158,5463,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:15:871,DamageDone,Fureur cyclonique,950311148,11992,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:15:872,DamageDone,Entaille tournoyante,950272669,563,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:15:872,DamageDone,Fureur cyclonique,950311148,36115,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:15:939,DamageDone,Fureur cyclonique,950311148,15589,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:15:969,DamageDone,Fureur cyclonique,950311148,13387,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:16:012,DamageDone,Colère mortelle,950313055,8703,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:16:051,DamageDone,Fureur cyclonique,950311148,36115,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:16:461,DamageDone,Fureur brutale,951299308,32051,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:16:515,DamageDone,Fureur brutale,951299308,12830,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:16:516,DamageDone,Colère mortelle,950313055,13796,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:16:561,DamageDone,Fureur brutale,951299308,32051,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:16:630,DamageDone,Fureur brutale,951299308,32051,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:16:706,DamageDone,Fureur brutale,951299308,12238,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:16:740,DamageDone,Ascension du dragon,950282680,2462,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:16:740,DamageDone,Ascension du dragon,950282680,1113,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:16:862,DamageDone,Entaille tournoyante,950272669,553,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:16:862,DamageDone,Fureur brutale,948285468,10075,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:16:909,DamageDone,Colère mortelle,950313055,8501,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:16:944,DamageDone,Fureur brutale,948285468,28395,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:17:024,DamageDone,Fureur brutale,948285468,11370,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:17:059,DamageDone,Fureur brutale,948285468,9597,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:17:152,DamageDone,Fureur brutale,948285468,28395,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:17:238,DamageDone,Fureur brutale,947958044,11845,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:17:238,DamageDone,Colère mortelle,950313055,9959,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:17:289,DamageDone,Fureur brutale,947958044,7944,0,0,kMaxDamageByNormal,Lordshuta,Calanthia
+20251213-22:30:17:364,DamageDone,Fureur brutale,947958044,15193,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:17:453,DamageDone,Fureur brutale,947958044,28931,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:17:488,DamageDone,Fureur brutale,947958044,8088,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:17:615,DamageDone,Entaille mutilante,950305597,99404,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:17:615,DamageDone,Entaille mutilante,950305597,129468,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:17:674,DamageDone,Colère mortelle,950313055,21610,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:17:727,DamageDone,Entaille mutilante,950438753,22521,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:17:772,DamageDone,Colère mortelle,950313055,21610,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:17:864,DamageDone,Entaille mutilante,950111723,9485,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:17:899,DamageDone,Ascension du dragon,950282680,4266,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:17:899,DamageDone,Ascension du dragon,950282680,1082,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:17:899,DamageDone,Colère mortelle,950313055,8660,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:18:006,DamageDone,Entaille mutilante,950046202,24245,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:18:007,DamageDone,Colère mortelle,950313055,6802,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:18:088,DamageDone,Entaille mutilante,950242822,7923,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:18:088,DamageDone,Colère mortelle,950313055,21610,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:18:209,DamageDone,Entaille mutilante,950177299,8724,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:18:444,DamageDone,Entaille double,947954158,2766,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:19:313,DamageDone,Lame guillotine,940609889,160254,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:19:624,DamageDone,Entaille double,947954158,1183,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:20:327,DamageDone,Coup fatal,940579344,235986,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:20:392,DamageDone,Colère mortelle,950313055,21355,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:20:614,DamageDone,Entaille double,947954158,1315,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:20:925,DamageDone,Entaille double,948412997,5323,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:21:080,DamageDone,Combat acharné,956175664,38562,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:21:106,DamageDone,Colère mortelle,950313055,22853,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:21:161,DamageDone,Combat acharné,956241200,30170,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:21:209,DamageDone,Colère mortelle,950313055,16831,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:21:309,DamageDone,Combat acharné,955258160,6220,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:21:650,DamageDone,Arc d'abattage,950828882,9052,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:21:713,DamageDone,Colère mortelle,950313055,7658,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:21:759,DamageDone,Arc d'abattage,950828882,12928,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:21:911,DamageDone,Entaille tournoyante,950272669,23590,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:22:027,DamageDone,Colère mortelle,950313055,7658,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:22:028,DamageDone,Entaille tournoyante,950272669,23590,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:22:259,DamageDone,Volonté brisée,967262495,2925,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:22:324,DamageDone,Colère mortelle,950313055,8388,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:22:498,DamageDone,Entaille double,947954158,5684,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:22:820,DamageDone,Entaille double,948412997,3817,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:23:014,DamageDone,Entaille tournoyante,950272669,615,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:23:156,DamageDone,Entaille double,948347469,3972,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:23:482,DamageDone,Entaille double,948544088,3580,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:23:817,DamageDone,Entaille double,947954158,4289,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:23:998,DamageDone,Entaille tournoyante,950272669,616,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:24:078,DamageDone,Entaille double,948412997,5323,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:24:293,DamageDone,Combat acharné,956175664,27035,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:24:293,DamageDone,Colère mortelle,950313055,20761,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:24:385,DamageDone,Combat acharné,956241200,14776,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia
+20251213-22:30:24:540,DamageDone,Combat acharné,955258160,17556,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:24:621,DamageDone,Colère mortelle,950313055,12988,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:24:812,DamageDone,Entaille double,948347469,3957,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:25:031,DamageDone,Entaille tournoyante,950272669,575,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:25:114,DamageDone,Entaille double,948544088,2343,0,1,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:25:997,DamageDone,Entaille tournoyante,950272669,568,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:26:995,DamageDone,Entaille tournoyante,950272669,525,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:28:016,DamageDone,Entaille tournoyante,950272669,541,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:29:006,DamageDone,Entaille tournoyante,950272669,524,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:30:005,DamageDone,Entaille tournoyante,950272669,385,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:31:003,DamageDone,Entaille tournoyante,950272669,340,0,0,kNormalHit,Lordshuta,Calanthia
+20251213-22:30:48:629,DamageDone,Ruée précise,955968982,2116,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:48:629,DamageDone,Ascension du dragon,950282680,5844,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:48:629,DamageDone,Ascension du dragon,950282680,906,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:49:220,DamageDone,Volonté brisée,967262495,2409,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:49:333,DamageDone,Ascension du dragon,950282680,3422,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:49:333,DamageDone,Ascension du dragon,950282680,1076,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:49:553,DamageDone,Combat acharné,956175664,26898,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:49:554,DamageDone,Ascension du dragon,950282680,7842,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:49:554,DamageDone,Ascension du dragon,950282680,1078,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:49:664,DamageDone,Combat acharné,956241200,33364,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:49:710,DamageDone,Ascension du dragon,950282680,5688,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:49:710,DamageDone,Ascension du dragon,950282680,1083,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:49:803,DamageDone,Combat acharné,955258160,32067,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:49:975,DamageDone,Ascension du dragon,950282680,8912,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:49:976,DamageDone,Ascension du dragon,950282680,1048,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:50:102,DamageDone,Arc d'abattage,950828882,10817,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:50:224,DamageDone,Arc d'abattage,950828882,18363,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:50:435,DamageDone,Entaille tournoyante,950272669,19931,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:50:528,DamageDone,Entaille tournoyante,950272669,19931,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:50:809,DamageDone,Entaille double,947954158,3736,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:50:882,DamageDone,Coup étourdissant,955867768,10606,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:51:545,DamageDone,Entaille tournoyante,950272669,320,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:51:987,DamageDone,Lame guillotine,940609889,365068,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:52:142,DamageDone,Fleur filante,968446634,17021,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:52:528,DamageDone,Entaille tournoyante,950272669,317,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:52:894,DamageDone,Coup fatal,940579344,236547,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:53:277,DamageDone,Entaille double,947954158,3706,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:53:594,DamageDone,Entaille tournoyante,950272669,320,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:54:195,DamageDone,Impact empalant,950324262,8494,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:54:306,DamageDone,Ascension du dragon,950282680,11100,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:54:306,DamageDone,Ascension du dragon,950282680,995,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:54:548,DamageDone,Entaille tournoyante,950272669,322,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:54:795,DamageDone,Fureur cyclonique,950311148,34649,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:54:842,DamageDone,Fureur cyclonique,950311148,36773,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:54:882,DamageDone,Fureur cyclonique,950311148,18423,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:54:948,DamageDone,Fureur cyclonique,950311148,19630,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:55:013,DamageDone,Fureur cyclonique,950311148,10290,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:55:267,DamageDone,Fureur brutale,951299308,28996,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:55:347,DamageDone,Fureur brutale,951299308,3946,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:55:408,DamageDone,Fureur brutale,951299308,28356,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:55:492,DamageDone,Fureur brutale,951299308,28356,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:55:540,DamageDone,Fureur brutale,951299308,28356,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:55:540,DamageDone,Entaille tournoyante,950272669,316,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:55:761,DamageDone,Fureur brutale,948285468,12458,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:55:823,DamageDone,Fureur brutale,948285468,26571,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:55:876,DamageDone,Fureur brutale,948285468,2508,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:55:924,DamageDone,Fureur brutale,948285468,7902,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:55:953,DamageDone,Ascension du dragon,950282680,9745,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:55:953,DamageDone,Ascension du dragon,950282680,818,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:56:006,DamageDone,Fureur brutale,948285468,10219,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:56:130,DamageDone,Fureur brutale,947958044,26571,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:56:172,DamageDone,Fureur brutale,947958044,15731,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:56:264,DamageDone,Fureur brutale,947958044,26571,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:56:325,DamageDone,Fureur brutale,947958044,14055,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:56:402,DamageDone,Fureur brutale,947958044,14474,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:56:580,DamageDone,Arc d'abattage,950828882,28638,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:56:729,DamageDone,Arc d'abattage,950828882,10622,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:56:905,DamageDone,Combat acharné,956175664,19655,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:56:942,DamageDone,Entaille double,947954158,2024,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:57:029,DamageDone,Combat acharné,956241200,39652,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:57:163,DamageDone,Combat acharné,955258160,14491,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:57:282,DamageDone,Ascension du dragon,950282680,11029,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:57:282,DamageDone,Ascension du dragon,950282680,861,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:57:395,DamageDone,Entaille double,948412997,2816,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:57:605,DamageDone,Entaille tournoyante,950272669,10436,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:57:605,DamageDone,Entaille tournoyante,950272669,11956,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:57:963,DamageDone,Entaille mutilante,950305597,88916,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:57:964,DamageDone,Entaille mutilante,950305597,33677,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:58:049,DamageDone,Entaille mutilante,950438753,21435,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:58:208,DamageDone,Entaille mutilante,950111723,10650,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:58:315,DamageDone,Entaille mutilante,950046202,5624,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:58:473,DamageDone,Entaille mutilante,950242822,18983,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:58:473,DamageDone,Ascension du dragon,950282680,3349,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:58:473,DamageDone,Ascension du dragon,950282680,858,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:58:598,DamageDone,Entaille mutilante,950177299,5018,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:59:027,DamageDone,Entaille double,947954158,1487,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:30:59:096,DamageDone,Fleur filante,968446634,5395,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:30:59:956,DamageDone,Lame guillotine,940609889,172953,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:00:339,DamageDone,Coup étourdissant,955867768,4311,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:00:653,DamageDone,Entaille double,947954158,2869,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:00:942,DamageDone,Entaille double,948412997,2792,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:23:003,DamageDone,Ruée précise,963183484,3819,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:23:021,DamageDone,Ascension du dragon,950282680,3603,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:23:022,DamageDone,Ascension du dragon,950282680,790,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:23:166,DamageDone,Entaille double,947954158,562,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:23:444,DamageDone,Volonté brisée,967262495,1935,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:23:545,DamageDone,Ascension du dragon,950282680,6651,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:23:545,DamageDone,Ascension du dragon,950282680,893,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:23:715,DamageDone,Entaille double,948412997,1678,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:23:821,DamageDone,Combat acharné,956175664,10865,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:23:821,DamageDone,Ascension du dragon,950282680,7286,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:23:821,DamageDone,Ascension du dragon,950282680,894,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:23:946,DamageDone,Combat acharné,956241200,28414,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:24:124,DamageDone,Combat acharné,955258160,20101,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:24:433,DamageDone,Arc d'abattage,950828882,18471,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:24:575,DamageDone,Arc d'abattage,950828882,13482,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:24:723,DamageDone,Ascension du dragon,950282680,8603,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:24:724,DamageDone,Ascension du dragon,950282680,1021,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:24:812,DamageDone,Entaille double,947954158,4875,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:24:856,DamageDone,Entaille tournoyante,950272669,20050,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:25:003,DamageDone,Entaille tournoyante,950272669,20050,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:25:268,DamageDone,Entaille double,947954158,1977,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:25:620,DamageDone,Entaille double,948412997,3751,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:25:655,DamageDone,Coup étourdissant,955867768,4070,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:25:708,DamageDone,Fleur filante,968446634,14143,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:25:945,DamageDone,Entaille double,947954158,2013,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:26:011,DamageDone,Entaille tournoyante,950272669,230,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:27:015,DamageDone,Entaille tournoyante,950272669,234,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:27:041,DamageDone,Lame guillotine,940609889,345852,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:28:010,DamageDone,Entaille tournoyante,950272669,230,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:28:033,DamageDone,Coup fatal,940579344,218415,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:28:411,DamageDone,Entaille double,947954158,5025,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:28:590,DamageDone,Combat acharné,956175664,10258,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:28:686,DamageDone,Combat acharné,956241200,15080,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:28:859,DamageDone,Combat acharné,955258160,19203,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:29:044,DamageDone,Entaille tournoyante,950272669,231,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:29:115,DamageDone,Entaille double,948412997,2133,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:29:204,DamageDone,Arc d'abattage,950828882,8825,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:29:369,DamageDone,Arc d'abattage,950828882,21611,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:29:561,DamageDone,Entaille double,947954158,3780,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:29:664,DamageDone,Entaille tournoyante,950272669,21211,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:29:773,DamageDone,Entaille tournoyante,950272669,21211,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:30:040,DamageDone,Entaille double,947954158,2095,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:30:305,DamageDone,Fureur cyclonique,950311148,12147,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:30:366,DamageDone,Fureur cyclonique,950311148,16192,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:30:463,DamageDone,Fureur cyclonique,950311148,9370,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:30:463,DamageDone,Fureur cyclonique,950311148,13448,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:30:504,DamageDone,Fureur cyclonique,950311148,15413,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:30:743,DamageDone,Entaille tournoyante,950272669,1290,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:30:817,DamageDone,Fureur brutale,951299308,30094,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:30:862,DamageDone,Fureur brutale,951299308,30094,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:30:955,DamageDone,Fureur brutale,951299308,13564,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:31:026,DamageDone,Fureur brutale,951299308,30094,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:31:052,DamageDone,Ascension du dragon,950282680,4190,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:31:052,DamageDone,Ascension du dragon,950282680,1029,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:31:093,DamageDone,Fureur brutale,951299308,30094,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:31:336,DamageDone,Fureur brutale,948285468,11161,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:31:390,DamageDone,Fureur brutale,948285468,30094,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:31:426,DamageDone,Fureur brutale,948285468,30094,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:31:511,DamageDone,Fureur brutale,948285468,30094,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:31:589,DamageDone,Fureur brutale,948285468,5714,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:31:590,DamageDone,Ascension du dragon,950282680,5340,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:31:590,DamageDone,Ascension du dragon,950282680,801,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:31:720,DamageDone,Fureur brutale,947958044,25111,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:31:775,DamageDone,Fureur brutale,947958044,5821,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:31:775,DamageDone,Entaille tournoyante,950272669,1269,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:31:817,DamageDone,Fureur brutale,947958044,9318,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:31:889,DamageDone,Fureur brutale,947958044,25111,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:31:961,DamageDone,Fureur brutale,947958044,25111,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:32:118,DamageDone,Entaille mutilante,950305597,74435,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:32:119,DamageDone,Entaille mutilante,950305597,37934,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:32:349,DamageDone,Blocage patient,951429481,21575,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:32:802,DamageDone,Entaille double,947954158,5501,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:32:976,DamageDone,Volonté brisée,967262495,7521,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:33:098,DamageDone,Fleur filante,968446634,7192,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:33:288,DamageDone,Entaille double,948412997,2532,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:33:362,DamageDone,Combat acharné,956175664,17216,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:33:451,DamageDone,Combat acharné,956241200,15133,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:33:498,DamageDone,Ascension du dragon,950282680,5043,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:33:498,DamageDone,Ascension du dragon,950282680,1022,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:33:619,DamageDone,Combat acharné,955258160,15806,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:33:877,DamageDone,Arc d'abattage,950828882,26979,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:34:046,DamageDone,Arc d'abattage,950828882,4885,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:34:176,DamageDone,Entaille tournoyante,950272669,10009,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:34:293,DamageDone,Entaille tournoyante,950272669,3684,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:34:566,DamageDone,Entaille double,947954158,6566,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:34:674,DamageDone,Coup étourdissant,955867768,5759,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:35:172,DamageDone,Entaille tournoyante,950272669,702,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:35:776,DamageDone,Lame guillotine,940609889,401723,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:36:187,DamageDone,Entaille tournoyante,950272669,642,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:36:457,DamageDone,Entaille double,947954158,3455,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:36:736,DamageDone,Entaille double,948412997,5800,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:37:083,DamageDone,Entaille double,948347469,5025,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:37:190,DamageDone,Entaille tournoyante,950272669,650,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:37:332,DamageDone,Entaille double,948544088,2902,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:37:646,DamageDone,Entaille double,947954158,2034,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:38:155,DamageDone,Entaille tournoyante,950272669,654,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:38:414,DamageDone,Coup fatal,940579344,197509,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:39:008,DamageDone,Fureur cyclonique,950311148,27615,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:39:057,DamageDone,Fureur cyclonique,950311148,30581,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:39:082,DamageDone,Fureur cyclonique,950311148,30581,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:39:165,DamageDone,Fureur cyclonique,950311148,12243,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:39:166,DamageDone,Entaille tournoyante,950272669,700,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:39:196,DamageDone,Fureur cyclonique,950311148,30581,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:39:515,DamageDone,Fureur brutale,951299308,26144,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:39:588,DamageDone,Fureur brutale,951299308,15118,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:39:626,DamageDone,Ascension du dragon,950282680,3623,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:39:626,DamageDone,Ascension du dragon,950282680,1029,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:39:666,DamageDone,Fureur brutale,951299308,26144,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:39:666,DamageDone,Fleur filante,968446634,14342,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:39:706,DamageDone,Fureur brutale,951299308,11651,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:39:774,DamageDone,Fureur brutale,951299308,4554,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:39:980,DamageDone,Fureur brutale,948285468,26144,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:40:029,DamageDone,Fureur brutale,948285468,26144,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:40:122,DamageDone,Fureur brutale,948285468,3846,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:40:157,DamageDone,Entaille tournoyante,950272669,678,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:40:190,DamageDone,Fureur brutale,948285468,26144,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:40:234,DamageDone,Fureur brutale,948285468,2917,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:40:282,DamageDone,Ascension du dragon,950282680,4187,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:40:283,DamageDone,Ascension du dragon,950282680,1024,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:40:319,DamageDone,Fureur brutale,947958044,28145,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:40:404,DamageDone,Fureur brutale,947958044,28145,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:40:508,DamageDone,Fureur brutale,947958044,6492,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:40:568,DamageDone,Fureur brutale,947958044,11270,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:40:616,DamageDone,Fureur brutale,947958044,12467,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:41:075,DamageDone,Combat acharné,956175664,23147,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:41:154,DamageDone,Combat acharné,956241200,12760,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:41:200,DamageDone,Entaille tournoyante,950272669,687,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:41:314,DamageDone,Combat acharné,955258160,9069,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:41:553,DamageDone,Entaille double,947954158,2190,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:41:676,DamageDone,Arc d'abattage,950828882,27682,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:41:797,DamageDone,Arc d'abattage,950828882,7798,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:41:983,DamageDone,Entaille double,947954158,5409,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:42:122,DamageDone,Entaille tournoyante,950272669,27682,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:42:197,DamageDone,Entaille tournoyante,950272669,15076,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:42:318,DamageDone,Ascension du dragon,950282680,4040,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:42:318,DamageDone,Ascension du dragon,950282680,1077,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:42:491,DamageDone,Volonté brisée,967262495,2759,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:42:830,DamageDone,Entaille mutilante,950305597,35079,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:42:831,DamageDone,Entaille mutilante,950305597,80220,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:42:922,DamageDone,Entaille mutilante,950438753,23052,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:43:030,DamageDone,Entaille mutilante,950111723,24816,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:43:191,DamageDone,Entaille mutilante,950046202,23052,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:43:303,DamageDone,Entaille mutilante,950242822,2765,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:43:415,DamageDone,Entaille mutilante,950177299,5396,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:43:558,DamageDone,Coup étourdissant,955867768,11297,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:43:935,DamageDone,Entaille double,947954158,1966,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:44:856,DamageDone,Lame guillotine,940609889,256186,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:45:157,DamageDone,Entaille double,947954158,4992,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:45:829,DamageDone,Coup fatal,940579344,227445,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:46:175,DamageDone,Entaille double,947954158,1959,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:46:466,DamageDone,Combat acharné,956175664,20719,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:46:502,DamageDone,Ascension du dragon,950282680,11396,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:46:502,DamageDone,Ascension du dragon,950282680,1119,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:46:603,DamageDone,Combat acharné,956241200,7600,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:46:738,DamageDone,Combat acharné,955258160,41725,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:47:019,DamageDone,Arc d'abattage,950828882,21254,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:47:162,DamageDone,Arc d'abattage,950828882,11835,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:47:284,DamageDone,Ascension du dragon,950282680,3013,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:47:284,DamageDone,Ascension du dragon,950282680,1051,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:47:344,DamageDone,Entaille tournoyante,950272669,5216,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:47:439,DamageDone,Entaille tournoyante,950272669,7892,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:47:692,DamageDone,Entaille double,947954158,5463,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:47:942,DamageDone,Fureur cyclonique,950311148,11984,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:47:999,DamageDone,Fureur cyclonique,950311148,3792,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:48:036,DamageDone,Fureur cyclonique,950311148,35793,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:48:101,DamageDone,Fureur cyclonique,950311148,13246,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:48:129,DamageDone,Fureur cyclonique,950311148,35793,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:48:456,DamageDone,Fureur brutale,951299308,11012,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:48:456,DamageDone,Entaille tournoyante,950272669,434,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:48:510,DamageDone,Fureur brutale,951299308,3687,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:48:543,DamageDone,Fureur brutale,951299308,22349,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:48:619,DamageDone,Fureur brutale,951299308,22349,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:48:680,DamageDone,Fureur brutale,951299308,13689,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:48:718,DamageDone,Ascension du dragon,950282680,2116,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:48:718,DamageDone,Ascension du dragon,950282680,865,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:48:933,DamageDone,Fureur brutale,948285468,27500,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:48:981,DamageDone,Fureur brutale,948285468,17530,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:49:041,DamageDone,Fureur brutale,948285468,27927,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:49:113,DamageDone,Fureur brutale,948285468,27927,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:49:179,DamageDone,Fureur brutale,948285468,27927,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:49:335,DamageDone,Fureur brutale,947958044,10019,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:49:336,DamageDone,Fureur brutale,947958044,30066,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:49:454,DamageDone,Fureur brutale,947958044,11831,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:49:454,DamageDone,Entaille tournoyante,950272669,395,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:49:455,DamageDone,Ascension du dragon,950282680,4050,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:49:455,DamageDone,Ascension du dragon,950282680,1025,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:49:501,DamageDone,Fureur brutale,947958044,29549,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:49:538,DamageDone,Fureur brutale,947958044,11831,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:49:729,DamageDone,Entaille double,947954158,868,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:50:454,DamageDone,Entaille tournoyante,950272669,403,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:50:544,DamageDone,Lame guillotine,940609889,372620,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:50:836,DamageDone,Volonté brisée,967262495,3194,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:50:965,DamageDone,Fleur filante,968446634,3578,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:51:144,DamageDone,Combat acharné,956175664,19766,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:51:242,DamageDone,Combat acharné,956241200,8695,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:51:456,DamageDone,Entaille tournoyante,950272669,403,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:52:435,DamageDone,Entaille tournoyante,950272669,412,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:53:452,DamageDone,Entaille tournoyante,950272669,404,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:54:169,DamageDone,Ruée précise,963183484,8187,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:54:341,DamageDone,Entaille double,947954158,5025,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:54:471,DamageDone,Entaille tournoyante,950272669,403,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:54:838,DamageDone,Entaille double,948412997,4375,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:54:893,DamageDone,Arc d'abattage,950828882,13879,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:55:033,DamageDone,Arc d'abattage,950828882,16514,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:55:474,DamageDone,Entaille tournoyante,950272669,412,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:55:520,DamageDone,Entaille double,947954158,4375,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:55:520,DamageDone,Combat acharné,956175664,12291,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:55:651,DamageDone,Combat acharné,956241200,13277,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:55:888,DamageDone,Combat acharné,955258160,36008,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:56:050,DamageDone,Entaille tournoyante,950272669,16464,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:56:198,DamageDone,Entaille tournoyante,950272669,26615,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:56:419,DamageDone,Entaille double,947954158,2302,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:56:483,DamageDone,Coup étourdissant,955867768,11164,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:56:726,DamageDone,Entaille double,947954158,2095,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:57:198,DamageDone,Entaille tournoyante,950272669,811,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:57:587,DamageDone,Coup fatal,940579344,92930,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:57:839,DamageDone,Entaille double,947954158,4209,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:58:169,DamageDone,Entaille double,948412997,4035,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:58:194,DamageDone,Entaille tournoyante,950272669,648,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:58:701,DamageDone,Fureur cyclonique,950311148,15766,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:58:749,DamageDone,Fureur cyclonique,950311148,15853,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:58:794,DamageDone,Fureur cyclonique,950311148,9858,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:58:840,DamageDone,Fleur filante,968446634,2098,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:58:841,DamageDone,Fureur cyclonique,950311148,9858,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:58:895,DamageDone,Fureur cyclonique,950311148,9858,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:59:200,DamageDone,Entaille tournoyante,950272669,659,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:59:242,DamageDone,Fureur brutale,951299308,8699,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:59:309,DamageDone,Fureur brutale,951299308,23076,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:59:407,DamageDone,Fureur brutale,951299308,9246,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:59:442,DamageDone,Fureur brutale,951299308,9246,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:59:531,DamageDone,Fureur brutale,951299308,23076,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:59:790,DamageDone,Fureur brutale,948285468,24013,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:59:844,DamageDone,Fureur brutale,948285468,24013,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:31:59:885,DamageDone,Fureur brutale,948285468,8547,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:31:59:965,DamageDone,Fureur brutale,948285468,9620,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:00:048,DamageDone,Fureur brutale,948285468,13830,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:00:201,DamageDone,Fureur brutale,947958044,22306,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:00:201,DamageDone,Fureur brutale,947958044,21647,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:00:202,DamageDone,Entaille tournoyante,950272669,648,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:00:286,DamageDone,Fureur brutale,947958044,21647,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:00:326,DamageDone,Fureur brutale,947958044,3731,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:00:397,DamageDone,Fureur brutale,947958044,8675,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:00:555,DamageDone,Entaille mutilante,950305597,69101,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:00:555,DamageDone,Entaille mutilante,950305597,48202,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:00:677,DamageDone,Entaille mutilante,950438753,18143,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:00:766,DamageDone,Entaille mutilante,950111723,17367,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:00:959,DamageDone,Entaille mutilante,950046202,17367,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:01:036,DamageDone,Entaille mutilante,950242822,8630,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:01:036,DamageDone,Ascension du dragon,950282680,3299,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:01:036,DamageDone,Ascension du dragon,950282680,842,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:01:212,DamageDone,Entaille mutilante,950177299,7378,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:01:312,DamageDone,Combat acharné,956175664,31745,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:01:395,DamageDone,Combat acharné,956241200,35833,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:01:570,DamageDone,Combat acharné,955258160,13322,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:01:810,DamageDone,Entaille double,947954158,4961,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:02:005,DamageDone,Arc d'abattage,950828882,19873,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:02:172,DamageDone,Arc d'abattage,950828882,19873,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:02:366,DamageDone,Entaille double,947954158,4961,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:02:555,DamageDone,Entaille tournoyante,950272669,21394,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:02:588,DamageDone,Ascension du dragon,950282680,2833,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:02:589,DamageDone,Ascension du dragon,950282680,885,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:02:637,DamageDone,Entaille tournoyante,950272669,21394,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:02:928,DamageDone,Entaille double,947954158,1108,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:03:633,DamageDone,Entaille tournoyante,950272669,1125,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:03:901,DamageDone,Lame guillotine,940609889,285508,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:04:168,DamageDone,Entaille double,947954158,3396,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:04:632,DamageDone,Entaille tournoyante,950272669,1363,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:04:806,DamageDone,Coup fatal,940579344,211306,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:04:925,DamageDone,Ascension du dragon,950282680,2075,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:04:925,DamageDone,Ascension du dragon,950282680,1029,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:05:179,DamageDone,Volonté brisée,967262495,8161,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:05:443,DamageDone,Entaille double,947954158,1995,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:05:443,DamageDone,Combat acharné,956175664,14265,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:05:553,DamageDone,Combat acharné,956241200,40354,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:05:654,DamageDone,Entaille tournoyante,950272669,1381,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:05:712,DamageDone,Combat acharné,955258160,43807,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:06:157,DamageDone,Blocage patient,951429481,7362,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:06:604,DamageDone,Entaille double,947954158,6425,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:06:650,DamageDone,Entaille tournoyante,950272669,1388,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:06:769,DamageDone,Arc d'abattage,950828882,11094,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:06:899,DamageDone,Ascension du dragon,950282680,4341,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:06:899,DamageDone,Ascension du dragon,950282680,1073,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:06:899,DamageDone,Fleur filante,968446634,9514,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:06:929,DamageDone,Arc d'abattage,950828882,9284,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:07:569,DamageDone,Entaille double,947954158,6425,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:07:777,DamageDone,Entaille tournoyante,950272669,24886,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:07:854,DamageDone,Ascension du dragon,950282680,4341,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:07:854,DamageDone,Ascension du dragon,950282680,1070,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:07:891,DamageDone,Entaille tournoyante,950272669,8518,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:08:751,DamageDone,Entaille tournoyante,950272669,1962,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:09:750,DamageDone,Entaille tournoyante,950272669,1932,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:10:593,DamageDone,Entaille double,947954158,940,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:10:718,DamageDone,Coup étourdissant,955867768,8826,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:10:765,DamageDone,Entaille tournoyante,950272669,1900,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:10:814,DamageDone,Ascension du dragon,950282680,3321,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:10:814,DamageDone,Ascension du dragon,950282680,940,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:11:027,DamageDone,Entaille double,947954158,4217,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:11:352,DamageDone,Entaille double,948412997,3361,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:11:604,DamageDone,Fureur cyclonique,950311148,7903,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:11:663,DamageDone,Fureur cyclonique,950311148,7171,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:11:718,DamageDone,Fureur cyclonique,950311148,4401,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:11:746,DamageDone,Ascension du dragon,950282680,7017,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:11:746,DamageDone,Ascension du dragon,950282680,779,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:11:746,DamageDone,Fureur cyclonique,950311148,22012,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:11:746,DamageDone,Entaille tournoyante,950272669,1709,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:11:795,DamageDone,Fureur cyclonique,950311148,8821,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:12:077,DamageDone,Fureur brutale,951299308,21096,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:12:148,DamageDone,Fureur brutale,951299308,9683,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:12:234,DamageDone,Fureur brutale,951299308,21096,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:12:286,DamageDone,Fureur brutale,951299308,7444,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:12:362,DamageDone,Fureur brutale,951299308,5475,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:12:609,DamageDone,Fureur brutale,948285468,19597,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:12:635,DamageDone,Fureur brutale,948285468,7856,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:12:699,DamageDone,Fureur brutale,948285468,19597,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:12:753,DamageDone,Entaille tournoyante,950272669,1389,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:12:790,DamageDone,Fureur brutale,948285468,11231,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:12:844,DamageDone,Fureur brutale,948285468,8429,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:12:875,DamageDone,Ascension du dragon,950282680,7185,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:12:875,DamageDone,Ascension du dragon,950282680,791,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:12:988,DamageDone,Fureur brutale,947958044,19597,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:13:039,DamageDone,Fureur brutale,947958044,5320,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:13:099,DamageDone,Fureur brutale,947958044,19597,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:13:194,DamageDone,Fureur brutale,947958044,3490,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:13:230,DamageDone,Fureur brutale,947958044,3523,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:13:692,DamageDone,Arc d'abattage,950828882,19791,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:13:891,DamageDone,Arc d'abattage,950828882,5895,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:14:073,DamageDone,Entaille double,947954158,3748,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:14:148,DamageDone,Combat acharné,956175664,27115,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:14:224,DamageDone,Combat acharné,956241200,11383,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:14:387,DamageDone,Combat acharné,955258160,12253,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:14:635,DamageDone,Entaille double,948412997,0,0,0,kMiss,Lordshuta,Calanthia destructrice
+20251213-22:32:14:666,DamageDone,Entaille tournoyante,950272669,8040,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:14:787,DamageDone,Entaille tournoyante,950272669,20057,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:15:032,DamageDone,Volonté brisée,967262495,5661,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:15:181,DamageDone,Fleur filante,968446634,14243,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:15:340,DamageDone,Entaille double,947954158,1016,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:15:684,DamageDone,Entaille double,948412997,3236,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:15:798,DamageDone,Entaille tournoyante,950272669,1893,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:16:065,DamageDone,Entaille double,948347469,4721,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:16:368,DamageDone,Entaille double,948544088,4232,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:16:788,DamageDone,Entaille tournoyante,950272669,2239,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:16:869,DamageDone,Entaille double,947954158,4419,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:17:187,DamageDone,Entaille double,948412997,2942,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:17:797,DamageDone,Entaille tournoyante,950272669,2286,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:18:715,DamageDone,Entaille double,947954158,4549,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:18:781,DamageDone,Entaille tournoyante,950272669,2245,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:19:776,DamageDone,Entaille tournoyante,950272669,2446,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:20:767,DamageDone,Entaille tournoyante,950272669,2432,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:21:567,DamageDone,Entaille double,947954158,0,0,0,kMiss,Lordshuta,Calanthia destructrice
+20251213-22:32:21:624,DamageDone,Combat acharné,956175664,26546,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:21:625,DamageDone,Colère mortelle,950313055,15742,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:21:728,DamageDone,Combat acharné,956241200,10325,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:21:781,DamageDone,Entaille tournoyante,950272669,2427,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:21:931,DamageDone,Combat acharné,955258160,17585,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:21:986,DamageDone,Colère mortelle,950313055,6461,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:22:137,DamageDone,Arc d'abattage,950828882,18464,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:22:137,DamageDone,Arc d'abattage,950828882,29518,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:22:254,DamageDone,Colère mortelle,950313055,19868,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:22:289,DamageDone,Arc d'abattage,950828882,20929,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:22:517,DamageDone,Entaille tournoyante,950272669,9175,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:22:597,DamageDone,Colère mortelle,950313055,20472,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:22:598,DamageDone,Entaille tournoyante,950272669,8007,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:22:710,DamageDone,Ascension du dragon,950282680,10045,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:22:711,DamageDone,Ascension du dragon,950282680,1074,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:22:855,DamageDone,Entaille double,947954158,899,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:22:855,DamageDone,Coup étourdissant,955867768,11611,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:22:949,DamageDone,Colère mortelle,950313055,8797,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:23:146,DamageDone,Entaille double,947954158,5377,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:23:620,DamageDone,Entaille tournoyante,950272669,444,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:24:025,DamageDone,Lame guillotine,940609889,224502,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:24:126,DamageDone,Colère mortelle,950313055,8465,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:24:356,DamageDone,Entaille double,947954158,4983,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:24:582,DamageDone,Entaille tournoyante,950272669,437,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:25:089,DamageDone,Coup fatal,940579344,82565,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:25:475,DamageDone,Entaille double,947954158,2741,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:25:619,DamageDone,Entaille tournoyante,950272669,413,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:25:725,DamageDone,Fureur cyclonique,950311148,29117,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:25:791,DamageDone,Fureur cyclonique,950311148,32513,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:25:824,DamageDone,Fureur cyclonique,950311148,32513,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:25:824,DamageDone,Colère mortelle,950313055,8689,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:25:861,DamageDone,Fleur filante,968446634,3321,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:25:861,DamageDone,Fureur cyclonique,950311148,32513,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:25:925,DamageDone,Fureur cyclonique,950311148,32513,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:26:169,DamageDone,Entaille double,947954158,2228,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:26:301,DamageDone,Fureur brutale,951299308,9894,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:26:385,DamageDone,Fureur brutale,951299308,11728,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:26:419,DamageDone,Colère mortelle,950313055,6342,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:26:453,DamageDone,Fureur brutale,951299308,12097,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:26:518,DamageDone,Fureur brutale,951299308,11250,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:26:583,DamageDone,Fureur brutale,951299308,30215,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:26:584,DamageDone,Entaille tournoyante,950272669,405,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:26:792,DamageDone,Fureur brutale,948285468,28066,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:26:792,DamageDone,Colère mortelle,950313055,8400,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:26:845,DamageDone,Fureur brutale,948285468,11239,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:26:930,DamageDone,Fureur brutale,948285468,11239,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:26:931,DamageDone,Ascension du dragon,950282680,1516,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:26:931,DamageDone,Ascension du dragon,950282680,1025,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:26:971,DamageDone,Fureur brutale,948285468,16582,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:27:058,DamageDone,Fureur brutale,948285468,28066,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:27:198,DamageDone,Fureur brutale,947958044,28066,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:27:199,DamageDone,Colère mortelle,950313055,20959,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:27:254,DamageDone,Fureur brutale,947958044,28066,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:27:306,DamageDone,Fureur brutale,947958044,28707,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:27:352,DamageDone,Fureur brutale,947958044,16967,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:27:446,DamageDone,Fureur brutale,947958044,5981,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:27:642,DamageDone,Entaille mutilante,950305597,46863,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:27:642,DamageDone,Entaille mutilante,950305597,53860,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:27:695,DamageDone,Colère mortelle,950313055,21432,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:27:749,DamageDone,Entaille mutilante,950438753,22336,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:27:790,DamageDone,Colère mortelle,950313055,21432,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:27:875,DamageDone,Entaille mutilante,950111723,22336,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:27:909,DamageDone,Ascension du dragon,950282680,6619,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:27:909,DamageDone,Ascension du dragon,950282680,1028,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:27:909,DamageDone,Colère mortelle,950313055,21432,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:28:031,DamageDone,Entaille mutilante,950046202,24045,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:28:032,DamageDone,Colère mortelle,950313055,21432,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:28:135,DamageDone,Entaille mutilante,950242822,8950,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:28:272,DamageDone,Entaille mutilante,950177299,18154,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:28:273,DamageDone,Colère mortelle,950313055,6297,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:28:423,DamageDone,Combat acharné,956175664,34176,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:28:424,DamageDone,Colère mortelle,950313055,8024,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:28:519,DamageDone,Combat acharné,956241200,8327,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:28:673,DamageDone,Combat acharné,955258160,13272,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:28:780,DamageDone,Colère mortelle,950313055,23154,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:28:927,DamageDone,Arc d'abattage,950828882,9532,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:29:066,DamageDone,Arc d'abattage,950828882,23793,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:29:182,DamageDone,Ascension du dragon,950282680,10292,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:29:182,DamageDone,Ascension du dragon,950282680,1082,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:29:182,DamageDone,Colère mortelle,950313055,7637,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:29:226,DamageDone,Entaille tournoyante,950272669,22101,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:29:311,DamageDone,Colère mortelle,950313055,20983,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:29:312,DamageDone,Entaille tournoyante,950272669,22101,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:29:556,DamageDone,Volonté brisée,967262495,7978,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:29:662,DamageDone,Colère mortelle,950313055,12847,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:30:048,DamageDone,Entaille double,947954158,2238,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:30:155,DamageDone,Coup étourdissant,955867768,8418,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:30:196,DamageDone,Colère mortelle,950313055,24483,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:30:339,DamageDone,Entaille tournoyante,950272669,467,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:31:326,DamageDone,Entaille tournoyante,950272669,459,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:31:494,DamageDone,Lame guillotine,940609889,132468,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:31:835,DamageDone,Entaille double,947954158,2861,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:32:326,DamageDone,Entaille tournoyante,950272669,470,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:32:542,DamageDone,Coup fatal,940579344,53534,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:32:942,DamageDone,Combat acharné,956175664,41542,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:32:972,DamageDone,Colère mortelle,950313055,22684,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:33:046,DamageDone,Combat acharné,956241200,25020,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:33:077,DamageDone,Ascension du dragon,950282680,11153,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:33:078,DamageDone,Ascension du dragon,950282680,1109,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:33:078,DamageDone,Colère mortelle,950313055,22684,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:33:209,DamageDone,Combat acharné,955258160,25827,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:33:318,DamageDone,Colère mortelle,950313055,21927,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:33:318,DamageDone,Entaille tournoyante,950272669,459,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:33:481,DamageDone,Arc d'abattage,950828882,10095,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:33:563,DamageDone,Colère mortelle,950313055,12582,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:33:601,DamageDone,Arc d'abattage,950828882,9021,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:33:786,DamageDone,Entaille tournoyante,950272669,12867,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:33:860,DamageDone,Colère mortelle,950313055,12801,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:33:903,DamageDone,Entaille tournoyante,950272669,22394,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:34:123,DamageDone,Entaille double,947954158,1110,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:34:430,DamageDone,Fureur cyclonique,950311148,15821,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:34:476,DamageDone,Fureur cyclonique,950311148,35578,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:34:521,DamageDone,Fureur cyclonique,950311148,33698,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:34:559,DamageDone,Colère mortelle,950313055,8342,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:34:559,DamageDone,Fureur cyclonique,950311148,19102,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:34:613,DamageDone,Fureur cyclonique,950311148,5163,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:34:718,DamageDone,Ascension du dragon,950282680,4114,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:34:718,DamageDone,Ascension du dragon,950282680,1025,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:34:935,DamageDone,Entaille tournoyante,950272669,1750,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:35:008,DamageDone,Fureur brutale,951299308,32398,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:35:059,DamageDone,Fureur brutale,951299308,32398,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:35:114,DamageDone,Colère mortelle,950313055,3619,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:35:164,DamageDone,Fureur brutale,951299308,12013,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:35:216,DamageDone,Fureur brutale,951299308,32398,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:35:262,DamageDone,Fureur brutale,951299308,32398,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:35:539,DamageDone,Fureur brutale,948285468,11161,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:35:539,DamageDone,Ascension du dragon,950282680,11038,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:35:539,DamageDone,Ascension du dragon,950282680,1016,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:35:539,DamageDone,Fureur brutale,948285468,24456,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:35:539,DamageDone,Colère mortelle,950313055,18265,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:35:619,DamageDone,Fureur brutale,948285468,11310,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:35:678,DamageDone,Fureur brutale,948285468,24456,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:35:739,DamageDone,Fureur brutale,948285468,4016,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:35:913,DamageDone,Fureur brutale,947958044,15082,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:35:913,DamageDone,Colère mortelle,950313055,4429,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:35:913,DamageDone,Entaille tournoyante,950272669,1637,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:35:986,DamageDone,Fureur brutale,947958044,22812,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:36:034,DamageDone,Fureur brutale,947958044,21128,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:36:084,DamageDone,Fureur brutale,947958044,8880,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:36:133,DamageDone,Fureur brutale,947958044,3467,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:36:134,DamageDone,Ascension du dragon,950282680,2098,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:36:134,DamageDone,Ascension du dragon,950282680,799,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:36:324,DamageDone,Entaille double,947954158,1559,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:36:692,DamageDone,Entaille double,948412997,0,0,0,kMiss,Lordshuta,Calanthia destructrice
+20251213-22:32:36:725,DamageDone,Combat acharné,956175664,30067,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:36:766,DamageDone,Colère mortelle,950313055,17825,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:36:839,DamageDone,Combat acharné,956241200,8600,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:36:875,DamageDone,Entaille tournoyante,950272669,1344,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:37:031,DamageDone,Combat acharné,955258160,15758,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:37:138,DamageDone,Colère mortelle,950313055,17825,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:37:626,DamageDone,Blocage patient,951429481,20499,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:37:660,DamageDone,Blocage patient,951429481,7856,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:37:660,DamageDone,Blocage patient,951429481,6259,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:37:660,DamageDone,Blocage patient,951429481,23351,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:37:660,DamageDone,Blocage patient,951429481,11499,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:37:660,DamageDone,Blocage patient,951429481,7878,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:37:883,DamageDone,Entaille tournoyante,950272669,1227,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:38:095,DamageDone,Volonté brisée,967262495,1261,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:38:238,DamageDone,Fleur filante,968446634,7647,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:38:418,DamageDone,Arc d'abattage,950828882,31360,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:38:500,DamageDone,Colère mortelle,950313055,5914,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:38:559,DamageDone,Arc d'abattage,950828882,31360,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:38:798,DamageDone,Entaille double,947954158,6429,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:38:936,DamageDone,Entaille tournoyante,950272669,30593,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:39:005,DamageDone,Colère mortelle,950313055,12520,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:39:034,DamageDone,Entaille tournoyante,950272669,30593,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:39:070,DamageDone,Entaille tournoyante,950272669,38108,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:39:307,DamageDone,Entaille double,947954158,1840,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:39:422,DamageDone,Coup étourdissant,955867768,11960,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:39:458,DamageDone,Colère mortelle,950313055,3434,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:39:720,DamageDone,Entaille double,947954158,5576,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:39:997,DamageDone,Fureur cyclonique,950311148,13009,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:40:032,DamageDone,Fureur cyclonique,950311148,38632,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:40:068,DamageDone,Fureur cyclonique,950311148,14319,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:40:110,DamageDone,Fureur cyclonique,950311148,14319,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:40:139,DamageDone,Colère mortelle,950313055,24999,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:40:206,DamageDone,Fureur cyclonique,950311148,19427,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:40:487,DamageDone,Fureur brutale,951299308,17990,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:40:608,DamageDone,Fureur brutale,951299308,6323,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:40:608,DamageDone,Colère mortelle,950313055,22148,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:40:650,DamageDone,Fureur brutale,951299308,10860,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:40:698,DamageDone,Fureur brutale,951299308,12897,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:40:742,DamageDone,Fureur brutale,951299308,31914,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:40:955,DamageDone,Fureur brutale,948285468,31914,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:41:001,DamageDone,Colère mortelle,950313055,23838,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:41:002,DamageDone,Fureur brutale,948285468,15752,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:41:076,DamageDone,Fureur brutale,948285468,33471,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:41:125,DamageDone,Fureur brutale,948285468,33471,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:41:178,DamageDone,Fureur brutale,948285468,10011,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:41:368,DamageDone,Fureur brutale,947958044,33471,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:41:369,DamageDone,Colère mortelle,950313055,9277,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:41:369,DamageDone,Fureur brutale,947958044,33471,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:41:471,DamageDone,Fureur brutale,947958044,12410,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:41:553,DamageDone,Fureur brutale,947958044,33471,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:41:615,DamageDone,Fureur brutale,947958044,33471,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:41:757,DamageDone,Entaille mutilante,950305597,14559,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:41:894,DamageDone,Entaille mutilante,950438753,26053,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:41:894,DamageDone,Colère mortelle,950313055,9001,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:41:966,DamageDone,Entaille mutilante,950111723,26053,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:42:033,DamageDone,Colère mortelle,950313055,4936,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:42:090,DamageDone,Entaille mutilante,950046202,10406,0,1,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:42:090,DamageDone,Colère mortelle,950313055,8147,1,0,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:42:251,DamageDone,Entaille mutilante,950242822,22871,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:42:251,DamageDone,Colère mortelle,950313055,2302,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:42:338,DamageDone,Entaille mutilante,950177299,22871,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:42:429,DamageDone,Ascension du dragon,950282680,10772,1,1,kMaxDamageByCriticalDecision,Lordshuta,Calanthia destructrice
+20251213-22:32:42:430,DamageDone,Ascension du dragon,950282680,1018,0,0,kNormalHit,Lordshuta,Calanthia destructrice
+20251213-22:32:42:431,DamageDone,Colère mortelle,950313055,11460,0,1,kNormalHit,Lordshuta,Calanthia destructrice
