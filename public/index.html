@@ -84,8 +84,7 @@
     <input type="file" id="combatlog" accept=".txt" />
     
     <div>
-      <!-- Upload serveur laissé si tu en as besoin -->
-      <button onclick="uploadServer()">📤 Envoyer au serveur</button>
+      <button id="downloadBtn" onclick="downloadRenamed()" disabled>⬇️ Télécharger le log renommé</button>
       <button id="discordBtn" onclick="sendToDiscord()" disabled>💬 Envoyer Discord</button>
     </div>
 
@@ -100,13 +99,12 @@
   </div>
 
   <script>
-    // ✅ Ton webhook Discord
     const discordWebhook = 'https://discord.com/api/webhooks/1452422715876184237/6RdIZAFZoOZLO1NibThrxkepR9cwViVMnEOEWZvu2PnEWzhNSzUjKQex4mE3gdRFTWqs';
 
     function showStatus(msg, type = '') {
       const status = document.getElementById('status');
       status.textContent = msg;
-      status.className = `status ${type}`;
+      status.className = 'status ' + type;
     }
 
     function copyPath() {
@@ -117,24 +115,24 @@
       });
     }
 
-    // Active / désactive le bouton Discord
+    // Active les boutons quand un fichier est choisi
     document.getElementById('combatlog').addEventListener('change', function () {
-      document.getElementById('discordBtn').disabled = !this.files[0];
+      const hasFile = !!this.files[0];
+      document.getElementById('discordBtn').disabled = !hasFile;
+      document.getElementById('downloadBtn').disabled = !hasFile;
       showStatus('', '');
     });
 
-    // 🔍 Lit le début du fichier et récupère date + player + boss
+    // Lit la 2e ligne et renvoie infos + contenu
     function parseHeaderFromFile(file) {
       return new Promise((resolve, reject) => {
-        const reader = new FileReader(); [web:268][web:281]
+        const reader = new FileReader();
         reader.onload = () => {
           const text = reader.result;
           const lines = text.split(/\r?\n/);
           if (lines.length < 2) return reject('Fichier trop court.');
 
-          // 2e ligne du combat log
           const headerLine = lines[1];
-          // 20251219-20:06:08:100,DamageDone,Déluge infernal,9673...,Darkshou,Reine Bellandir
           const parts = headerLine.split(',');
           if (parts.length < 7) return reject('Format de log invalide.');
 
@@ -142,14 +140,57 @@
           const player  = parts[parts.length - 2].trim();
           const boss    = parts[parts.length - 1].trim();
 
-          resolve({ rawDate, player, boss });
+          resolve({ rawDate, player, boss, fullText: text });
         };
         reader.onerror = () => reject('Erreur lecture fichier.');
-        reader.readAsText(file);  // lecture texte [web:268]
+        reader.readAsText(file);
       });
     }
 
-    // 💬 Envoi à Discord avec nom basé sur le contenu du log
+    function buildFilename(rawDate, player, boss) {
+      const datePart = rawDate.split('-')[0];
+      const timePart = rawDate.split('-')[1];
+      const year  = datePart.slice(0,4);
+      const month = datePart.slice(4,6);
+      const day   = datePart.slice(6,8);
+      const time  = timePart.split(':').slice(0,3).join('-');
+      const niceDate = `${year}-${month}-${day}T${time}`;
+
+      const safePlayer = player.replace(/[^a-zA-Z0-9_-]/g, '');
+      const safeBoss   = boss.replace(/[^a-zA-Z0-9_-]/g, '');
+      const newName = `TL-Log-${niceDate}_${safePlayer}_${safeBoss}.txt`;
+
+      return { niceDate, newName };
+    }
+
+    // ⬇️ Télécharger le log renommé
+    async function downloadRenamed() {
+      const input = document.getElementById('combatlog');
+      const file = input.files[0];
+      if (!file) return showStatus('❌ Sélectionne un fichier.', 'error');
+
+      showStatus('Préparation du fichier…', '');
+
+      try {
+        const { rawDate, player, boss, fullText } = await parseHeaderFromFile(file);
+        const { newName } = buildFilename(rawDate, player, boss);
+
+        const blob = new Blob([fullText], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = newName;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+        showStatus('Téléchargement du log renommé ✅', 'success');
+      } catch (e) {
+        showStatus('❌ Erreur : ' + e, 'error');
+      }
+    }
+
+    // 💬 Envoyer à Discord
     async function sendToDiscord() {
       const fileInput = document.getElementById('combatlog');
       const file = fileInput.files[0];
@@ -161,27 +202,13 @@
       showStatus('📄 Lecture du log...', '');
 
       try {
-        // 1) lire la 2e ligne pour extraire infos
-        const { rawDate, player, boss } = await parseHeaderFromFile(file);
-
-        // rawDate : 20251219-20:06:08:100 → 2025-12-19T20-06-08
-        const datePart = rawDate.split('-')[0];      // 20251219
-        const timePart = rawDate.split('-')[1];      // 20:06:08:100
-        const year  = datePart.slice(0,4);
-        const month = datePart.slice(4,6);
-        const day   = datePart.slice(6,8);
-        const time  = timePart.split(':').slice(0,3).join('-');
-        const niceDate = `${year}-${month}-${day}T${time}`;
-
-        const safePlayer = player.replace(/[^a-zA-Z0-9_-]/g, '');
-        const safeBoss   = boss.replace(/[^a-zA-Z0-9_-]/g, '');
-        const newName = `TL-Log-${niceDate}_${safePlayer}_${safeBoss}.txt`;
+        const { rawDate, player, boss, fullText } = await parseHeaderFromFile(file);
+        const { niceDate, newName } = buildFilename(rawDate, player, boss);
 
         discordBtn.textContent = '⏳ Envoi...';
         showStatus('📤 Envoi vers Discord...', '');
 
-        // 2) créer un nouveau File avec ce nom
-        const renamedFile = new File([file], newName, { type: file.type }); [web:257][web:251]
+        const renamedFile = new File([fullText], newName, { type: 'text/plain' });
 
         const formData = new FormData();
         formData.append('file', renamedFile);
@@ -193,12 +220,13 @@
         const response = await fetch(discordWebhook, {
           method: 'POST',
           body: formData
-        }); [web:215][web:225]
+        });
 
         if (response.ok) {
           showStatus('✅ Log envoyé sur Discord !', 'success');
           fileInput.value = '';
           document.getElementById('discordBtn').disabled = true;
+          document.getElementById('downloadBtn').disabled = true;
         } else {
           throw new Error(`Discord error: ${response.status}`);
         }
@@ -207,26 +235,6 @@
       } finally {
         discordBtn.disabled = false;
         discordBtn.textContent = '💬 Envoyer Discord';
-      }
-    }
-
-    // Upload serveur (si tu en as encore besoin)
-    async function uploadServer() {
-      const fileInput = document.getElementById('combatlog');
-      const file = fileInput.files[0];
-      if (!file) return showStatus('❌ Sélectionne un fichier.', 'error');
-
-      const formData = new FormData();
-      formData.append('combatlog', file);
-
-      showStatus('📤 Upload serveur...', '');
-      
-      try {
-        const response = await fetch('/upload', { method: 'POST', body: formData });
-        if (response.ok) showStatus('✅ Upload OK !', 'success');
-        else showStatus('❌ Erreur serveur', 'error');
-      } catch(e) {
-        showStatus('❌ Erreur réseau', 'error');
       }
     }
   </script>
