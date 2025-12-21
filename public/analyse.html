@@ -58,9 +58,8 @@
       reader.onload = () => {
         try {
           const text = reader.result;
-          const lines = text.split(/\\r?\\n/);
+          const lines = text.split(/\r?\n/);
 
-          // Agrégation des dégâts par sort
           const damageBySkill = {};
 
           for (const line of lines) {
@@ -68,8 +67,9 @@
             const parts = line.split(',');
             if (parts.length < 5) continue;
 
-            const type = parts[1];
-            if (type !== 'DamageDone') continue;
+            // test plus souple sur le type d'événement
+            const type = (parts[1] || '').trim().toLowerCase();
+            if (!type.includes('damage')) continue;
 
             const skillName = parts[2].trim();
             const damageStr = parts[4].trim();
@@ -88,7 +88,6 @@
             return;
           }
 
-          // Trier par dégâts décroissants
           entries.sort((a, b) => b[1] - a[1]);
 
           const labels = entries.map(e => e[0]);
@@ -149,4 +148,3 @@
   </script>
 </body>
 </html>
-
