@@ -26,6 +26,8 @@ const upload = multer({ storage });
 
 // Servir la page HTML dans /public
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/logs', express.static(path.join(__dirname, 'uploads')));
+
 
 // Route d'upload avec renommage
 app.post('/upload', upload.single('combatlog'), (req, res) => {
@@ -75,10 +77,18 @@ app.post('/upload', upload.single('combatlog'), (req, res) => {
 
     // Renommer le fichier
     fs.rename(filePath, newPath, (err2) => {
-      if (err2) {
-        console.error('Erreur renommage fichier :', err2);
-        return res.status(500).send('Erreur renommage fichier');
-      }
+  if (err2) {
+    console.error('Erreur renommage fichier :', err2);
+    return res.status(500).send('Erreur renommage fichier');
+  }
+
+  const downloadUrl = `/logs/${encodeURIComponent(newFilename)}`;
+  res.send(`
+    <p>Fichier renommé en : ${newFilename}</p>
+    <p><a href="${downloadUrl}">Télécharger le log renommé</a></p>
+  `);
+});
+
 
       res.send('Fichier renommé en : ' + newFilename);
     });
