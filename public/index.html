@@ -8,11 +8,9 @@
       margin: 0;
       min-height: 100vh;
       display: flex;
-      justify-content: center;      /* centre horizontalement */
-      align-items: center;          /* centre verticalement */
+      justify-content: center;
+      align-items: center;
       font-family: Arial, sans-serif;
-
-      /* IMAGE DE FOND (public/Images/...) */
       background-image: url('/Images/Throne-and-Liberty-Wallpaper-16-3840x2160.jpg');
       background-size: cover;
       background-position: center;
@@ -21,64 +19,166 @@
 
     .container {
       text-align: center;
-      background-color: rgba(0, 0, 0, 0.6); /* fond sombre transparent */
+      background-color: rgba(0, 0, 0, 0.8);
       padding: 30px 40px;
-      border-radius: 8px;
+      border-radius: 12px;
       color: white;
       max-width: 600px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
     }
 
-    h1 {
-      margin-bottom: 20px;
+    h1 { margin-bottom: 20px; }
+    
+    input[type="file"] {
+      display: block;
+      margin: 15px auto;
+      padding: 10px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 6px;
+      color: white;
     }
 
     button {
-      margin-top: 10px;
-      padding: 6px 14px;
+      margin: 8px;
+      padding: 12px 24px;
+      background: #5865F2;
+      color: white;
+      border: none;
+      border-radius: 6px;
       cursor: pointer;
+      font-size: 16px;
     }
 
+    button:hover { background: #4752C4; }
+    button:disabled { background: #666; cursor: not-allowed; }
+
     .logs-path {
-      margin-top: 20px;
+      margin-top: 25px;
       font-size: 14px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.2);
     }
 
     .logs-path code {
       background: rgba(255, 255, 255, 0.1);
-      padding: 3px 6px;
+      padding: 4px 8px;
       border-radius: 4px;
+      font-family: monospace;
     }
+
+    .status {
+      margin-top: 10px;
+      min-height: 20px;
+      font-weight: bold;
+    }
+
+    .success { color: #57F287; }
+    .error { color: #ED4245; }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Uploader un log Throne and Liberty</h1>
+    <h1>🗡️ Upload log Throne and Liberty</h1>
 
-    <form action="/upload" method="post" enctype="multipart/form-data">
-      <input type="file" name="combatlog" accept=".txt" required />
-      <button type="submit">Envoyer le log</button>
-    </form>
+    <input type="file" id="combatlog" accept=".txt" />
+    
+    <div>
+      <button onclick="uploadServer()">📤 Envoyer au serveur</button>
+      <button id="discordBtn" onclick="sendToDiscord()" disabled>💬 Envoyer Discord</button>
+    </div>
+
+    <div class="status" id="status"></div>
 
     <div class="logs-path">
-      <p>Dossier des logs sur votre PC :</p>
-      <p>
-        <code id="logPath">%LOCALAPPDATA%\TL\SAVED\COMBATLOGS</code>
-      </p>
-      <button type="button" onclick="copyPath()">Copier le chemin</button>
+      <p>Dossier des logs :</p>
+      <p><code id="logPath">%LOCALAPPDATA%\TL\SAVED\COMBATLOGS</code></p>
+      <button type="button" onclick="copyPath()">📋 Copier chemin</button>
       <p id="copyMsg"></p>
     </div>
   </div>
 
   <script>
+    const discordWebhook = 'https://discord.com/api/webhooks/123456789/ABCDEF...'; // ← REMPLACE PAR TON WEBHOOK
+
+    function showStatus(msg, type = '') {
+      const status = document.getElementById('status');
+      status.textContent = msg;
+      status.className = `status ${type}`;
+    }
+
     function copyPath() {
-      const text = document.getElementById('logPath').textContent;
-      navigator.clipboard.writeText(text)
-        .then(() => {
-          document.getElementById('copyMsg').textContent = 'Chemin copié dans le presse-papiers.';
-        })
-        .catch(() => {
-          document.getElementById('copyMsg').textContent = 'Impossible de copier automatiquement, copiez le texte à la main.';
+      const text = '%LOCALAPPDATA%\\TL\\SAVED\\COMBATLOGS';
+      navigator.clipboard.writeText(text).then(() => {
+        document.getElementById('copyMsg').textContent = '✅ Chemin copié !';
+        setTimeout(() => document.getElementById('copyMsg').textContent = '', 3000);
+      });
+    }
+
+    async function sendToDiscord() {
+      const fileInput = document.getElementById('combatlog');
+      const file = fileInput.files[0];
+      
+      if (!file) return showStatus('❌ Sélectionne un fichier d\'abord', 'error');
+
+      const discordBtn = document.getElementById('discordBtn');
+      discordBtn.disabled = true;
+      discordBtn.textContent = '⏳ Envoi...';
+      showStatus('📤 Envoi vers Discord...', '');
+
+      // Renomme le fichier avec timestamp
+      const now = new Date().toISOString().slice(0,19).replace(/:/g,'-');
+      const newName = `TL-Log-${now}.txt`;
+      const renamedFile = new File([file], newName, { type: file.type });
+
+      const formData = new FormData();
+      formData.append('file', renamedFile);
+      formData.append('payload_json', JSON.stringify({
+        username: '🗡️ TL Log Uploader',
+        content: `**Log Throne & Liberty**\nFichier: ${newName}\nTaille: ${(file.size/1024).toFixed(1)} KB`
+      }));
+
+      try {
+        const response = await fetch(discordWebhook, {
+          method: 'POST',
+          body: formData
         });
+
+        if (response.ok) {
+          showStatus('✅ Log envoyé sur Discord !', 'success');
+          fileInput.value = ''; // Reset
+          document.getElementById('discordBtn').disabled = true;
+        } else {
+          throw new Error(`Discord error: ${response.status}`);
+        }
+      } catch (error) {
+        showStatus(`❌ Erreur: ${error.message}`, 'error');
+      } finally {
+        discordBtn.disabled = false;
+        discordBtn.textContent = '💬 Envoyer Discord';
+      }
+    }
+
+    // Active le bouton Discord quand un fichier est sélectionné
+    document.getElementById('combatlog').addEventListener('change', function() {
+      document.getElementById('discordBtn').disabled = !this.files[0];
+    });
+
+    // Upload serveur (optionnel - garde ton ancien code si besoin)
+    async function uploadServer() {
+      const fileInput = document.getElementById('combatlog');
+      const formData = new FormData();
+      formData.append('combatlog', fileInput.files[0]);
+
+      showStatus('📤 Upload serveur...', '');
+      
+      try {
+        const response = await fetch('/upload', { method: 'POST', body: formData });
+        if (response.ok) showStatus('✅ Upload OK !', 'success');
+        else showStatus('❌ Erreur serveur', 'error');
+      } catch(e) {
+        showStatus('❌ Erreur réseau', 'error');
+      }
     }
   </script>
 </body>
