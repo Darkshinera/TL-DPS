@@ -99,7 +99,8 @@
   </div>
 
   <script>
-    const discordWebhook = 'https://discord.com/api/webhooks/123456789/ABCDEF...'; // ← REMPLACE PAR TON WEBHOOK
+    // ✅ TON WEBHOOK DISCORD INTÉGRÉ
+    const discordWebhook = 'https://discord.com/api/webhooks/1452422715876184237/6RdIZAFZoOZLO1NibThrxkepR9cwViVMnEOEWZvu2PnEWzhNSzUjKQex4mE3gdRFTWqs';
 
     function showStatus(msg, type = '') {
       const status = document.getElementById('status');
@@ -164,7 +165,7 @@
       document.getElementById('discordBtn').disabled = !this.files[0];
     });
 
-    // Upload serveur (optionnel - garde ton ancien code si besoin)
+    // Upload serveur (optionnel)
     async function uploadServer() {
       const fileInput = document.getElementById('combatlog');
       const formData = new FormData();
