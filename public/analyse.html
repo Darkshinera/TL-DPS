@@ -515,16 +515,15 @@
           responsive: true,
           maintainAspectRatio: false,
 
-          // --- barres plus épaisses ---
+          // barres épaisses mais avec espace suffisant
           datasets: {
             bar: {
-              barThickness: 24,       // épaisseur des barres (augmente/diminue ici)
-              maxBarThickness: 28,
-              categoryPercentage: 0.9,
-              barPercentage: 0.9
+              barThickness: 18,        // épaisseur
+              maxBarThickness: 22,
+              categoryPercentage: 0.7, // 70% de la “ligne” utilisée
+              barPercentage: 0.8       // barre un peu plus courte pour laisser de l’air
             }
           },
-          // ----------------------------
 
           plugins: {
             legend: { display: true },
