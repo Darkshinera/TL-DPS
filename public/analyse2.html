@@ -163,18 +163,7 @@
     <tbody id="playerBody"></tbody>
   </table>
 
-  <!-- Panel DPS Timeline -->
-  <div class="panel">
-    <div class="panel-header">
-      <span class="panel-title">DPS Timeline</span>
-      <span class="panel-meta" id="fightDurationMeta"></span>
-    </div>
-    <div class="panel-body" id="timelineContainer">
-      <canvas id="dpsTimeline"></canvas>
-    </div>
-  </div>
-
-  <!-- Panel Damage By Skill -->
+  <!-- Panel Damage By Skill (maintenant en premier) -->
   <div class="panel">
     <div class="panel-header">
       <span class="panel-title">Damage By Skill</span>
@@ -182,6 +171,17 @@
     </div>
     <div class="panel-body" id="chartContainer">
       <canvas id="damageChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Panel DPS Timeline (en dessous) -->
+  <div class="panel">
+    <div class="panel-header">
+      <span class="panel-title">DPS Timeline</span>
+      <span class="panel-meta" id="fightDurationMeta"></span>
+    </div>
+    <div class="panel-body" id="timelineContainer">
+      <canvas id="dpsTimeline"></canvas>
     </div>
   </div>
 
