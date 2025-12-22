@@ -508,29 +508,31 @@
         type: 'bar',
         data: { labels, datasets },
         options: {
-  indexAxis: 'y',
-  responsive: true,
-  maintainAspectRatio: false,
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
 
-  // plus de hauteur par skill + barres plus larges
-  categoryPercentage: 0.9, // 90% de la ligne (au lieu de 0.6)
-  barPercentage: 0.7,      // largeur de chaque barre dans son slot
+          /* plus d'espace entre les barres / catégories */
+          categoryPercentage: 0.5,
+          barPercentage: 0.7,
 
-  plugins: {
-    legend: { display: true },
-    title: { display: false }
-  },
-  scales: {
-    x: {
-      ticks: { color: '#ffffff' },
-      grid: { color: 'rgba(255,255,255,0.1)' }
-    },
-    y: {
-      ticks: { color: '#ffffff' },
-      grid: { color: 'rgba(255,255,255,0.1)' }
+          plugins: {
+            legend: { display: true },
+            title: { display: false }
+          },
+          scales: {
+            x: {
+              ticks: { color: '#ffffff' },
+              grid: { color: 'rgba(255,255,255,0.1)' }
+            },
+            y: {
+              ticks: { color: '#ffffff' },
+              grid: { color: 'rgba(255,255,255,0.1)' }
+            }
+          }
+        }
+      });
     }
-  }
-}
 
     function drawAvgDpsTimeline() {
       const ctx = document.getElementById('avgDpsTimeline').getContext('2d');
