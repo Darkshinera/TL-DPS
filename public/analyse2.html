@@ -30,8 +30,8 @@
       display: flex;
       gap: 12px;
       margin-top: 16px;
-      width: 90%;
-      max-width: 1200px;
+      width: 95%;
+      max-width: 1600px;
     }
     .card {
       flex: 1;
@@ -55,18 +55,18 @@
 
     /* Tableau joueurs */
     table {
-  margin-top: 25px;
-  border-collapse: collapse;
-  width: 95%;
-  max-width: 1400px;   /* large sur écran PC */
-  background-color: #151518;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
+      margin-top: 25px;
+      border-collapse: collapse;
+      width: 95%;
+      max-width: 1600px;
+      background-color: #151518;
+      border-radius: 8px;
+      overflow: hidden;
+    }
     th, td {
-      padding: 6px 10px;
+      padding: 8px 12px;
       text-align: center;
+      font-size: 14px;
     }
     th {
       background-color: #202024;
@@ -85,7 +85,6 @@
       text-align: left;
     }
     td {
-      font-size: 13px;
       color: #e0e0f5;
     }
     td:nth-child(4),
@@ -98,8 +97,8 @@
 
     /* Panneaux pour les graphes */
     .panel {
-      width: 90%;
-      max-width: 1200px;
+      width: 95%;
+      max-width: 1600px;
       margin-top: 20px;
       background: #101018;
       border-radius: 10px;
@@ -122,11 +121,9 @@
       font-size: 11px;
       color: #9a9ac2;
     }
-    /* plus de place pour les graphes */
     .panel-body {
-    height: 420px;   /* essaie 380–450 selon ton écran */
+      height: 420px; /* hauteur augmentée pour des graphes lisibles */
     }
-
 
     #chartContainer, #timelineContainer {
       width: 100%;
@@ -227,7 +224,6 @@
           }
           playersData.sort((a, b) => b.dps - a.dps);
 
-          // cartes résumé
           const totalFightDamage = playersData.reduce((s, p) => s + p.totalDamage, 0);
           const avgDps = playersData.reduce((s, p) => s + p.dps, 0) / playersData.length;
           document.getElementById('sumTotalDamage').textContent =
@@ -493,9 +489,7 @@
           maintainAspectRatio: false,
           plugins: {
             legend: { display: true },
-            title: {
-              display: false
-            }
+            title: { display: false }
           },
           scales: {
             x: {
