@@ -56,7 +56,7 @@
       text-overflow: ellipsis;
     }
 
-    /* Tableau joueurs */
+    /* Tableau */
     table {
       margin-top: 25px;
       border-collapse: collapse;
@@ -79,6 +79,7 @@
     }
     tr.player-selected { background-color: #3a2525; }
     td:nth-child(2) { text-align: left; }
+    #targetsTable td:first-child { text-align: left; }
 
     /* Panneaux pour les graphes */
     .panel {
@@ -107,7 +108,7 @@
       color: #9a9ac2;
     }
     .panel-body {
-      height: 420px; /* valeur de base, modifiée dynamiquement pour Damage By Skill */
+      height: 420px;
     }
 
     #chartContainer, #timelineContainer, #avgTimelineContainer {
@@ -115,7 +116,6 @@
       height: 100%;
     }
 
-    /* Canvases */
     #dpsTimeline,
     #damageChart,
     #avgDpsTimeline {
@@ -152,8 +152,18 @@
     </div>
   </div>
 
+  <!-- Bouton Targets -->
+  <div style="width:95%; max-width:1600px; margin-top:12px; text-align:right;">
+    <button id="toggleTargetsBtn"
+            style="padding:4px 10px; font-size:13px; border-radius:4px; border:1px solid #333; background:#1b1c22; color:#fff; cursor:pointer;">
+      Afficher les autres cibles
+    </button>
+  </div>
+
   <h2>Player Statistics</h2>
   <p>Clique sur un ou plusieurs joueurs pour les comparer sur les graphiques.</p>
+
+  <!-- Tableau joueurs -->
   <table>
     <thead>
       <tr>
@@ -171,7 +181,19 @@
     <tbody id="playerBody"></tbody>
   </table>
 
-  <!-- Panel Damage By Skill en premier -->
+  <!-- Tableau cibles -->
+  <table id="targetsTable" style="display:none; margin-top:10px;">
+    <thead>
+      <tr>
+        <th>Target</th>
+        <th>Total Damage</th>
+        <th>Hits</th>
+      </tr>
+    </thead>
+    <tbody id="targetsBody"></tbody>
+  </table>
+
+  <!-- Panel Damage By Skill -->
   <div class="panel">
     <div class="panel-header">
       <span class="panel-title">Damage By Skill</span>
@@ -182,7 +204,7 @@
     </div>
   </div>
 
-  <!-- Panel DPS moyen -->
+  <!-- Panel Average DPS -->
   <div class="panel">
     <div class="panel-header">
       <span class="panel-title">Average DPS Over Time</span>
@@ -193,7 +215,7 @@
     </div>
   </div>
 
-  <!-- Panel DPS Timeline instantané -->
+  <!-- Panel DPS Timeline -->
   <div class="panel">
     <div class="panel-header">
       <span class="panel-title">DPS Timeline (Per Second)</span>
@@ -208,11 +230,27 @@
     const fileInput = document.getElementById('logFile');
     const statusEl = document.getElementById('status');
     const playerBody = document.getElementById('playerBody');
+    const targetsTable = document.getElementById('targetsTable');
+    const targetsBody  = document.getElementById('targetsBody');
+    const toggleTargetsBtn = document.getElementById('toggleTargetsBtn');
+
     let chart;
     let dpsTimelineChart;
     let avgDpsTimelineChart;
     let playersData = [];
     let selectedPlayers = [];
+
+    toggleTargetsBtn.addEventListener('click', () => {
+      const isHidden = targetsTable.style.display === 'none' || targetsTable.style.display === '';
+      if (isHidden) {
+        renderTargetsTable();
+        targetsTable.style.display = '';
+        toggleTargetsBtn.textContent = 'Masquer les autres cibles';
+      } else {
+        targetsTable.style.display = 'none';
+        toggleTargetsBtn.textContent = 'Afficher les autres cibles';
+      }
+    });
 
     fileInput.addEventListener('change', () => {
       const files = Array.from(fileInput.files);
@@ -221,6 +259,10 @@
       playersData = [];
       selectedPlayers = [];
       playerBody.innerHTML = '';
+      targetsBody.innerHTML = '';
+      targetsTable.style.display = 'none';
+      toggleTargetsBtn.textContent = 'Afficher les autres cibles';
+
       if (chart) chart.destroy();
       if (dpsTimelineChart) dpsTimelineChart.destroy();
       if (avgDpsTimelineChart) avgDpsTimelineChart.destroy();
@@ -256,9 +298,6 @@
           drawComparisonChart();
           drawAvgDpsTimeline();
           drawDpsTimeline();
-
-          // debug simple des cibles
-          logTargetsDebug();
         })
         .catch(err => {
           statusEl.textContent = 'Erreur : ' + err;
@@ -308,7 +347,6 @@
                 if (!damageBySkill[skillName]) damageBySkill[skillName] = 0;
                 damageBySkill[skillName] += dmg;
 
-                // agg par cible
                 if (!damageByTarget[boss]) damageByTarget[boss] = { totalDamage: 0, hits: 0 };
                 damageByTarget[boss].totalDamage += dmg;
                 damageByTarget[boss].hits += 1;
@@ -355,7 +393,7 @@
               damageBySkill,
               damageTimeline,
               avgDpsTimeline,
-              damageByTarget   // nouveau champ
+              damageByTarget
             });
           } catch {
             resolve(null);
@@ -389,7 +427,7 @@
         const [datePart, timePart] = ts.split('-');
         const year = parseInt(datePart.slice(0,4), 10);
         const month = parseInt(datePart.slice(4,6), 10) - 1;
-        const day = parseInt(datePart.slice(6,8), 10);
+        the day = parseInt(datePart.slice(6,8), 10);
         const [h, m, s, ms] = timePart.split(':').map(x => parseInt(x, 10));
         return new Date(year, month, day, h, m, s, ms);
       };
@@ -429,18 +467,34 @@
       });
     }
 
-    // debug simple des cibles
-    function logTargetsDebug() {
-      const targetTotals = {};
+    function renderTargetsTable() {
+      targetsBody.innerHTML = '';
+
+      const targetTotals = {}; // { target: { totalDamage, hits } }
+
       playersData.forEach(p => {
         if (!p.damageByTarget) return;
         Object.entries(p.damageByTarget).forEach(([target, info]) => {
-          if (!targetTotals[target]) targetTotals[target] = { totalDamage: 0, hits: 0 };
+          if (!targetTotals[target]) {
+            targetTotals[target] = { totalDamage: 0, hits: 0 };
+          }
           targetTotals[target].totalDamage += info.totalDamage;
           targetTotals[target].hits += info.hits;
         });
       });
-      console.log('Targets:', targetTotals);
+
+      const sortedTargets = Object.entries(targetTotals)
+        .sort((a, b) => b[1].totalDamage - a[1].totalDamage);
+
+      sortedTargets.forEach(([target, info]) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${target}</td>
+          <td>${info.totalDamage.toLocaleString('fr-FR')}</td>
+          <td>${info.hits.toLocaleString('fr-FR')}</td>
+        `;
+        targetsBody.appendChild(tr);
+      });
     }
 
     function onPlayerRowClick(player) {
