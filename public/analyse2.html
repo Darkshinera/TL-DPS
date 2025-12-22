@@ -502,7 +502,7 @@
 
       // hauteur dynamique en fonction du nombre de skills
       const minHeight = 450;
-      const perSkill = 30;
+      const perSkill = 40;   // lignes plus hautes pour des barres visuellement “doublées”
       const newHeight = Math.max(minHeight, labels.length * perSkill);
       const panelBody = document.getElementById('chartContainer');
       panelBody.style.height = newHeight + 'px';
@@ -514,6 +514,11 @@
           indexAxis: 'y',
           responsive: true,
           maintainAspectRatio: false,
+
+          // barres épaisses sans chevauchement
+          categoryPercentage: 0.9,
+          barPercentage: 0.7,
+
           plugins: {
             legend: { display: true },
             title: { display: false }
