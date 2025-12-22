@@ -243,20 +243,18 @@
     }
 
     function onPlayerRowClick(player) {
-      // si déjà sélectionné → le retirer
-      const exists = selectedPlayers.find(p => p.index === player.index);
-      if (exists) {
-        selectedPlayers = selectedPlayers.filter(p => p.index !== player.index);
-      } else {
-        // max 2 joueurs
-        if (selectedPlayers.length >= 2) {
-          selectedPlayers.shift(); // enlève le premier
-        }
-        selectedPlayers.push(player);
-      }
-      highlightSelectedRows();
-      drawComparisonChart();
-    }
+  // si déjà sélectionné → le retirer
+  const exists = selectedPlayers.find(p => p.index === player.index);
+  if (exists) {
+    selectedPlayers = selectedPlayers.filter(p => p.index !== player.index);
+  } else {
+    // aucune limite : on ajoute simplement le joueur
+    selectedPlayers.push(player);
+  }
+  highlightSelectedRows();
+  drawComparisonChart();
+}
+
 
     function highlightSelectedRows() {
       const rows = playerBody.querySelectorAll('tr');
