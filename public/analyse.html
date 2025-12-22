@@ -514,6 +514,18 @@
           indexAxis: 'y',
           responsive: true,
           maintainAspectRatio: false,
+
+          // --- barres plus épaisses ---
+          datasets: {
+            bar: {
+              barThickness: 24,       // épaisseur des barres (augmente/diminue ici)
+              maxBarThickness: 28,
+              categoryPercentage: 0.9,
+              barPercentage: 0.9
+            }
+          },
+          // ----------------------------
+
           plugins: {
             legend: { display: true },
             title: { display: false }
