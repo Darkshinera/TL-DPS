@@ -61,6 +61,7 @@
   <div id="status"></div>
 
   <h2>Player Statistics</h2>
+  <p>Cliquer sur 1 ou 2 joueurs pour les comparer sur le graphique.</p>
   <table>
     <thead>
       <tr>
@@ -87,12 +88,14 @@
     const playerBody = document.getElementById('playerBody');
     let chart;
     let playersData = [];
+    let selectedPlayers = []; // tableau d’objets joueur
 
     fileInput.addEventListener('change', () => {
       const files = Array.from(fileInput.files);
       if (!files.length) return;
       statusEl.textContent = 'Lecture des fichiers...';
       playersData = [];
+      selectedPlayers = [];
       playerBody.innerHTML = '';
       if (chart) chart.destroy();
 
@@ -106,7 +109,11 @@
           playersData.sort((a, b) => b.dps - a.dps);
           renderPlayerTable(playersData);
           statusEl.textContent = `Logs analysés : ${playersData.length}`;
-          drawSkillChart(playersData[0]);
+
+          // par défaut, sélectionner le meilleur joueur
+          selectedPlayers = [playersData[0]];
+          highlightSelectedRows();
+          drawComparisonChart();
         })
         .catch(err => {
           statusEl.textContent = 'Erreur : ' + err;
@@ -148,141 +155,3 @@
               if (!isNaN(dmg) && dmg > 0) {
                 totalDamage += dmg;
                 hitCount += 1;
-                if (dmg > maxHit) maxHit = dmg;
-
-                if (!damageBySkill[skillName]) damageBySkill[skillName] = 0;
-                damageBySkill[skillName] += dmg;
-              }
-
-              if (!firstTs) firstTs = ts;
-              lastTs = ts;
-              playerName = player;
-              bossName = boss;
-            }
-
-            if (hitCount === 0 || !firstTs || !lastTs) {
-              console.log('Aucun hit dans ce fichier :', file.name);
-              resolve(null);
-              return;
-            }
-
-            const duration = computeDurationSeconds(firstTs, lastTs);
-            const dps = duration > 0 ? Math.round(totalDamage / duration) : totalDamage;
-            const avgHit = Math.round(totalDamage / hitCount);
-
-            resolve({
-              index,
-              playerName,
-              bossName,
-              totalDamage,
-              hitCount,
-              maxHit,
-              avgHit,
-              duration,
-              dps,
-              damageBySkill
-            });
-          } catch (e) {
-            console.error('Erreur parsing fichier', file.name, e);
-            resolve(null);
-          }
-        };
-        reader.onerror = () => {
-          console.error('Erreur lecture fichier', file.name);
-          resolve(null);
-        };
-        reader.readAsText(file);
-      });
-    }
-
-    function computeDurationSeconds(ts1, ts2) {
-      const parse = (ts) => {
-        const [datePart, timePart] = ts.split('-');
-        const year = parseInt(datePart.slice(0,4), 10);
-        const month = parseInt(datePart.slice(4,6), 10) - 1;
-        const day = parseInt(datePart.slice(6,8), 10);
-        const [h, m, s, ms] = timePart.split(':').map(x => parseInt(x, 10));
-        return new Date(year, month, day, h, m, s, ms);
-      };
-      try {
-        const d1 = parse(ts1);
-        const d2 = parse(ts2);
-        return Math.max(1, Math.round((d2 - d1) / 1000));
-      } catch {
-        return 1;
-      }
-    }
-
-    function renderPlayerTable(players) {
-      playerBody.innerHTML = '';
-      players.forEach((p, idx) => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${idx + 1}</td>
-          <td>${p.playerName}</td>
-          <td>${p.dps.toLocaleString('fr-FR')}</td>
-          <td>${p.totalDamage.toLocaleString('fr-FR')}</td>
-          <td>${p.hitCount.toLocaleString('fr-FR')}</td>
-          <td>${p.avgHit.toLocaleString('fr-FR')}</td>
-          <td>${p.maxHit.toLocaleString('fr-FR')}</td>
-          <td>${p.duration}s</td>
-        `;
-        tr.addEventListener('click', () => {
-          document
-            .querySelectorAll('#playerBody tr')
-            .forEach(row => row.classList.remove('player-selected'));
-          tr.classList.add('player-selected');
-          drawSkillChart(p);
-        });
-        if (idx === 0) tr.classList.add('player-selected');
-        playerBody.appendChild(tr);
-      });
-    }
-
-    function drawSkillChart(player) {
-      const entries = Object.entries(player.damageBySkill);
-      entries.sort((a, b) => b[1] - a[1]);
-
-      const labels = entries.map(e => e[0]);
-      const data = entries.map(e => e[1]);
-
-      const ctx = document.getElementById('damageChart').getContext('2d');
-      if (chart) chart.destroy();
-
-      chart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels,
-          datasets: [{
-            label: `Damage total - ${player.playerName}`,
-            data,
-            backgroundColor: 'rgba(88, 101, 242, 0.8)'
-          }]
-        },
-        options: {
-          indexAxis: 'y',
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { display: false },
-            title: {
-              display: true,
-              text: `Damage By Skill - ${player.playerName} vs ${player.bossName}`
-            }
-          },
-          scales: {
-            x: {
-              ticks: { color: '#ffffff' },
-              grid: { color: 'rgba(255,255,255,0.1)' }
-            },
-            y: {
-              ticks: { color: '#ffffff' },
-              grid: { color: 'rgba(255,255,255,0.1)' }
-            }
-          }
-        }
-      });
-    }
-  </script>
-</body>
-</html>
