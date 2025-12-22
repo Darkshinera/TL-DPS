@@ -241,16 +241,19 @@
     let selectedPlayers = [];
 
     toggleTargetsBtn.addEventListener('click', () => {
-      const isHidden = targetsTable.style.display === 'none' || targetsTable.style.display === '';
-      if (isHidden) {
-        renderTargetsTable();
-        targetsTable.style.display = '';
-        toggleTargetsBtn.textContent = 'Masquer les autres cibles';
-      } else {
-        targetsTable.style.display = 'none';
-        toggleTargetsBtn.textContent = 'Afficher les autres cibles';
-      }
-    });
+  const currentDisplay = window.getComputedStyle(targetsTable).display;
+  const isHidden = currentDisplay === 'none';
+
+  if (isHidden) {
+    renderTargetsTable();
+    targetsTable.style.display = 'table';
+    toggleTargetsBtn.textContent = 'Masquer les autres cibles';
+  } else {
+    targetsTable.style.display = 'none';
+    toggleTargetsBtn.textContent = 'Afficher les autres cibles';
+  }
+});
+
 
     fileInput.addEventListener('change', () => {
       const files = Array.from(fileInput.files);
