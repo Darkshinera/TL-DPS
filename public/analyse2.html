@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Analyse log TL - Tableau style jeu</title>
+  <title>Damage Analyse - Throne and Liberty</title>
   <style>
     body {
       margin: 0;
@@ -97,6 +97,8 @@
   </table>
 
   <script>
+    console.log('analyse2 script chargé');
+
     const fileInput = document.getElementById('logFile');
     const statusEl = document.getElementById('status');
     const playerBody = document.getElementById('playerBody');
@@ -104,6 +106,7 @@
     let playersData = [];
 
     fileInput.addEventListener('change', () => {
+      console.log('change event, fichiers:', fileInput.files.length);
       const files = Array.from(fileInput.files);
       if (!files.length) return;
       statusEl.textContent = 'Lecture des fichiers...';
@@ -114,5 +117,144 @@
       Promise.all(files.map((f, index) => parseLogFile(f, index)))
         .then(results => {
           playersData = results.filter(r => r !== null);
+          console.log('playersData', playersData);
           if (!playersData.length) {
-            statusEl.textContent = 'Aucune donnée valide trouv
+            statusEl.textContent = 'Aucune donnée valide trouvée dans les logs.';
+            return;
+          }
+          playersData.sort((a, b) => b.dps - a.dps);
+          renderPlayerTable(playersData);
+          statusEl.textContent = `Logs analysés : ${playersData.length}`;
+          renderSkillTable(playersData[0]);
+        })
+        .catch(err => {
+          statusEl.textContent = 'Erreur : ' + err;
+        });
+    });
+
+    function parseLogFile(file, index) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          try {
+            const text = reader.result;
+            const lines = text.split(/\r?\n/);
+
+            const skills = {};
+            let totalDamage = 0;
+            let hitCount = 0;
+            let maxHit = 0;
+            let firstTs = null;
+            let lastTs = null;
+            let playerName = 'Unknown';
+            let bossName = 'Unknown';
+
+            for (const line of lines) {
+              if (!line) continue;
+              const parts = line.split(',');
+              if (parts.length < 10) continue;
+
+              const type = (parts[1] || '').trim().toLowerCase();
+              if (!type.includes('damage')) continue;
+
+              const ts = parts[0].trim();
+              const skillName = parts[2].trim();
+              const dmgStr = parts[4].trim().replace(/\s/g, '');
+              const dmg = parseInt(dmgStr, 10);
+              const player = parts[parts.length - 2].trim();
+              const boss = parts[parts.length - 1].trim();
+
+              if (!isNaN(dmg) && dmg > 0) {
+                totalDamage += dmg;
+                hitCount += 1;
+                if (dmg > maxHit) maxHit = dmg;
+
+                if (!skills[skillName]) {
+                  skills[skillName] = { total: 0, hits: 0, maxHit: 0 };
+                }
+                skills[skillName].total += dmg;
+                skills[skillName].hits += 1;
+                if (dmg > skills[skillName].maxHit) {
+                  skills[skillName].maxHit = dmg;
+                }
+              }
+
+              if (!firstTs) firstTs = ts;
+              lastTs = ts;
+              playerName = player;
+              bossName = boss;
+            }
+
+            if (hitCount === 0 || !firstTs || !lastTs) {
+              console.log('Aucun hit dans ce fichier :', file.name);
+              resolve(null);
+              return;
+            }
+
+            const duration = computeDurationSeconds(firstTs, lastTs);
+            const dps = duration > 0 ? Math.round(totalDamage / duration) : totalDamage;
+            const avgHit = Math.round(totalDamage / hitCount);
+
+            resolve({
+              index,
+              playerName,
+              bossName,
+              totalDamage,
+              hitCount,
+              maxHit,
+              avgHit,
+              duration,
+              dps,
+              skills
+            });
+          } catch (e) {
+            console.error('Erreur parsing fichier', file.name, e);
+            resolve(null);
+          }
+        };
+        reader.onerror = () => {
+          console.error('Erreur lecture fichier', file.name);
+          resolve(null);
+        };
+        reader.readAsText(file);
+      });
+    }
+
+    function computeDurationSeconds(ts1, ts2) {
+      const parse = (ts) => {
+        const [datePart, timePart] = ts.split('-');
+        const year = parseInt(datePart.slice(0,4), 10);
+        const month = parseInt(datePart.slice(4,6), 10) - 1;
+        const day = parseInt(datePart.slice(6,8), 10);
+        const [h, m, s, ms] = timePart.split(':').map(x => parseInt(x, 10));
+        return new Date(year, month, day, h, m, s, ms);
+      };
+      try {
+        const d1 = parse(ts1);
+        const d2 = parse(ts2);
+        return Math.max(1, Math.round((d2 - d1) / 1000));
+      } catch {
+        return 1;
+      }
+    }
+
+    function renderPlayerTable(players) {
+      playerBody.innerHTML = '';
+      players.forEach((p, idx) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${idx + 1}</td>
+          <td>${p.playerName}</td>
+          <td>${p.totalDamage.toLocaleString('fr-FR')}</td>
+          <td>${p.dps.toLocaleString('fr-FR')}</td>
+          <td>${p.hitCount.toLocaleString('fr-FR')}</td>
+          <td>${p.avgHit.toLocaleString('fr-FR')}</td>
+          <td>${p.maxHit.toLocaleString('fr-FR')}</td>
+          <td>${p.duration}s</td>
+          <td>${p.bossName}</td>
+        `;
+        tr.addEventListener('click', () => {
+          document
+            .querySelectorAll('#playerBody tr')
+            .forEach(row => row.classList.remove('player-selected'));
+          tr.classList.add('player-selected');
