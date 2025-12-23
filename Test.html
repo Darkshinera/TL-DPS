@@ -115,6 +115,7 @@
       padding: 2px 6px;
       border-radius: 3px;
       transition: background 0.2s;
+      display: inline-block;
     }
     .remove-player:hover {
       background: rgba(255, 102, 102, 0.2);
@@ -249,7 +250,7 @@
   </div>
 
   <h2>Player Statistics</h2>
-  <p>Click one or more players to compare them on the charts. ✕ removes from charts.</p>
+  <p>Click one or more players to compare them on the charts. ✕ removes from logs completely.</p>
 
   <table>
     <thead>
@@ -317,6 +318,7 @@
       <canvas id="dpsTimeline"></canvas>
     </div>
   </div>
+
   <script>
     const fileInput = document.getElementById('logFile');
     const dropZone  = document.getElementById('dropZone');
@@ -576,7 +578,7 @@
           <td>${p.maxHit.toLocaleString('fr-FR')}</td>
           <td>${p.duration}s</td>
           <td style="width:40px;">
-            <span class="remove-player" data-index="${p.index}" title="Retirer ce joueur des graphes">✕</span>
+            <span class="remove-player" data-index="${p.index}" title="Retirer ce joueur des logs">✕</span>
           </td>
         `;
         if (idx === 0) tr.style.borderLeft = '3px solid #ff4d6a';
@@ -896,8 +898,30 @@
       const removeBtn = e.target.closest('.remove-player');
       if (removeBtn) {
         const index = +removeBtn.dataset.index;
+
+        // 1) enlever complètement le joueur des données
+        playersData = playersData.filter(p => p.index !== index);
+
+        // 2) enlever aussi des sélectionnés
         selectedPlayers = selectedPlayers.filter(p => p.index !== index);
+
+        // 3) recréer la table à partir des données restantes
+        playersData.forEach((p, i) => { p.index = i; });
+        renderPlayerTable(playersData);
         highlightSelectedRows();
+
+        // 4) recalculer les totaux en haut
+        const totalFightDamage = playersData.reduce((s, p) => s + p.totalDamage, 0);
+        const avgDps = playersData.length
+          ? playersData.reduce((s, p) => s + p.dps, 0) / playersData.length
+          : 0;
+        document.getElementById('sumTotalDamage').textContent =
+          totalFightDamage.toLocaleString('fr-FR');
+        document.getElementById('sumAvgDps').textContent =
+          Math.round(avgDps).toLocaleString('fr-FR');
+        document.getElementById('sumPlayers').textContent = playersData.length;
+
+        // 5) mettre à jour les graphes
         refreshCharts();
         return;
       }
