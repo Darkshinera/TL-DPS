@@ -107,6 +107,20 @@
 
     #targetsTable td:first-child { text-align: left; }
 
+    .remove-player {
+      cursor: pointer;
+      color: #ff6666;
+      font-weight: bold;
+      font-size: 16px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      transition: background 0.2s;
+      display: inline-block;
+    }
+    .remove-player:hover {
+      background: rgba(255, 102, 102, 0.2);
+    }
+
     .panel {
       width: 95%;
       max-width: 1600px;
@@ -173,12 +187,24 @@
       cursor: pointer;
       margin-left: 6px;
     }
+
+    button {
+      padding: 4px 10px;
+      font-size: 13px;
+      border-radius: 4px;
+      border: 1px solid #333;
+      background: #1b1c22;
+      color: #fff;
+      cursor: pointer;
+    }
+    #clearLogsBtn {
+      background: #441818;
+    }
   </style>
 </head>
 <body>
   <h1>Damage By Skill - Throne and Liberty</h1>
 
-  <!-- Clickable log path -->
   <div style="margin-top:4px; text-align:center; font-size:13px;">
     Logs folder:
     <code id="logPath"
@@ -190,7 +216,6 @@
 
   <p style="margin-top:16px;">Select one or more combatlog (.txt) files exported from the game.</p>
 
-  <!-- Hidden input + drop/click area -->
   <input type="file" id="logFile" accept=".txt" multiple style="display:none;">
 
   <div id="dropZone"
@@ -200,6 +225,10 @@
   </div>
 
   <div id="status"></div>
+
+  <div style="width:95%; max-width:1600px; margin-top:6px; text-align:right;">
+    <button id="clearLogsBtn">Clear logs</button>
+  </div>
 
   <div class="summary">
     <div class="card">
@@ -221,7 +250,7 @@
   </div>
 
   <h2>Player Statistics</h2>
-  <p>Click one or more players to compare them on the charts.</p>
+  <p>Click one or more players to compare them on the charts. ✕ removes from logs completely.</p>
 
   <table>
     <thead>
@@ -235,17 +264,14 @@
         <th>Avg Hit</th>
         <th>Max Hit</th>
         <th>Duration</th>
+        <th></th>
       </tr>
     </thead>
     <tbody id="playerBody"></tbody>
   </table>
 
-  <!-- BOUTON SOUS LE TABLEAU DES JOUEURS -->
   <div style="width:95%; max-width:1600px; margin-top:8px; text-align:right;">
-    <button id="toggleTargetsBtn"
-            style="padding:4px 10px; font-size:13px; border-radius:4px; border:1px solid #333; background:#1b1c22; color:#fff; cursor:pointer;">
-      Show other targets
-    </button>
+    <button id="toggleTargetsBtn">Show other targets</button>
   </div>
 
   <table id="targetsTable" style="display:none; margin-top:10px;">
@@ -304,6 +330,7 @@
     const resetAvgZoomBtn = document.getElementById('resetAvgZoomBtn');
     const logPathEl = document.getElementById('logPath');
     const copyMsgEl = document.getElementById('copyMsg');
+    const clearLogsBtn = document.getElementById('clearLogsBtn');
 
     let skillChart;
     let dpsTimelineChart;
@@ -346,7 +373,6 @@
       'rgba(241, 196, 15, 1)'
     ];
 
-    // Clickable path
     logPathEl.addEventListener('click', () => {
       navigator.clipboard.writeText('%LOCALAPPDATA%\\TL\\SAVED\\COMBATLOGS')
         .then(() => {
@@ -355,23 +381,19 @@
         });
     });
 
-    // Drop / click area
     dropZone.addEventListener('click', () => {
       fileInput.click();
     });
-
     dropZone.addEventListener('dragover', (e) => {
       e.preventDefault();
       dropZone.style.borderColor = '#4fd1ff';
       dropZone.style.background  = '#15172a';
     });
-
     dropZone.addEventListener('dragleave', (e) => {
       e.preventDefault();
       dropZone.style.borderColor = '#5865F2';
       dropZone.style.background  = '#10111b';
     });
-
     dropZone.addEventListener('drop', (e) => {
       e.preventDefault();
       dropZone.style.borderColor = '#5865F2';
@@ -555,6 +577,9 @@
           <td>${p.avgHit.toLocaleString('fr-FR')}</td>
           <td>${p.maxHit.toLocaleString('fr-FR')}</td>
           <td>${p.duration}s</td>
+          <td style="width:40px;">
+            <span class="remove-player" data-index="${p.index}" title="Retirer ce joueur des logs">✕</span>
+          </td>
         `;
         if (idx === 0) tr.style.borderLeft = '3px solid #ff4d6a';
         playerBody.appendChild(tr);
@@ -868,7 +893,39 @@
       if (avgDpsTimelineChart) avgDpsTimelineChart.resetZoom();
     });
 
+    // clic sur la table joueurs (ligne ou croix)
     playerBody.addEventListener('click', (e) => {
+      const removeBtn = e.target.closest('.remove-player');
+      if (removeBtn) {
+        const index = +removeBtn.dataset.index;
+
+        // 1) enlever complètement le joueur des données
+        playersData = playersData.filter(p => p.index !== index);
+
+        // 2) enlever aussi des sélectionnés
+        selectedPlayers = selectedPlayers.filter(p => p.index !== index);
+
+        // 3) recréer la table à partir des données restantes
+        playersData.forEach((p, i) => { p.index = i; });
+        renderPlayerTable(playersData);
+        highlightSelectedRows();
+
+        // 4) recalculer les totaux en haut
+        const totalFightDamage = playersData.reduce((s, p) => s + p.totalDamage, 0);
+        const avgDps = playersData.length
+          ? playersData.reduce((s, p) => s + p.dps, 0) / playersData.length
+          : 0;
+        document.getElementById('sumTotalDamage').textContent =
+          totalFightDamage.toLocaleString('fr-FR');
+        document.getElementById('sumAvgDps').textContent =
+          Math.round(avgDps).toLocaleString('fr-FR');
+        document.getElementById('sumPlayers').textContent = playersData.length;
+
+        // 5) mettre à jour les graphes
+        refreshCharts();
+        return;
+      }
+
       const row = e.target.closest('tr');
       if (!row) return;
       const index = +row.dataset.index;
@@ -882,6 +939,28 @@
 
       highlightSelectedRows();
       refreshCharts();
+    });
+
+    clearLogsBtn.addEventListener('click', () => {
+      playersData = [];
+      selectedPlayers = [];
+      selectedTarget = null;
+      globalBossPhases = [];
+
+      playerBody.innerHTML = '';
+      targetsBody.innerHTML = '';
+      targetsTable.style.display = 'none';
+      toggleTargetsBtn.textContent = 'Show other targets';
+
+      document.getElementById('sumTotalDamage').textContent = '0';
+      document.getElementById('sumAvgDps').textContent = '0';
+      document.getElementById('sumPlayers').textContent = '0';
+      document.getElementById('sumBossName').textContent = '---';
+      statusEl.textContent = 'Logs cleared.';
+
+      if (skillChart) { skillChart.destroy(); skillChart = null; }
+      if (dpsTimelineChart) { dpsTimelineChart.destroy(); dpsTimelineChart = null; }
+      if (avgDpsTimelineChart) { avgDpsTimelineChart.destroy(); avgDpsTimelineChart = null; }
     });
 
     function handleFiles() {
@@ -937,7 +1016,6 @@
           renderPlayerTable(playersData);
           statusEl.textContent = `Logs loaded: ${playersData.length}`;
 
-          // auto-select first player
           if (playersData.length > 0) {
             selectedPlayers = [playersData[0]];
           }
