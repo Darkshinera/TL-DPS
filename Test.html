@@ -345,7 +345,7 @@
       'rgba(241, 196, 15, 1)'
     ];
 
-    // Chemin cliquable : copie dans le presse-papiers
+    // Chemin cliquable
     logPathEl.addEventListener('click', () => {
       navigator.clipboard.writeText('%LOCALAPPDATA%\\TL\\SAVED\\COMBATLOGS')
         .then(() => {
@@ -894,11 +894,8 @@
       }
 
       statusEl.textContent = 'Lecture des fichiers...';
-      playersData = [];
-      selectedPlayers = [];
+
       selectedTarget = null;
-      globalBossPhases = [];
-      playerBody.innerHTML = '';
       targetsBody.innerHTML = '';
       targetsTable.style.display = 'none';
       toggleTargetsBtn.textContent = 'Afficher les autres cibles';
@@ -907,15 +904,21 @@
       if (dpsTimelineChart) dpsTimelineChart.destroy();
       if (avgDpsTimelineChart) avgDpsTimelineChart.destroy();
 
-      Promise.all(files.map((f, index) => parseLogFile(f, index)))
+      const baseIndex = playersData.length;
+
+      Promise.all(files.map((f, idx) => parseLogFile(f, baseIndex + idx)))
         .then(results => {
-          playersData = results.filter(Boolean);
-          if (!playersData.length) {
-            statusEl.textContent = 'Aucune donnée valide trouvée dans les logs.';
+          const newPlayers = results.filter(Boolean);
+          if (!newPlayers.length) {
+            statusEl.textContent = 'Aucune donnée valide trouvée dans les logs ajoutés.';
             return;
           }
 
+          playersData = playersData.concat(newPlayers);
+
           playersData.sort((a, b) => b.dps - a.dps);
+
+          playersData.forEach((p, i) => { p.index = i; });
 
           const bossName =
             playersData[0].bossName && playersData[0].bossName !== 'Unknown'
@@ -934,7 +937,6 @@
           renderPlayerTable(playersData);
           statusEl.textContent = `Logs analysés : ${playersData.length}`;
 
-          selectedPlayers = [playersData[0]];
           highlightSelectedRows();
           globalBossPhases = playersData[0].bossPhases || [];
 
