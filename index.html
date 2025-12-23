@@ -11,7 +11,8 @@
       justify-content: center;
       align-items: center;
       font-family: Arial, sans-serif;
-      background-image: url('/Images/Throne-and-Liberty-Wallpaper-16-3840x2160.jpg');
+      /* Chemin RELATIF (sans / au début) */
+      background-image: url('Images/Throne-and-Liberty-Wallpaper-16-3840x2160.jpg');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -81,8 +82,9 @@
   <div class="container">
     <h1>🗡️ Upload log Throne and Liberty</h1>
 
-       <p>
-      <a href="/analyse.html" style="color:#58a6ff; text-decoration:underline;">
+    <p>
+      <!-- Lien RELATIF vers analyse.html -->
+      <a href="analyse.html" style="color:#58a6ff; text-decoration:underline;">
         Ouvrir l’analyse des dégâts (Damage By Skill)
       </a>
     </p>
@@ -90,8 +92,12 @@
     <input type="file" id="combatlog" accept=".txt" />
     
     <div>
-      <button id="downloadBtn" onclick="downloadRenamed()" disabled>⬇️ Télécharger le log renommé</button>
-      <button id="discordBtn" onclick="sendToDiscord()" disabled>💬 Envoyer Discord</button>
+      <button id="downloadBtn" onclick="downloadRenamed()" disabled>
+        ⬇️ Télécharger le log renommé
+      </button>
+      <button id="discordBtn" onclick="sendToDiscord()" disabled>
+        💬 Envoyer Discord
+      </button>
     </div>
 
     <div class="status" id="status"></div>
