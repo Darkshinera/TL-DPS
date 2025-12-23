@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Damage By Skill - Throne and Liberty</title>
@@ -178,9 +178,9 @@
 <body>
   <h1>Damage By Skill - Throne and Liberty</h1>
 
-  <!-- Chemin cliquable -->
+  <!-- Clickable log path -->
   <div style="margin-top:4px; text-align:center; font-size:13px;">
-    Dossier des logs :
+    Logs folder:
     <code id="logPath"
           style="padding:3px 6px; background:#1f2233; border-radius:4px; cursor:pointer;">
       %LOCALAPPDATA%\TL\SAVED\COMBATLOGS
@@ -188,15 +188,17 @@
     <span id="copyMsg" style="margin-left:6px; font-size:12px; color:#aaa;"></span>
   </div>
 
-  <p style="margin-top:16px;">Choisis un ou plusieurs fichiers combatlog (.txt) exportés du jeu.</p>
+  <p style="margin-top:16px;">
+    Select one or more combatlog (.txt) files exported from the game.
+  </p>
 
-  <!-- Input caché + zone drop/clic -->
+  <!-- Hidden input + drop/click area -->
   <input type="file" id="logFile" accept=".txt" multiple style="display:none;">
 
   <div id="dropZone"
        style="margin-top:10px; width:95%; max-width:1600px; padding:18px; border:2px dashed #5865F2; border-radius:8px; text-align:center; cursor:pointer; background:#10111b;">
-    Dépose ici tes fichiers combatlog (.txt)<br>
-    <span style="font-size:12px; color:#aaa;">ou clique pour les sélectionner</span>
+    Drop your combatlog (.txt) files here<br>
+    <span style="font-size:12px; color:#aaa;">or click to select them</span>
   </div>
 
   <div id="status"></div>
@@ -223,22 +225,22 @@
   <div style="width:95%; max-width:1600px; margin-top:12px; text-align:right;">
     <button id="toggleTargetsBtn"
             style="padding:4px 10px; font-size:13px; border-radius:4px; border:1px solid #333; background:#1b1c22; color:#fff; cursor:pointer;">
-      Afficher les autres cibles
+      Show other targets
     </button>
   </div>
 
   <h2>Player Statistics</h2>
-  <p>Clique sur un ou plusieurs joueurs pour les comparer sur les graphiques.</p>
+  <p>Click one or more players to compare them on the charts.</p>
 
   <table>
     <thead>
       <tr>
         <th>#</th>
-        <th>Player Name</th>
+        <th>Player</th>
         <th>DPS</th>
         <th>Total Damage</th>
         <th>% Fight</th>
-        <th>Hit Count</th>
+        <th>Hits</th>
         <th>Avg Hit</th>
         <th>Max Hit</th>
         <th>Duration</th>
@@ -346,16 +348,16 @@
       'rgba(241, 196, 15, 1)'
     ];
 
-    // Chemin cliquable
+    // Clickable path
     logPathEl.addEventListener('click', () => {
       navigator.clipboard.writeText('%LOCALAPPDATA%\\TL\\SAVED\\COMBATLOGS')
         .then(() => {
-          copyMsgEl.textContent = 'Chemin copié ✔';
+          copyMsgEl.textContent = 'Path copied ✔';
           setTimeout(() => { copyMsgEl.textContent = ''; }, 2000);
         });
     });
 
-    // Zone drop / clic
+    // Drop / click area
     dropZone.addEventListener('click', () => {
       fileInput.click();
     });
@@ -548,12 +550,12 @@
         tr.innerHTML = `
           <td>${idx + 1}</td>
           <td>${p.playerName}</td>
-          <td>${p.dps.toLocaleString('fr-FR')}</td>
-          <td>${p.totalDamage.toLocaleString('fr-FR')}</td>
+          <td>${p.dps.toLocaleString('en-US')}</td>
+          <td>${p.totalDamage.toLocaleString('en-US')}</td>
           <td>${percent.toFixed(2)}%</td>
-          <td>${p.hitCount.toLocaleString('fr-FR')}</td>
-          <td>${p.avgHit.toLocaleString('fr-FR')}</td>
-          <td>${p.maxHit.toLocaleString('fr-FR')}</td>
+          <td>${p.hitCount.toLocaleString('en-US')}</td>
+          <td>${p.avgHit.toLocaleString('en-US')}</td>
+          <td>${p.maxHit.toLocaleString('en-US')}</td>
           <td>${p.duration}s</td>
           <td>
             <button class="remove-player"
@@ -598,8 +600,8 @@
           const tr = document.createElement('tr');
           tr.innerHTML = `
             <td>${target}</td>
-            <td>${info.totalDamage.toLocaleString('fr-FR')}</td>
-            <td>${info.hits.toLocaleString('fr-FR')}</td>
+            <td>${info.totalDamage.toLocaleString('en-US')}</td>
+            <td>${info.hits.toLocaleString('en-US')}</td>
           `;
           tr.addEventListener('click', () => {
             selectedTarget = target;
@@ -677,7 +679,7 @@
               callbacks: {
                 label: (ctx) => {
                   const v = ctx.parsed.x || 0;
-                  return `${ctx.dataset.label} – ${ctx.label}: ${v.toLocaleString('fr-FR')} dégâts`;
+                  return `${ctx.dataset.label} – ${ctx.label}: ${v.toLocaleString('en-US')} damage`;
                 }
               }
             }
@@ -733,13 +735,13 @@
             legend: { display: true },
             title: {
               display: true,
-              text: 'Average DPS Over Time (Click and drag to zoom)'
+              text: 'Average DPS Over Time (click and drag to zoom)'
             },
             tooltip: {
               callbacks: {
                 label: (ctx) => {
                   const v = ctx.parsed.y || 0;
-                  return `${ctx.dataset.label}: ${Math.round(v).toLocaleString('fr-FR')} DPS moyen`;
+                  return `${ctx.dataset.label}: ${Math.round(v).toLocaleString('en-US')} avg DPS`;
                 }
               }
             },
@@ -834,7 +836,7 @@
               callbacks: {
                 label: (ctx) => {
                   const v = ctx.parsed.y || 0;
-                  return `${ctx.dataset.label}: ${v.toLocaleString('fr-FR')} DPS`;
+                  return `${ctx.dataset.label}: ${v.toLocaleString('en-US')} DPS`;
                 }
               }
             }
@@ -864,10 +866,10 @@
       if (isHidden) {
         renderTargetsTable();
         targetsTable.style.display = 'table';
-        toggleTargetsBtn.textContent = 'Masquer les autres cibles';
+        toggleTargetsBtn.textContent = 'Hide other targets';
       } else {
         targetsTable.style.display = 'none';
-        toggleTargetsBtn.textContent = 'Afficher les autres cibles';
+        toggleTargetsBtn.textContent = 'Show other targets';
       }
     });
 
@@ -875,7 +877,7 @@
       if (avgDpsTimelineChart) avgDpsTimelineChart.resetZoom();
     });
 
-    // clic sur une ligne = sélection, clic sur la croix = suppression
+    // Row click = select, cross click = remove player
     playerBody.addEventListener('click', (e) => {
       const removeBtn = e.target.closest('.remove-player');
       if (removeBtn) {
@@ -899,9 +901,9 @@
           : 0;
 
         document.getElementById('sumTotalDamage').textContent =
-          totalFightDamage.toLocaleString('fr-FR');
+          totalFightDamage.toLocaleString('en-US');
         document.getElementById('sumAvgDps').textContent =
-          Math.round(avgDps || 0).toLocaleString('fr-FR');
+          Math.round(avgDps || 0).toLocaleString('en-US');
         document.getElementById('sumPlayers').textContent = playersData.length;
 
         renderPlayerTable(playersData);
@@ -910,7 +912,7 @@
         globalBossPhases = playersData[0]?.bossPhases || [];
         refreshCharts();
 
-        statusEl.textContent = `Logs analysés : ${playersData.length}`;
+        statusEl.textContent = `Logs loaded: ${playersData.length}`;
         return;
       }
 
@@ -935,16 +937,16 @@
 
       files = files.filter(f => f.size < 20 * 1024 * 1024);
       if (!files.length) {
-        statusEl.textContent = 'Fichiers trop volumineux.';
+        statusEl.textContent = 'Files are too large.';
         return;
       }
 
-      statusEl.textContent = 'Lecture des fichiers...';
+      statusEl.textContent = 'Reading log files...';
 
       selectedTarget = null;
       targetsBody.innerHTML = '';
       targetsTable.style.display = 'none';
-      toggleTargetsBtn.textContent = 'Afficher les autres cibles';
+      toggleTargetsBtn.textContent = 'Show other targets';
 
       if (skillChart) skillChart.destroy();
       if (dpsTimelineChart) dpsTimelineChart.destroy();
@@ -956,7 +958,7 @@
         .then(results => {
           const newPlayers = results.filter(Boolean);
           if (!newPlayers.length) {
-            statusEl.textContent = 'Aucune donnée valide trouvée dans les logs ajoutés.';
+            statusEl.textContent = 'No valid data found in the added logs.';
             return;
           }
 
@@ -974,13 +976,13 @@
           const totalFightDamage = playersData.reduce((s, p) => s + p.totalDamage, 0);
           const avgDps = playersData.reduce((s, p) => s + p.dps, 0) / playersData.length;
           document.getElementById('sumTotalDamage').textContent =
-            totalFightDamage.toLocaleString('fr-FR');
+            totalFightDamage.toLocaleString('en-US');
           document.getElementById('sumAvgDps').textContent =
-            Math.round(avgDps).toLocaleString('fr-FR');
+            Math.round(avgDps).toLocaleString('en-US');
           document.getElementById('sumPlayers').textContent = playersData.length;
 
           renderPlayerTable(playersData);
-          statusEl.textContent = `Logs analysés : ${playersData.length}`;
+          statusEl.textContent = `Logs loaded: ${playersData.length}`;
 
           highlightSelectedRows();
           globalBossPhases = playersData[0].bossPhases || [];
@@ -988,7 +990,7 @@
           refreshCharts();
         })
         .catch(err => {
-          statusEl.textContent = 'Erreur : ' + err;
+          statusEl.textContent = 'Error: ' + err;
         });
     }
 
