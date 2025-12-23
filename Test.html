@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <title>Damage By Skill - Throne and Liberty</title>
@@ -178,27 +178,25 @@
 <body>
   <h1>Damage By Skill - Throne and Liberty</h1>
 
-  <!-- Clickable log path -->
+  <!-- Chemin cliquable -->
   <div style="margin-top:4px; text-align:center; font-size:13px;">
-    Logs folder:
+    Dossier des logs :
     <code id="logPath"
           style="padding:3px 6px; background:#1f2233; border-radius:4px; cursor:pointer;">
-      %LOCALAPPDATA%\TL\SAVED\COMBATLOGS
+      %LOCALAPPDATA%\TL\SAVED\\COMBATLOGS
     </code>
     <span id="copyMsg" style="margin-left:6px; font-size:12px; color:#aaa;"></span>
   </div>
 
-  <p style="margin-top:16px;">
-    Select one or more combatlog (.txt) files exported from the game.
-  </p>
+  <p style="margin-top:16px;">Choisis un ou plusieurs fichiers combatlog (.txt) exportés du jeu.</p>
 
-  <!-- Hidden input + drop/click area -->
+  <!-- Input caché + zone drop/clic -->
   <input type="file" id="logFile" accept=".txt" multiple style="display:none;">
 
   <div id="dropZone"
        style="margin-top:10px; width:95%; max-width:1600px; padding:18px; border:2px dashed #5865F2; border-radius:8px; text-align:center; cursor:pointer; background:#10111b;">
-    Drop your combatlog (.txt) files here<br>
-    <span style="font-size:12px; color:#aaa;">or click to select them</span>
+    Dépose ici tes fichiers combatlog (.txt)<br>
+    <span style="font-size:12px; color:#aaa;">ou clique pour les sélectionner</span>
   </div>
 
   <div id="status"></div>
@@ -222,30 +220,29 @@
     </div>
   </div>
 
-  <!-- Moved button just under the first panel -->
+  <!-- Bouton sous le premier cadre -->
   <div style="width:95%; max-width:1600px; margin-top:8px; text-align:right;">
     <button id="toggleTargetsBtn"
             style="padding:4px 10px; font-size:13px; border-radius:4px; border:1px solid #333; background:#1b1c22; color:#fff; cursor:pointer;">
-      Show other targets
+      Afficher les autres cibles
     </button>
   </div>
 
   <h2>Player Statistics</h2>
-  <p>Click one or more players to compare them on the charts.</p>
+  <p>Clique sur un ou plusieurs joueurs pour les comparer sur les graphiques.</p>
 
   <table>
     <thead>
       <tr>
         <th>#</th>
-        <th>Player</th>
+        <th>Player Name</th>
         <th>DPS</th>
         <th>Total Damage</th>
         <th>% Fight</th>
-        <th>Hits</th>
+        <th>Hit Count</th>
         <th>Avg Hit</th>
         <th>Max Hit</th>
         <th>Duration</th>
-        <th>Remove</th>
       </tr>
     </thead>
     <tbody id="playerBody"></tbody>
@@ -349,16 +346,16 @@
       'rgba(241, 196, 15, 1)'
     ];
 
-    // Clickable path
+    // Chemin cliquable
     logPathEl.addEventListener('click', () => {
       navigator.clipboard.writeText('%LOCALAPPDATA%\\TL\\SAVED\\COMBATLOGS')
         .then(() => {
-          copyMsgEl.textContent = 'Path copied ✔';
+          copyMsgEl.textContent = 'Chemin copié ✔';
           setTimeout(() => { copyMsgEl.textContent = ''; }, 2000);
         });
     });
 
-    // Drop / click area
+    // Zone drop / clic
     dropZone.addEventListener('click', () => {
       fileInput.click();
     });
@@ -551,20 +548,13 @@
         tr.innerHTML = `
           <td>${idx + 1}</td>
           <td>${p.playerName}</td>
-          <td>${p.dps.toLocaleString('en-US')}</td>
-          <td>${p.totalDamage.toLocaleString('en-US')}</td>
+          <td>${p.dps.toLocaleString('fr-FR')}</td>
+          <td>${p.totalDamage.toLocaleString('fr-FR')}</td>
           <td>${percent.toFixed(2)}%</td>
-          <td>${p.hitCount.toLocaleString('en-US')}</td>
-          <td>${p.avgHit.toLocaleString('en-US')}</td>
-          <td>${p.maxHit.toLocaleString('en-US')}</td>
+          <td>${p.hitCount.toLocaleString('fr-FR')}</td>
+          <td>${p.avgHit.toLocaleString('fr-FR')}</td>
+          <td>${p.maxHit.toLocaleString('fr-FR')}</td>
           <td>${p.duration}s</td>
-          <td>
-            <button class="remove-player"
-                    data-index="${p.index}"
-                    style="background:none;border:none;color:#ff6b6b;cursor:pointer;font-size:16px;">
-              ✖
-            </button>
-          </td>
         `;
         if (idx === 0) tr.style.borderLeft = '3px solid #ff4d6a';
         playerBody.appendChild(tr);
@@ -601,8 +591,8 @@
           const tr = document.createElement('tr');
           tr.innerHTML = `
             <td>${target}</td>
-            <td>${info.totalDamage.toLocaleString('en-US')}</td>
-            <td>${info.hits.toLocaleString('en-US')}</td>
+            <td>${info.totalDamage.toLocaleString('fr-FR')}</td>
+            <td>${info.hits.toLocaleString('fr-FR')}</td>
           `;
           tr.addEventListener('click', () => {
             selectedTarget = target;
@@ -680,7 +670,7 @@
               callbacks: {
                 label: (ctx) => {
                   const v = ctx.parsed.x || 0;
-                  return `${ctx.dataset.label} – ${ctx.label}: ${v.toLocaleString('en-US')} damage`;
+                  return `${ctx.dataset.label} – ${ctx.label}: ${v.toLocaleString('fr-FR')} dégâts`;
                 }
               }
             }
@@ -736,13 +726,13 @@
             legend: { display: true },
             title: {
               display: true,
-              text: 'Average DPS Over Time (click and drag to zoom)'
+              text: 'Average DPS Over Time (Click and drag to zoom)'
             },
             tooltip: {
               callbacks: {
                 label: (ctx) => {
                   const v = ctx.parsed.y || 0;
-                  return `${ctx.dataset.label}: ${Math.round(v).toLocaleString('en-US')} avg DPS`;
+                  return `${ctx.dataset.label}: ${Math.round(v).toLocaleString('fr-FR')} DPS moyen`;
                 }
               }
             },
@@ -837,7 +827,7 @@
               callbacks: {
                 label: (ctx) => {
                   const v = ctx.parsed.y || 0;
-                  return `${ctx.dataset.label}: ${v.toLocaleString('en-US')} DPS`;
+                  return `${ctx.dataset.label}: ${v.toLocaleString('fr-FR')} DPS`;
                 }
               }
             }
@@ -867,10 +857,10 @@
       if (isHidden) {
         renderTargetsTable();
         targetsTable.style.display = 'table';
-        toggleTargetsBtn.textContent = 'Hide other targets';
+        toggleTargetsBtn.textContent = 'Masquer les autres cibles';
       } else {
         targetsTable.style.display = 'none';
-        toggleTargetsBtn.textContent = 'Show other targets';
+        toggleTargetsBtn.textContent = 'Afficher les autres cibles';
       }
     });
 
@@ -878,45 +868,7 @@
       if (avgDpsTimelineChart) avgDpsTimelineChart.resetZoom();
     });
 
-    // Row click = select, cross click = remove player
     playerBody.addEventListener('click', (e) => {
-      const removeBtn = e.target.closest('.remove-player');
-      if (removeBtn) {
-        e.stopPropagation();
-        const idx = +removeBtn.dataset.index;
-
-        playersData = playersData.filter(p => p.index !== idx);
-        selectedPlayers = selectedPlayers.filter(p => p.index !== idx);
-
-        playersData.forEach((p, i) => { p.index = i; });
-
-        const bossName =
-          playersData[0] && playersData[0].bossName && playersData[0].bossName !== 'Unknown'
-            ? playersData[0].bossName
-            : (playersData[0] ? 'Unknown target' : '---');
-        document.getElementById('sumBossName').textContent = bossName;
-
-        const totalFightDamage = playersData.reduce((s, p) => s + p.totalDamage, 0);
-        const avgDps = playersData.length
-          ? playersData.reduce((s, p) => s + p.dps, 0) / playersData.length
-          : 0;
-
-        document.getElementById('sumTotalDamage').textContent =
-          totalFightDamage.toLocaleString('en-US');
-        document.getElementById('sumAvgDps').textContent =
-          Math.round(avgDps || 0).toLocaleString('en-US');
-        document.getElementById('sumPlayers').textContent = playersData.length;
-
-        renderPlayerTable(playersData);
-        highlightSelectedRows();
-
-        globalBossPhases = playersData[0]?.bossPhases || [];
-        refreshCharts();
-
-        statusEl.textContent = `Logs loaded: ${playersData.length}`;
-        return;
-      }
-
       const row = e.target.closest('tr');
       if (!row) return;
       const index = +row.dataset.index;
@@ -938,16 +890,16 @@
 
       files = files.filter(f => f.size < 20 * 1024 * 1024);
       if (!files.length) {
-        statusEl.textContent = 'Files are too large.';
+        statusEl.textContent = 'Fichiers trop volumineux.';
         return;
       }
 
-      statusEl.textContent = 'Reading log files...';
+      statusEl.textContent = 'Lecture des fichiers...';
 
       selectedTarget = null;
       targetsBody.innerHTML = '';
       targetsTable.style.display = 'none';
-      toggleTargetsBtn.textContent = 'Show other targets';
+      toggleTargetsBtn.textContent = 'Afficher les autres cibles';
 
       if (skillChart) skillChart.destroy();
       if (dpsTimelineChart) dpsTimelineChart.destroy();
@@ -959,7 +911,7 @@
         .then(results => {
           const newPlayers = results.filter(Boolean);
           if (!newPlayers.length) {
-            statusEl.textContent = 'No valid data found in the added logs.';
+            statusEl.textContent = 'Aucune donnée valide trouvée dans les logs ajoutés.';
             return;
           }
 
@@ -977,13 +929,18 @@
           const totalFightDamage = playersData.reduce((s, p) => s + p.totalDamage, 0);
           const avgDps = playersData.reduce((s, p) => s + p.dps, 0) / playersData.length;
           document.getElementById('sumTotalDamage').textContent =
-            totalFightDamage.toLocaleString('en-US');
+            totalFightDamage.toLocaleString('fr-FR');
           document.getElementById('sumAvgDps').textContent =
-            Math.round(avgDps).toLocaleString('en-US');
+            Math.round(avgDps).toLocaleString('fr-FR');
           document.getElementById('sumPlayers').textContent = playersData.length;
 
           renderPlayerTable(playersData);
-          statusEl.textContent = `Logs loaded: ${playersData.length}`;
+          statusEl.textContent = `Logs analysés : ${playersData.length}`;
+
+          // sélection automatique du premier joueur
+          if (playersData.length > 0) {
+            selectedPlayers = [playersData[0]];
+          }
 
           highlightSelectedRows();
           globalBossPhases = playersData[0].bossPhases || [];
@@ -991,7 +948,7 @@
           refreshCharts();
         })
         .catch(err => {
-          statusEl.textContent = 'Error: ' + err;
+          statusEl.textContent = 'Erreur : ' + err;
         });
     }
 
