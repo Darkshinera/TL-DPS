@@ -19,7 +19,6 @@
       padding: 20px;
     }
     h1 { margin-bottom: 10px; }
-    input[type="file"] { margin-top: 15px; }
     #status {
       margin-top: 10px;
       min-height: 20px;
@@ -178,8 +177,28 @@
 </head>
 <body>
   <h1>Damage By Skill - Throne and Liberty</h1>
-  <p>Choisis un ou plusieurs fichiers combatlog (.txt) exportés du jeu.</p>
-  <input type="file" id="logFile" accept=".txt" multiple>
+
+  <!-- Chemin cliquable -->
+  <div style="margin-top:4px; text-align:center; font-size:13px;">
+    Dossier des logs :
+    <code id="logPath"
+          style="padding:3px 6px; background:#1f2233; border-radius:4px; cursor:pointer;">
+      %LOCALAPPDATA%\TL\SAVED\COMBATLOGS
+    </code>
+    <span id="copyMsg" style="margin-left:6px; font-size:12px; color:#aaa;"></span>
+  </div>
+
+  <p style="margin-top:16px;">Choisis un ou plusieurs fichiers combatlog (.txt) exportés du jeu.</p>
+
+  <!-- Input caché + zone drop/clic -->
+  <input type="file" id="logFile" accept=".txt" multiple style="display:none;">
+
+  <div id="dropZone"
+       style="margin-top:10px; width:95%; max-width:1600px; padding:18px; border:2px dashed #5865F2; border-radius:8px; text-align:center; cursor:pointer; background:#10111b;">
+    Dépose ici tes fichiers combatlog (.txt)<br>
+    <span style="font-size:12px; color:#aaa;">ou clique pour les sélectionner</span>
+  </div>
+
   <div id="status"></div>
 
   <div class="summary">
@@ -275,12 +294,15 @@
 
   <script>
     const fileInput = document.getElementById('logFile');
-    const statusEl = document.getElementById('status');
+    const dropZone  = document.getElementById('dropZone');
+    const statusEl  = document.getElementById('status');
     const playerBody = document.getElementById('playerBody');
     const targetsTable = document.getElementById('targetsTable');
     const targetsBody  = document.getElementById('targetsBody');
     const toggleTargetsBtn = document.getElementById('toggleTargetsBtn');
     const resetAvgZoomBtn = document.getElementById('resetAvgZoomBtn');
+    const logPathEl = document.getElementById('logPath');
+    const copyMsgEl = document.getElementById('copyMsg');
 
     let skillChart;
     let dpsTimelineChart;
@@ -322,6 +344,42 @@
       'rgba(52, 152, 219, 1)',
       'rgba(241, 196, 15, 1)'
     ];
+
+    // Chemin cliquable : copie dans le presse-papiers
+    logPathEl.addEventListener('click', () => {
+      navigator.clipboard.writeText('%LOCALAPPDATA%\\TL\\SAVED\\COMBATLOGS')
+        .then(() => {
+          copyMsgEl.textContent = 'Chemin copié ✔';
+          setTimeout(() => { copyMsgEl.textContent = ''; }, 2000);
+        });
+    });
+
+    // Zone drop / clic
+    dropZone.addEventListener('click', () => {
+      fileInput.click();
+    });
+
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.style.borderColor = '#4fd1ff';
+      dropZone.style.background  = '#15172a';
+    });
+
+    dropZone.addEventListener('dragleave', (e) => {
+      e.preventDefault();
+      dropZone.style.borderColor = '#5865F2';
+      dropZone.style.background  = '#10111b';
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.style.borderColor = '#5865F2';
+      dropZone.style.background  = '#10111b';
+      const files = e.dataTransfer.files;
+      if (!files.length) return;
+      fileInput.files = files;
+      handleFiles();
+    });
 
     function parseTs(ts) {
       const [datePart, timePart] = ts.split('-');
@@ -825,7 +883,7 @@
       refreshCharts();
     });
 
-    fileInput.addEventListener('change', () => {
+    function handleFiles() {
       let files = Array.from(fileInput.files);
       if (!files.length) return;
 
@@ -885,7 +943,9 @@
         .catch(err => {
           statusEl.textContent = 'Erreur : ' + err;
         });
-    });
+    }
+
+    fileInput.addEventListener('change', handleFiles);
   </script>
 </body>
 </html>
