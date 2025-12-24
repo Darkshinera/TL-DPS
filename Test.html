@@ -344,7 +344,7 @@
       <canvas id="dpsTimeline"></canvas>
     </div>
   </div>
-  <script>
+    <script>
     const fileInput = document.getElementById('logFile');
     const dropZone  = document.getElementById('dropZone');
     const statusEl  = document.getElementById('status');
@@ -402,7 +402,7 @@
       'rgba(241, 196, 15, 1)'
     ];
 
-    // PATH clickable
+    // PATH
     logPathEl.addEventListener('click', () => {
       navigator.clipboard.writeText('%LOCALAPPDATA%\\TL\\SAVED\\COMBATLOGS')
         .then(() => {
@@ -411,7 +411,7 @@
         });
     });
 
-    // Drag & drop
+    // DRAG & DROP
     dropZone.addEventListener('click', () => {
       fileInput.click();
     });
@@ -435,7 +435,7 @@
       handleFiles();
     });
 
-    // Temps / dates
+    // TEMPS / DATES
     function parseTs(ts) {
       const [datePart, timePart] = ts.split('-');
       const year = +datePart.slice(0, 4);
@@ -461,7 +461,7 @@
       }
     }
 
-    // Parse d'un fichier log
+    // PARSE LOG FILE
     function parseLogFile(file, index) {
       return new Promise(resolve => {
         if (file.size > 20 * 1024 * 1024) {
@@ -476,6 +476,7 @@
             const damageBySkill = {};
             const damageTimeline = {};
             const damageByTarget = {};
+            const damageBySkillTimeline = {}; // skill -> par seconde
             const bossPhases = [];
 
             let totalDamage = 0;
@@ -523,6 +524,13 @@
                 if (dmg > maxHit) maxHit = dmg;
 
                 damageBySkill[skillName] = (damageBySkill[skillName] || 0) + dmg;
+
+                // nouveau : dégâts par skill et par seconde
+                if (!damageBySkillTimeline[secFromStart]) {
+                  damageBySkillTimeline[secFromStart] = {};
+                }
+                damageBySkillTimeline[secFromStart][skillName] =
+                  (damageBySkillTimeline[secFromStart][skillName] || 0) + dmg;
 
                 if (!damageByTarget[boss]) {
                   damageByTarget[boss] = { totalDamage: 0, hits: 0, bySkill: {} };
@@ -580,7 +588,8 @@
               damageTimeline,
               avgDpsTimeline,
               damageByTarget,
-              bossPhases
+              bossPhases,
+              damageBySkillTimeline
             });
           } catch {
             resolve(null);
@@ -591,7 +600,7 @@
       });
     }
 
-    // ---- SLIDER TEMPS ----
+    // SLIDER TEMPS
     function initTimeSlider(maxDuration) {
       if (maxDuration < 1) maxDuration = 1;
 
@@ -630,7 +639,6 @@
       }
     }
 
-    // applique la fenêtre temps à une timeline simple (objet {sec: valeur})
     function applyTimeWindowToTimeline(timeline, duration) {
       const from = timeFilter.from ?? 0;
       const to   = timeFilter.to   ?? duration;
@@ -642,7 +650,7 @@
       return { filtered, from, to };
     }
 
-    // recalcul des stats d'un joueur sur la fenêtre temps
+    // stats joueur dans la fenêtre temps
     function buildPlayerStatsInWindow(player) {
       const from = timeFilter.from ?? 0;
       const to   = Math.min(timeFilter.to ?? player.duration, player.duration);
@@ -667,7 +675,7 @@
       return { totalDamage, hitCount, maxHit, duration, dps, avgHit };
     }
 
-    // construit une avgDpsTimeline limitée à la fenêtre temps
+    // avg DPS fenêtre
     function buildAvgDpsTimelineWindow(player, from, to) {
       let cumulative = 0;
       const avg = {};
@@ -681,7 +689,24 @@
       return avg;
     }
 
-    // ---- TABLEAUX ----
+    // dégâts par skill dans la fenêtre temps
+    function buildDamageBySkillInWindow(player) {
+      const from = timeFilter.from ?? 0;
+      const to   = Math.min(timeFilter.to ?? player.duration, player.duration);
+      const skillTotals = {};
+
+      for (let s = from; s <= to; s++) {
+        const skillsAtSec = player.damageBySkillTimeline?.[s];
+        if (!skillsAtSec) continue;
+        Object.entries(skillsAtSec).forEach(([skill, dmg]) => {
+          skillTotals[skill] = (skillTotals[skill] || 0) + dmg;
+        });
+      }
+
+      return skillTotals;
+    }
+
+    // TABLEAUX
     function renderPlayerTable(players) {
       playerBody.innerHTML = '';
 
@@ -717,7 +742,6 @@
         playerBody.appendChild(tr);
       });
 
-      // cards en haut suivant la fenêtre temps
       const sumTotalDamage = windowStats.reduce((sum, w) => sum + w.stats.totalDamage, 0);
       const avgDps = windowStats.length
         ? windowStats.reduce((sum, w) => sum + w.stats.dps, 0) / windowStats.length
@@ -768,7 +792,7 @@
           targetsBody.appendChild(tr);
         });
     }
-    // ---- GRAPHIQUES ----
+    // GRAPHIQUES
     function drawComparisonChart() {
       const ctx = document.getElementById('damageChart').getContext('2d');
       if (skillChart) skillChart.destroy();
@@ -779,43 +803,30 @@
         return;
       }
 
-      const skillTotals = {};
-      selectedPlayers.forEach(p => {
-        const source =
-          selectedTarget && p.damageByTarget?.[selectedTarget]?.bySkill
-            ? p.damageByTarget[selectedTarget].bySkill
-            : p.damageBySkill;
-
-        Object.entries(source).forEach(([skill, dmg]) => {
-          skillTotals[skill] = (skillTotals[skill] || 0) + dmg;
-        });
+      // dégâts par skill dans la fenêtre temps pour chaque joueur sélectionné
+      const allSkills = new Set();
+      const perPlayerSkillTotals = selectedPlayers.map(p => {
+        const totals = buildDamageBySkillInWindow(p);
+        Object.keys(totals).forEach(k => allSkills.add(k));
+        return { player: p, totals };
       });
 
-      const sorted = Object.entries(skillTotals).sort((a, b) => b[1] - a[1]);
-      const labels = sorted.map(e => e[0]);
+      const labels = Array.from(allSkills);
 
-      const datasets = selectedPlayers.map((p, idx) => {
-        const source =
-          selectedTarget && p.damageByTarget?.[selectedTarget]?.bySkill
-            ? p.damageByTarget[selectedTarget].bySkill
-            : p.damageBySkill;
+      const datasets = perPlayerSkillTotals.map(({ player, totals }, idx) => ({
+        label: selectedTarget ? `${player.playerName} (${selectedTarget})` : player.playerName,
+        data: labels.map(skill => totals[skill] || 0),
+        backgroundColor: BAR_COLORS[idx % BAR_COLORS.length],
+        borderColor: BAR_BORDER_COLORS[idx % BAR_BORDER_COLORS.length],
+        borderWidth: 1,
+        borderRadius: 6,
+        borderSkipped: false
+      }));
 
-        return {
-          label: selectedTarget ? `${p.playerName} (${selectedTarget})` : p.playerName,
-          data: labels.map(skill => source[skill] || 0),
-          backgroundColor: BAR_COLORS[idx % BAR_COLORS.length],
-          borderColor: BAR_BORDER_COLORS[idx % BAR_BORDER_COLORS.length],
-          borderWidth: 1,
-          borderRadius: 6,
-          borderSkipped: false
-        };
-      });
-
-      playersMeta.textContent = selectedTarget
-        ? `${selectedPlayers.map(p => p.playerName).join(' vs ')} – ${selectedTarget}`
-        : (selectedPlayers.length === 1
-            ? selectedPlayers[0].playerName
-            : selectedPlayers.map(p => p.playerName).join(' vs '));
+      playersMeta.textContent =
+        perPlayerSkillTotals.length === 1
+          ? perPlayerSkillTotals[0].player.playerName
+          : perPlayerSkillTotals.map(p => p.player.playerName).join(' vs ');
 
       const newHeight = Math.max(450, labels.length * 40);
       document.getElementById('chartContainer').style.height = newHeight + 'px';
@@ -1038,7 +1049,7 @@
       drawDpsTimeline();
     }
 
-    // ---- EVENTS UI ----
+    // EVENTS UI
     toggleTargetsBtn.addEventListener('click', () => {
       const isHidden = getComputedStyle(targetsTable).display === 'none';
       if (isHidden) {
@@ -1055,7 +1066,6 @@
       if (avgDpsTimelineChart) avgDpsTimelineChart.resetZoom();
     });
 
-    // clic sur la table joueurs (ligne ou croix)
     playerBody.addEventListener('click', (e) => {
       const removeBtn = e.target.closest('.remove-player');
       if (removeBtn) {
@@ -1127,7 +1137,7 @@
       if (avgDpsTimelineChart) { avgDpsTimelineChart.destroy(); avgDpsTimelineChart = null; }
     });
 
-    // ---- LECTURE FICHIERS ----
+    // LECTURE FICHIERS
     function handleFiles() {
       let files = Array.from(fileInput.files);
       if (!files.length) return;
