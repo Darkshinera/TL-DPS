@@ -602,42 +602,42 @@
 
     // SLIDER TEMPS
     function initTimeSlider(maxDuration) {
-      if (maxDuration < 1) maxDuration = 1;
+  if (maxDuration < 1) maxDuration = 1;
 
-      if (!timeSlider) {
-        noUiSlider.create(timeRangeSliderEl, {
-          start: [0, maxDuration],
-          connect: true,
-          step: 1,
-          range: { min: 0, max: maxDuration },
-          tooltips: false
-        });
-        timeSlider = timeRangeSliderEl;
+  if (!timeSlider) {
+    noUiSlider.create(timeRangeSliderEl, {
+      start: [0, maxDuration],
+      connect: true,
+      step: 1,
+      range: { min: 0, max: maxDuration },
+      tooltips: false
+    });
+    timeSlider = timeRangeSliderEl;
 
-        timeSlider.noUiSlider.on('update', (values) => {
-          const from = Math.round(values[0]);
-          const to   = Math.round(values[1]);
-          timeFilter.from = from;
-          timeFilter.to   = to;
-          timeRangeLabel.textContent = from + 's - ' + to + 's';
-        });
+    // UN SEUL listener update : met à jour le label + tous les tableaux/graphes
+    timeSlider.noUiSlider.on('update', (values) => {
+      const from = Math.round(values[0]);
+      const to   = Math.round(values[1]);
+      timeFilter.from = from;
+      timeFilter.to   = to;
+      timeRangeLabel.textContent = from + 's - ' + to + 's';
 
-        timeSlider.noUiSlider.on('change', () => {
-          renderPlayerTable(playersData);
-          highlightSelectedRows();
-          renderTargetsTable();
-          refreshCharts();
-        });
-      } else {
-        timeSlider.noUiSlider.updateOptions({
-          start: [0, maxDuration],
-          range: { min: 0, max: maxDuration }
-        });
-        timeFilter.from = 0;
-        timeFilter.to   = maxDuration;
-        timeRangeLabel.textContent = '0s - ' + maxDuration + 's';
-      }
-    }
+      renderPlayerTable(playersData);
+      highlightSelectedRows();
+      renderTargetsTable();
+      refreshCharts();
+    });
+  } else {
+    timeSlider.noUiSlider.updateOptions({
+      start: [0, maxDuration],
+      range: { min: 0, max: maxDuration }
+    });
+    timeFilter.from = 0;
+    timeFilter.to   = maxDuration;
+    timeRangeLabel.textContent = '0s - ' + maxDuration + 's';
+  }
+}
+
 
     function applyTimeWindowToTimeline(timeline, duration) {
       const from = timeFilter.from ?? 0;
