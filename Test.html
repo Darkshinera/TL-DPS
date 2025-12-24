@@ -196,16 +196,14 @@
       margin-left: 6px;
     }
 
-    /* Time range slider container */
+    /* Time range slider sobre, au-dessus du tableau joueurs */
     #timeRangeWrapper {
       width: 95%;
       max-width: 1600px;
-      margin-top: 18px;
-      font-size: 12px;
-      color: #ccc;
+      margin-top: 16px;
     }
     #timeRangeSlider {
-      margin-top: 6px;
+      margin-top: 4px;
     }
 
     button {
@@ -267,6 +265,14 @@
       <div class="card-title">Target</div>
       <div class="card-value" id="sumBossName">---</div>
     </div>
+  </div>
+
+  <!-- SLIDER TEMPS juste au-dessus des joueurs -->
+  <div id="timeRangeWrapper">
+    <div style="font-size:12px; color:#ccc; margin-bottom:4px;">
+      Time range: <span id="timeRangeLabel">0s - 0s</span>
+    </div>
+    <div id="timeRangeSlider"></div>
   </div>
 
   <h2>Player Statistics</h2>
@@ -338,18 +344,7 @@
       <canvas id="dpsTimeline"></canvas>
     </div>
   </div>
-
-  <!-- TIME RANGE SLIDER -->
-  <div id="timeRangeWrapper">
-    Time range (seconds from pull):
-    <div id="timeRangeSlider"></div>
-    <div style="margin-top:4px;">
-      <span id="timeRangeLabel">0s - 0s</span>
-    </div>
-  </div>
-
-  <!-- ICI viendra tout le <script> mis à jour -->
-    <script>
+  <script>
     const fileInput = document.getElementById('logFile');
     const dropZone  = document.getElementById('dropZone');
     const statusEl  = document.getElementById('status');
@@ -407,7 +402,7 @@
       'rgba(241, 196, 15, 1)'
     ];
 
-    // --- PATH CLICKABLE ---
+    // PATH clickable
     logPathEl.addEventListener('click', () => {
       navigator.clipboard.writeText('%LOCALAPPDATA%\\TL\\SAVED\\COMBATLOGS')
         .then(() => {
@@ -416,7 +411,7 @@
         });
     });
 
-    // --- DRAG & DROP ---
+    // Drag & drop
     dropZone.addEventListener('click', () => {
       fileInput.click();
     });
@@ -440,7 +435,7 @@
       handleFiles();
     });
 
-    // --- TEMPS / DATES ---
+    // Temps / dates
     function parseTs(ts) {
       const [datePart, timePart] = ts.split('-');
       const year = +datePart.slice(0, 4);
@@ -466,7 +461,7 @@
       }
     }
 
-    // --- PARSE LOG ---
+    // Parse d'un fichier log
     function parseLogFile(file, index) {
       return new Promise(resolve => {
         if (file.size > 20 * 1024 * 1024) {
@@ -596,26 +591,124 @@
       });
     }
 
-    // --- TABLES ---
+    // ---- SLIDER TEMPS ----
+    function initTimeSlider(maxDuration) {
+      if (maxDuration < 1) maxDuration = 1;
+
+      if (!timeSlider) {
+        noUiSlider.create(timeRangeSliderEl, {
+          start: [0, maxDuration],
+          connect: true,
+          step: 1,
+          range: { min: 0, max: maxDuration },
+          tooltips: false
+        });
+        timeSlider = timeRangeSliderEl;
+
+        timeSlider.noUiSlider.on('update', (values) => {
+          const from = Math.round(values[0]);
+          const to   = Math.round(values[1]);
+          timeFilter.from = from;
+          timeFilter.to   = to;
+          timeRangeLabel.textContent = from + 's - ' + to + 's';
+        });
+
+        timeSlider.noUiSlider.on('change', () => {
+          renderPlayerTable(playersData);
+          highlightSelectedRows();
+          renderTargetsTable();
+          refreshCharts();
+        });
+      } else {
+        timeSlider.noUiSlider.updateOptions({
+          start: [0, maxDuration],
+          range: { min: 0, max: maxDuration }
+        });
+        timeFilter.from = 0;
+        timeFilter.to   = maxDuration;
+        timeRangeLabel.textContent = '0s - ' + maxDuration + 's';
+      }
+    }
+
+    // applique la fenêtre temps à une timeline simple (objet {sec: valeur})
+    function applyTimeWindowToTimeline(timeline, duration) {
+      const from = timeFilter.from ?? 0;
+      const to   = timeFilter.to   ?? duration;
+      const filtered = {};
+      for (let s = 0; s <= duration; s++) {
+        if (s < from || s > to) continue;
+        if (timeline[s]) filtered[s] = timeline[s];
+      }
+      return { filtered, from, to };
+    }
+
+    // recalcul des stats d'un joueur sur la fenêtre temps
+    function buildPlayerStatsInWindow(player) {
+      const from = timeFilter.from ?? 0;
+      const to   = Math.min(timeFilter.to ?? player.duration, player.duration);
+
+      let totalDamage = 0;
+      let hitCount = 0;
+      let maxHit = 0;
+
+      for (let s = from; s <= to; s++) {
+        const dmg = player.damageTimeline[s] || 0;
+        if (dmg > 0) {
+          totalDamage += dmg;
+          hitCount++;
+          if (dmg > maxHit) maxHit = dmg;
+        }
+      }
+
+      const duration = Math.max(1, to - from + 1);
+      const dps = Math.round(totalDamage / duration);
+      const avgHit = hitCount > 0 ? Math.round(totalDamage / hitCount) : 0;
+
+      return { totalDamage, hitCount, maxHit, duration, dps, avgHit };
+    }
+
+    // construit une avgDpsTimeline limitée à la fenêtre temps
+    function buildAvgDpsTimelineWindow(player, from, to) {
+      let cumulative = 0;
+      const avg = {};
+      for (let s = 0; s <= player.duration; s++) {
+        const dmg = player.damageTimeline[s] || 0;
+        cumulative += dmg;
+        if (s >= from && s <= to) {
+          avg[s] = cumulative / Math.max(1, s + 1);
+        }
+      }
+      return avg;
+    }
+
+    // ---- TABLEAUX ----
     function renderPlayerTable(players) {
       playerBody.innerHTML = '';
-      const totalFightDamage = players.reduce((sum, p) => sum + p.totalDamage, 0);
 
-      players.forEach((p, idx) => {
+      const windowStats = players.map(p => ({
+        player: p,
+        stats: buildPlayerStatsInWindow(p)
+      }));
+
+      const totalFightDamage = windowStats.reduce((sum, w) => sum + w.stats.totalDamage, 0);
+
+      windowStats.forEach((w, idx) => {
+        const p = w.player;
+        const s = w.stats;
         const tr = document.createElement('tr');
         tr.dataset.index = p.index;
-        const percent = totalFightDamage > 0 ? (p.totalDamage / totalFightDamage) * 100 : 0;
+        const percent = totalFightDamage > 0 ? (s.totalDamage / totalFightDamage) * 100 : 0;
 
         tr.innerHTML = `
           <td>${idx + 1}</td>
           <td>${p.playerName}</td>
-          <td>${p.dps.toLocaleString('fr-FR')}</td>
-          <td>${p.totalDamage.toLocaleString('fr-FR')}</td>
+          <td>${s.dps.toLocaleString('fr-FR')}</td>
+          <td>${s.totalDamage.toLocaleString('fr-FR')}</td>
           <td>${percent.toFixed(2)}%</td>
-          <td>${p.hitCount.toLocaleString('fr-FR')}</td>
-          <td>${p.avgHit.toLocaleString('fr-FR')}</td>
-          <td>${p.maxHit.toLocaleString('fr-FR')}</td>
-          <td>${p.duration}s</td>
+          <td>${s.hitCount.toLocaleString('fr-FR')}</td>
+          <td>${s.avgHit ? s.avgHit.toLocaleString('fr-FR') : '-'}</td>
+          <td>${s.maxHit.toLocaleString('fr-FR')}</td>
+          <td>${s.duration}s</td>
           <td style="width:40px;">
             <span class="remove-player" data-index="${p.index}" title="Retirer ce joueur des logs">✕</span>
           </td>
@@ -623,6 +716,16 @@
         if (idx === 0) tr.style.borderLeft = '3px solid #ff4d6a';
         playerBody.appendChild(tr);
       });
+
+      // cards en haut suivant la fenêtre temps
+      const sumTotalDamage = windowStats.reduce((sum, w) => sum + w.stats.totalDamage, 0);
+      const avgDps = windowStats.length
+        ? windowStats.reduce((sum, w) => sum + w.stats.dps, 0) / windowStats.length
+        : 0;
+      document.getElementById('sumTotalDamage').textContent =
+        sumTotalDamage.toLocaleString('fr-FR');
+      document.getElementById('sumAvgDps').textContent =
+        Math.round(avgDps).toLocaleString('fr-FR');
     }
 
     function highlightSelectedRows() {
@@ -665,70 +768,7 @@
           targetsBody.appendChild(tr);
         });
     }
-
-    // --- RANGE SLIDER TEMPS ---
-    function initTimeSlider(maxDuration) {
-      if (maxDuration < 1) maxDuration = 1;
-
-      if (!timeSlider) {
-        noUiSlider.create(timeRangeSliderEl, {
-          start: [0, maxDuration],
-          connect: true,
-          step: 1,
-          range: { min: 0, max: maxDuration },
-          tooltips: false
-        });
-        timeSlider = timeRangeSliderEl;
-
-        timeSlider.noUiSlider.on('update', (values) => {
-          const from = Math.round(values[0]);
-          const to   = Math.round(values[1]);
-          timeFilter.from = from;
-          timeFilter.to   = to;
-          timeRangeLabel.textContent = from + 's - ' + to + 's';
-        });
-
-        timeSlider.noUiSlider.on('change', () => {
-          refreshCharts();
-        });
-      } else {
-        timeSlider.noUiSlider.updateOptions({
-          start: [0, maxDuration],
-          range: { min: 0, max: maxDuration }
-        });
-        timeFilter.from = 0;
-        timeFilter.to   = maxDuration;
-        timeRangeLabel.textContent = '0s - ' + maxDuration + 's';
-      }
-    }
-
-    // applique la fenêtre temps à une timeline simple (objet {sec: valeur})
-    function applyTimeWindowToTimeline(timeline, duration) {
-      const from = timeFilter.from ?? 0;
-      const to   = timeFilter.to   ?? duration;
-      const filtered = {};
-      for (let s = 0; s <= duration; s++) {
-        if (s < from || s > to) continue;
-        if (timeline[s]) filtered[s] = timeline[s];
-      }
-      return { filtered, from, to };
-    }
-
-    // recalcul de l'avg DPS sur la fenêtre temps pour un joueur
-    function buildAvgDpsTimelineWindow(player, from, to) {
-      let cumulative = 0;
-      const avg = {};
-      for (let s = 0; s <= player.duration; s++) {
-        const dmg = player.damageTimeline[s] || 0;
-        cumulative += dmg;
-        if (s >= from && s <= to) {
-          avg[s] = cumulative / Math.max(1, s + 1);
-        }
-      }
-      return avg;
-    }
-
-    // --- CHARTS ---
+    // ---- GRAPHIQUES ----
     function drawComparisonChart() {
       const ctx = document.getElementById('damageChart').getContext('2d');
       if (skillChart) skillChart.destroy();
@@ -998,7 +1038,7 @@
       drawDpsTimeline();
     }
 
-    // --- BOUTONS / ÉVÉNEMENTS ---
+    // ---- EVENTS UI ----
     toggleTargetsBtn.addEventListener('click', () => {
       const isHidden = getComputedStyle(targetsTable).display === 'none';
       if (isHidden) {
@@ -1087,6 +1127,7 @@
       if (avgDpsTimelineChart) { avgDpsTimelineChart.destroy(); avgDpsTimelineChart = null; }
     });
 
+    // ---- LECTURE FICHIERS ----
     function handleFiles() {
       let files = Array.from(fileInput.files);
       if (!files.length) return;
@@ -1158,6 +1199,5 @@
 
     fileInput.addEventListener('change', handleFiles);
   </script>
-
 </body>
 </html>
