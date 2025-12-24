@@ -798,7 +798,7 @@
       if (skillChart) skillChart.destroy();
       const playersMeta = document.getElementById('playersMeta');
 
-      if (!selectedPlayers.length) {
+       if (!selectedPlayers.length) {
         playersMeta.textContent = '';
         return;
       }
@@ -811,7 +811,18 @@
         return { player: p, totals };
       });
 
-      const labels = Array.from(allSkills);
+      // total global par skill (pour le tri)
+      const globalSkillTotals = {};
+      perPlayerSkillTotals.forEach(({ totals }) => {
+        Object.entries(totals).forEach(([skill, dmg]) => {
+          globalSkillTotals[skill] = (globalSkillTotals[skill] || 0) + dmg;
+        });
+      });
+
+      // labels triés du plus gros au plus faible
+      const labels = Array.from(allSkills).sort((a, b) => {
+        return (globalSkillTotals[b] || 0) - (globalSkillTotals[a] || 0);
+      });
 
       const datasets = perPlayerSkillTotals.map(({ player, totals }, idx) => ({
         label: selectedTarget ? `${player.playerName} (${selectedTarget})` : player.playerName,
@@ -827,6 +838,7 @@
         perPlayerSkillTotals.length === 1
           ? perPlayerSkillTotals[0].player.playerName
           : perPlayerSkillTotals.map(p => p.player.playerName).join(' vs ');
+
 
       const newHeight = Math.max(450, labels.length * 40);
       document.getElementById('chartContainer').style.height = newHeight + 'px';
