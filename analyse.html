@@ -96,10 +96,11 @@
       cursor: pointer;
       border-left: 3px solid #ff4d6a;
     }
+
     tr.player-selected {
-      background-color: #3a2525;
-      border-left: 3px solid #ff9a6a;
+      font-weight: bold;
     }
+
     td:nth-child(2) { text-align: left; }
 
     td:nth-child(3),
@@ -196,7 +197,6 @@
       margin-left: 6px;
     }
 
-    /* Time range slider sobre, au-dessus du tableau joueurs */
     #timeRangeWrapper {
       width: 95%;
       max-width: 1600px;
@@ -267,7 +267,6 @@
     </div>
   </div>
 
-  <!-- SLIDER TEMPS juste au-dessus des joueurs -->
   <div id="timeRangeWrapper">
     <div style="font-size:12px; color:#ccc; margin-bottom:4px;">
       Time range: <span id="timeRangeLabel">0s - 0s</span>
@@ -344,7 +343,8 @@
       <canvas id="dpsTimeline"></canvas>
     </div>
   </div>
-    <script>
+
+  <script>
     const fileInput = document.getElementById('logFile');
     const dropZone  = document.getElementById('dropZone');
     const statusEl  = document.getElementById('status');
@@ -366,8 +366,8 @@
     let selectedPlayers = [];
     let selectedTarget = null;
     let globalBossPhases = [];
-    let timeSlider = null;          // noUiSlider instance
-    let timeFilter = { from: 0, to: null }; // secondes filtrées
+    let timeSlider = null;
+    let timeFilter = { from: 0, to: null };
 
     const BAR_COLORS = [
       'rgba(88, 101, 242, 0.8)',
@@ -402,6 +402,17 @@
       'rgba(241, 196, 15, 1)'
     ];
 
+    // couleur par index (log)
+    function getColorForIndex(idx) {
+      return {
+        rowBg: BAR_COLORS[idx % BAR_COLORS.length],
+        text: '#ffffff',
+        barBg: BAR_COLORS[idx % BAR_COLORS.length],
+        barBorder: BAR_BORDER_COLORS[idx % BAR_BORDER_COLORS.length],
+        line: LINE_COLORS[idx % LINE_COLORS.length]
+      };
+    }
+
     // PATH
     logPathEl.addEventListener('click', () => {
       navigator.clipboard.writeText('%LOCALAPPDATA%\\TL\\SAVED\\COMBATLOGS')
@@ -412,9 +423,7 @@
     });
 
     // DRAG & DROP
-    dropZone.addEventListener('click', () => {
-      fileInput.click();
-    });
+    dropZone.addEventListener('click', () => fileInput.click());
     dropZone.addEventListener('dragover', (e) => {
       e.preventDefault();
       dropZone.style.borderColor = '#4fd1ff';
@@ -444,7 +453,6 @@
       const [h, m, s, ms] = timePart.split(':').map(n => +n);
       return new Date(year, month, day, h, m, s, ms);
     }
-
     function computeDurationSeconds(ts1, ts2) {
       try {
         return Math.max(1, Math.round((parseTs(ts2) - parseTs(ts1)) / 1000));
@@ -452,7 +460,6 @@
         return 1;
       }
     }
-
     function computeSecondsDiff(tsStart, tsCurrent) {
       try {
         return Math.max(0, Math.floor((parseTs(tsCurrent) - parseTs(tsStart)) / 1000));
@@ -476,7 +483,7 @@
             const damageBySkill = {};
             const damageTimeline = {};
             const damageByTarget = {};
-            const damageBySkillTimeline = {}; // skill -> par seconde
+            const damageBySkillTimeline = {};
             const bossPhases = [];
 
             let totalDamage = 0;
@@ -525,7 +532,6 @@
 
                 damageBySkill[skillName] = (damageBySkill[skillName] || 0) + dmg;
 
-                // nouveau : dégâts par skill et par seconde
                 if (!damageBySkillTimeline[secFromStart]) {
                   damageBySkillTimeline[secFromStart] = {};
                 }
@@ -602,42 +608,40 @@
 
     // SLIDER TEMPS
     function initTimeSlider(maxDuration) {
-  if (maxDuration < 1) maxDuration = 1;
+      if (maxDuration < 1) maxDuration = 1;
 
-  if (!timeSlider) {
-    noUiSlider.create(timeRangeSliderEl, {
-      start: [0, maxDuration],
-      connect: true,
-      step: 1,
-      range: { min: 0, max: maxDuration },
-      tooltips: false
-    });
-    timeSlider = timeRangeSliderEl;
+      if (!timeSlider) {
+        noUiSlider.create(timeRangeSliderEl, {
+          start: [0, maxDuration],
+          connect: true,
+          step: 1,
+          range: { min: 0, max: maxDuration },
+          tooltips: false
+        });
+        timeSlider = timeRangeSliderEl;
 
-    // UN SEUL listener update : met à jour le label + tous les tableaux/graphes
-    timeSlider.noUiSlider.on('update', (values) => {
-      const from = Math.round(values[0]);
-      const to   = Math.round(values[1]);
-      timeFilter.from = from;
-      timeFilter.to   = to;
-      timeRangeLabel.textContent = from + 's - ' + to + 's';
+        timeSlider.noUiSlider.on('update', (values) => {
+          const from = Math.round(values[0]);
+          const to   = Math.round(values[1]);
+          timeFilter.from = from;
+          timeFilter.to   = to;
+          timeRangeLabel.textContent = from + 's - ' + to + 's';
 
-      renderPlayerTable(playersData);
-      highlightSelectedRows();
-      renderTargetsTable();
-      refreshCharts();
-    });
-  } else {
-    timeSlider.noUiSlider.updateOptions({
-      start: [0, maxDuration],
-      range: { min: 0, max: maxDuration }
-    });
-    timeFilter.from = 0;
-    timeFilter.to   = maxDuration;
-    timeRangeLabel.textContent = '0s - ' + maxDuration + 's';
-  }
-}
-
+          renderPlayerTable(playersData);
+          highlightSelectedRows();
+          renderTargetsTable();
+          refreshCharts();
+        });
+      } else {
+        timeSlider.noUiSlider.updateOptions({
+          start: [0, maxDuration],
+          range: { min: 0, max: maxDuration }
+        });
+        timeFilter.from = 0;
+        timeFilter.to   = maxDuration;
+        timeRangeLabel.textContent = '0s - ' + maxDuration + 's';
+      }
+    }
 
     function applyTimeWindowToTimeline(timeline, duration) {
       const from = timeFilter.from ?? 0;
@@ -650,7 +654,6 @@
       return { filtered, from, to };
     }
 
-    // stats joueur dans la fenêtre temps
     function buildPlayerStatsInWindow(player) {
       const from = timeFilter.from ?? 0;
       const to   = Math.min(timeFilter.to ?? player.duration, player.duration);
@@ -675,7 +678,6 @@
       return { totalDamage, hitCount, maxHit, duration, dps, avgHit };
     }
 
-    // avg DPS fenêtre
     function buildAvgDpsTimelineWindow(player, from, to) {
       let cumulative = 0;
       const avg = {};
@@ -689,7 +691,6 @@
       return avg;
     }
 
-    // dégâts par skill dans la fenêtre temps
     function buildDamageBySkillInWindow(player) {
       const from = timeFilter.from ?? 0;
       const to   = Math.min(timeFilter.to ?? player.duration, player.duration);
@@ -722,11 +723,13 @@
         const s = w.stats;
         const tr = document.createElement('tr');
         tr.dataset.index = p.index;
+
+        const c = getColorForIndex(p.index);
         const percent = totalFightDamage > 0 ? (s.totalDamage / totalFightDamage) * 100 : 0;
 
         tr.innerHTML = `
           <td>${idx + 1}</td>
-          <td>${p.playerName}</td>
+          <td style="color:${c.text};">${p.playerName}</td>
           <td>${s.dps.toLocaleString('fr-FR')}</td>
           <td>${s.totalDamage.toLocaleString('fr-FR')}</td>
           <td>${percent.toFixed(2)}%</td>
@@ -738,7 +741,12 @@
             <span class="remove-player" data-index="${p.index}" title="Retirer ce joueur des logs">✕</span>
           </td>
         `;
-        if (idx === 0) tr.style.borderLeft = '3px solid #ff4d6a';
+
+        if (selectedPlayers.some(sp => sp.index === p.index)) {
+          tr.classList.add('player-selected');
+          tr.style.backgroundColor = c.rowBg;
+        }
+
         playerBody.appendChild(tr);
       });
 
@@ -756,8 +764,15 @@
       const rows = playerBody.querySelectorAll('tr');
       rows.forEach(row => {
         const idx = +row.dataset.index;
-        const isSelected = selectedPlayers.some(p => p.index === idx);
+        const p = playersData.find(pl => pl.index === idx);
+        const isSelected = selectedPlayers.some(sp => sp.index === idx);
+
         row.classList.toggle('player-selected', isSelected);
+        row.style.backgroundColor = '';
+        if (isSelected && p) {
+          const c = getColorForIndex(p.index);
+          row.style.backgroundColor = c.rowBg;
+        }
       });
     }
 
@@ -792,18 +807,18 @@
           targetsBody.appendChild(tr);
         });
     }
+
     // GRAPHIQUES
     function drawComparisonChart() {
       const ctx = document.getElementById('damageChart').getContext('2d');
       if (skillChart) skillChart.destroy();
       const playersMeta = document.getElementById('playersMeta');
 
-       if (!selectedPlayers.length) {
+      if (!selectedPlayers.length) {
         playersMeta.textContent = '';
         return;
       }
 
-      // dégâts par skill dans la fenêtre temps pour chaque joueur sélectionné
       const allSkills = new Set();
       const perPlayerSkillTotals = selectedPlayers.map(p => {
         const totals = buildDamageBySkillInWindow(p);
@@ -811,7 +826,6 @@
         return { player: p, totals };
       });
 
-      // total global par skill (pour le tri)
       const globalSkillTotals = {};
       perPlayerSkillTotals.forEach(({ totals }) => {
         Object.entries(totals).forEach(([skill, dmg]) => {
@@ -819,26 +833,27 @@
         });
       });
 
-      // labels triés du plus gros au plus faible
       const labels = Array.from(allSkills).sort((a, b) => {
         return (globalSkillTotals[b] || 0) - (globalSkillTotals[a] || 0);
       });
 
-      const datasets = perPlayerSkillTotals.map(({ player, totals }, idx) => ({
-        label: selectedTarget ? `${player.playerName} (${selectedTarget})` : player.playerName,
-        data: labels.map(skill => totals[skill] || 0),
-        backgroundColor: BAR_COLORS[idx % BAR_COLORS.length],
-        borderColor: BAR_BORDER_COLORS[idx % BAR_BORDER_COLORS.length],
-        borderWidth: 1,
-        borderRadius: 6,
-        borderSkipped: false
-      }));
+      const datasets = perPlayerSkillTotals.map(({ player, totals }) => {
+        const c = getColorForIndex(player.index);
+        return {
+          label: selectedTarget ? `${player.playerName} (${selectedTarget})` : player.playerName,
+          data: labels.map(skill => totals[skill] || 0),
+          backgroundColor: c.barBg,
+          borderColor: c.barBorder,
+          borderWidth: 1,
+          borderRadius: 6,
+          borderSkipped: false
+        };
+      });
 
       playersMeta.textContent =
         perPlayerSkillTotals.length === 1
           ? perPlayerSkillTotals[0].player.playerName
           : perPlayerSkillTotals.map(p => p.player.playerName).join(' vs ');
-
 
       const newHeight = Math.max(450, labels.length * 40);
       document.getElementById('chartContainer').style.height = newHeight + 'px';
@@ -896,15 +911,16 @@
       const labels = [];
       for (let s = from; s <= to; s++) labels.push(`${s}s`);
 
-      const datasets = selectedPlayers.map((p, idx) => {
+      const datasets = selectedPlayers.map((p) => {
         const avgWindow = buildAvgDpsTimelineWindow(p, from, to);
+        const c = getColorForIndex(p.index);
         return {
           label: p.playerName,
           data: labels.map((_, i) => {
             const sec = from + i;
             return avgWindow[sec] || 0;
           }),
-          borderColor: LINE_COLORS[idx % LINE_COLORS.length],
+          borderColor: c.line,
           backgroundColor: 'transparent',
           pointRadius: 0,
           borderWidth: 1.8,
@@ -1006,15 +1022,16 @@
       const labels = [];
       for (let s = from; s <= to; s++) labels.push(`${s}s`);
 
-      const datasets = selectedPlayers.map((p, idx) => {
+      const datasets = selectedPlayers.map((p) => {
         const { filtered } = applyTimeWindowToTimeline(p.damageTimeline, p.duration);
+        const c = getColorForIndex(p.index);
         return {
           label: p.playerName,
           data: labels.map((_, i) => {
             const sec = from + i;
             return filtered[sec] || 0;
           }),
-          borderColor: LINE_COLORS[idx % LINE_COLORS.length],
+          borderColor: c.line,
           backgroundColor: 'transparent',
           pointRadius: 0,
           borderWidth: 1.5,
@@ -1115,6 +1132,7 @@
         ? selectedPlayers.filter(p => p.index !== player.index)
         : [...selectedPlayers, player];
 
+      renderPlayerTable(playersData);
       highlightSelectedRows();
       refreshCharts();
     });
