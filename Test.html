@@ -97,7 +97,6 @@
       border-left: 3px solid #ff4d6a;
     }
 
-    /* plus de couleur fixe : JS gère la couleur par joueur */
     tr.player-selected {
       font-weight: bold;
     }
@@ -370,6 +369,7 @@
     let timeSlider = null;
     let timeFilter = { from: 0, to: null };
 
+    // couleurs générées si jamais nécessaires ailleurs
     const BAR_COLORS = [
       'rgba(88, 101, 242, 0.8)',
       'rgba(46, 204, 113, 0.8)',
@@ -403,7 +403,7 @@
       'rgba(241, 196, 15, 1)'
     ];
 
-    // === Couleur unique par joueur ===
+    // couleur unique par joueur
     const playerColorCache = {};
     function colorFromName(name) {
       let hash = 0;
@@ -668,7 +668,6 @@
       return { filtered, from, to };
     }
 
-    // stats joueur dans la fenêtre temps
     function buildPlayerStatsInWindow(player) {
       const from = timeFilter.from ?? 0;
       const to   = Math.min(timeFilter.to ?? player.duration, player.duration);
@@ -852,7 +851,7 @@
         return (globalSkillTotals[b] || 0) - (globalSkillTotals[a] || 0);
       });
 
-      const datasets = perPlayerSkillTotals.map(({ player, totals }, idx) => {
+      const datasets = perPlayerSkillTotals.map(({ player, totals }) => {
         const c = player.uiColor || getPlayerColor(player.playerName);
         return {
           label: selectedTarget ? `${player.playerName} (${selectedTarget})` : player.playerName,
@@ -1142,8 +1141,8 @@
       const player = playersData.find(p => p.index === index);
       if (!player) return;
 
-      // couleur fixe pour ce joueur
-      player.uiColor = getPlayerColor(player.playerName);
+      // assigne ou réutilise la couleur de ce joueur
+      player.uiColor = player.uiColor || getPlayerColor(player.playerName);
 
       const exists = selectedPlayers.some(p => p.index === player.index);
       selectedPlayers = exists
