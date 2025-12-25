@@ -97,7 +97,7 @@
       border-left: 3px solid #ff4d6a;
     }
 
-    /* plus de couleur fixe ici, le JS met la bonne couleur pour chaque joueur */
+    /* plus de couleur fixe : JS gère la couleur par joueur */
     tr.player-selected {
       font-weight: bold;
     }
@@ -345,9 +345,7 @@
     </div>
   </div>
 
-  <!-- SCRIPT COMPLET CI‑DESSOUS -->
   <script>
-    /* ==== CONFIG GLOBALE ==== */
     const fileInput = document.getElementById('logFile');
     const dropZone  = document.getElementById('dropZone');
     const statusEl  = document.getElementById('status');
@@ -372,7 +370,6 @@
     let timeSlider = null;
     let timeFilter = { from: 0, to: null };
 
-    // PALETTES / FONCTIONS DE COULEUR
     const BAR_COLORS = [
       'rgba(88, 101, 242, 0.8)',
       'rgba(46, 204, 113, 0.8)',
@@ -393,7 +390,6 @@
       'rgba(230, 126, 34, 1)',
       'rgba(149, 165, 166, 1)'
     ];
-
     const LINE_COLORS = [
       'rgba(255, 99, 132, 1)',
       'rgba(54, 162, 235, 1)',
@@ -407,9 +403,8 @@
       'rgba(241, 196, 15, 1)'
     ];
 
-    // === COULEUR UNIQUE PAR JOUEUR (clé = nom) ===
+    // === Couleur unique par joueur ===
     const playerColorCache = {};
-
     function colorFromName(name) {
       let hash = 0;
       for (let i = 0; i < name.length; i++) {
@@ -418,7 +413,6 @@
       const h = Math.abs(hash) % 360;
       return `hsl(${h}, 65%, 55%)`;
     }
-
     function getPlayerColor(name) {
       if (!playerColorCache[name]) {
         const base = colorFromName(name);
@@ -433,16 +427,16 @@
       return playerColorCache[name];
     }
 
-    /* ==== PATH ==== */
+    // PATH
     logPathEl.addEventListener('click', () => {
-      navigator.clipboard.writeText('%LOCALAPPDATA%\\\\TL\\\\SAVED\\\\COMBATLOGS')
+      navigator.clipboard.writeText('%LOCALAPPDATA%\\TL\\SAVED\\COMBATLOGS')
         .then(() => {
           copyMsgEl.textContent = 'Path copied ✔';
           setTimeout(() => { copyMsgEl.textContent = ''; }, 2000);
         });
     });
 
-    /* ==== DRAG & DROP ==== */
+    // DRAG & DROP
     dropZone.addEventListener('click', () => fileInput.click());
     dropZone.addEventListener('dragover', (e) => {
       e.preventDefault();
@@ -464,7 +458,7 @@
       handleFiles();
     });
 
-    /* ==== TEMPS / DATES ==== */
+    // TEMPS / DATES
     function parseTs(ts) {
       const [datePart, timePart] = ts.split('-');
       const year = +datePart.slice(0, 4);
@@ -473,7 +467,6 @@
       const [h, m, s, ms] = timePart.split(':').map(n => +n);
       return new Date(year, month, day, h, m, s, ms);
     }
-
     function computeDurationSeconds(ts1, ts2) {
       try {
         return Math.max(1, Math.round((parseTs(ts2) - parseTs(ts1)) / 1000));
@@ -481,7 +474,6 @@
         return 1;
       }
     }
-
     function computeSecondsDiff(tsStart, tsCurrent) {
       try {
         return Math.max(0, Math.floor((parseTs(tsCurrent) - parseTs(tsStart)) / 1000));
@@ -490,7 +482,7 @@
       }
     }
 
-    /* ==== PARSE LOG FILE ==== */
+    // PARSE LOG FILE
     function parseLogFile(file, index) {
       return new Promise(resolve => {
         if (file.size > 20 * 1024 * 1024) {
@@ -500,7 +492,7 @@
         const reader = new FileReader();
         reader.onload = () => {
           try {
-            const lines = reader.result.split(/\\r?\\n/);
+            const lines = reader.result.split(/\r?\n/);
 
             const damageBySkill = {};
             const damageTimeline = {};
@@ -528,7 +520,7 @@
 
               const ts = parts[0].trim();
               const skillName = parts[2].trim();
-              const dmg = parseInt(parts[4].trim().replace(/\\s/g, ''), 10);
+              const dmg = parseInt(parts[4].trim().replace(/\s/g, ''), 10);
               const player = parts[parts.length - 2].trim();
               const boss = parts[parts.length - 1].trim();
 
@@ -628,7 +620,7 @@
       });
     }
 
-    /* ==== SLIDER TEMPS ==== */
+    // SLIDER TEMPS
     function initTimeSlider(maxDuration) {
       if (maxDuration < 1) maxDuration = 1;
 
@@ -676,6 +668,7 @@
       return { filtered, from, to };
     }
 
+    // stats joueur dans la fenêtre temps
     function buildPlayerStatsInWindow(player) {
       const from = timeFilter.from ?? 0;
       const to   = Math.min(timeFilter.to ?? player.duration, player.duration);
@@ -729,7 +722,7 @@
       return skillTotals;
     }
 
-    /* ==== TABLEAUX ==== */
+    // TABLEAUX
     function renderPlayerTable(players) {
       playerBody.innerHTML = '';
 
@@ -747,23 +740,22 @@
         tr.dataset.index = p.index;
 
         const c = p.uiColor || getPlayerColor(p.playerName);
-
         const percent = totalFightDamage > 0 ? (s.totalDamage / totalFightDamage) * 100 : 0;
 
-        tr.innerHTML = \`
-          <td>\${idx + 1}</td>
-          <td style="color:\${c.text};">\${p.playerName}</td>
-          <td>\${s.dps.toLocaleString('fr-FR')}</td>
-          <td>\${s.totalDamage.toLocaleString('fr-FR')}</td>
-          <td>\${percent.toFixed(2)}%</td>
-          <td>\${s.hitCount.toLocaleString('fr-FR')}</td>
-          <td>\${s.avgHit ? s.avgHit.toLocaleString('fr-FR') : '-'}</td>
-          <td>\${s.maxHit.toLocaleString('fr-FR')}</td>
-          <td>\${s.duration}s</td>
+        tr.innerHTML = `
+          <td>${idx + 1}</td>
+          <td style="color:${c.text};">${p.playerName}</td>
+          <td>${s.dps.toLocaleString('fr-FR')}</td>
+          <td>${s.totalDamage.toLocaleString('fr-FR')}</td>
+          <td>${percent.toFixed(2)}%</td>
+          <td>${s.hitCount.toLocaleString('fr-FR')}</td>
+          <td>${s.avgHit ? s.avgHit.toLocaleString('fr-FR') : '-'}</td>
+          <td>${s.maxHit.toLocaleString('fr-FR')}</td>
+          <td>${s.duration}s</td>
           <td style="width:40px;">
-            <span class="remove-player" data-index="\${p.index}" title="Retirer ce joueur des logs">✕</span>
+            <span class="remove-player" data-index="${p.index}" title="Retirer ce joueur des logs">✕</span>
           </td>
-        \`;
+        `;
 
         if (selectedPlayers.some(sp => sp.index === p.index)) {
           tr.classList.add('player-selected');
@@ -789,6 +781,7 @@
         const idx = +row.dataset.index;
         const p = playersData.find(pl => pl.index === idx);
         const isSelected = selectedPlayers.some(sp => sp.index === idx);
+
         row.classList.toggle('player-selected', isSelected);
         row.style.backgroundColor = '';
         if (isSelected && p) {
@@ -817,11 +810,11 @@
         .sort((a, b) => b[1].totalDamage - a[1].totalDamage)
         .forEach(([target, info]) => {
           const tr = document.createElement('tr');
-          tr.innerHTML = \`
-            <td>\${target}</td>
-            <td>\${info.totalDamage.toLocaleString('fr-FR')}</td>
-            <td>\${info.hits.toLocaleString('fr-FR')}</td>
-          \`;
+          tr.innerHTML = `
+            <td>${target}</td>
+            <td>${info.totalDamage.toLocaleString('fr-FR')}</td>
+            <td>${info.hits.toLocaleString('fr-FR')}</td>
+          `;
           tr.addEventListener('click', () => {
             selectedTarget = target;
             refreshCharts();
@@ -830,7 +823,7 @@
         });
     }
 
-    /* ==== GRAPHIQUES ==== */
+    // GRAPHIQUES
     function drawComparisonChart() {
       const ctx = document.getElementById('damageChart').getContext('2d');
       if (skillChart) skillChart.destroy();
@@ -862,7 +855,7 @@
       const datasets = perPlayerSkillTotals.map(({ player, totals }, idx) => {
         const c = player.uiColor || getPlayerColor(player.playerName);
         return {
-          label: selectedTarget ? \`\${player.playerName} (\${selectedTarget})\` : player.playerName,
+          label: selectedTarget ? `${player.playerName} (${selectedTarget})` : player.playerName,
           data: labels.map(skill => totals[skill] || 0),
           backgroundColor: c.barBg,
           borderColor: c.barBorder,
@@ -897,7 +890,7 @@
               callbacks: {
                 label: (ctx) => {
                   const v = ctx.parsed.x || 0;
-                  return \`\${ctx.dataset.label} – \${ctx.label}: \${v.toLocaleString('fr-FR')} dégâts\`;
+                  return `${ctx.dataset.label} – ${ctx.label}: ${v.toLocaleString('fr-FR')} dégâts`;
                 }
               }
             }
@@ -928,10 +921,10 @@
       const maxDuration = Math.max(...selectedPlayers.map(p => p.duration));
       const from = timeFilter.from ?? 0;
       const to   = Math.min(timeFilter.to ?? maxDuration, maxDuration);
-      fightMeta.textContent = \`\${from}s - \${to}s (fight \${maxDuration}s)\`;
+      fightMeta.textContent = `${from}s - ${to}s (fight ${maxDuration}s)`;
 
       const labels = [];
-      for (let s = from; s <= to; s++) labels.push(\`\${s}s\`);
+      for (let s = from; s <= to; s++) labels.push(`${s}s`);
 
       const datasets = selectedPlayers.map((p) => {
         const avgWindow = buildAvgDpsTimelineWindow(p, from, to);
@@ -967,7 +960,7 @@
               callbacks: {
                 label: (ctx) => {
                   const v = ctx.parsed.y || 0;
-                  return \`\${ctx.dataset.label}: \${Math.round(v).toLocaleString('fr-FR')} DPS moyen\`;
+                  return `${ctx.dataset.label}: ${Math.round(v).toLocaleString('fr-FR')} DPS moyen`;
                 }
               }
             },
@@ -1039,10 +1032,10 @@
       const maxDuration = Math.max(...selectedPlayers.map(p => p.duration));
       const from = timeFilter.from ?? 0;
       const to   = Math.min(timeFilter.to ?? maxDuration, maxDuration);
-      fightMeta.textContent = \`\${from}s - \${to}s (fight \${maxDuration}s)\`;
+      fightMeta.textContent = `${from}s - ${to}s (fight ${maxDuration}s)`;
 
       const labels = [];
-      for (let s = from; s <= to; s++) labels.push(\`\${s}s\`);
+      for (let s = from; s <= to; s++) labels.push(`${s}s`);
 
       const datasets = selectedPlayers.map((p) => {
         const { filtered } = applyTimeWindowToTimeline(p.damageTimeline, p.duration);
@@ -1075,7 +1068,7 @@
               callbacks: {
                 label: (ctx) => {
                   const v = ctx.parsed.y || 0;
-                  return \`\${ctx.dataset.label}: \${v.toLocaleString('fr-FR')} DPS\`;
+                  return `${ctx.dataset.label}: ${v.toLocaleString('fr-FR')} DPS`;
                 }
               }
             }
@@ -1100,7 +1093,7 @@
       drawDpsTimeline();
     }
 
-    /* ==== EVENTS UI ==== */
+    // EVENTS UI
     toggleTargetsBtn.addEventListener('click', () => {
       const isHidden = getComputedStyle(targetsTable).display === 'none';
       if (isHidden) {
@@ -1149,9 +1142,8 @@
       const player = playersData.find(p => p.index === index);
       if (!player) return;
 
-      // couleur figée pour ce joueur
-      const color = getPlayerColor(player.playerName);
-      player.uiColor = color;
+      // couleur fixe pour ce joueur
+      player.uiColor = getPlayerColor(player.playerName);
 
       const exists = selectedPlayers.some(p => p.index === player.index);
       selectedPlayers = exists
@@ -1193,7 +1185,7 @@
       if (avgDpsTimelineChart) { avgDpsTimelineChart.destroy(); avgDpsTimelineChart = null; }
     });
 
-    /* ==== LECTURE FICHIERS ==== */
+    // LECTURE FICHIERS
     function handleFiles() {
       let files = Array.from(fileInput.files);
       if (!files.length) return;
@@ -1245,10 +1237,9 @@
           document.getElementById('sumPlayers').textContent = playersData.length;
 
           renderPlayerTable(playersData);
-          statusEl.textContent = \`Logs loaded: \${playersData.length}\`;
+          statusEl.textContent = `Logs loaded: ${playersData.length}`;
 
           if (playersData.length > 0) {
-            // premier joueur sélectionné par défaut + couleur
             const first = playersData[0];
             first.uiColor = getPlayerColor(first.playerName);
             selectedPlayers = [first];
