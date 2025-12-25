@@ -369,7 +369,6 @@
     let timeSlider = null;
     let timeFilter = { from: 0, to: null };
 
-    // couleurs générées si jamais nécessaires ailleurs
     const BAR_COLORS = [
       'rgba(88, 101, 242, 0.8)',
       'rgba(46, 204, 113, 0.8)',
@@ -403,28 +402,15 @@
       'rgba(241, 196, 15, 1)'
     ];
 
-    // couleur unique par joueur
-    const playerColorCache = {};
-    function colorFromName(name) {
-      let hash = 0;
-      for (let i = 0; i < name.length; i++) {
-        hash = name.charCodeAt(i) + ((hash << 5) - hash);
-      }
-      const h = Math.abs(hash) % 360;
-      return `hsl(${h}, 65%, 55%)`;
-    }
-    function getPlayerColor(name) {
-      if (!playerColorCache[name]) {
-        const base = colorFromName(name);
-        playerColorCache[name] = {
-          rowBg: base,
-          text: '#ffffff',
-          barBg: base,
-          barBorder: base,
-          line: base
-        };
-      }
-      return playerColorCache[name];
+    // couleur par index (log)
+    function getColorForIndex(idx) {
+      return {
+        rowBg: BAR_COLORS[idx % BAR_COLORS.length],
+        text: '#ffffff',
+        barBg: BAR_COLORS[idx % BAR_COLORS.length],
+        barBorder: BAR_BORDER_COLORS[idx % BAR_BORDER_COLORS.length],
+        line: LINE_COLORS[idx % LINE_COLORS.length]
+      };
     }
 
     // PATH
@@ -738,7 +724,7 @@
         const tr = document.createElement('tr');
         tr.dataset.index = p.index;
 
-        const c = p.uiColor || getPlayerColor(p.playerName);
+        const c = getColorForIndex(p.index);
         const percent = totalFightDamage > 0 ? (s.totalDamage / totalFightDamage) * 100 : 0;
 
         tr.innerHTML = `
@@ -784,7 +770,7 @@
         row.classList.toggle('player-selected', isSelected);
         row.style.backgroundColor = '';
         if (isSelected && p) {
-          const c = p.uiColor || getPlayerColor(p.playerName);
+          const c = getColorForIndex(p.index);
           row.style.backgroundColor = c.rowBg;
         }
       });
@@ -852,7 +838,7 @@
       });
 
       const datasets = perPlayerSkillTotals.map(({ player, totals }) => {
-        const c = player.uiColor || getPlayerColor(player.playerName);
+        const c = getColorForIndex(player.index);
         return {
           label: selectedTarget ? `${player.playerName} (${selectedTarget})` : player.playerName,
           data: labels.map(skill => totals[skill] || 0),
@@ -927,7 +913,7 @@
 
       const datasets = selectedPlayers.map((p) => {
         const avgWindow = buildAvgDpsTimelineWindow(p, from, to);
-        const c = p.uiColor || getPlayerColor(p.playerName);
+        const c = getColorForIndex(p.index);
         return {
           label: p.playerName,
           data: labels.map((_, i) => {
@@ -1038,7 +1024,7 @@
 
       const datasets = selectedPlayers.map((p) => {
         const { filtered } = applyTimeWindowToTimeline(p.damageTimeline, p.duration);
-        const c = p.uiColor || getPlayerColor(p.playerName);
+        const c = getColorForIndex(p.index);
         return {
           label: p.playerName,
           data: labels.map((_, i) => {
@@ -1141,9 +1127,6 @@
       const player = playersData.find(p => p.index === index);
       if (!player) return;
 
-      // assigne ou réutilise la couleur de ce joueur
-      player.uiColor = player.uiColor || getPlayerColor(player.playerName);
-
       const exists = selectedPlayers.some(p => p.index === player.index);
       selectedPlayers = exists
         ? selectedPlayers.filter(p => p.index !== player.index)
@@ -1239,9 +1222,7 @@
           statusEl.textContent = `Logs loaded: ${playersData.length}`;
 
           if (playersData.length > 0) {
-            const first = playersData[0];
-            first.uiColor = getPlayerColor(first.playerName);
-            selectedPlayers = [first];
+            selectedPlayers = [playersData[0]];
           }
 
           highlightSelectedRows();
