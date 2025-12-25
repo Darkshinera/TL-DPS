@@ -1,142 +1,814 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CombatLog Viewer Complet</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; background: #1a1a1a; color: #fff; }
-        .container { max-width: 1400px; margin: 0 auto; }
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; }
-        .player-card { background: #2a2a2a; padding: 20px; border-radius: 10px; }
-        .player-name { font-size: 24px; font-weight: bold; color: #ffd700; margin-bottom: 15px; }
-        .total-dps { font-size: 32px; color: #00ff88; font-weight: bold; }
-        .ability-list { list-style: none; padding: 0; }
-        .ability { background: #3a3a3a; margin: 8px 0; padding: 12px; border-radius: 6px; display: flex; justify-content: space-between; }
-        .ability-name { font-weight: bold; }
-        .ability-dmg { color: #ff6b6b; }
-        .top5 { background: linear-gradient(90deg, #ffd700, #ffed4a); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #2a2a2a; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #444; }
-        th { background: #3a3a3a; color: #ffd700; }
-        .raw-log { background: #000; padding: 20px; border-radius: 10px; max-height: 400px; overflow-y: auto; font-family: monospace; font-size: 12px; margin-top: 20px; }
-        .upload-zone { background: #3a3a3a; padding: 20px; border-radius: 10px; text-align: center; margin-top: 30px; }
-    </style>
+  <meta charset="UTF-8">
+  <title>Damage By Skill - Throne and Liberty</title>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+
+  <!-- noUiSlider (range temps) -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.8.1/nouislider.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.8.1/nouislider.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      font-family: Arial, sans-serif;
+      background-color: #050610;
+      color: #fff;
+      padding: 20px;
+    }
+    h1 { margin-bottom: 10px; }
+    #status {
+      margin-top: 10px;
+      min-height: 20px;
+      font-weight: bold;
+    }
+
+    .summary {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+      width: 95%;
+      max-width: 1600px;
+    }
+    .card {
+      flex: 1;
+      background: linear-gradient(145deg, #151728, #0c0d16);
+      border-radius: 8px;
+      padding: 8px 12px;
+      box-shadow: 0 0 18px rgba(0,0,0,0.8);
+      border: 1px solid rgba(120,120,200,0.4);
+    }
+    .card-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: #9b9bc0;
+      letter-spacing: 0.06em;
+    }
+    .card-value {
+      margin-top: 4px;
+      font-size: 18px;
+      font-weight: 700;
+      color: #4fd1ff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    table {
+      margin-top: 25px;
+      border-collapse: collapse;
+      width: 95%;
+      max-width: 1600px;
+      background-color: #151518;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 8px 12px;
+      text-align: center;
+      font-size: 14px;
+      border-right: 1px solid #22252f;
+    }
+    th:last-child, td:last-child { border-right: none; }
+    th {
+      background-color: #202024;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+    thead th {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+    tr:nth-child(even) { background-color: #1a1a1f; }
+    tbody tr:hover {
+      background-color: #262533;
+      cursor: pointer;
+      border-left: 3px solid #ff4d6a;
+    }
+    tr.player-selected {
+      background-color: #3a2525;
+      border-left: 3px solid #ff9a6a;
+    }
+    
+    /* COULEURS PAR JOUEUR DANS LE TABLEAU */
+    .player-Nonogt td:nth-child(2) { color: #ff4444 !important; font-weight: bold; }
+    .player-P0SIPLAY td:nth-child(2) { color: #4444ff !important; font-weight: bold; }
+    .player-Calanthia td:nth-child(2) { color: #44ff44 !important; font-weight: bold; }
+    
+    td:nth-child(2) { text-align: left; }
+
+    td:nth-child(3),
+    td:nth-child(4),
+    td:nth-child(5),
+    td:nth-child(6),
+    td:nth-child(7),
+    td:nth-child(8),
+    td:nth-child(9) {
+      font-family: "Roboto Mono", Consolas, monospace;
+      font-size: 13px;
+    }
+
+    #targetsTable td:first-child { text-align: left; }
+
+    .remove-player {
+      cursor: pointer;
+      color: #ff6666;
+      font-weight: bold;
+      font-size: 16px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      transition: background 0.2s;
+      display: inline-block;
+    }
+    .remove-player:hover {
+      background: rgba(255, 102, 102, 0.2);
+    }
+
+    .panel {
+      width: 95%;
+      max-width: 1600px;
+      margin-top: 20px;
+      background: radial-gradient(circle at top left, #1b213a 0, #101018 55%);
+      border-radius: 10px;
+      padding: 10px 14px 14px;
+      box-shadow: 0 0 22px rgba(0,0,0,0.8);
+      border: 1px solid rgba(120,120,200,0.35);
+    }
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      padding-bottom: 6px;
+    }
+    .panel-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #e5e5ff;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .panel-meta {
+      font-size: 11px;
+      color: #c3c7ff;
+      letter-spacing: 0.04em;
+    }
+    .panel-body {
+      height: 420px;
+    }
+
+    #chartContainer, #timelineContainer, #avgTimelineContainer {
+      width: 100%;
+      height: 100%;
+    }
+
+    #dpsTimeline,
+    #damageChart,
+    #avgDpsTimeline {
+      width: 100% !important;
+      height: 100% !important;
+      max-height: none !important;
+      display: block;
+    }
+
+    #avgControls {
+      width: 95%;
+      max-width: 1600px;
+      margin-top: 6px;
+      text-align: right;
+      font-size: 12px;
+      color: #aaa;
+    }
+    #avgControls button {
+      padding: 3px 8px;
+      font-size: 12px;
+      border-radius: 4px;
+      border: 1px solid #333;
+      background: #1b1c22;
+      color: #fff;
+      cursor: pointer;
+      margin-left: 6px;
+    }
+
+    /* Time range slider sobre, au-dessus du tableau joueurs */
+    #timeRangeWrapper {
+      width: 95%;
+      max-width: 1600px;
+      margin-top: 16px;
+    }
+    #timeRangeSlider {
+      margin-top: 4px;
+    }
+
+    button {
+      padding: 4px 10px;
+      font-size: 13px;
+      border-radius: 4px;
+      border: 1px solid #333;
+      background: #1b1c22;
+      color: #fff;
+      cursor: pointer;
+    }
+    #clearLogsBtn {
+      background: #441818;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🔥 CombatLog Analyzer COMPLET 🔥</h1>
-        <p>Glisse ton <code>merged_logs.txt</code> ou clique pour uploader → Stats instantanées !</p>
-        <div id="stats"></div>
-        <div id="global-table"></div>
-        <div id="raw-log"></div>
+  <!-- HTML IDENTIQUE À L'ORIGINAL -->
+  <h1>Damage By Skill - Throne and Liberty</h1>
+
+  <div style="margin-top:4px; text-align:center; font-size:13px;">
+    Logs folder:
+    <code id="logPath"
+          style="padding:3px 6px; background:#1f2233; border-radius:4px; cursor:pointer;">
+      %LOCALAPPDATA%\TL\SAVED\COMBATLOGS
+    </code>
+    <span id="copyMsg" style="margin-left:6px; font-size:12px; color:#aaa;"></span>
+  </div>
+
+  <p style="margin-top:16px;">Select one or more combatlog (.txt) files exported from the game.</p>
+
+  <input type="file" id="logFile" accept=".txt" multiple style="display:none;">
+
+  <div id="dropZone"
+       style="margin-top:10px; width:95%; max-width:1600px; padding:18px; border:2px dashed #5865F2; border-radius:8px; text-align:center; cursor:pointer; background:#10111b;">
+    Drop your combatlog (.txt) files here<br>
+    <span style="font-size:12px; color:#aaa;">or click to select them</span>
+  </div>
+
+  <div id="status"></div>
+
+  <div style="width:95%; max-width:1600px; margin-top:6px; text-align:right;">
+    <button id="clearLogsBtn">Clear logs</button>
+  </div>
+
+  <div class="summary">
+    <div class="card">
+      <div class="card-title">Total Damage</div>
+      <div class="card-value" id="sumTotalDamage">0</div>
     </div>
+    <div class="card">
+      <div class="card-title">Average DPS</div>
+      <div class="card-value" id="sumAvgDps">0</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Players</div>
+      <div class="card-value" id="sumPlayers">0</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Target</div>
+      <div class="card-value" id="sumBossName">---</div>
+    </div>
+  </div>
 
-    <script>
-        // PARSER COMBATLOG INTÉGRÉ (100% autonome)
-        function parseCombatLog(logText) {
-            const stats = {};
-            const lines = logText.split('\n').filter(line => line.trim());
-            
-            lines.forEach(line => {
-                if (line.startsWith('CombatLogVersion')) return;
-                const parts = line.split(',');
-                if (parts.length < 11 || parts[1] !== 'DamageDone' || parseInt(parts[5]) === 0) return;
-                
-                const [, , ability, spellId, damage, , , , hitType, attacker, target] = parts;
-                const dmg = parseInt(damage);
-                
-                if (!stats[attacker]) stats[attacker] = { total: 0, abilities: {} };
-                if (!stats[attacker].abilities[ability]) stats[attacker].abilities[ability] = { total: 0, count: 0, avg: 0 };
-                
-                stats[attacker].total += dmg;
-                stats[attacker].abilities[ability].total += dmg;
-                stats[attacker].abilities[ability].count++;
-                stats[attacker].abilities[ability].avg = stats[attacker].abilities[ability].total / stats[attacker].abilities[ability].count;
-            });
-            return stats;
-        }
+  <!-- SLIDER TEMPS juste au-dessus des joueurs -->
+  <div id="timeRangeWrapper">
+    <div style="font-size:12px; color:#ccc; margin-bottom:4px;">
+      Time range: <span id="timeRangeLabel">0s - 0s</span>
+    </div>
+    <div id="timeRangeSlider"></div>
+  </div>
 
-        function displayStats(stats) {
-            const sortedPlayers = Object.entries(stats).sort(([,a], [,b]) => b.total - a.total);
-            
-            // TOP 5
-            const top5Html = sortedPlayers.slice(0,5).map(([player, data], i) => 
-                `<div class="player-card top5">
-                    <div class="player-name">#${i+1} ${player}</div>
-                    <div class="total-dps">${data.total.toLocaleString()} DPS</div>
-                </div>`
-            ).join('');
-            
-            document.getElementById('stats').innerHTML = `<div class="stats-grid">${top5Html}</div>`;
-            
-            // TABLEAU GLOBAL
-            const tableRows = sortedPlayers.map(([player, data]) => {
-                const topAbility = Object.entries(data.abilities).sort(([,a], [,b]) => b.total - a.total)[0];
-                return `<tr>
-                    <td>${player}</td>
-                    <td>${data.total.toLocaleString()}</td>
-                    <td>${topAbility ? topAbility[0] : 'N/A'}</td>
-                    <td>${topAbility ? topAbility[1].total.toLocaleString() : '0'}</td>
-                    <td>${Math.round(data.total / Object.keys(data.abilities).length || 0).toLocaleString()}</td>
-                </tr>`;
-            }).join('');
-            
-            document.getElementById('global-table').innerHTML = `
-                <table>
-                    <thead><tr><th>Joueur</th><th>Total</th><th>Top Sort</th><th>Dmg Sort</th><th>/Sort</th></tr></thead>
-                    <tbody>${tableRows}</tbody>
-                </table>
-            `;
-        }
+  <h2>Player Statistics</h2>
+  <p>Click one or more players to compare them on the charts. ✕ removes from logs completely.</p>
 
-        // DRAG & DROP + UPLOAD
-        const uploadZone = document.createElement('div');
-        uploadZone.className = 'upload-zone';
-        uploadZone.innerHTML = `
-            <input type="file" id="logFile" accept=".txt" style="display: none;">
-            <div style="font-size: 18px; margin-bottom: 15px;">📁 Glisse ton merged_logs.txt ici</div>
-            <button onclick="document.getElementById('logFile').click()" 
-                    style="padding: 12px 24px; background: #00ff88; color: black; border: none; border-radius: 6px; font-size: 16px; cursor: pointer;">
-                OU choisis fichier
-            </button>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Player</th>
+        <th>DPS</th>
+        <th>Total Damage</th>
+        <th>% Fight</th>
+        <th>Hits</th>
+        <th>Avg Hit</th>
+        <th>Max Hit</th>
+        <th>Duration</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="playerBody"></tbody>
+  </table>
+
+  <div style="width:95%; max-width:1600px; margin-top:8px; text-align:right;">
+    <button id="toggleTargetsBtn">Show other targets</button>
+  </div>
+
+  <table id="targetsTable" style="display:none; margin-top:10px;">
+    <thead>
+      <tr>
+        <th>Target</th>
+        <th>Total Damage</th>
+        <th>Hits</th>
+      </tr>
+    </thead>
+    <tbody id="targetsBody"></tbody>
+  </table>
+
+  <div class="panel">
+    <div class="panel-header">
+      <span class="panel-title">Damage By Skill</span>
+      <span class="panel-meta" id="playersMeta"></span>
+    </div>
+    <div class="panel-body" id="chartContainer">
+      <canvas id="damageChart"></canvas>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-header">
+      <span class="panel-title">Average DPS Over Time</span>
+      <span class="panel-meta" id="avgFightDurationMeta"></span>
+    </div>
+    <div class="panel-body" id="avgTimelineContainer">
+      <canvas id="avgDpsTimeline"></canvas>
+    </div>
+  </div>
+  <div id="avgControls">
+    (Click and drag to zoom)
+    <button id="resetAvgZoomBtn">Reset zoom</button>
+  </div>
+
+  <div class="panel">
+    <div class="panel-header">
+      <span class="panel-title">DPS Timeline (Per Second)</span>
+      <span class="panel-meta" id="fightDurationMeta"></span>
+    </div>
+    <div class="panel-body" id="timelineContainer">
+      <canvas id="dpsTimeline"></canvas>
+    </div>
+  </div>
+
+  <script>
+    // === COULEURS PAR JOUEUR ===
+    const PLAYER_COLORS = {
+      'Nonogt': { 
+        color: '#ff4444', 
+        lineColor: 'rgba(255, 68, 68, 1)', 
+        barColor: 'rgba(255, 68, 68, 0.8)',
+        barBorder: 'rgba(255, 68, 68, 1)'
+      },
+      'P0SIPLAY': { 
+        color: '#4444ff', 
+        lineColor: 'rgba(68, 68, 255, 1)', 
+        barColor: 'rgba(68, 68, 255, 0.8)',
+        barBorder: 'rgba(68, 68, 255, 1)'
+      },
+      'Calanthia': { 
+        color: '#44ff44', 
+        lineColor: 'rgba(68, 255, 68, 1)', 
+        barColor: 'rgba(68, 255, 68, 0.8)',
+        barBorder: 'rgba(68, 255, 68, 1)'
+      }
+    };
+
+    // FONCTION pour obtenir couleur par joueur
+    function getPlayerColor(playerName) {
+      return PLAYER_COLORS[playerName] || { 
+        color: '#ffffff', 
+        lineColor: 'rgba(255,255,255,1)', 
+        barColor: 'rgba(255,255,255,0.6)',
+        barBorder: 'rgba(255,255,255,1)'
+      };
+    }
+
+    // === LE RESTE DU CODE IDENTIQUE ===
+    const fileInput = document.getElementById('logFile');
+    const dropZone  = document.getElementById('dropZone');
+    const statusEl  = document.getElementById('status');
+    const playerBody = document.getElementById('playerBody');
+    const targetsTable = document.getElementById('targetsTable');
+    const targetsBody  = document.getElementById('targetsBody');
+    const toggleTargetsBtn = document.getElementById('toggleTargetsBtn');
+    const resetAvgZoomBtn = document.getElementById('resetAvgZoomBtn');
+    const logPathEl = document.getElementById('logPath');
+    const copyMsgEl = document.getElementById('copyMsg');
+    const clearLogsBtn = document.getElementById('clearLogsBtn');
+    const timeRangeLabel = document.getElementById('timeRangeLabel');
+        const timeRangeSliderEl = document.getElementById('timeRangeSlider');
+
+    let skillChart;
+    let dpsTimelineChart;
+    let avgDpsTimelineChart;
+    let playersData = [];
+    let selectedPlayers = [];
+    let selectedTarget = null;
+    let globalBossPhases = [];
+    let timeSlider = null;
+    let timeFilter = { from: 0, to: null };
+
+    // PATH
+    logPathEl.addEventListener('click', () => {
+      navigator.clipboard.writeText('%LOCALAPPDATA%\\TL\\SAVED\\COMBATLOGS')
+        .then(() => {
+          copyMsgEl.textContent = 'Path copied ✔';
+          setTimeout(() => { copyMsgEl.textContent = ''; }, 2000);
+        });
+    });
+
+    // DRAG & DROP (IDENTIQUE)
+    dropZone.addEventListener('click', () => { fileInput.click(); });
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault(); dropZone.style.borderColor = '#4fd1ff'; dropZone.style.background = '#15172a';
+    });
+    dropZone.addEventListener('dragleave', (e) => {
+      e.preventDefault(); dropZone.style.borderColor = '#5865F2'; dropZone.style.background = '#10111b';
+    });
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault(); dropZone.style.borderColor = '#5865F2'; dropZone.style.background = '#10111b';
+      const files = e.dataTransfer.files; if (!files.length) return;
+      fileInput.files = files; handleFiles();
+    });
+
+    // TEMPS / DATES (IDENTIQUE)
+    function parseTs(ts) {
+      const [datePart, timePart] = ts.split('-');
+      const year = +datePart.slice(0, 4); const month = +datePart.slice(4, 6) - 1;
+      const day = +datePart.slice(6, 8); const [h, m, s, ms] = timePart.split(':').map(n => +n);
+      return new Date(year, month, day, h, m, s, ms);
+    }
+
+    function computeDurationSeconds(ts1, ts2) {
+      try { return Math.max(1, Math.round((parseTs(ts2) - parseTs(ts1)) / 1000)); } catch { return 1; }
+    }
+
+    function computeSecondsDiff(tsStart, tsCurrent) {
+      try { return Math.max(0, Math.floor((parseTs(tsCurrent) - parseTs(tsStart)) / 1000)); } catch { return 0; }
+    }
+
+    // PARSE LOG FILE (IDENTIQUE)
+    function parseLogFile(file, index) {
+      return new Promise(resolve => {
+        if (file.size > 20 * 1024 * 1024) { resolve(null); return; }
+        const reader = new FileReader();
+        reader.onload = () => {
+          try {
+            const lines = reader.result.split(/\r?\n/);
+            const damageBySkill = {}; const damageTimeline = {}; const damageByTarget = {};
+            const damageBySkillTimeline = {}; const bossPhases = [];
+            let totalDamage = 0, hitCount = 0, maxHit = 0, firstTs = null, lastTs = null;
+            let playerName = 'Unknown', bossName = 'Unknown', currentBoss = null, currentBossStartSec = 0;
+
+            for (const line of lines) {
+              if (!line) continue; const parts = line.split(',');
+              if (parts.length < 10) continue; const type = (parts[1] || '').trim().toLowerCase();
+              if (!type.includes('damage')) continue;
+
+              const ts = parts[0].trim(), skillName = parts[2].trim();
+              const dmg = parseInt(parts[4].trim().replace(/\s/g, ''), 10);
+              const player = parts[parts.length - 2].trim(), boss = parts[parts.length - 1].trim();
+
+              if (!firstTs) firstTs = ts; const secFromStart = computeSecondsDiff(firstTs, ts);
+
+              if (boss !== currentBoss) {
+                if (currentBoss !== null) {
+                  bossPhases.push({ name: currentBoss, startSec: currentBossStartSec, endSec: secFromStart });
+                }
+                currentBoss = boss; currentBossStartSec = secFromStart;
+              }
+
+              if (!Number.isNaN(dmg) && dmg > 0) {
+                totalDamage += dmg; hitCount++; if (dmg > maxHit) maxHit = dmg;
+                damageBySkill[skillName] = (damageBySkill[skillName] || 0) + dmg;
+
+                if (!damageBySkillTimeline[secFromStart]) damageBySkillTimeline[secFromStart] = {};
+                damageBySkillTimeline[secFromStart][skillName] = (damageBySkillTimeline[secFromStart][skillName] || 0) + dmg;
+
+                if (!damageByTarget[boss]) damageByTarget[boss] = { totalDamage: 0, hits: 0, bySkill: {} };
+                const tgt = damageByTarget[boss]; tgt.totalDamage += dmg; tgt.hits++;
+                tgt.bySkill[skillName] = (tgt.bySkill[skillName] || 0) + dmg;
+
+                damageTimeline[secFromStart] = (damageTimeline[secFromStart] || 0) + dmg;
+              }
+              lastTs = ts; playerName = player; bossName = boss;
+            }
+
+            if (!hitCount || !firstTs || !lastTs) { resolve(null); return; }
+            const lastSec = computeSecondsDiff(firstTs, lastTs);
+            if (currentBoss !== null) bossPhases.push({ name: currentBoss, startSec: currentBossStartSec, endSec: lastSec });
+
+            const duration = computeDurationSeconds(firstTs, lastTs);
+            const dps = duration > 0 ? Math.round(totalDamage / duration) : totalDamage;
+            const avgHit = Math.round(totalDamage / hitCount);
+
+            const avgDpsTimeline = {}; let cumulative = 0;
+            for (let s = 0; s <= duration; s++) {
+              const dmg = damageTimeline[s] || 0; cumulative += dmg;
+              avgDpsTimeline[s] = cumulative / Math.max(1, s + 1);
+            }
+
+            resolve({ index, playerName, bossName, totalDamage, hitCount, maxHit, avgHit, duration, dps,
+                     damageBySkill, damageTimeline, avgDpsTimeline, damageByTarget, bossPhases, damageBySkillTimeline });
+          } catch { resolve(null); }
+        };
+        reader.onerror = () => resolve(null); reader.readAsText(file);
+      });
+    }
+
+    // SLIDER TEMPS (IDENTIQUE)
+    function initTimeSlider(maxDuration) {
+      if (maxDuration < 1) maxDuration = 1;
+      if (!timeSlider) {
+        noUiSlider.create(timeRangeSliderEl, { start: [0, maxDuration], connect: true, step: 1, range: { min: 0, max: maxDuration }, tooltips: false });
+        timeSlider = timeRangeSliderEl;
+        timeSlider.noUiSlider.on('update', (values) => {
+          const from = Math.round(values[0]), to = Math.round(values[1]);
+          timeFilter.from = from; timeFilter.to = to; timeRangeLabel.textContent = from + 's - ' + to + 's';
+          renderPlayerTable(playersData); highlightSelectedRows(); renderTargetsTable(); refreshCharts();
+        });
+      } else {
+        timeSlider.noUiSlider.updateOptions({ start: [0, maxDuration], range: { min: 0, max: maxDuration } });
+        timeFilter.from = 0; timeFilter.to = maxDuration; timeRangeLabel.textContent = '0s - ' + maxDuration + 's';
+      }
+    }
+
+    // FONCTIONS FENÊTRE TEMPS (IDENTIQUES - buildPlayerStatsInWindow, buildAvgDpsTimelineWindow, buildDamageBySkillInWindow)
+    function applyTimeWindowToTimeline(timeline, duration) {
+      const from = timeFilter.from ?? 0; const to = timeFilter.to ?? duration; const filtered = {};
+      for (let s = 0; s <= duration; s++) { if (s < from || s > to) continue; if (timeline[s]) filtered[s] = timeline[s]; }
+      return { filtered, from, to };
+    }
+
+    function buildPlayerStatsInWindow(player) {
+      const from = timeFilter.from ?? 0; const to = Math.min(timeFilter.to ?? player.duration, player.duration);
+      let totalDamage = 0, hitCount = 0, maxHit = 0;
+      for (let s = from; s <= to; s++) { const dmg = player.damageTimeline[s] || 0; if (dmg > 0) { totalDamage += dmg; hitCount++; if (dmg > maxHit) maxHit = dmg; } }
+      const duration = Math.max(1, to - from + 1); const dps = Math.round(totalDamage / duration); const avgHit = hitCount > 0 ? Math.round(totalDamage / hitCount) : 0;
+      return { totalDamage, hitCount, maxHit, duration, dps, avgHit };
+    }
+
+    function buildAvgDpsTimelineWindow(player, from, to) {
+      let cumulative = 0; const avg = {};
+      for (let s = 0; s <= player.duration; s++) { const dmg = player.damageTimeline[s] || 0; cumulative += dmg; if (s >= from && s <= to) avg[s] = cumulative / Math.max(1, s + 1); }
+      return avg;
+    }
+
+    function buildDamageBySkillInWindow(player) {
+      const from = timeFilter.from ?? 0; const to = Math.min(timeFilter.to ?? player.duration, player.duration); const skillTotals = {};
+      for (let s = from; s <= to; s++) {
+        const skillsAtSec = player.damageBySkillTimeline?.[s]; if (!skillsAtSec) continue;
+        Object.entries(skillsAtSec).forEach(([skill, dmg]) => { skillTotals[skill] = (skillTotals[skill] || 0) + dmg; });
+      }
+      return skillTotals;
+    }
+
+    // TABLEAU JOUEURS avec COULEURS
+    function renderPlayerTable(players) {
+      playerBody.innerHTML = '';
+      const windowStats = players.map(p => ({ player: p, stats: buildPlayerStatsInWindow(p) }));
+      const totalFightDamage = windowStats.reduce((sum, w) => sum + w.stats.totalDamage, 0);
+
+      windowStats.forEach((w, idx) => {
+        const p = w.player; const s = w.stats;
+        const tr = document.createElement('tr'); tr.dataset.index = p.index; tr.className = `player-${p.playerName}`;
+        const percent = totalFightDamage > 0 ? (s.totalDamage / totalFightDamage) * 100 : 0;
+
+        tr.innerHTML = `
+          <td>${idx + 1}</td>
+          <td>${p.playerName}</td>
+          <td>${s.dps.toLocaleString('fr-FR')}</td>
+          <td>${s.totalDamage.toLocaleString('fr-FR')}</td>
+          <td>${percent.toFixed(2)}%</td>
+          <td>${s.hitCount.toLocaleString('fr-FR')}</td>
+          <td>${s.avgHit ? s.avgHit.toLocaleString('fr-FR') : '-'}</td>
+          <td>${s.maxHit.toLocaleString('fr-FR')}</td>
+          <td>${s.duration}s</td>
+          <td style="width:40px;">
+            <span class="remove-player" data-index="${p.index}" title="Retirer ce joueur des logs">✕</span>
+          </td>
         `;
-        document.body.appendChild(uploadZone);
+        if (idx === 0) tr.style.borderLeft = '3px solid #ff4d6a';
+        playerBody.appendChild(tr);
+      });
 
-        ['dragover', 'dragenter'].forEach(event => {
-            uploadZone.addEventListener(event, e => e.preventDefault());
-        });
-        
-        uploadZone.addEventListener('drop', e => {
-            e.preventDefault();
-            const file = e.dataTransfer.files[0];
-            if (file) loadFile(file);
-        });
-        
-        document.getElementById('logFile').addEventListener('change', e => loadFile(e.target.files[0]));
+      const sumTotalDamage = windowStats.reduce((sum, w) => sum + w.stats.totalDamage, 0);
+      const avgDps = windowStats.length ? windowStats.reduce((sum, w) => sum + w.stats.dps, 0) / windowStats.length : 0;
+      document.getElementById('sumTotalDamage').textContent = sumTotalDamage.toLocaleString('fr-FR');
+      document.getElementById('sumAvgDps').textContent = Math.round(avgDps).toLocaleString('fr-FR');
+    }
 
-        function loadFile(file) {
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = e => {
-                const stats = parseCombatLog(e.target.result);
-                displayStats(stats);
-                document.getElementById('raw-log').innerHTML = 
-                    `<strong>✅ ${Object.keys(stats).length} joueurs - ${Object.values(stats).reduce((a,b)=>a+b.total,0).toLocaleString()} dégâts totaux</strong><br>
-                     <div style="margin-top:10px">${e.target.result.split('\n').slice(-50).join('<br>')}</div>`;
-            };
-            reader.readAsText(file);
+    function highlightSelectedRows() {
+      const rows = playerBody.querySelectorAll('tr');
+      rows.forEach(row => {
+        const idx = +row.dataset.index;
+        const isSelected = selectedPlayers.some(p => p.index === idx);
+        row.classList.toggle('player-selected', isSelected);
+      });
+    }
+
+    // GRAPHIQUES AVEC COULEURS JOUEURS
+    function drawComparisonChart() {
+      const ctx = document.getElementById('damageChart').getContext('2d');
+      if (skillChart) skillChart.destroy();
+      const playersMeta = document.getElementById('playersMeta');
+
+      if (!selectedPlayers.length) { playersMeta.textContent = ''; return; }
+
+      const allSkills = new Set(); const perPlayerSkillTotals = selectedPlayers.map(p => {
+        const totals = buildDamageBySkillInWindow(p); Object.keys(totals).forEach(k => allSkills.add(k));
+        return { player: p, totals };
+      });
+
+      const globalSkillTotals = {}; perPlayerSkillTotals.forEach(({ totals }) => {
+        Object.entries(totals).forEach(([skill, dmg]) => { globalSkillTotals[skill] = (globalSkillTotals[skill] || 0) + dmg; });
+      });
+
+      const labels = Array.from(allSkills).sort((a, b) => (globalSkillTotals[b] || 0) - (globalSkillTotals[a] || 0));
+      const datasets = perPlayerSkillTotals.map(({ player, totals }, idx) => {
+        const color = getPlayerColor(player.playerName);
+        return {
+          label: selectedTarget ? `${player.playerName} (${selectedTarget})` : player.playerName,
+          data: labels.map(skill => totals[skill] || 0),
+          backgroundColor: color.barColor,
+          borderColor: color.barBorder,
+          borderWidth: 1,
+          borderRadius: 6,
+          borderSkipped: false
+        };
+      });
+
+      playersMeta.textContent = perPlayerSkillTotals.length === 1 ? perPlayerSkillTotals[0].player.playerName :
+        perPlayerSkillTotals.map(p => p.player.playerName).join(' vs ');
+
+      const newHeight = Math.max(450, labels.length * 40); document.getElementById('chartContainer').style.height = newHeight + 'px';
+
+      skillChart = new Chart(ctx, {
+        type: 'bar', data: { labels, datasets }, options: {
+          indexAxis: 'y', responsive: true, maintainAspectRatio: false, categoryPercentage: 0.9, barPercentage: 0.7,
+          animation: false, plugins: {
+            legend: { display: true }, tooltip: {
+              callbacks: { label: (ctx) => `${ctx.dataset.label} – ${ctx.label}: ${ctx.parsed.x.toLocaleString('fr-FR')} dégâts` }
+            }
+          },
+          scales: { x: { ticks: { color: '#ffffff', maxTicksLimit: 10 }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                   y: { ticks: { color: '#ffffff' }, grid: { color: 'rgba(255,255,255,0.1)' } } }
         }
+      });
+    }
 
-        // DONNÉES D'EXEMPLE (tes logs)
-        const sampleLogs = `CombatLogVersion,4
-20251213-222806136,DamageDone,Rue prcise,955968982,727,0,0,kNormalHit,Nonogt,Calanthia
-20251213-222816676,DamageDone,Coup de bouclier,963293328,7385,0,1,kNormalHit,Nonogt,Calanthia
-20251213-222817037,DamageDone,Combat acharn,956175664,6662,0,1,kMinDamageByCriticalDecision,Nonogt,Calanthia
-20251213-222841344,DamageDone,Boule de mana,950614913,1171,1,1,kMaxDamageByCriticalDecision,P0SIPLAY,Calanthia
-20251213-222842157,DamageDone,Coup corrupteur,967072496,1543,0,0,kNormalHit,P0SIPLAY,Calanthia`;
-        
-        displayStats(parseCombatLog(sampleLogs));
-    </script>
+    function drawAvgDpsTimeline() {
+      const ctx = document.getElementById('avgDpsTimeline').getContext('2d');
+      if (avgDpsTimelineChart) avgDpsTimelineChart.destroy();
+      const fightMeta = document.getElementById('avgFightDurationMeta');
+      if (!selectedPlayers.length) { fightMeta.textContent = ''; return; }
+
+      const maxDuration = Math.max(...selectedPlayers.map(p => p.duration));
+      const from = timeFilter.from ?? 0; const to = Math.min(timeFilter.to ?? maxDuration, maxDuration);
+      fightMeta.textContent = `${from}s - ${to}s (fight ${maxDuration}s)`;
+
+      const labels = []; for (let s = from; s <= to; s++) labels.push(`${s}s`);
+      const datasets = selectedPlayers.map((p, idx) => {
+        const avgWindow = buildAvgDpsTimelineWindow(p, from, to); const color = getPlayerColor(p.playerName);
+        return {
+          label: p.playerName, data: labels.map((_, i) => { const sec = from + i; return avgWindow[sec] || 0; }),
+          borderColor: color.lineColor, backgroundColor: 'transparent', pointRadius: 0, borderWidth: 1.8, tension: 0.15
+        };
+      });
+
+      avgDpsTimelineChart = new Chart(ctx, {
+        type: 'line', data: { labels, datasets }, options: {
+          responsive: true, maintainAspectRatio: false, animation: false, plugins: {
+            legend: { display: true }, title: { display: true, text: 'Average DPS Over Time (time‑windowed)' },
+            tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${Math.round(ctx.parsed.y).toLocaleString('fr-FR')} DPS moyen` } },
+            zoom: { zoom: { wheel: { enabled: true }, drag: { enabled: true }, mode: 'x' }, pan: { enabled: true, mode: 'x' } }
+          },
+          scales: { x: { ticks: { color: '#ffffff', maxTicksLimit: 15 }, grid: { color: 'rgba(255,255,255,0.08)' } },
+                   y: { ticks: { color: '#ffffff' }, grid: { color: 'rgba(255,255,255,0.08)' } } }
+        }, plugins: [{
+          id: 'bossBackgrounds', beforeDraw(chart) {
+            const { ctx, chartArea, scales: { x } } = chart;
+            if (!globalBossPhases?.length) return;
+            const colors = ['rgba(80, 40, 120, 0.35)', 'rgba(160, 120, 40, 0.35)', 'rgba(20, 80, 120, 0.35)', 'rgba(80, 120, 40, 0.35)'];
+            globalBossPhases.forEach((phase, idx) => {
+              const start = Math.max(phase.startSec, from); const end = Math.min(phase.endSec, to);
+              if (end <= start) return; const xStart = x.getPixelForValue(start - from); const xEnd = x.getPixelForValue(end - from);
+              ctx.save(); ctx.fillStyle = colors[idx % colors.length];
+              ctx.fillRect(xStart, chartArea.top, xEnd - xStart, chartArea.bottom - chartArea.top);
+              ctx.fillStyle = '#ffffff'; ctx.font = '10px Arial'; ctx.textAlign = 'center';
+              ctx.fillText(phase.name, (xStart + xEnd) / 2, chartArea.top + 12); ctx.restore();
+            });
+          }
+        }]
+      });
+    }
+
+    function drawDpsTimeline() {
+      const ctx = document.getElementById('dpsTimeline').getContext('2d');
+      if (dpsTimelineChart) dpsTimelineChart.destroy();
+      const fightMeta = document.getElementById('fightDurationMeta');
+      if (!selectedPlayers.length) { fightMeta.textContent = ''; return; }
+
+      const maxDuration = Math.max(...selectedPlayers.map(p => p.duration));
+      const from = timeFilter.from ?? 0; const to = Math.min(timeFilter.to ?? maxDuration, maxDuration);
+      fightMeta.textContent = `${from}s - ${to}s (fight ${maxDuration}s)`;
+
+      const labels = []; for (let s = from; s <= to; s++) labels.push(`${s}s`);
+      const datasets = selectedPlayers.map((p, idx) => {
+        const { filtered } = applyTimeWindowToTimeline(p.damageTimeline, p.duration); const color = getPlayerColor(p.playerName);
+        return {
+          label: p.playerName, data: labels.map((_, i) => { const sec = from + i; return filtered[sec] || 0; }),
+          borderColor: color.lineColor, backgroundColor: 'transparent', pointRadius: 0, borderWidth: 1.5, tension: 0.2
+        };
+      });
+
+      dpsTimelineChart = new Chart(ctx, {
+        type: 'line', data: { labels, datasets }, options: {
+          responsive: true, maintainAspectRatio: false, animation: false, plugins: {
+            legend: { display: true }, tooltip: {
+              callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString('fr-FR')} DPS` }
+            }
+          },
+          scales: { x: { ticks: { color: '#ffffff', maxTicksLimit: 15 }, grid: { color: 'rgba(255,255,255,0.08)' } },
+                   y: { ticks: { color: '#ffffff' }, grid: { color: 'rgba(255,255,255,0.08)' } } }
+        }
+      });
+    }
+
+    function refreshCharts() { drawComparisonChart(); drawAvgDpsTimeline(); drawDpsTimeline(); }
+
+    // ÉVÉNEMENTS (IDENTIQUES)
+    toggleTargetsBtn.addEventListener('click', () => {
+      const isHidden = getComputedStyle(targetsTable).display === 'none';
+      if (isHidden) { renderTargetsTable(); targetsTable.style.display = 'table'; toggleTargetsBtn.textContent = 'Hide other targets'; }
+      else { targetsTable.style.display = 'none'; toggleTargetsBtn.textContent = 'Show other targets'; }
+    });
+
+    resetAvgZoomBtn.addEventListener('click', () => { if (avgDpsTimelineChart) avgDpsTimelineChart.resetZoom(); });
+
+    playerBody.addEventListener('click', (e) => {
+      const removeBtn = e.target.closest('.remove-player');
+      if (removeBtn) {
+        const index = +removeBtn.dataset.index; playersData = playersData.filter(p => p.index !== index);
+        selectedPlayers = selectedPlayers.filter(p => p.index !== index); playersData.forEach((p, i) => { p.index = i; });
+        renderPlayerTable(playersData); highlightSelectedRows(); refreshCharts(); return;
+      }
+      const row = e.target.closest('tr'); if (!row) return;
+      const index = +row.dataset.index; const player = playersData.find(p => p.index === index);
+      if (!player) return; const exists = selectedPlayers.some(p => p.index === player.index);
+      selectedPlayers = exists ? selectedPlayers.filter(p => p.index !== player.index) : [...selectedPlayers, player];
+      highlightSelectedRows(); refreshCharts();
+    });
+
+    clearLogsBtn.addEventListener('click', () => {
+      playersData = []; selectedPlayers = []; selectedTarget = null; globalBossPhases = []; timeFilter = { from: 0, to: null };
+      if (timeSlider) { timeSlider.noUiSlider.updateOptions({ start: [0, 0], range: { min: 0, max: 0 } }); timeRangeLabel.textContent = '0s - 0s'; }
+      playerBody.innerHTML = ''; targetsBody.innerHTML = ''; targetsTable.style.display = 'none'; toggleTargetsBtn.textContent = 'Show other targets';
+      document.getElementById('sumTotalDamage').textContent = '0'; document.getElementById('sumAvgDps').textContent = '0';
+      document.getElementById('sumPlayers').textContent = '0'; document.getElementById('sumBossName').textContent = '---'; statusEl.textContent = 'Logs cleared.';
+      if (skillChart) { skillChart.destroy(); skillChart = null; } if (dpsTimelineChart) { dpsTimelineChart.destroy(); dpsTimelineChart = null; }
+      if (avgDpsTimelineChart) { avgDpsTimelineChart.destroy(); avgDpsTimelineChart = null; }
+    });
+
+    function handleFiles() {
+      let files = Array.from(fileInput.files); if (!files.length) return;
+      files = files.filter(f => f.size < 20 * 1024 * 1024); if (!files.length) { statusEl.textContent = 'Files are too large.'; return; }
+      statusEl.textContent = 'Reading log files...'; selectedTarget = null; targetsBody.innerHTML = ''; targetsTable.style.display = 'none';
+      toggleTargetsBtn.textContent = 'Show other targets'; if (skillChart) skillChart.destroy(); if (dpsTimelineChart) dpsTimelineChart.destroy();
+      if (avgDpsTimelineChart) avgDpsTimelineChart.destroy(); const baseIndex = playersData.length;
+
+      Promise.all(files.map((f, idx) => parseLogFile(f, baseIndex + idx))).then(results => {
+        const newPlayers = results.filter(Boolean); if (!newPlayers.length) { statusEl.textContent = 'No valid data found in the added logs.'; return; }
+        playersData = playersData.concat(newPlayers); playersData.sort((a, b) => b.dps - a.dps);
+        playersData.forEach((p, i) => { p.index = i; }); const bossName = playersData[0].bossName && playersData[0].bossName !== 'Unknown' ? playersData[0].bossName : 'Unknown target';
+        document.getElementById('sumBossName').textContent = bossName; const totalFightDamage = playersData.reduce((s, p) => s + p.totalDamage, 0);
+        const avgDps = playersData.reduce((s, p) => s + p.dps, 0) / playersData.length;
+        document.getElementById('sumTotalDamage').textContent = totalFightDamage.toLocaleString('fr-FR');
+        document.getElementById('sumAvgDps').textContent = Math.round(avgDps).toLocaleString('fr-FR');
+        document.getElementById('sumPlayers').textContent = playersData.length; renderPlayerTable(playersData);
+        statusEl.textContent = `Logs loaded: ${playersData.length}`; if (playersData.length > 0) { selectedPlayers = [playersData[0]]; }
+        highlightSelectedRows(); globalBossPhases = playersData[0].bossPhases || []; const maxDuration = Math.max(...playersData.map(p => p.duration));
+        initTimeSlider(maxDuration); refreshCharts();
+      }).catch(err => { statusEl.textContent = 'Error: ' + err; });
+    }
+
+    fileInput.addEventListener('change', handleFiles);
+
+    function renderTargetsTable() {
+      targetsBody.innerHTML = ''; const targetTotals = {};
+      playersData.forEach(p => { if (!p.damageByTarget) return;
+        Object.entries(p.damageByTarget).forEach(([target, info]) => {
+          if (!targetTotals[target]) targetTotals[target] = { totalDamage: 0, hits: 0 };
+          targetTotals[target].totalDamage += info.totalDamage; targetTotals[target].hits += info.hits;
+        });
+      });
+      Object.entries(targetTotals).sort((a, b) => b[1].totalDamage - a[1].totalDamage).forEach(([target, info]) => {
+        const tr = document.createElement('tr'); tr.innerHTML = `<td>${target}</td><td>${info.totalDamage.toLocaleString('fr-FR')}</td><td>${info.hits.toLocaleString('fr-FR')}</td>`;
+        tr.addEventListener('click', () => { selectedTarget = target; refreshCharts(); }); targetsBody.appendChild(tr);
+      });
+    }
+  </script>
 </body>
 </html>
