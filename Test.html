@@ -13,7 +13,17 @@ h1{margin-bottom:10px}
 .card{flex:1;background:linear-gradient(145deg,#151728,#0c0d16);border-radius:8px;padding:8px 12px;box-shadow:0 0 18px rgba(0,0,0,.8);border:1px solid rgba(120,120,200,.4)}
 .card-title{font-size:11px;text-transform:uppercase;color:#9b9bc0;letter-spacing:.06em}
 .card-value{margin-top:4px;font-size:18px;font-weight:700;color:#4fd1ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-table{margin-top:25px;border-collapse:collapse;width:95%;max-width:1600px;background-color:#151518;border-radius:8px;overflow:hidden}
+
+/* HEADER STICKY */
+#fixedHeader{position:sticky;top:0;z-index:1000;background:linear-gradient(180deg,#050610 0%,rgba(5,6,16,0.97) 100%);backdrop-filter:blur(12px);border-bottom:1px solid rgba(120,120,200,0.2);padding:20px 0 15px;margin:-20px -20px 25px -20px}
+#fixedHeader .dropzone-container{text-align:center;margin:16px 0}
+#dropZone{padding:18px;border:2px dashed #5865F2;border-radius:8px;cursor:pointer;background:#10111b;display:inline-block;width:95%;max-width:600px}
+#fixedHeader .controls{text-align:right;margin-top:12px;padding-right:5px}
+
+/* CONTENU SCROLLABLE */
+.scrollable-content{width:95%;max-width:1600px;margin:0 auto}
+
+table{margin-top:25px;border-collapse:collapse;width:100%;background-color:#151518;border-radius:8px;overflow:hidden}
 th,td{padding:8px 12px;text-align:center;font-size:14px;border-right:1px solid #22252f}
 th:last-child,td:last-child{border-right:none}
 th{background-color:#202024;font-weight:600;letter-spacing:.03em}
@@ -26,75 +36,96 @@ td:nth-child(3),td:nth-child(4),td:nth-child(5),td:nth-child(6),td:nth-child(7),
 #targetsTable td:first-child{text-align:left}
 .remove-player{cursor:pointer;color:#ff6666;font-weight:bold;font-size:16px;padding:2px 6px;border-radius:3px;transition:background .2s;display:inline-block}
 .remove-player:hover{background:rgba(255,102,102,.2)}
-.panel{width:95%;max-width:1600px;margin-top:20px;background:radial-gradient(circle at top left,#1b213a 0,#101018 55%);border-radius:10px;padding:10px 14px 14px;box-shadow:0 0 22px rgba(0,0,0,.8);border:1px solid rgba(120,120,200,.35)}
+.panel{width:100%;max-width:1600px;margin-top:20px;background:radial-gradient(circle at top left,#1b213a 0,#101018 55%);border-radius:10px;padding:10px 14px 14px;box-shadow:0 0 22px rgba(0,0,0,.8);border:1px solid rgba(120,120,200,.35)}
 .panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;border-bottom:1px solid rgba(255,255,255,.04);padding-bottom:6px}
 .panel-title{font-size:13px;font-weight:600;color:#e5e5ff;letter-spacing:.04em;text-transform:uppercase}
 .panel-meta{font-size:11px;color:#c3c7ff;letter-spacing:.04em}
 .panel-body{height:420px}
 #chartContainer,#timelineContainer,#avgTimelineContainer{width:100%;height:100%}
 #dpsTimeline,#damageChart,#avgDpsTimeline{width:100%!important;height:100%!important;max-height:none!important;display:block}
-#avgControls{width:95%;max-width:1600px;margin-top:6px;text-align:right;font-size:12px;color:#aaa}
+#avgControls{width:100%;max-width:1600px;margin-top:6px;text-align:right;font-size:12px;color:#aaa}
 #avgControls button{padding:3px 8px;font-size:12px;border-radius:4px;border:1px solid #333;background:#1b1c22;color:#fff;cursor:pointer;margin-left:6px}
-#timeRangeWrapper{width:95%;max-width:1600px;margin-top:16px}
+#timeRangeWrapper{width:100%;max-width:1600px;margin-top:16px}
 #timeRangeSlider{margin-top:4px}
-button{padding:4px 10px;font-size:13px;border-radius:4px;border:1px solid:#333;background:#1b1c22;color:#fff;cursor:pointer}
+button{padding:4px 10px;font-size:13px;border-radius:4px;border:1px solid #333;background:#1b1c22;color:#fff;cursor:pointer}
 #clearLogsBtn{background:#441818}
 </style>
 </head>
 <body>
-<h1>Damage By Skill - Throne and Liberty</h1>
-<div style="margin-top:4px;text-align:center;font-size:13px;">Logs folder:
-  <code id="logPath" style="padding:3px 6px;background:#1f2233;border-radius:4px;cursor:pointer;">%LOCALAPPDATA%\TL\SAVED\COMBATLOGS</code>
-  <span id="copyMsg" style="margin-left:6px;font-size:12px;color:#aaa;"></span>
+<!-- HEADER STICKY -->
+<div id="fixedHeader">
+  <h1 style="margin:0 0 10px 20px;">Damage By Skill - Throne and Liberty</h1>
+  
+  <div style="text-align:center;font-size:13px;padding:0 20px;">
+    Logs folder:
+    <code id="logPath" style="padding:3px 6px;background:#1f2233;border-radius:4px;cursor:pointer;">%LOCALAPPDATA%\TL\SAVED\COMBATLOGS</code>
+    <span id="copyMsg" style="margin-left:6px;font-size:12px;color:#aaa;"></span>
+  </div>
+
+  <div class="dropzone-container">
+    <p style="margin:0 0 8px 0;font-size:14px;color:#ccc;">Select one or more combatlog (.txt) files</p>
+    <input type="file" id="logFile" accept=".txt" multiple style="display:none;">
+    <div id="dropZone">Drop your combatlog (.txt) files here<br><span style="font-size:12px;color:#aaa;">or click to select them</span></div>
+  </div>
+
+  <div id="status" style="text-align:center;padding:0 20px;margin-top:10px;"></div>
+  
+  <div class="controls">
+    <button id="clearLogsBtn">Clear logs</button>
+  </div>
+
+  <!-- SUMMARY CARDS -->
+  <div class="summary" style="padding:0 20px;">
+    <div class="card"><div class="card-title">Total Damage</div><div class="card-value" id="sumTotalDamage">0</div></div>
+    <div class="card"><div class="card-title">Average DPS</div><div class="card-value" id="sumAvgDps">0</div></div>
+    <div class="card"><div class="card-title">Players</div><div class="card-value" id="sumPlayers">0</div></div>
+    <div class="card"><div class="card-title">Target</div><div class="card-value" id="sumBossName">---</div></div>
+  </div>
+
+  <!-- TIME SLIDER -->
+  <div id="timeRangeWrapper" style="padding:0 20px;">
+    <div style="font-size:12px;color:#ccc;margin-bottom:4px;">Time range: <span id="timeRangeLabel">0s - 0s</span></div>
+    <div id="timeRangeSlider"></div>
+  </div>
 </div>
-<p style="margin-top:16px;">Select one or more combatlog (.txt) files exported from the game.</p>
-<input type="file" id="logFile" accept=".txt" multiple style="display:none;">
-<div id="dropZone" style="margin-top:10px;width:95%;max-width:1600px;padding:18px;border:2px dashed #5865F2;border-radius:8px;text-align:center;cursor:pointer;background:#10111b;">
-  Drop your combatlog (.txt) files here<br><span style="font-size:12px;color:#aaa;">or click to select them</span>
-</div>
-<div id="status"></div>
-<div style="width:95%;max-width:1600px;margin-top:6px;text-align:right;"><button id="clearLogsBtn">Clear logs</button></div>
-<div class="summary">
-  <div class="card"><div class="card-title">Total Damage</div><div class="card-value" id="sumTotalDamage">0</div></div>
-  <div class="card"><div class="card-title">Average DPS</div><div class="card-value" id="sumAvgDps">0</div></div>
-  <div class="card"><div class="card-title">Players</div><div class="card-value" id="sumPlayers">0</div></div>
-  <div class="card"><div class="card-title">Target</div><div class="card-value" id="sumBossName">---</div></div>
-</div>
-<div id="timeRangeWrapper">
-  <div style="font-size:12px;color:#ccc;margin-bottom:4px;">Time range: <span id="timeRangeLabel">0s - 0s</span></div>
-  <div id="timeRangeSlider"></div>
-</div>
-<h2>Player Statistics</h2>
-<p>Click one or more players to compare them on the charts. ✕ removes from logs completely.</p>
-<table>
-  <thead><tr><th>#</th><th>Player</th><th>DPS</th><th>Total Damage</th><th>% Fight</th><th>Hits</th><th>Avg Hit</th><th>Max Hit</th><th>Duration</th><th></th></tr></thead>
-  <tbody id="playerBody"></tbody>
-</table>
-<div style="width:95%;max-width:1600px;margin-top:8px;text-align:right;"><button id="toggleTargetsBtn">Show other targets</button></div>
-<table id="targetsTable" style="display:none;margin-top:10px;">
-  <thead><tr><th>Target</th><th>Total Damage</th><th>Hits</th></tr></thead>
-  <tbody id="targetsBody"></tbody>
-</table>
-<div class="panel">
-  <div class="panel-header"><span class="panel-title">Damage By Skill</span><span class="panel-meta" id="playersMeta"></span></div>
-  <div class="panel-body" id="chartContainer"><canvas id="damageChart"></canvas></div>
-</div>
-<div class="panel">
-  <div class="panel-header"><span class="panel-title">Average DPS Over Time</span><span class="panel-meta" id="avgFightDurationMeta"></span></div>
-  <div class="panel-body" id="avgTimelineContainer"><canvas id="avgDpsTimeline"></canvas></div>
-</div>
-<div id="avgControls">(Click and drag to zoom) <button id="resetAvgZoomBtn">Reset zoom</button></div>
-<div class="panel">
-  <div class="panel-header"><span class="panel-title">DPS Timeline (Per Second)</span><span class="panel-meta" id="fightDurationMeta"></span></div>
-  <div class="panel-body" id="timelineContainer"><canvas id="dpsTimeline"></canvas></div>
+
+<!-- CONTENU SCROLLABLE -->
+<div class="scrollable-content">
+  <h2>Player Statistics</h2>
+  <p>Click one or more players to compare them on the charts. ✕ removes from logs completely.</p>
+  
+  <table>
+    <thead><tr><th>#</th><th>Player</th><th>DPS</th><th>Total Damage</th><th>% Fight</th><th>Hits</th><th>Avg Hit</th><th>Max Hit</th><th>Duration</th><th></th></tr></thead>
+    <tbody id="playerBody"></tbody>
+  </table>
+
+  <div style="margin-top:8px;text-align:right;"><button id="toggleTargetsBtn">Show other targets</button></div>
+  <table id="targetsTable" style="display:none;margin-top:10px;">
+    <thead><tr><th>Target</th><th>Total Damage</th><th>Hits</th></tr></thead>
+    <tbody id="targetsBody"></tbody>
+  </table>
+
+  <div class="panel">
+    <div class="panel-header"><span class="panel-title">Damage By Skill</span><span class="panel-meta" id="playersMeta"></span></div>
+    <div class="panel-body" id="chartContainer"><canvas id="damageChart"></canvas></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-header"><span class="panel-title">Average DPS Over Time</span><span class="panel-meta" id="avgFightDurationMeta"></span></div>
+    <div class="panel-body" id="avgTimelineContainer"><canvas id="avgDpsTimeline"></canvas></div>
+  </div>
+  <div id="avgControls">(Click and drag to zoom) <button id="resetAvgZoomBtn">Reset zoom</button></div>
+
+  <div class="panel">
+    <div class="panel-header"><span class="panel-title">DPS Timeline (Per Second)</span><span class="panel-meta" id="fightDurationMeta"></span></div>
+    <div class="panel-body" id="timelineContainer"><canvas id="dpsTimeline"></canvas></div>
+  </div>
 </div>
 
 <script>
 const fileInput=document.getElementById('logFile'),dropZone=document.getElementById('dropZone'),statusEl=document.getElementById('status'),playerBody=document.getElementById('playerBody'),targetsTable=document.getElementById('targetsTable'),targetsBody=document.getElementById('targetsBody'),toggleTargetsBtn=document.getElementById('toggleTargetsBtn'),resetAvgZoomBtn=document.getElementById('resetAvgZoomBtn'),logPathEl=document.getElementById('logPath'),copyMsgEl=document.getElementById('copyMsg'),clearLogsBtn=document.getElementById('clearLogsBtn'),timeRangeLabel=document.getElementById('timeRangeLabel'),timeRangeSliderEl=document.getElementById('timeRangeSlider');
 let skillChart,dpsTimelineChart,avgDpsTimelineChart,playersData=[],selectedPlayers=[],selectedTarget=null,globalBossPhases=[],timeSlider=null,timeFilter={from:0,to:null};
-const BAR_COLORS=['rgba(88,101,242,.8)','rgba(46,204,113,.8)','rgba(231,76,60,.8)','rgba(241,196,15,.8)','rgba(155,89,182,.8)','rgba(26,188,156,.8)','rgba(230,126,34,.8)','rgba(149,165,166,.8)'],
-BAR_BORDER_COLORS=['rgba(88,101,242,1)','rgba(46,204,113,1)','rgba(231,76,60,1)','rgba(241,196,15,1)','rgba(155,89,182,1)','rgba(26,188,156,1)','rgba(230,126,34,1)','rgba(149,165,166,1)'],
-LINE_COLORS=['rgba(255,99,132,1)','rgba(54,162,235,1)','rgba(75,192,192,1)','rgba(255,206,86,1)','rgba(153,102,255,1)','rgba(255,159,64,1)','rgba(46,204,113,1)','rgba(231,76,60,1)','rgba(52,152,219,1)','rgba(241,196,15,1)'];
+const BAR_COLORS=['rgba(88,101,242,.8)','rgba(46,204,113,.8)','rgba(231,76,60,.8)','rgba(241,196,15,.8)','rgba(155,89,182,.8)','rgba(26,188,156,.8)','rgba(230,126,34,.8)','rgba(149,165,166,.8)'],BAR_BORDER_COLORS=['rgba(88,101,242,1)','rgba(46,204,113,1)','rgba(231,76,60,1)','rgba(241,196,15,1)','rgba(155,89,182,1)','rgba(26,188,156,1)','rgba(230,126,34,1)','rgba(149,165,166,1)'],LINE_COLORS=['rgba(255,99,132,1)','rgba(54,162,235,1)','rgba(75,192,192,1)','rgba(255,206,86,1)','rgba(153,102,255,1)','rgba(255,159,64,1)','rgba(46,204,113,1)','rgba(231,76,60,1)','rgba(52,152,219,1)','rgba(241,196,15,1)'];
 const getColorForIndex=i=>({rowBg:BAR_COLORS[i%BAR_COLORS.length],text:'#fff',barBg:BAR_COLORS[i%BAR_COLORS.length],barBorder:BAR_BORDER_COLORS[i%BAR_BORDER_COLORS.length],line:LINE_COLORS[i%LINE_COLORS.length]});
 
 logPathEl.onclick=()=>{navigator.clipboard.writeText('%LOCALAPPDATA%\\TL\\SAVED\\COMBATLOGS').then(()=>{copyMsgEl.textContent='Path copied ✔';setTimeout(()=>copyMsgEl.textContent='',2000);});};
