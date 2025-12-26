@@ -402,7 +402,6 @@
     'rgba(241, 196, 15, 1)'
   ];
 
-  // couleur par index de joueur/log
   function getColorForIndex(idx) {
     return {
       rowBg: BAR_COLORS[idx % BAR_COLORS.length],
@@ -413,7 +412,6 @@
     };
   }
 
-  // PATH
   logPathEl.addEventListener('click', () => {
     navigator.clipboard.writeText('%LOCALAPPDATA%\\TL\\SAVED\\COMBATLOGS')
       .then(() => {
@@ -422,7 +420,6 @@
       });
   });
 
-  // DRAG & DROP
   dropZone.addEventListener('click', () => fileInput.click());
   dropZone.addEventListener('dragover', (e) => {
     e.preventDefault();
@@ -444,7 +441,6 @@
     handleFiles();
   });
 
-  // TEMPS / DATES
   function parseTs(ts) {
     const [datePart, timePart] = ts.split('-');
     const year = +datePart.slice(0, 4);
@@ -468,7 +464,6 @@
     }
   }
 
-  // PARSE LOG FILE
   function parseLogFile(file, index) {
     return new Promise(resolve => {
       if (file.size > 20 * 1024 * 1024) {
@@ -606,7 +601,6 @@
     });
   }
 
-  // SLIDER TEMPS
   function initTimeSlider(maxDuration) {
     if (maxDuration < 1) maxDuration = 1;
 
@@ -707,16 +701,16 @@
     return skillTotals;
   }
 
-  // dégâts par skill pour une cible précise + fenêtre temps
   function buildDamageBySkillForTargetInWindow(player, targetName) {
-    if (!player.damageByTarget || !player.damageByTarget[targetName]) {
+    const targetInfo = player.damageByTarget && player.damageByTarget[targetName];
+    if (!targetInfo) {
       return buildDamageBySkillInWindow(player);
     }
 
     const from = timeFilter.from ?? 0;
     const to   = Math.min(timeFilter.to ?? player.duration, player.duration);
     const skillTotals = {};
-    const validSkills = player.damageByTarget[targetName].bySkill || {};
+    const validSkills = targetInfo.bySkill || {};
 
     for (let s = from; s <= to; s++) {
       const skillsAtSec = player.damageBySkillTimeline?.[s];
@@ -730,7 +724,6 @@
     return skillTotals;
   }
 
-  // TABLEAUX
   function renderPlayerTable(players) {
     playerBody.innerHTML = '';
 
@@ -831,7 +824,6 @@
       });
   }
 
-  // GRAPHIQUES
   function drawComparisonChart() {
     const ctx = document.getElementById('damageChart').getContext('2d');
     if (skillChart) skillChart.destroy();
@@ -1105,7 +1097,6 @@
     drawDpsTimeline();
   }
 
-  // EVENTS UI
   toggleTargetsBtn.addEventListener('click', () => {
     const isHidden = getComputedStyle(targetsTable).display === 'none';
     if (isHidden) {
@@ -1194,7 +1185,6 @@
     if (avgDpsTimelineChart) { avgDpsTimelineChart.destroy(); avgDpsTimelineChart = null; }
   });
 
-  // LECTURE FICHIERS
   function handleFiles() {
     let files = Array.from(fileInput.files);
     if (!files.length) return;
