@@ -810,89 +810,113 @@
 
     // GRAPHIQUES
     function drawComparisonChart() {
-      const ctx = document.getElementById('damageChart').getContext('2d');
-      if (skillChart) skillChart.destroy();
-      const playersMeta = document.getElementById('playersMeta');
+  const ctx = document.getElementById('damageChart').getContext('2d');
+  if (skillChart) skillChart.destroy();
+  const playersMeta = document.getElementById('playersMeta');
 
-      if (!selectedPlayers.length) {
-        playersMeta.textContent = '';
-        return;
-      }
+  if (!selectedPlayers.length) {
+    playersMeta.textContent = '';
+    return;
+  }
 
-      const allSkills = new Set();
-      const perPlayerSkillTotals = selectedPlayers.map(p => {
-        const totals = buildDamageBySkillInWindow(p);
-        Object.keys(totals).forEach(k => allSkills.add(k));
-        return { player: p, totals };
+  // temps
+  const allSkills = new Set();
+  const perPlayerSkillTotals = selectedPlayers.map(p => {
+    // si une cible est choisie, on part de p.damageByTarget[target].bySkill
+    let baseSkillTotals = p.damageBySkill;
+
+    if (selectedTarget && p.damageByTarget && p.damageByTarget[selectedTarget]) {
+      baseSkillTotals = p.damageByTarget[selectedTarget].bySkill || {};
+    }
+
+    // puis on applique la fenêtre de temps comme avant
+    const windowTotals = {};
+    const from = timeFilter.from ?? 0;
+    const to   = Math.min(timeFilter.to ?? p.duration, p.duration);
+
+    for (let s = from; s <= to; s++) {
+      const skillsAtSec = p.damageBySkillTimeline?.[s];
+      if (!skillsAtSec) continue;
+      Object.entries(skillsAtSec).forEach(([skill, dmg]) => {
+        // si une cible est sélectionnée, on ne garde que les skills présents pour cette cible
+        if (selectedTarget && !baseSkillTotals[skill]) return;
+        windowTotals[skill] = (windowTotals[skill] || 0) + dmg;
       });
+    }
 
-      const globalSkillTotals = {};
-      perPlayerSkillTotals.forEach(({ totals }) => {
-        Object.entries(totals).forEach(([skill, dmg]) => {
-          globalSkillTotals[skill] = (globalSkillTotals[skill] || 0) + dmg;
-        });
-      });
+    const totals = selectedTarget ? windowTotals : baseSkillTotals;
+    Object.keys(totals).forEach(k => allSkills.add(k));
+    return { player: p, totals };
+  });
 
-      const labels = Array.from(allSkills).sort((a, b) => {
-        return (globalSkillTotals[b] || 0) - (globalSkillTotals[a] || 0);
-      });
+  const globalSkillTotals = {};
+  perPlayerSkillTotals.forEach(({ totals }) => {
+    Object.entries(totals).forEach(([skill, dmg]) => {
+      globalSkillTotals[skill] = (globalSkillTotals[skill] || 0) + dmg;
+    });
+  });
 
-      const datasets = perPlayerSkillTotals.map(({ player, totals }) => {
-        const c = getColorForIndex(player.index);
-        return {
-          label: selectedTarget ? `${player.playerName} (${selectedTarget})` : player.playerName,
-          data: labels.map(skill => totals[skill] || 0),
-          backgroundColor: c.barBg,
-          borderColor: c.barBorder,
-          borderWidth: 1,
-          borderRadius: 6,
-          borderSkipped: false
-        };
-      });
+  const labels = Array.from(allSkills).sort((a, b) => {
+    return (globalSkillTotals[b] || 0) - (globalSkillTotals[a] || 0);
+  });
 
-      playersMeta.textContent =
-        perPlayerSkillTotals.length === 1
-          ? perPlayerSkillTotals[0].player.playerName
-          : perPlayerSkillTotals.map(p => p.player.playerName).join(' vs ');
+  const datasets = perPlayerSkillTotals.map(({ player, totals }) => {
+    const c = getColorForIndex(player.index);
+    return {
+      label: selectedTarget ? `${player.playerName} (${selectedTarget})` : player.playerName,
+      data: labels.map(skill => totals[skill] || 0),
+      backgroundColor: c.barBg,
+      borderColor: c.barBorder,
+      borderWidth: 1,
+      borderRadius: 6,
+      borderSkipped: false
+    };
+  });
 
-      const newHeight = Math.max(450, labels.length * 40);
-      document.getElementById('chartContainer').style.height = newHeight + 'px';
+  playersMeta.textContent =
+    perPlayerSkillTotals.length === 1
+      ? perPlayerSkillTotals[0].player.playerName
+      : perPlayerSkillTotals.map(p => p.player.playerName).join(' vs ');
 
-      skillChart = new Chart(ctx, {
-        type: 'bar',
-        data: { labels, datasets },
-        options: {
-          indexAxis: 'y',
-          responsive: true,
-          maintainAspectRatio: false,
-          categoryPercentage: 0.9,
-          barPercentage: 0.7,
-          animation: false,
-          plugins: {
-            legend: { display: true },
-            title: { display: false },
-            tooltip: {
-              callbacks: {
-                label: (ctx) => {
-                  const v = ctx.parsed.x || 0;
-                  return `${ctx.dataset.label} – ${ctx.label}: ${v.toLocaleString('fr-FR')} dégâts`;
-                }
-              }
-            }
-          },
-          scales: {
-            x: {
-              ticks: { color: '#ffffff', maxTicksLimit: 10 },
-              grid: { color: 'rgba(255,255,255,0.1)' }
-            },
-            y: {
-              ticks: { color: '#ffffff' },
-              grid: { color: 'rgba(255,255,255,0.1)' }
+  const newHeight = Math.max(450, labels.length * 40);
+  document.getElementById('chartContainer').style.height = newHeight + 'px';
+
+  skillChart = new Chart(ctx, {
+    type: 'bar',
+    data: { labels, datasets },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      categoryPercentage: 0.9,
+      barPercentage: 0.7,
+      animation: false,
+      plugins: {
+        legend: { display: true },
+        title: { display: false },
+        tooltip: {
+          callbacks: {
+            label: (ctx) => {
+              const v = ctx.parsed.x || 0;
+              return `${ctx.dataset.label} – ${ctx.label}: ${v.toLocaleString('fr-FR')} dégâts`;
             }
           }
         }
-      });
+      },
+      scales: {
+        x: {
+          ticks: { color: '#ffffff', maxTicksLimit: 10 },
+          grid: { color: 'rgba(255,255,255,0.1)' }
+        },
+        y: {
+          ticks: { color: '#ffffff' },
+          grid: { color: 'rgba(255,255,255,0.1)' }
+        }
+      }
     }
+  });
+}
+
 
     function drawAvgDpsTimeline() {
       const ctx = document.getElementById('avgDpsTimeline').getContext('2d');
