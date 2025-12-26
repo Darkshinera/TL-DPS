@@ -6,52 +6,18 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.8.1/nouislider.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.8.1/nouislider.min.js"></script>
 <style>
-body{margin:0;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;font-family:Arial,sans-serif;background-color:#050610;color:#fff;padding:20px}
-h1{margin-bottom:10px}
-#status{margin-top:10px;min-height:20px;font-weight:bold}
-.summary{display:flex;gap:12px;margin-top:16px;width:95%;max-width:1600px}
-.card{flex:1;background:linear-gradient(145deg,#151728,#0c0d16);border-radius:8px;padding:8px 12px;box-shadow:0 0 18px rgba(0,0,0,.8);border:1px solid rgba(120,120,200,.4)}
-.card-title{font-size:11px;text-transform:uppercase;color:#9b9bc0;letter-spacing:.06em}
-.card-value{margin-top:4px;font-size:18px;font-weight:700;color:#4fd1ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-table{margin-top:25px;border-collapse:collapse;width:95%;max-width:1600px;background-color:#151518;border-radius:8px;overflow:hidden}
-th,td{padding:8px 12px;text-align:center;font-size:14px;border-right:1px solid #22252f}
-th:last-child,td:last-child{border-right:none}
-th{background-color:#202024;font-weight:600;letter-spacing:.03em}
-thead th{position:sticky;top:0;z-index:2}
-tr:nth-child(even){background-color:#1a1a1f}
-tbody tr:hover{background-color:#262533;cursor:pointer;border-left:3px solid #ff4d6a}
-tr.player-selected{font-weight:bold}
-td:nth-child(2){text-align:left}
-td:nth-child(3),td:nth-child(4),td:nth-child(5),td:nth-child(6),td:nth-child(7),td:nth-child(8),td:nth-child(9){font-family:"Roboto Mono",Consolas,monospace;font-size:13px}
-#targetsTable td:first-child{text-align:left}
-.remove-player{cursor:pointer;color:#ff6666;font-weight:bold;font-size:16px;padding:2px 6px;border-radius:3px;transition:background .2s;display:inline-block}
-.remove-player:hover{background:rgba(255,102,102,.2)}
-.panel{width:95%;max-width:1600px;margin-top:20px;background:radial-gradient(circle at top left,#1b213a 0,#101018 55%);border-radius:10px;padding:10px 14px 14px;box-shadow:0 0 22px rgba(0,0,0,.8);border:1px solid rgba(120,120,200,.35)}
-.panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;border-bottom:1px solid rgba(255,255,255,.04);padding-bottom:6px}
-.panel-title{font-size:13px;font-weight:600;color:#e5e5ff;letter-spacing:.04em;text-transform:uppercase}
-.panel-meta{font-size:11px;color:#c3c7ff;letter-spacing:.04em}
-.panel-body{height:420px}
-#chartContainer,#timelineContainer,#avgTimelineContainer{width:100%;height:100%}
-#dpsTimeline,#damageChart,#avgDpsTimeline{width:100%!important;height:100%!important;max-height:none!important;display:block}
-#avgControls{width:95%;max-width:1600px;margin-top:6px;text-align:right;font-size:12px;color:#aaa}
-#avgControls button{padding:3px 8px;font-size:12px;border-radius:4px;border:1px solid #333;background:#1b1c22;color:#fff;cursor:pointer;margin-left:6px}
-#timeRangeWrapper{width:95%;max-width:1600px;margin-top:16px}
-#timeRangeSlider{margin-top:4px}
-button{padding:4px 10px;font-size:13px;border-radius:4px;border:1px solid:#333;background:#1b1c22;color:#fff;cursor:pointer}
-#clearLogsBtn{background:#441818}
+body{margin:0;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:#f5f5ff;padding:24px 16px 40px;background:radial-gradient(circle at top,#191c36 0,#050610 55%,#020309 100%)}h1{margin:0 0 8px;font-weight:700;font-size:26px;letter-spacing:.06em;text-transform:uppercase}h2{margin-top:26px;margin-bottom:6px;font-size:18px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#c5caf8}#status{margin-top:10px;min-height:20px;font-weight:500;font-size:13px;color:#b0b5ff}.summary{display:flex;gap:14px;margin-top:18px;width:95%;max-width:1600px}.card{flex:1;background:linear-gradient(135deg,rgba(21,23,40,.92),rgba(8,10,26,.96));backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:16px;padding:12px 16px;box-shadow:0 24px 60px rgba(0,0,0,.8);border:1px solid rgba(120,120,200,.45);transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}.card:hover{transform:translateY(-2px);box-shadow:0 32px 80px rgba(0,0,0,.9);border-color:rgba(111,165,255,.9)}.card-title{font-size:11px;text-transform:uppercase;color:#9fa4ff;letter-spacing:.12em}.card-value{margin-top:6px;font-size:20px;font-weight:800;color:#4fd1ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#logPath{padding:3px 8px;background:rgba(22,26,54,.9);border-radius:999px;border:1px solid rgba(120,120,200,.6);cursor:pointer;font-size:12px}#logPath:hover{background:rgba(35,42,92,.95)}#copyMsg{color:#9fa4ff}#dropZone{margin-top:12px;width:95%;max-width:1600px;padding:22px;border:1px dashed rgba(120,130,255,.9);border-radius:18px;text-align:center;cursor:pointer;background:linear-gradient(135deg,rgba(15,18,40,.96),rgba(8,9,26,.98));box-shadow:0 22px 70px rgba(0,0,0,.85);transition:background .18s ease,border-color .18s ease,transform .12s ease}#dropZone span{color:#a0a4c8;font-size:12px}#dropZone:hover{border-color:rgba(131,181,255,1);background:linear-gradient(135deg,rgba(19,26,60,.98),rgba(8,12,35,.99));transform:translateY(-1px)}button{padding:5px 14px;font-size:12px;border-radius:999px;border:1px solid rgba(79,141,255,.7);background:radial-gradient(circle at top left,#27385c 0,#151729 55%);color:#e7ecff;cursor:pointer;letter-spacing:.08em;text-transform:uppercase;transition:background .18s ease,box-shadow .18s ease,transform .1s ease,border-color .18s ease}button:hover{background:radial-gradient(circle at top left,#335fa8 0,#18233f 55%);box-shadow:0 0 0 1px rgba(79,141,255,.8);transform:translateY(-1px)}#clearLogsBtn{background:radial-gradient(circle at top left,#5a1f32 0,#2a1018 55%);border-color:rgba(255,77,106,.8)}#clearLogsBtn:hover{box-shadow:0 0 0 1px rgba(255,77,106,.9)}#timeRangeWrapper{width:95%;max-width:1600px;margin-top:18px}#timeRangeLabel{font-weight:500;color:#d0d4ff}.noUi-target{background:rgba(22,24,46,.95);border-radius:999px;border:1px solid rgba(84,102,220,.7);box-shadow:inset 0 0 0 1px rgba(0,0,0,.7)}.noUi-connect{background:linear-gradient(90deg,#4f8dff,#4fd1ff)}.noUi-handle{border-radius:999px;border:2px solid #0b0d1e;background:radial-gradient(circle at 30% 20%,#fff 0,#c2e3ff 28%,#4f8dff 60%,#24378c 100%);box-shadow:0 0 0 1px rgba(100,140,255,.9),0 8px 20px rgba(0,0,0,.9)}table{margin-top:22px;border-collapse:collapse;width:95%;max-width:1600px;background:rgba(8,10,26,.96);border-radius:16px;overflow:hidden;box-shadow:0 26px 70px rgba(0,0,0,.9)}th,td{padding:9px 12px;text-align:center;font-size:13px;border-right:1px solid #24263a}th:last-child,td:last-child{border-right:none}thead th{position:sticky;top:0;z-index:2;background:linear-gradient(90deg,#202436,#181a28);font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#c9cffb}tbody tr:nth-child(even){background-color:rgba(15,16,32,.96)}tbody tr:nth-child(odd){background-color:rgba(11,12,26,.96)}tbody tr{transition:background .18s ease,transform .08s ease,border-left .18s ease}tbody tr:hover{background:rgba(79,141,255,.06);transform:translateY(-1px);border-left:3px solid #4fd1ff;cursor:pointer}tr.player-selected{font-weight:600}td:nth-child(3),td:nth-child(4),td:nth-child(5),td:nth-child(6),td:nth-child(7),td:nth-child(8),td:nth-child(9){font-family:"Roboto Mono",Consolas,monospace;font-size:12px}td:nth-child(2){text-align:left}#targetsTable td:first-child{text-align:left}.remove-player{cursor:pointer;color:#ff99a9;font-weight:700;font-size:14px;padding:2px 8px;border-radius:999px;background:rgba(255,77,106,.08);transition:background .18s ease,color .18s ease,transform .08s ease;display:inline-flex;align-items:center;justify-content:center}.remove-player:hover{background:rgba(255,77,106,.35);color:#ffeef2;transform:translateY(-1px)}.panel{width:95%;max-width:1600px;margin-top:22px;background:linear-gradient(145deg,rgba(15,17,32,.98),rgba(7,9,22,.99));border-radius:18px;padding:14px 18px 18px;box-shadow:0 26px 72px rgba(0,0,0,.95);border:1px solid rgba(120,120,200,.45)}.panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;border-bottom:1px solid rgba(255,255,255,.05);padding-bottom:8px}.panel-title{font-size:12px;font-weight:600;color:#e5e7ff;letter-spacing:.14em;text-transform:uppercase}.panel-meta{font-size:11px;color:#9fa4ff;letter-spacing:.08em;text-transform:uppercase}.panel-body{height:420px}#chartContainer,#timelineContainer,#avgTimelineContainer{width:100%;height:100%}#dpsTimeline,#damageChart,#avgDpsTimeline{width:100%!important;height:100%!important;max-height:none!important;display:block}#avgControls{width:95%;max-width:1600px;margin-top:8px;text-align:right;font-size:12px;color:#a6aad0}p{font-size:13px;color:#c2c5dd}code{font-family:"JetBrains Mono","Fira Code",monospace}@media (min-width:1800px){body{padding-top:32px}}@media (max-width:900px){.summary{flex-direction:column}}
 </style>
 </head>
 <body>
 <h1>Damage By Skill - Throne and Liberty</h1>
 <div style="margin-top:4px;text-align:center;font-size:13px;">Logs folder:
-  <code id="logPath" style="padding:3px 6px;background:#1f2233;border-radius:4px;cursor:pointer;">%LOCALAPPDATA%\TL\SAVED\COMBATLOGS</code>
+  <code id="logPath" style="cursor:pointer;">%LOCALAPPDATA%\TL\SAVED\COMBATLOGS</code>
   <span id="copyMsg" style="margin-left:6px;font-size:12px;color:#aaa;"></span>
 </div>
 <p style="margin-top:16px;">Select one or more combatlog (.txt) files exported from the game.</p>
 <input type="file" id="logFile" accept=".txt" multiple style="display:none;">
-<div id="dropZone" style="margin-top:10px;width:95%;max-width:1600px;padding:18px;border:2px dashed #5865F2;border-radius:8px;text-align:center;cursor:pointer;background:#10111b;">
-  Drop your combatlog (.txt) files here<br><span style="font-size:12px;color:#aaa;">or click to select them</span>
-</div>
+<div id="dropZone">Drop your combatlog (.txt) files here<br><span>or click to select them</span></div>
 <div id="status"></div>
 <div style="width:95%;max-width:1600px;margin-top:6px;text-align:right;"><button id="clearLogsBtn">Clear logs</button></div>
 <div class="summary">
