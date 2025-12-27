@@ -1,93 +1,3 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<title>Damage By Skill - Throne and Liberty</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.8.1/nouislider.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.8.1/nouislider.min.js"></script>
-<style>
-body{margin:0;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:#f5f5ff;padding:24px 16px 40px;background:radial-gradient(circle at top,#191c36 0,#050610 55%,#020309 100%)}
-h1{margin:0 0 8px;font-weight:700;font-size:26px;letter-spacing:.06em;text-transform:uppercase}
-h2{margin-top:26px;margin-bottom:6px;font-size:18px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#c5caf8}
-#status{margin-top:10px;min-height:20px;font-weight:500;font-size:13px;color:#b0b5ff}
-.summary{display:flex;gap:14px;margin-top:18px;width:95%;max-width:1600px}
-.card{flex:1;background:linear-gradient(135deg,rgba(21,23,40,.92),rgba(8,10,26,.96));backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:16px;padding:12px 16px;box-shadow:0 24px 60px rgba(0,0,0,.8);border:1px solid rgba(120,120,200,.45);transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
-.card:hover{transform:translateY(-2px);box-shadow:0 32px 80px rgba(0,0,0,.9);border-color:rgba(111,165,255,.9)}
-.card-title{font-size:11px;text-transform:uppercase;color:#9fa4ff;letter-spacing:.12em}
-.card-value{margin-top:6px;font-size:20px;font-weight:800;color:#4fd1ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#logPath{padding:3px 8px;background:rgba(22,26,54,.9);border-radius:999px;border:1px solid rgba(120,120,200,.6);cursor:pointer;font-size:12px}
-#logPath:hover{background:rgba(35,42,92,.95)}
-#copyMsg{color:#9fa4ff}
-#dropZone{margin-top:12px;width:95%;max-width:1600px;padding:22px;border:1px dashed rgba(120,130,255,.9);border-radius:18px;text-align:center;cursor:pointer;background:linear-gradient(135deg,rgba(15,18,40,.96),rgba(8,9,26,.98));box-shadow:0 22px 70px rgba(0,0,0,.85);transition:background .18s ease,border-color .18s ease,transform .12s ease}
-#dropZone span{color:#a0a4c8;font-size:12px}
-#dropZone:hover{border-color:rgba(131,181,255,1);background:linear-gradient(135deg,rgba(19,26,60,.98),rgba(8,12,35,.99));transform:translateY(-1px)}
-button{padding:5px 14px;font-size:12px;border-radius:999px;border:1px solid rgba(79,141,255,.7);background:radial-gradient(circle at top left,#27385c 0,#151729 55%);color:#e7ecff;cursor:pointer;letter-spacing:.08em;text-transform:uppercase;transition:background .18s ease,box-shadow .18s ease,transform .1s ease,border-color .18s ease}
-button:hover{background:radial-gradient(circle at top left,#335fa8 0,#18233f 55%);box-shadow:0 0 0 1px rgba(79,141,255,.8);transform:translateY(-1px)}
-#clearLogsBtn{background:radial-gradient(circle at top left,#5a1f32 0,#2a1018 55%);border-color:rgba(255,77,106,.8)}
-#clearLogsBtn:hover{box-shadow:0 0 0 1px rgba(255,77,106,.9)}
-#timeRangeWrapper{width:95%;max-width:1600px;margin-top:18px}
-#timeRangeLabel{font-weight:500;color:#d0d4ff}
-.noUi-target{background:rgba(22,24,46,.95);border-radius:999px;border:1px solid rgba(84,102,220,.7);box-shadow:inset 0 0 0 1px rgba(0,0,0,.7)}
-.noUi-base{border-radius:999px;overflow:hidden}
-.noUi-connect{background:linear-gradient(90deg,#25d8ff,#4f46e5,#a855f7);box-shadow:0 0 22px rgba(37,216,255,.7)}
-.noUi-handle{width:12px;height:26px;border-radius:999px;border:2px solid #e5f6ff;background:radial-gradient(circle at 30% 20%,#fff 0,#c2e3ff 28%,#4f8dff 60%,#24378c 100%);box-shadow:0 0 12px rgba(37,216,255,.9),0 8px 20px rgba(0,0,0,.9);cursor:pointer}
-.noUi-handle:before,.noUi-handle:after{display:none}
-.noUi-handle:hover{box-shadow:0 0 18px rgba(129,230,217,1),0 0 40px rgba(37,216,255,.9);transform:scale(1.05)}
-table{margin-top:22px;border-collapse:collapse;width:95%;max-width:1600px;background:rgba(8,10,26,.96);border-radius:16px;overflow:hidden;box-shadow:0 26px 70px rgba(0,0,0,.9)}
-th,td{padding:9px 12px;text-align:center;font-size:13px;border-right:1px solid #24263a}
-th:last-child,td:last-child{border-right:none}
-thead th{position:sticky;top:0;z-index:2;background:linear-gradient(90deg,#202436,#181a28);font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#c9cffb}
-tbody tr:nth-child(even){background-color:rgba(15,16,32,.96)}
-tbody tr:nth-child(odd){background-color:rgba(11,12,26,.96)}
-tbody tr{transition:background .18s ease,transform .08s ease,border-left .18s ease}
-tbody tr:hover{background:rgba(79,141,255,.06);transform:translateY(-1px);border-left:3px solid #4fd1ff;cursor:pointer}
-tr.player-selected{font-weight:600}
-td:nth-child(3),td:nth-child(4),td:nth-child(5),td:nth-child(6),td:nth-child(7),td:nth-child(8),td:nth-child(9){font-family:"Roboto Mono",Consolas,monospace;font-size:12px}
-td:nth-child(2){text-align:left}
-#targetsTable td:first-child{text-align:left}
-.remove-player{cursor:pointer;color:#ff99a9;font-weight:700;font-size:14px;padding:2px 8px;border-radius:999px;background:rgba(255,77,106,.08);transition:background .18s ease,color .18s ease,transform .08s ease;display:inline-flex;align-items:center;justify-content:center}
-.remove-player:hover{background:rgba(255,77,106,.35);color:#ffeef2;transform:translateY(-1px)}
-.panel{width:95%;max-width:1600px;margin-top:22px;background:linear-gradient(145deg,rgba(15,17,32,.98),rgba(7,9,22,.99));border-radius:18px;padding:14px 18px 18px;box-shadow:0 26px 72px rgba(0,0,0,.95);border:1px solid rgba(120,120,200,.45)}
-.panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;border-bottom:1px solid rgba(255,255,255,.05);padding-bottom:8px}
-.panel-title{font-size:12px;font-weight:600;color:#e5e7ff;letter-spacing:.14em;text-transform:uppercase}
-.panel-meta{font-size:11px;color:#9fa4ff;letter-spacing:.08em;text-transform:uppercase}
-.panel-body{height:420px}
-#chartContainer,#timelineContainer,#avgTimelineContainer{width:100%;height:100%}
-#dpsTimeline,#damageChart,#avgDpsTimeline{width:100%!important;height:100%!important;max-height:none!important;display:block}
-#avgControls{width:95%;max-width:1600px;margin-top:8px;text-align:right;font-size:12px;color:#a6aad0}
-#pullsWrapper{display:none;width:95%;max-width:1600px;margin-top:22px;}
-#pullsTable{margin-top:0;}
-#pullsTable tbody tr.kill-row{background:rgba(16,185,129,.15)!important;border-left:4px solid #10b981;}
-#pullsTable tbody tr.wipe-row{background:rgba(239,68,68,.12)!important;border-left:3px solid #ef4444;}
-p{font-size:13px;color:#c2c5dd}
-code{font-family:"JetBrains Mono","Fira Code",monospace}
-
-/* Conteneur scrollable pour la liste de cibles */
-#targetsWrapper{
-  display:none;
-  width:95%;
-  max-width:1600px;
-  margin-top:10px;
-  position:relative;
-  z-index:auto;
-}
-#targetsScroll{
-  max-height:140px;
-  overflow-y:auto;
-  border-radius:12px;
-}
-/* Header des cibles non sticky */
-#targetsTable thead th{
-  position:static;
-}
-
-@media (min-width:1800px){body{padding-top:32px}}
-@media (max-width:900px){.summary{flex-direction:column}}
-</style>
-</head>
-<body>
 <h1>Damage By Skill - Throne and Liberty</h1>
 
 <div style="margin-top:4px;text-align:center;font-size:13px;">
@@ -171,7 +81,6 @@ code{font-family:"JetBrains Mono","Fira Code",monospace}
   <div class="panel-body" id="timelineContainer"><canvas id="dpsTimeline"></canvas></div>
 </div>
 
-<script>
 const fileInput=document.getElementById('logFile'),
       dropZone=document.getElementById('dropZone'),
       statusEl=document.getElementById('status'),
@@ -218,11 +127,10 @@ const parseTs=ts=>{const[d,t]=ts.split('-'),y=+d.slice(0,4),m=+d.slice(4,6)-1,da
 const computeDurationSeconds=(a,b)=>{try{return Math.max(1,Math.round((parseTs(b)-parseTs(a))/1e3));}catch{return 1;}};
 const computeSecondsDiff=(a,b)=>{try{return Math.max(0,Math.floor((parseTs(b)-parseTs(a))/1e3));}catch{return 0;}};
 
-// NOUVEAU : Détection automatique des pulls multiples
 const detectBossPulls = (damageTimelineByTarget, firstTs) => {
   const pulls = [];
   let currentPull = null;
-  const MAX_GAP_SECONDS = 30; // Seuil pour séparer les pulls (30s de pause)
+  const MAX_GAP_SECONDS = 30;
 
   Object.entries(damageTimelineByTarget || {}).forEach(([bossName, timeline]) => {
     const times = Object.keys(timeline).sort((a, b) => computeSecondsDiff(firstTs, a) - computeSecondsDiff(firstTs, b));
@@ -232,7 +140,6 @@ const detectBossPulls = (damageTimelineByTarget, firstTs) => {
       const sec = computeSecondsDiff(firstTs, ts);
       
       if (!currentPull || currentPull.bossName !== bossName || (sec - currentPull.endSec) > MAX_GAP_SECONDS) {
-        // Nouveau pull détecté
         currentPull = { 
           bossName, 
           startSec: sec, 
@@ -242,7 +149,6 @@ const detectBossPulls = (damageTimelineByTarget, firstTs) => {
         };
         pulls.push(currentPull);
       } else {
-        // Continuation du pull actuel
         currentPull.endSec = sec;
         currentPull.damage += timeline[ts] || 0;
         currentPull.hits += 1;
@@ -297,7 +203,6 @@ function parseLogFile(file,index){return new Promise(res=>{
         if(!damageBySkillTimelineByTarget[boss][sec])damageBySkillTimelineByTarget[boss][sec]={};
         damageBySkillTimelineByTarget[boss][sec][skillName]=(damageBySkillTimelineByTarget[boss][sec][skillName]||0)+dmg;
 
-        // Damage par cible avec timeline
         if(!damageByTarget[boss])damageByTarget[boss]={totalDamage:0,hits:0,bySkill:{}};
         const tgt=damageByTarget[boss];
         tgt.totalDamage+=dmg;
@@ -318,7 +223,6 @@ function parseLogFile(file,index){return new Promise(res=>{
     if(!hitCount||!firstTs||!lastTs)return res(null);
     const lastSec=computeSecondsDiff(firstTs,lastTs);
 
-    // NOUVEAU : Détection des pulls multiples
     const bossPulls = detectBossPulls(damageTimelineByTarget, firstTs);
 
     const duration=computeDurationSeconds(firstTs,lastTs),
@@ -346,7 +250,7 @@ function parseLogFile(file,index){return new Promise(res=>{
       damageTimeline,
       avgDpsTimeline,
       damageByTarget,
-      bossPulls,  // NOUVEAU : Liste des pulls détectés
+      bossPulls,
       damageBySkillTimeline,
       damageTimelineByTarget,
       damageBySkillTimelineByTarget
@@ -356,6 +260,7 @@ function parseLogFile(file,index){return new Promise(res=>{
   r.readAsText(file);
 });}
 
+// TOUTES LES FONCTIONS SANS wipe (reste identique au code original)
 function initTimeSlider(maxD){
   if(maxD<1)maxD=1;
   if(!timeSlider){
@@ -405,8 +310,8 @@ function buildPlayerStatsInWindow(p){
 
 function buildAvgDpsTimelineWindow(p,from,to){
   const byTarget=p.damageTimelineByTarget && selectedTarget
-    ? p.damageTimelineByTarget[selectedTarget]
-    : null;
+         ? p.damageTimelineByTarget[selectedTarget]
+      : null;
   const baseTimeline=byTarget || p.damageTimeline;
 
   let cum=0,avg={};
@@ -442,7 +347,6 @@ function buildDamageBySkillForTargetInWindow(p,target){
   return tot;
 }
 
-// NOUVEAU : Affichage de la table des pulls
 function renderPullsTable() {
   const pulls = playersData[0]?.bossPulls || [];
   pullsBody.innerHTML = '';
@@ -450,7 +354,6 @@ function renderPullsTable() {
   pulls.forEach((pull, i) => {
     const duration = pull.endSec - pull.startSec + 1;
     const dps = duration > 0 ? Math.round(pull.damage / duration) : 0;
-    // Heuristique pour détecter un kill : dernier pull + gros dégâts
     const isKill = i === pulls.length - 1 && pull.damage > 500000;
     
     const tr = document.createElement('tr');
@@ -509,7 +412,6 @@ function renderPlayerTable(players){
   document.getElementById('sumTotalDamage').textContent=totalFiltered.toLocaleString('fr-FR');
   document.getElementById('sumAvgDps').textContent=Math.round(avgDpsFiltered).toLocaleString('fr-FR');
   
-  // NOUVEAU : Affichage du nombre de pulls
   const pullsInfo = playersData[0]?.bossPulls?.length 
     ? ` (${playersData[0].bossPulls.length} pulls)` : '';
   document.getElementById('sumBossName').textContent = 
@@ -754,7 +656,6 @@ toggleTargetsBtn.onclick=()=>{
   }
 };
 
-// NOUVEAU : Toggle pour la table des pulls
 togglePullsBtn.onclick=()=>{
   const hidden=getComputedStyle(pullsWrapper).display==='none';
   if(hidden){
@@ -852,7 +753,6 @@ function handleFiles(){
     const boss=playersData[0].bossName&&playersData[0].bossName!=='Unknown'
       ? playersData[0].bossName:'Unknown target';
     
-    // NOUVEAU : Auto-show pulls si plusieurs détectés
     const pullsCount = playersData[0]?.bossPulls?.length || 0;
     if (pullsCount > 1) {
       pullsWrapper.style.display = 'block';
@@ -886,3 +786,4 @@ fileInput.addEventListener('change',handleFiles);
 </script>
 </body>
 </html>
+
