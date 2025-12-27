@@ -246,7 +246,6 @@ function parseLogFile(file,index){return new Promise(res=>{
         if(!damageBySkillTimeline[sec])damageBySkillTimeline[sec]={};
         damageBySkillTimeline[sec][skillName]=(damageBySkillTimeline[sec][skillName]||0)+dmg;
 
-        // skill timeline par cible
         if(!damageBySkillTimelineByTarget[boss])damageBySkillTimelineByTarget[boss]={};
         if(!damageBySkillTimelineByTarget[boss][sec])damageBySkillTimelineByTarget[boss][sec]={};
         damageBySkillTimelineByTarget[boss][sec][skillName]=(damageBySkillTimelineByTarget[boss][sec][skillName]||0)+dmg;
@@ -337,18 +336,20 @@ function initTimeSlider(maxD){
 function buildPlayerStatsInWindow(p){
   const from=timeFilter.from??0;
   const to=Math.min(timeFilter.to??p.duration,p.duration);
+
   const baseTimeline=selectedTarget && p.damageTimelineByTarget?.[selectedTarget]
     ? p.damageTimelineByTarget[selectedTarget]
     : p.damageTimeline;
+
   let total=0,hits=0,max=0;
   for(let s=from;s<=to;s++){
     const dmg=baseTimeline[s]||0;
     if(dmg>0){total+=dmg;hits++;if(dmg>max)max=dmg;}
   }
-  const dur=Math.max(1,to-from+1);
-  const dps=Math.round(total/dur);
-  const avg=hits?Math.round(total/hits):0;
-  return{totalDamage:total,hitCount:hits,maxHit:max,duration:dur,dps,avgHit:avg};
+  const duration=Math.max(1,to-from+1);
+  const dps=Math.round(total/duration);
+  const avgHit=hits?Math.round(total/hits):0;
+  return{totalDamage:total,hitCount:hits,maxHit:max,duration,dps,avgHit};
 }
 
 function buildAvgDpsTimelineWindow(p,from,to){
@@ -390,14 +391,20 @@ function buildDamageBySkillForTargetInWindow(p,target){
 
 function renderPlayerTable(players){
   playerBody.innerHTML='';
-  const stats=players.map(p=>({player:p,stats:buildPlayerStatsInWindow(p)}));
-  const total=stats.reduce((s,w)=>s+w.stats.totalDamage,0);
 
-  stats.forEach((w,i)=>{
-    const p=w.player,s=w.stats,tr=document.createElement('tr');
+  const rows=players.map(p=>{
+    const stats=buildPlayerStatsInWindow(p);
+    return{player:p,stats};
+  });
+
+  const totalDamageAll=rows.reduce((s,r)=>s+r.stats.totalDamage,0);
+
+  rows.forEach((row,i)=>{
+    const p=row.player,s=row.stats,tr=document.createElement('tr');
     tr.dataset.index=p.index;
     const c=getColorForIndex(p.index);
-    const percent=total>0?s.totalDamage/total*100:0;
+    const percent=totalDamageAll>0?s.totalDamage/totalDamageAll*100:0;
+
     tr.innerHTML=`<td>${i+1}</td>
       <td style="color:${c.text};">${p.playerName}</td>
       <td>${s.dps.toLocaleString('fr-FR')}</td>
@@ -408,6 +415,7 @@ function renderPlayerTable(players){
       <td>${s.maxHit.toLocaleString('fr-FR')}</td>
       <td>${s.duration}s</td>
       <td style="width:40px;"><span class="remove-player" data-index="${p.index}" title="Retirer ce joueur des logs">✕</span></td>`;
+
     if(selectedPlayers.some(sp=>sp.index===p.index)){
       tr.classList.add('player-selected');
       tr.style.backgroundColor=c.rowBg;
@@ -415,10 +423,10 @@ function renderPlayerTable(players){
     playerBody.appendChild(tr);
   });
 
-  const sumTotal=stats.reduce((s,w)=>s+w.stats.totalDamage,0);
-  const avgD=stats.length?stats.reduce((s,w)=>s+w.stats.dps,0)/stats.length:0;
-  document.getElementById('sumTotalDamage').textContent=sumTotal.toLocaleString('fr-FR');
-  document.getElementById('sumAvgDps').textContent=Math.round(avgD).toLocaleString('fr-FR');
+  const totalFiltered=rows.reduce((s,r)=>s+r.stats.totalDamage,0);
+  const avgDpsFiltered=rows.length?rows.reduce((s,r)=>s+r.stats.dps,0)/rows.length:0;
+  document.getElementById('sumTotalDamage').textContent=totalFiltered.toLocaleString('fr-FR');
+  document.getElementById('sumAvgDps').textContent=Math.round(avgDpsFiltered).toLocaleString('fr-FR');
 }
 
 function highlightSelectedRows(){
@@ -461,13 +469,6 @@ function renderTargetsTable(){
       refreshCharts();
 
       document.getElementById('sumBossName').textContent=t;
-      let totalOnTarget=0,dpsSum=0,count=0;
-      playersData.forEach(p=>{
-        const s=buildPlayerStatsInWindow(p);
-        if(s.totalDamage>0){totalOnTarget+=s.totalDamage;dpsSum+=s.dps;count++; }
-      });
-      document.getElementById('sumTotalDamage').textContent=totalOnTarget.toLocaleString('fr-FR');
-      document.getElementById('sumAvgDps').textContent=(count?Math.round(dpsSum/count):0).toLocaleString('fr-FR');
     };
     targetsBody.appendChild(tr);
   });
@@ -771,5 +772,6 @@ function handleFiles(){
 
 fileInput.addEventListener('change',handleFiles);
 </script>
+
   </body></html>
 
