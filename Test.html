@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="fr"><head>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
 <meta charset="UTF-8">
 <title>Damage By Skill - Throne and Liberty</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -6,64 +8,167 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.8.1/nouislider.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.8.1/nouislider.min.js"></script>
 <style>
-body{margin:0;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:#f5f5ff;padding:24px 16px 40px;background:radial-gradient(circle at top,#191c36 0,#050610 55%,#020309 100%)}h1{margin:0 0 8px;font-weight:700;font-size:26px;letter-spacing:.06em;text-transform:uppercase}h2{margin-top:26px;margin-bottom:6px;font-size:18px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#c5caf8}#status{margin-top:10px;min-height:20px;font-weight:500;font-size:13px;color:#b0b5ff}.summary{display:flex;gap:14px;margin-top:18px;width:95%;max-width:1600px}.card{flex:1;background:linear-gradient(135deg,rgba(21,23,40,.92),rgba(8,10,26,.96));backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:16px;padding:12px 16px;box-shadow:0 24px 60px rgba(0,0,0,.8);border:1px solid rgba(120,120,200,.45);transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}.card:hover{transform:translateY(-2px);box-shadow:0 32px 80px rgba(0,0,0,.9);border-color:rgba(111,165,255,.9)}.card-title{font-size:11px;text-transform:uppercase;color:#9fa4ff;letter-spacing:.12em}.card-value{margin-top:6px;font-size:20px;font-weight:800;color:#4fd1ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#logPath{padding:3px 8px;background:rgba(22,26,54,.9);border-radius:999px;border:1px solid rgba(120,120,200,.6);cursor:pointer;font-size:12px}#logPath:hover{background:rgba(35,42,92,.95)}#copyMsg{color:#9fa4ff}#dropZone{margin-top:12px;width:95%;max-width:1600px;padding:22px;border:1px dashed rgba(120,130,255,.9);border-radius:18px;text-align:center;cursor:pointer;background:linear-gradient(135deg,rgba(15,18,40,.96),rgba(8,9,26,.98));box-shadow:0 22px 70px rgba(0,0,0,.85);transition:background .18s ease,border-color .18s ease,transform .12s ease}#dropZone span{color:#a0a4c8;font-size:12px}#dropZone:hover{border-color:rgba(131,181,255,1);background:linear-gradient(135deg,rgba(19,26,60,.98),rgba(8,12,35,.99));transform:translateY(-1px)}button{padding:5px 14px;font-size:12px;border-radius:999px;border:1px solid rgba(79,141,255,.7);background:radial-gradient(circle at top left,#27385c 0,#151729 55%);color:#e7ecff;cursor:pointer;letter-spacing:.08em;text-transform:uppercase;transition:background .18s ease,box-shadow .18s ease,transform .1s ease,border-color .18s ease}button:hover{background:radial-gradient(circle at top left,#335fa8 0,#18233f 55%);box-shadow:0 0 0 1px rgba(79,141,255,.8);transform:translateY(-1px)}#clearLogsBtn{background:radial-gradient(circle at top left,#5a1f32 0,#2a1018 55%);border-color:rgba(255,77,106,.8)}#clearLogsBtn:hover{box-shadow:0 0 0 1px rgba(255,77,106,.9)}#timeRangeWrapper{width:95%;max-width:1600px;margin-top:18px}#timeRangeLabel{font-weight:500;color:#d0d4ff}.noUi-target{background:rgba(22,24,46,.95);border-radius:999px;border:1px solid rgba(84,102,220,.7);box-shadow:inset 0 0 0 1px rgba(0,0,0,.7)}.noUi-connect{background:linear-gradient(90deg,#4f8dff,#4fd1ff)}.noUi-handle{border-radius:999px;border:2px solid #0b0d1e;background:radial-gradient(circle at 30% 20%,#fff 0,#c2e3ff 28%,#4f8dff 60%,#24378c 100%);box-shadow:0 0 0 1px rgba(100,140,255,.9),0 8px 20px rgba(0,0,0,.9)}table{margin-top:22px;border-collapse:collapse;width:95%;max-width:1600px;background:rgba(8,10,26,.96);border-radius:16px;overflow:hidden;box-shadow:0 26px 70px rgba(0,0,0,.9)}th,td{padding:9px 12px;text-align:center;font-size:13px;border-right:1px solid #24263a}th:last-child,td:last-child{border-right:none}thead th{position:sticky;top:0;z-index:2;background:linear-gradient(90deg,#202436,#181a28);font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#c9cffb}tbody tr:nth-child(even){background-color:rgba(15,16,32,.96)}tbody tr:nth-child(odd){background-color:rgba(11,12,26,.96)}tbody tr{transition:background .18s ease,transform .08s ease,border-left .18s ease}tbody tr:hover{background:rgba(79,141,255,.06);transform:translateY(-1px);border-left:3px solid #4fd1ff;cursor:pointer}tr.player-selected{font-weight:600}td:nth-child(3),td:nth-child(4),td:nth-child(5),td:nth-child(6),td:nth-child(7),td:nth-child(8),td:nth-child(9){font-family:"Roboto Mono",Consolas,monospace;font-size:12px}td:nth-child(2){text-align:left}#targetsTable td:first-child{text-align:left}.remove-player{cursor:pointer;color:#ff99a9;font-weight:700;font-size:14px;padding:2px 8px;border-radius:999px;background:rgba(255,77,106,.08);transition:background .18s ease,color .18s ease,transform .08s ease;display:inline-flex;align-items:center;justify-content:center}.remove-player:hover{background:rgba(255,77,106,.35);color:#ffeef2;transform:translateY(-1px)}.panel{width:95%;max-width:1600px;margin-top:22px;background:linear-gradient(145deg,rgba(15,17,32,.98),rgba(7,9,22,.99));border-radius:18px;padding:14px 18px 18px;box-shadow:0 26px 72px rgba(0,0,0,.95);border:1px solid rgba(120,120,200,.45)}.panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;border-bottom:1px solid rgba(255,255,255,.05);padding-bottom:8px}.panel-title{font-size:12px;font-weight:600;color:#e5e7ff;letter-spacing:.14em;text-transform:uppercase}.panel-meta{font-size:11px;color:#9fa4ff;letter-spacing:.08em;text-transform:uppercase}.panel-body{height:420px}#chartContainer,#timelineContainer,#avgTimelineContainer{width:100%;height:100%}#dpsTimeline,#damageChart,#avgDpsTimeline{width:100%!important;height:100%!important;max-height:none!important;display:block}#avgControls{width:95%;max-width:1600px;margin-top:8px;text-align:right;font-size:12px;color:#a6aad0}p{font-size:13px;color:#c2c5dd}code{font-family:"JetBrains Mono","Fira Code",monospace}@media (min-width:1800px){body{padding-top:32px}}@media (max-width:900px){.summary{flex-direction:column}}
+body{margin:0;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:#f5f5ff;padding:24px 16px 40px;background:radial-gradient(circle at top,#191c36 0,#050610 55%,#020309 100%)}
+h1{margin:0 0 8px;font-weight:700;font-size:26px;letter-spacing:.06em;text-transform:uppercase}
+h2{margin-top:26px;margin-bottom:6px;font-size:18px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#c5caf8}
+#status{margin-top:10px;min-height:20px;font-weight:500;font-size:13px;color:#b0b5ff}
+.summary{display:flex;gap:14px;margin-top:18px;width:95%;max-width:1600px}
+.card{flex:1;background:linear-gradient(135deg,rgba(21,23,40,.92),rgba(8,10,26,.96));backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:16px;padding:12px 16px;box-shadow:0 24px 60px rgba(0,0,0,.8);border:1px solid rgba(120,120,200,.45);transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+.card:hover{transform:translateY(-2px);box-shadow:0 32px 80px rgba(0,0,0,.9);border-color:rgba(111,165,255,.9)}
+.card-title{font-size:11px;text-transform:uppercase;color:#9fa4ff;letter-spacing:.12em}
+.card-value{margin-top:6px;font-size:20px;font-weight:800;color:#4fd1ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#logPath{padding:3px 8px;background:rgba(22,26,54,.9);border-radius:999px;border:1px solid rgba(120,120,200,.6);cursor:pointer;font-size:12px}
+#logPath:hover{background:rgba(35,42,92,.95)}
+#copyMsg{color:#9fa4ff}
+#dropZone{margin-top:12px;width:95%;max-width:1600px;padding:22px;border:1px dashed rgba(120,130,255,.9);border-radius:18px;text-align:center;cursor:pointer;background:linear-gradient(135deg,rgba(15,18,40,.96),rgba(8,9,26,.98));box-shadow:0 22px 70px rgba(0,0,0,.85);transition:background .18s ease,border-color .18s ease,transform .12s ease}
+#dropZone span{color:#a0a4c8;font-size:12px}
+#dropZone:hover{border-color:rgba(131,181,255,1);background:linear-gradient(135deg,rgba(19,26,60,.98),rgba(8,12,35,.99));transform:translateY(-1px)}
+button{padding:5px 14px;font-size:12px;border-radius:999px;border:1px solid rgba(79,141,255,.7);background:radial-gradient(circle at top left,#27385c 0,#151729 55%);color:#e7ecff;cursor:pointer;letter-spacing:.08em;text-transform:uppercase;transition:background .18s ease,box-shadow .18s ease,transform .1s ease,border-color .18s ease}
+button:hover{background:radial-gradient(circle at top left,#335fa8 0,#18233f 55%);box-shadow:0 0 0 1px rgba(79,141,255,.8);transform:translateY(-1px)}
+#clearLogsBtn{background:radial-gradient(circle at top left,#5a1f32 0,#2a1018 55%);border-color:rgba(255,77,106,.8)}
+#clearLogsBtn:hover{box-shadow:0 0 0 1px rgba(255,77,106,.9)}
+#timeRangeWrapper{width:95%;max-width:1600px;margin-top:18px}
+#timeRangeLabel{font-weight:500;color:#d0d4ff}
+
+/* rail noUiSlider */
+.noUi-target{background:rgba(22,24,46,.95);border-radius:999px;border:1px solid rgba(84,102,220,.7);box-shadow:inset 0 0 0 1px rgba(0,0,0,.7)}
+.noUi-base{border-radius:999px;overflow:hidden}
+.noUi-connect{background:linear-gradient(90deg,#25d8ff,#4f46e5,#a855f7);box-shadow:0 0 22px rgba(37,216,255,.7)}
+.noUi-handle{width:12px;height:26px;border-radius:999px;border:2px solid #e5f6ff;background:radial-gradient(circle at 30% 20%,#fff 0,#c2e3ff 28%,#4f8dff 60%,#24378c 100%);box-shadow:0 0 12px rgba(37,216,255,.9),0 8px 20px rgba(0,0,0,.9);cursor:pointer}
+.noUi-handle:before,.noUi-handle:after{display:none}
+.noUi-handle:hover{box-shadow:0 0 18px rgba(129,230,217,1),0 0 40px rgba(37,216,255,.9);transform:scale(1.05)}
+
+table{margin-top:22px;border-collapse:collapse;width:95%;max-width:1600px;background:rgba(8,10,26,.96);border-radius:16px;overflow:hidden;box-shadow:0 26px 70px rgba(0,0,0,.9)}
+th,td{padding:9px 12px;text-align:center;font-size:13px;border-right:1px solid #24263a}
+th:last-child,td:last-child{border-right:none}
+thead th{position:sticky;top:0;z-index:2;background:linear-gradient(90deg,#202436,#181a28);font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#c9cffb}
+tbody tr:nth-child(even){background-color:rgba(15,16,32,.96)}
+tbody tr:nth-child(odd){background-color:rgba(11,12,26,.96)}
+tbody tr{transition:background .18s ease,transform .08s ease,border-left .18s ease}
+tbody tr:hover{background:rgba(79,141,255,.06);transform:translateY(-1px);border-left:3px solid #4fd1ff;cursor:pointer}
+tr.player-selected{font-weight:600}
+td:nth-child(3),td:nth-child(4),td:nth-child(5),td:nth-child(6),td:nth-child(7),td:nth-child(8),td:nth-child(9){font-family:"Roboto Mono",Consolas,monospace;font-size:12px}
+td:nth-child(2){text-align:left}
+#targetsTable td:first-child{text-align:left}
+.remove-player{cursor:pointer;color:#ff99a9;font-weight:700;font-size:14px;padding:2px 8px;border-radius:999px;background:rgba(255,77,106,.08);transition:background .18s ease,color .18s ease,transform .08s ease;display:inline-flex;align-items:center;justify-content:center}
+.remove-player:hover{background:rgba(255,77,106,.35);color:#ffeef2;transform:translateY(-1px)}
+
+.panel{width:95%;max-width:1600px;margin-top:22px;background:linear-gradient(145deg,rgba(15,17,32,.98),rgba(7,9,22,.99));border-radius:18px;padding:14px 18px 18px;box-shadow:0 26px 72px rgba(0,0,0,.95);border:1px solid rgba(120,120,200,.45)}
+.panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;border-bottom:1px solid rgba(255,255,255,.05);padding-bottom:8px}
+.panel-title{font-size:12px;font-weight:600;color:#e5e7ff;letter-spacing:.14em;text-transform:uppercase}
+.panel-meta{font-size:11px;color:#9fa4ff;letter-spacing:.08em;text-transform:uppercase}
+.panel-body{height:420px}
+#chartContainer,#timelineContainer,#avgTimelineContainer{width:100%;height:100%}
+#dpsTimeline,#damageChart,#avgDpsTimeline{width:100%!important;height:100%!important;max-height:none!important;display:block}
+#avgControls{width:95%;max-width:1600px;margin-top:8px;text-align:right;font-size:12px;color:#a6aad0}
+p{font-size:13px;color:#c2c5dd}
+code{font-family:"JetBrains Mono","Fira Code",monospace}
+@media (min-width:1800px){body{padding-top:32px}}
+@media (max-width:900px){.summary{flex-direction:column}}
 </style>
 </head>
 <body>
 <h1>Damage By Skill - Throne and Liberty</h1>
-<div style="margin-top:4px;text-align:center;font-size:13px;">Logs folder:
+
+<div style="margin-top:4px;text-align:center;font-size:13px;">
+  Logs folder:
   <code id="logPath" style="cursor:pointer;">%LOCALAPPDATA%\TL\SAVED\COMBATLOGS</code>
   <span id="copyMsg" style="margin-left:6px;font-size:12px;color:#aaa;"></span>
 </div>
+
 <p style="margin-top:16px;">Select one or more combatlog (.txt) files exported from the game.</p>
+
 <input type="file" id="logFile" accept=".txt" multiple style="display:none;">
 <div id="dropZone">Drop your combatlog (.txt) files here<br><span>or click to select them</span></div>
 <div id="status"></div>
-<div style="width:95%;max-width:1600px;margin-top:6px;text-align:right;"><button id="clearLogsBtn">Clear logs</button></div>
+
+<div style="width:95%;max-width:1600px;margin-top:6px;text-align:right;">
+  <button id="clearLogsBtn">Clear logs</button>
+</div>
+
 <div class="summary">
   <div class="card"><div class="card-title">Total Damage</div><div class="card-value" id="sumTotalDamage">0</div></div>
   <div class="card"><div class="card-title">Average DPS</div><div class="card-value" id="sumAvgDps">0</div></div>
   <div class="card"><div class="card-title">Players</div><div class="card-value" id="sumPlayers">0</div></div>
   <div class="card"><div class="card-title">Target</div><div class="card-value" id="sumBossName">---</div></div>
 </div>
+
 <div id="timeRangeWrapper">
-  <div style="font-size:12px;color:#ccc;margin-bottom:4px;">Time range: <span id="timeRangeLabel">0s - 0s</span></div>
+  <div style="font-size:12px;color:#ccc;margin-bottom:4px;">
+    Time range: <span id="timeRangeLabel">0s - 0s</span>
+  </div>
   <div id="timeRangeSlider"></div>
 </div>
+
 <h2>Player Statistics</h2>
 <p>Click one or more players to compare them on the charts. ✕ removes from logs completely.</p>
+
 <table>
-  <thead><tr><th>#</th><th>Player</th><th>DPS</th><th>Total Damage</th><th>% Fight</th><th>Hits</th><th>Avg Hit</th><th>Max Hit</th><th>Duration</th><th></th></tr></thead>
+  <thead>
+    <tr><th>#</th><th>Player</th><th>DPS</th><th>Total Damage</th><th>% Fight</th><th>Hits</th><th>Avg Hit</th><th>Max Hit</th><th>Duration</th><th></th></tr>
+  </thead>
   <tbody id="playerBody"></tbody>
 </table>
-<div style="width:95%;max-width:1600px;margin-top:8px;text-align:right;"><button id="toggleTargetsBtn">Show other targets</button></div>
+
+<div style="width:95%;max-width:1600px;margin-top:8px;text-align:right;">
+  <button id="toggleTargetsBtn">Show other targets</button>
+</div>
+
 <table id="targetsTable" style="display:none;margin-top:10px;">
   <thead><tr><th>Target</th><th>Total Damage</th><th>Hits</th></tr></thead>
   <tbody id="targetsBody"></tbody>
 </table>
+
 <div class="panel">
   <div class="panel-header"><span class="panel-title">Damage By Skill</span><span class="panel-meta" id="playersMeta"></span></div>
   <div class="panel-body" id="chartContainer"><canvas id="damageChart"></canvas></div>
 </div>
+
 <div class="panel">
   <div class="panel-header"><span class="panel-title">Average DPS Over Time</span><span class="panel-meta" id="avgFightDurationMeta"></span></div>
   <div class="panel-body" id="avgTimelineContainer"><canvas id="avgDpsTimeline"></canvas></div>
 </div>
+
 <div id="avgControls">(Click and drag to zoom) <button id="resetAvgZoomBtn">Reset zoom</button></div>
+
 <div class="panel">
   <div class="panel-header"><span class="panel-title">DPS Timeline (Per Second)</span><span class="panel-meta" id="fightDurationMeta"></span></div>
   <div class="panel-body" id="timelineContainer"><canvas id="dpsTimeline"></canvas></div>
 </div>
-
 <script>
-const fileInput=document.getElementById('logFile'),dropZone=document.getElementById('dropZone'),statusEl=document.getElementById('status'),playerBody=document.getElementById('playerBody'),targetsTable=document.getElementById('targetsTable'),targetsBody=document.getElementById('targetsBody'),toggleTargetsBtn=document.getElementById('toggleTargetsBtn'),resetAvgZoomBtn=document.getElementById('resetAvgZoomBtn'),logPathEl=document.getElementById('logPath'),copyMsgEl=document.getElementById('copyMsg'),clearLogsBtn=document.getElementById('clearLogsBtn'),timeRangeLabel=document.getElementById('timeRangeLabel'),timeRangeSliderEl=document.getElementById('timeRangeSlider');
-let skillChart,dpsTimelineChart,avgDpsTimelineChart,playersData=[],selectedPlayers=[],selectedTarget=null,globalBossPhases=[],timeSlider=null,timeFilter={from:0,to:null};
+const fileInput=document.getElementById('logFile'),
+      dropZone=document.getElementById('dropZone'),
+      statusEl=document.getElementById('status'),
+      playerBody=document.getElementById('playerBody'),
+      targetsTable=document.getElementById('targetsTable'),
+      targetsBody=document.getElementById('targetsBody'),
+      toggleTargetsBtn=document.getElementById('toggleTargetsBtn'),
+      resetAvgZoomBtn=document.getElementById('resetAvgZoomBtn'),
+      logPathEl=document.getElementById('logPath'),
+      copyMsgEl=document.getElementById('copyMsg'),
+      clearLogsBtn=document.getElementById('clearLogsBtn'),
+      timeRangeLabel=document.getElementById('timeRangeLabel'),
+      timeRangeSliderEl=document.getElementById('timeRangeSlider');
+
+let skillChart,dpsTimelineChart,avgDpsTimelineChart;
+let playersData=[],selectedPlayers=[],selectedTarget=null;
+let globalBossPhases=[],timeSlider=null;
+let timeFilter={from:0,to:null};
+
 const BAR_COLORS=['rgba(88,101,242,.8)','rgba(46,204,113,.8)','rgba(231,76,60,.8)','rgba(241,196,15,.8)','rgba(155,89,182,.8)','rgba(26,188,156,.8)','rgba(230,126,34,.8)','rgba(149,165,166,.8)'],
-BAR_BORDER_COLORS=['rgba(88,101,242,1)','rgba(46,204,113,1)','rgba(231,76,60,1)','rgba(241,196,15,1)','rgba(155,89,182,1)','rgba(26,188,156,1)','rgba(230,126,34,1)','rgba(149,165,166,1)'],
-LINE_COLORS=['rgba(255,99,132,1)','rgba(54,162,235,1)','rgba(75,192,192,1)','rgba(255,206,86,1)','rgba(153,102,255,1)','rgba(255,159,64,1)','rgba(46,204,113,1)','rgba(231,76,60,1)','rgba(52,152,219,1)','rgba(241,196,15,1)'];
-const getColorForIndex=i=>({rowBg:BAR_COLORS[i%BAR_COLORS.length],text:'#fff',barBg:BAR_COLORS[i%BAR_COLORS.length],barBorder:BAR_BORDER_COLORS[i%BAR_BORDER_COLORS.length],line:LINE_COLORS[i%LINE_COLORS.length]});
+      BAR_BORDER_COLORS=['rgba(88,101,242,1)','rgba(46,204,113,1)','rgba(231,76,60,1)','rgba(241,196,15,1)','rgba(155,89,182,1)','rgba(26,188,156,1)','rgba(230,126,34,1)','rgba(149,165,166,1)'],
+      LINE_COLORS=['rgba(255,99,132,1)','rgba(54,162,235,1)','rgba(75,192,192,1)','rgba(255,206,86,1)','rgba(153,102,255,1)','rgba(255,159,64,1)','rgba(46,204,113,1)','rgba(231,76,60,1)','rgba(52,152,219,1)','rgba(241,196,15,1)'];
+
+const getColorForIndex=i=>({
+  rowBg:BAR_COLORS[i%BAR_COLORS.length],
+  text:'#fff',
+  barBg:BAR_COLORS[i%BAR_COLORS.length],
+  barBorder:BAR_BORDER_COLORS[i%BAR_BORDER_COLORS.length],
+  line:LINE_COLORS[i%LINE_COLORS.length]
+});
 
 logPathEl.onclick=()=>{navigator.clipboard.writeText('%LOCALAPPDATA%\\TL\\SAVED\\COMBATLOGS').then(()=>{copyMsgEl.textContent='Path copied ✔';setTimeout(()=>copyMsgEl.textContent='',2000);});};
+
 dropZone.onclick=()=>fileInput.click();
 dropZone.ondragover=e=>{e.preventDefault();dropZone.style.borderColor='#4fd1ff';dropZone.style.background='#15172a';};
 dropZone.ondragleave=e=>{e.preventDefault();dropZone.style.borderColor='#5865F2';dropZone.style.background='#10111b';};
@@ -73,79 +178,569 @@ const parseTs=ts=>{const[d,t]=ts.split('-'),y=+d.slice(0,4),m=+d.slice(4,6)-1,da
 const computeDurationSeconds=(a,b)=>{try{return Math.max(1,Math.round((parseTs(b)-parseTs(a))/1e3));}catch{return 1;}};
 const computeSecondsDiff=(a,b)=>{try{return Math.max(0,Math.floor((parseTs(b)-parseTs(a))/1e3));}catch{return 0;}};
 
-function parseLogFile(file,index){return new Promise(res=>{if(file.size>20*1024*1024)return res(null);const r=new FileReader();r.onload=()=>{try{const lines=r.result.split(/\r?\n/),damageBySkill={},damageTimeline={},damageByTarget={},damageBySkillTimeline={},bossPhases=[];let totalDamage=0,hitCount=0,maxHit=0,firstTs=null,lastTs=null,playerName='Unknown',bossName='Unknown',currentBoss=null,currentBossStartSec=0;
-for(const line of lines){if(!line)continue;const parts=line.split(',');if(parts.length<10)continue;const type=(parts[1]||'').trim().toLowerCase();if(!type.includes('damage'))continue;const ts=parts[0].trim(),skillName=parts[2].trim(),dmg=parseInt(parts[4].trim().replace(/\s/g,''),10),player=parts[parts.length-2].trim(),boss=parts[parts.length-1].trim();if(!firstTs)firstTs=ts;const sec=computeSecondsDiff(firstTs,ts);
-if(boss!==currentBoss){if(currentBoss!==null)bossPhases.push({name:currentBoss,startSec:currentBossStartSec,endSec:sec});currentBoss=boss;currentBossStartSec=sec;}
-if(!Number.isNaN(dmg)&&dmg>0){totalDamage+=dmg;hitCount++;if(dmg>maxHit)maxHit=dmg;damageBySkill[skillName]=(damageBySkill[skillName]||0)+dmg;if(!damageBySkillTimeline[sec])damageBySkillTimeline[sec]={};damageBySkillTimeline[sec][skillName]=(damageBySkillTimeline[sec][skillName]||0)+dmg;
-if(!damageByTarget[boss])damageByTarget[boss]={totalDamage:0,hits:0,bySkill:{}};const tgt=damageByTarget[boss];tgt.totalDamage+=dmg;tgt.hits++;tgt.bySkill[skillName]=(tgt.bySkill[skillName]||0)+dmg;damageTimeline[sec]=(damageTimeline[sec]||0)+dmg;}
-lastTs=ts;playerName=player;bossName=boss;}
-if(!hitCount||!firstTs||!lastTs)return res(null);const lastSec=computeSecondsDiff(firstTs,lastTs);if(currentBoss!==null)bossPhases.push({name:currentBoss,startSec:currentBossStartSec,endSec:lastSec});
-const duration=computeDurationSeconds(firstTs,lastTs),dps=duration>0?Math.round(totalDamage/duration):totalDamage,avgHit=Math.round(totalDamage/hitCount),avgDpsTimeline={};let cum=0;for(let s=0;s<=duration;s++){const dmg=damageTimeline[s]||0;cum+=dmg;avgDpsTimeline[s]=cum/Math.max(1,s+1);}
-res({index,playerName,bossName,totalDamage,hitCount,maxHit,avgHit,duration,dps,damageBySkill,damageTimeline,avgDpsTimeline,damageByTarget,bossPhases,damageBySkillTimeline});}catch{res(null);}};r.onerror=()=>res(null);r.readAsText(file);});}
+function parseLogFile(file,index){return new Promise(res=>{
+  if(file.size>20*1024*1024)return res(null);
+  const r=new FileReader();
+  r.onload=()=>{try{
+    const lines=r.result.split(/\r?\n/),
+          damageBySkill={},
+          damageTimeline={},
+          damageByTarget={},
+          damageBySkillTimeline={},
+          damageTimelineByTarget={},   // timelines par cible
+          bossPhases=[];
+    let totalDamage=0,hitCount=0,maxHit=0,firstTs=null,lastTs=null,
+        playerName='Unknown',bossName='Unknown',currentBoss=null,currentBossStartSec=0;
 
-function initTimeSlider(maxD){if(maxD<1)maxD=1;if(!timeSlider){noUiSlider.create(timeRangeSliderEl,{start:[0,maxD],connect:true,step:1,range:{min:0,max:maxD},tooltips:false});timeSlider=timeRangeSliderEl;timeSlider.noUiSlider.on('update',v=>{const[from,to]=v.map(x=>Math.round(x));timeFilter={from,to};timeRangeLabel.textContent=`${from}s - ${to}s`;renderPlayerTable(playersData);highlightSelectedRows();renderTargetsTable();refreshCharts();});}
-else{timeSlider.noUiSlider.updateOptions({start:[0,maxD],range:{min:0,max:maxD}});timeFilter={from:0,to:maxD};timeRangeLabel.textContent=`0s - ${maxD}s`;}}
-const applyTimeWindowToTimeline=(tl,d)=>{const from=timeFilter.from??0,to=timeFilter.to??d,f={};for(let s=0;s<=d;s++){if(s<from||s>to)continue;if(tl[s])f[s]=tl[s];}return{filtered:f,from,to};};
+    for(const line of lines){
+      if(!line)continue;
+      const parts=line.split(',');
+      if(parts.length<10)continue;
+      const type=(parts[1]||'').trim().toLowerCase();
+      if(!type.includes('damage'))continue;
 
-function buildPlayerStatsInWindow(p){const from=timeFilter.from??0,to=Math.min(timeFilter.to??p.duration,p.duration);let total=0,hits=0,max=0;for(let s=from;s<=to;s++){const dmg=p.damageTimeline[s]||0;if(dmg>0){total+=dmg;hits++;if(dmg>max)max=dmg;}}const dur=Math.max(1,to-from+1),dps=Math.round(total/dur),avg=hits?Math.round(total/hits):0;return{totalDamage:total,hitCount:hits,maxHit:max,duration:dur,dps,avgHit:avg};}
-function buildAvgDpsTimelineWindow(p,from,to){let cum=0,avg={};for(let s=0;s<=p.duration;s++){const dmg=p.damageTimeline[s]||0;cum+=dmg;if(s>=from&&s<=to)avg[s]=cum/Math.max(1,s+1);}return avg;}
-function buildDamageBySkillInWindow(p){const from=timeFilter.from??0,to=Math.min(timeFilter.to??p.duration,p.duration),tot={};for(let s=from;s<=to;s++){const skills=p.damageBySkillTimeline?.[s];if(!skills)continue;Object.entries(skills).forEach(([sk,d])=>{tot[sk]=(tot[sk]||0)+d;});}return tot;}
-function buildDamageBySkillForTargetInWindow(p,target){const tInfo=p.damageByTarget&&p.damageByTarget[target];if(!tInfo)return buildDamageBySkillInWindow(p);const from=timeFilter.from??0,to=Math.min(timeFilter.to??p.duration,p.duration),tot={},valid=tInfo.bySkill||{};for(let s=from;s<=to;s++){const skills=p.damageBySkillTimeline?.[s];if(!skills)continue;Object.entries(skills).forEach(([sk,d])=>{if(!valid[sk])return;tot[sk]=(tot[sk]||0)+d;});}return tot;}
+      const ts=parts[0].trim(),
+            skillName=parts[2].trim(),
+            dmg=parseInt(parts[4].trim().replace(/\s/g,''),10),
+            player=parts[parts.length-2].trim(),
+            boss=parts[parts.length-1].trim();
 
-function renderPlayerTable(players){playerBody.innerHTML='';const stats=players.map(p=>({player:p,stats:buildPlayerStatsInWindow(p)})),total=stats.reduce((s,w)=>s+w.stats.totalDamage,0);
-stats.forEach((w,i)=>{const p=w.player,s=w.stats,tr=document.createElement('tr');tr.dataset.index=p.index;const c=getColorForIndex(p.index),percent=total>0?s.totalDamage/total*100:0;
-tr.innerHTML=`<td>${i+1}</td><td style="color:${c.text};">${p.playerName}</td><td>${s.dps.toLocaleString('fr-FR')}</td><td>${s.totalDamage.toLocaleString('fr-FR')}</td><td>${percent.toFixed(2)}%</td><td>${s.hitCount.toLocaleString('fr-FR')}</td><td>${s.avgHit?s.avgHit.toLocaleString('fr-FR'):'-'}</td><td>${s.maxHit.toLocaleString('fr-FR')}</td><td>${s.duration}s</td><td style="width:40px;"><span class="remove-player" data-index="${p.index}" title="Retirer ce joueur des logs">✕</span></td>`;
-if(selectedPlayers.some(sp=>sp.index===p.index)){tr.classList.add('player-selected');tr.style.backgroundColor=c.rowBg;}playerBody.appendChild(tr);});
-const sumTotal=stats.reduce((s,w)=>s+w.stats.totalDamage,0),avgD=stats.length?stats.reduce((s,w)=>s+w.stats.dps,0)/stats.length:0;
-document.getElementById('sumTotalDamage').textContent=sumTotal.toLocaleString('fr-FR');document.getElementById('sumAvgDps').textContent=Math.round(avgD).toLocaleString('fr-FR');}
-function highlightSelectedRows(){playerBody.querySelectorAll('tr').forEach(r=>{const idx=+r.dataset.index,p=playersData.find(pl=>pl.index===idx),sel=selectedPlayers.some(sp=>sp.index===idx);r.classList.toggle('player-selected',sel);r.style.backgroundColor='';if(sel&&p){const c=getColorForIndex(p.index);r.style.backgroundColor=c.rowBg;}});}
+      if(!firstTs)firstTs=ts;
+      const sec=computeSecondsDiff(firstTs,ts);
 
-function renderTargetsTable(){targetsBody.innerHTML='';const totals={};playersData.forEach(p=>{if(!p.damageByTarget)return;Object.entries(p.damageByTarget).forEach(([t,info])=>{if(!totals[t])totals[t]={totalDamage:0,hits:0};totals[t].totalDamage+=info.totalDamage;totals[t].hits+=info.hits;});});
-Object.entries(totals).sort((a,b)=>b[1].totalDamage-a[1].totalDamage).forEach(([t,info])=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${t}</td><td>${info.totalDamage.toLocaleString('fr-FR')}</td><td>${info.hits.toLocaleString('fr-FR')}</td>`;tr.onclick=()=>{selectedTarget=t;refreshCharts();};targetsBody.appendChild(tr);});}
+      if(boss!==currentBoss){
+        if(currentBoss!==null)bossPhases.push({name:currentBoss,startSec:currentBossStartSec,endSec:sec});
+        currentBoss=boss;
+        currentBossStartSec=sec;
+      }
 
-function drawComparisonChart(){const ctx=document.getElementById('damageChart').getContext('2d');if(skillChart)skillChart.destroy();const meta=document.getElementById('playersMeta');if(!selectedPlayers.length){meta.textContent='';return;}
-const allSkills=new Set(),perPlayer=selectedPlayers.map(p=>{const totals=selectedTarget?buildDamageBySkillForTargetInWindow(p,selectedTarget):buildDamageBySkillInWindow(p);Object.keys(totals).forEach(k=>allSkills.add(k));return{player:p,totals};});
-const global={};perPlayer.forEach(({totals})=>{Object.entries(totals).forEach(([sk,d])=>{global[sk]=(global[sk]||0)+d;});});
-const labels=Array.from(allSkills).sort((a,b)=>(global[b]||0)-(global[a]||0)),datasets=perPlayer.map(({player,totals})=>{const c=getColorForIndex(player.index);return{label:selectedTarget?`${player.playerName} (${selectedTarget})`:player.playerName,data:labels.map(sk=>totals[sk]||0),backgroundColor:c.barBg,borderColor:c.barBorder,borderWidth:1,borderRadius:6,borderSkipped:false};});
-meta.textContent=perPlayer.length===1?perPlayer[0].player.playerName:perPlayer.map(p=>p.player.playerName).join(' vs ');
-document.getElementById('chartContainer').style.height=Math.max(450,labels.length*40)+'px';
-skillChart=new Chart(ctx,{type:'bar',data:{labels,datasets},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,categoryPercentage:.9,barPercentage:.7,animation:false,plugins:{legend:{display:true},title:{display:false},tooltip:{callbacks:{label:ctx=>{const v=ctx.parsed.x||0;return`${ctx.dataset.label} – ${ctx.label}: ${v.toLocaleString('fr-FR')} dégâts`;}}}},scales:{x:{ticks:{color:'#fff',maxTicksLimit:10},grid:{color:'rgba(255,255,255,.1)'}},y:{ticks:{color:'#fff'},grid:{color:'rgba(255,255,255,.1)'}}}}});}
+      if(!Number.isNaN(dmg)&&dmg>0){
+        totalDamage+=dmg;
+        hitCount++;
+        if(dmg>maxHit)maxHit=dmg;
 
-function drawAvgDpsTimeline(){const ctx=document.getElementById('avgDpsTimeline').getContext('2d');if(avgDpsTimelineChart)avgDpsTimelineChart.destroy();const meta=document.getElementById('avgFightDurationMeta');if(!selectedPlayers.length){meta.textContent='';return;}
-const maxD=Math.max(...selectedPlayers.map(p=>p.duration)),from=timeFilter.from??0,to=Math.min(timeFilter.to??maxD,maxD);meta.textContent=`${from}s - ${to}s (fight ${maxD}s)`;const labels=[];for(let s=from;s<=to;s++)labels.push(`${s}s`);
-const datasets=selectedPlayers.map(p=>{const avg=buildAvgDpsTimelineWindow(p,from,to),c=getColorForIndex(p.index);return{label:p.playerName,data:labels.map((_,i)=>avg[from+i]||0),borderColor:c.line,backgroundColor:'transparent',pointRadius:0,borderWidth:1.8,tension:.15};});
-avgDpsTimelineChart=new Chart(ctx,{type:'line',data:{labels,datasets},options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{display:true},title:{display:true,text:'Average DPS Over Time (time‑windowed)'},tooltip:{callbacks:{label:ctx=>{const v=ctx.parsed.y||0;return`${ctx.dataset.label}: ${Math.round(v).toLocaleString('fr-FR')} DPS moyen`;}}},zoom:{zoom:{wheel:{enabled:true},drag:{enabled:true},mode:'x'},pan:{enabled:true,mode:'x'}}},scales:{x:{ticks:{color:'#fff',maxTicksLimit:15},grid:{color:'rgba(255,255,255,.08)'}},y:{ticks:{color:'#fff'},grid:{color:'rgba(255,255,255,.08)'}}}},plugins:[{id:'bossBackgrounds',beforeDraw(chart){const{ctx,chartArea,scales:{x}}=chart;if(!globalBossPhases?.length)return;const cols=['rgba(80,40,120,.35)','rgba(160,120,40,.35)','rgba(20,80,120,.35)','rgba(80,120,40,.35)'];globalBossPhases.forEach((ph,i)=>{const s=Math.max(ph.startSec,from),e=Math.min(ph.endSec,to);if(e<=s)return;const xs=x.getPixelForValue(s-from),xe=x.getPixelForValue(e-from);ctx.save();ctx.fillStyle=cols[i%cols.length];ctx.fillRect(xs,chartArea.top,xe-xs,chartArea.bottom-chartArea.top);ctx.fillStyle='#fff';ctx.font='10px Arial';ctx.textAlign='center';ctx.fillText(ph.name,(xs+xe)/2,chartArea.top+12);ctx.restore();});}}]});}
+        damageBySkill[skillName]=(damageBySkill[skillName]||0)+dmg;
 
-function drawDpsTimeline(){const ctx=document.getElementById('dpsTimeline').getContext('2d');if(dpsTimelineChart)dpsTimelineChart.destroy();const meta=document.getElementById('fightDurationMeta');if(!selectedPlayers.length){meta.textContent='';return;}
-const maxD=Math.max(...selectedPlayers.map(p=>p.duration)),from=timeFilter.from??0,to=Math.min(timeFilter.to??maxD,maxD);meta.textContent=`${from}s - ${to}s (fight ${maxD}s)`;const labels=[];for(let s=from;s<=to;s++)labels.push(`${s}s`);
-const datasets=selectedPlayers.map(p=>{const{filtered}=applyTimeWindowToTimeline(p.damageTimeline,p.duration),c=getColorForIndex(p.index);return{label:p.playerName,data:labels.map((_,i)=>filtered[from+i]||0),borderColor:c.line,backgroundColor:'transparent',pointRadius:0,borderWidth:1.5,tension:.2};});
-dpsTimelineChart=new Chart(ctx,{type:'line',data:{labels,datasets},options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{display:true},title:{display:false},tooltip:{callbacks:{label:ctx=>{const v=ctx.parsed.y||0;return`${ctx.dataset.label}: ${v.toLocaleString('fr-FR')} DPS`;}}}},scales:{x:{ticks:{color:'#fff',maxTicksLimit:15},grid:{color:'rgba(255,255,255,.08)'}},y:{ticks:{color:'#fff'},grid:{color:'rgba(255,255,255,.08)'}}}}});}
+        if(!damageBySkillTimeline[sec])damageBySkillTimeline[sec]={};
+        damageBySkillTimeline[sec][skillName]=(damageBySkillTimeline[sec][skillName]||0)+dmg;
 
-const refreshCharts=()=>{drawComparisonChart();drawAvgDpsTimeline();drawDpsTimeline();};
+        if(!damageByTarget[boss])damageByTarget[boss]={totalDamage:0,hits:0,bySkill:{}};
+        const tgt=damageByTarget[boss];
+        tgt.totalDamage+=dmg;
+        tgt.hits++;
+        tgt.bySkill[skillName]=(tgt.bySkill[skillName]||0)+dmg;
 
-toggleTargetsBtn.onclick=()=>{const hidden=getComputedStyle(targetsTable).display==='none';if(hidden){renderTargetsTable();targetsTable.style.display='table';toggleTargetsBtn.textContent='Hide other targets';}else{targetsTable.style.display='none';toggleTargetsBtn.textContent='Show other targets';}};
+        damageTimeline[sec]=(damageTimeline[sec]||0)+dmg;
+
+        // timeline par cible
+        if(!damageTimelineByTarget[boss])damageTimelineByTarget[boss]={};
+        damageTimelineByTarget[boss][sec]=(damageTimelineByTarget[boss][sec]||0)+dmg;
+      }
+
+      lastTs=ts;
+      playerName=player;
+      bossName=boss;
+    }
+
+    if(!hitCount||!firstTs||!lastTs)return res(null);
+    const lastSec=computeSecondsDiff(firstTs,lastTs);
+    if(currentBoss!==null)bossPhases.push({name:currentBoss,startSec:currentBossStartSec,endSec:lastSec});
+
+    const duration=computeDurationSeconds(firstTs,lastTs),
+          dps=duration>0?Math.round(totalDamage/duration):totalDamage,
+          avgHit=Math.round(totalDamage/hitCount),
+          avgDpsTimeline={};
+    let cum=0;
+    for(let s=0;s<=duration;s++){
+      const dmg=damageTimeline[s]||0;
+      cum+=dmg;
+      avgDpsTimeline[s]=cum/Math.max(1,s+1);
+    }
+
+    res({
+      index,
+      playerName,
+      bossName,
+      totalDamage,
+      hitCount,
+      maxHit,
+      avgHit,
+      duration,
+      dps,
+      damageBySkill,
+      damageTimeline,
+      avgDpsTimeline,
+      damageByTarget,
+      bossPhases,
+      damageBySkillTimeline,
+      damageTimelineByTarget
+    });
+  }catch{res(null);}};
+  r.onerror=()=>res(null);
+  r.readAsText(file);
+});}
+
+function initTimeSlider(maxD){
+  if(maxD<1)maxD=1;
+  if(!timeSlider){
+    noUiSlider.create(timeRangeSliderEl,{
+      start:[0,maxD],
+      connect:true,
+      step:1,
+      range:{min:0,max:maxD},
+      tooltips:false
+    });
+    timeSlider=timeRangeSliderEl;
+    timeSlider.noUiSlider.on('update',v=>{
+      const[from,to]=v.map(x=>Math.round(x));
+      timeFilter={from,to};
+      timeRangeLabel.textContent=`${from}s - ${to}s`;
+      renderPlayerTable(playersData);
+      highlightSelectedRows();
+      renderTargetsTable();
+      refreshCharts();
+    });
+  }else{
+    timeSlider.noUiSlider.updateOptions({start:[0,maxD],range:{min:0,max:maxD}});
+    timeFilter={from:0,to:maxD};
+    timeRangeLabel.textContent=`0s - ${maxD}s`;
+  }
+}
+
+function buildPlayerStatsInWindow(p){
+  const from=timeFilter.from??0;
+  const to=Math.min(timeFilter.to??p.duration,p.duration);
+
+  const baseTimeline=selectedTarget && p.damageTimelineByTarget?.[selectedTarget]
+    ? p.damageTimelineByTarget[selectedTarget]
+    : p.damageTimeline;
+
+  let total=0,hits=0,max=0;
+  for(let s=from;s<=to;s++){
+    const dmg=baseTimeline[s]||0;
+    if(dmg>0){
+      total+=dmg;
+      hits++;
+      if(dmg>max)max=dmg;
+    }
+  }
+  const dur=Math.max(1,to-from+1);
+  const dps=Math.round(total/dur);
+  const avg=hits?Math.round(total/hits):0;
+  return{totalDamage:total,hitCount:hits,maxHit:max,duration:dur,dps,avgHit:avg};
+}
+
+function buildAvgDpsTimelineWindow(p,from,to){
+  const baseTimeline=selectedTarget && p.damageTimelineByTarget?.[selectedTarget]
+    ? p.damageTimelineByTarget[selectedTarget]
+    : p.damageTimeline;
+
+  let cum=0,avg={};
+  for(let s=0;s<=p.duration;s++){
+    const dmg=baseTimeline[s]||0;
+    cum+=dmg;
+    if(s>=from&&s<=to){
+      avg[s]=cum/Math.max(1,s+1);
+    }
+  }
+  return avg;
+}
+
+function buildDamageBySkillInWindow(p){
+  const from=timeFilter.from??0;
+  const to=Math.min(timeFilter.to??p.duration,p.duration);
+  const tot={};
+  for(let s=from;s<=to;s++){
+    const skills=p.damageBySkillTimeline?.[s];
+    if(!skills)continue;
+    Object.entries(skills).forEach(([sk,d])=>{tot[sk]=(tot[sk]||0)+d;});
+  }
+  return tot;
+}
+
+function buildDamageBySkillForTargetInWindow(p,target){
+  const tInfo=p.damageByTarget&&p.damageByTarget[target];
+  if(!tInfo)return buildDamageBySkillInWindow(p);
+  const from=timeFilter.from??0;
+  const to=Math.min(timeFilter.to??p.duration,p.duration);
+  const tot={},valid=tInfo.bySkill||{};
+  for(let s=from;s<=to;s++){
+    const skills=p.damageBySkillTimeline?.[s];
+    if(!skills)continue;
+    Object.entries(skills).forEach(([sk,d])=>{
+      if(!valid[sk])return;
+      tot[sk]=(tot[sk]||0)+d;
+    });
+  }
+  return tot;
+}
+
+function renderPlayerTable(players){
+  playerBody.innerHTML='';
+  const stats=players.map(p=>({player:p,stats:buildPlayerStatsInWindow(p)}));
+  const total=stats.reduce((s,w)=>s+w.stats.totalDamage,0);
+
+  stats.forEach((w,i)=>{
+    const p=w.player,s=w.stats,tr=document.createElement('tr');
+    tr.dataset.index=p.index;
+    const c=getColorForIndex(p.index);
+    const percent=total>0?s.totalDamage/total*100:0;
+
+    tr.innerHTML=`<td>${i+1}</td>
+      <td style="color:${c.text};">${p.playerName}</td>
+      <td>${s.dps.toLocaleString('fr-FR')}</td>
+      <td>${s.totalDamage.toLocaleString('fr-FR')}</td>
+      <td>${percent.toFixed(2)}%</td>
+      <td>${s.hitCount.toLocaleString('fr-FR')}</td>
+      <td>${s.avgHit?s.avgHit.toLocaleString('fr-FR'):'-'}</td>
+      <td>${s.maxHit.toLocaleString('fr-FR')}</td>
+      <td>${s.duration}s</td>
+      <td style="width:40px;"><span class="remove-player" data-index="${p.index}" title="Retirer ce joueur des logs">✕</span></td>`;
+
+    if(selectedPlayers.some(sp=>sp.index===p.index)){
+      tr.classList.add('player-selected');
+      tr.style.backgroundColor=c.rowBg;
+    }
+    playerBody.appendChild(tr);
+  });
+
+  const sumTotal=stats.reduce((s,w)=>s+w.stats.totalDamage,0);
+  const avgD=stats.length?stats.reduce((s,w)=>s+w.stats.dps,0)/stats.length:0;
+  document.getElementById('sumTotalDamage').textContent=sumTotal.toLocaleString('fr-FR');
+  document.getElementById('sumAvgDps').textContent=Math.round(avgD).toLocaleString('fr-FR');
+}
+
+function highlightSelectedRows(){
+  playerBody.querySelectorAll('tr').forEach(r=>{
+    const idx=+r.dataset.index;
+    const p=playersData.find(pl=>pl.index===idx);
+    const sel=selectedPlayers.some(sp=>sp.index===idx);
+    r.classList.toggle('player-selected',sel);
+    r.style.backgroundColor='';
+    if(sel&&p){
+      const c=getColorForIndex(p.index);
+      r.style.backgroundColor=c.rowBg;
+    }
+  });
+}
+
+function renderTargetsTable(){
+  targetsBody.innerHTML='';
+  const totals={};
+  playersData.forEach(p=>{
+    if(!p.damageByTarget)return;
+    Object.entries(p.damageByTarget).forEach(([t,info])=>{
+      if(!totals[t])totals[t]={totalDamage:0,hits:0};
+      totals[t].totalDamage+=info.totalDamage;
+      totals[t].hits+=info.hits;
+    });
+  });
+
+  Object.entries(totals).sort((a,b)=>b[1].totalDamage-a[1].totalDamage).forEach(([t,info])=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${t}</td><td>${info.totalDamage.toLocaleString('fr-FR')}</td><td>${info.hits.toLocaleString('fr-FR')}</td>`;
+    tr.onclick=()=>{selectedTarget=t;refreshCharts();renderPlayerTable(playersData);highlightSelectedRows();};
+    targetsBody.appendChild(tr);
+  });
+}
+
+function drawComparisonChart(){
+  const ctx=document.getElementById('damageChart').getContext('2d');
+  if(skillChart)skillChart.destroy();
+  const meta=document.getElementById('playersMeta');
+  if(!selectedPlayers.length){meta.textContent='';return;}
+
+  const allSkills=new Set();
+  const perPlayer=selectedPlayers.map(p=>{
+    const totals=selectedTarget?buildDamageBySkillForTargetInWindow(p,selectedTarget):buildDamageBySkillInWindow(p);
+    Object.keys(totals).forEach(k=>allSkills.add(k));
+    return{player:p,totals};
+  });
+
+  const global={};
+  perPlayer.forEach(({totals})=>{
+    Object.entries(totals).forEach(([sk,d])=>{global[sk]=(global[sk]||0)+d;});
+  });
+
+  const labels=Array.from(allSkills).sort((a,b)=>(global[b]||0)-(global[a]||0));
+  const datasets=perPlayer.map(({player,totals})=>{
+    const c=getColorForIndex(player.index);
+    return{
+      label:selectedTarget?`${player.playerName} (${selectedTarget})`:player.playerName,
+      data:labels.map(sk=>totals[sk]||0),
+      backgroundColor:c.barBg,
+      borderColor:c.barBorder,
+      borderWidth:1,
+      borderRadius:6,
+      borderSkipped:false
+    };
+  });
+
+  meta.textContent=perPlayer.length===1?perPlayer[0].player.playerName:perPlayer.map(p=>p.player.playerName).join(' vs ');
+  document.getElementById('chartContainer').style.height=Math.max(450,labels.length*40)+'px';
+
+  skillChart=new Chart(ctx,{
+    type:'bar',
+    data:{labels,datasets},
+    options:{
+      indexAxis:'y',
+      responsive:true,
+      maintainAspectRatio:false,
+      categoryPercentage:.9,
+      barPercentage:.7,
+      animation:false,
+      plugins:{
+        legend:{display:true},
+        title:{display:false},
+        tooltip:{callbacks:{label:ctx=>{const v=ctx.parsed.x||0;return`${ctx.dataset.label} – ${ctx.label}: ${v.toLocaleString('fr-FR')} dégâts`;}}}
+      },
+      scales:{
+        x:{ticks:{color:'#fff',maxTicksLimit:10},grid:{color:'rgba(255,255,255,.1)'}},
+        y:{ticks:{color:'#fff'},grid:{color:'rgba(255,255,255,.1)'}}
+      }
+    }
+  });
+}
+
+function drawAvgDpsTimeline(){
+  const ctx=document.getElementById('avgDpsTimeline').getContext('2d');
+  if(avgDpsTimelineChart)avgDpsTimelineChart.destroy();
+  const meta=document.getElementById('avgFightDurationMeta');
+  if(!selectedPlayers.length){meta.textContent='';return;}
+
+  const maxD=Math.max(...selectedPlayers.map(p=>p.duration));
+  const from=timeFilter.from??0;
+  const to=Math.min(timeFilter.to??maxD,maxD);
+  meta.textContent=`${from}s - ${to}s (fight ${maxD}s)`;
+
+  const labels=[];
+  for(let s=from;s<=to;s++)labels.push(`${s}s`);
+
+  const datasets=selectedPlayers.map(p=>{
+    const avg=buildAvgDpsTimelineWindow(p,from,to);
+    const c=getColorForIndex(p.index);
+    return{
+      label:selectedTarget?`${p.playerName} (${selectedTarget})`:p.playerName,
+      data:labels.map((_,i)=>avg[from+i]||0),
+      borderColor:c.line,
+      backgroundColor:'transparent',
+      pointRadius:0,
+      borderWidth:1.8,
+      tension:.15
+    };
+  });
+
+  avgDpsTimelineChart=new Chart(ctx,{
+    type:'line',
+    data:{labels,datasets},
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      animation:false,
+      plugins:{
+        legend:{display:true},
+        title:{display:true,text:'Average DPS Over Time (time‑windowed)'},
+        tooltip:{callbacks:{label:ctx=>{const v=ctx.parsed.y||0;return`${ctx.dataset.label}: ${Math.round(v).toLocaleString('fr-FR')} DPS moyen`;}}},
+        zoom:{zoom:{wheel:{enabled:true},drag:{enabled:true},mode:'x'},pan:{enabled:true,mode:'x'}}
+      },
+      scales:{
+        x:{ticks:{color:'#fff',maxTicksLimit:15},grid:{color:'rgba(255,255,255,.08)'}},
+        y:{ticks:{color:'#fff'},grid:{color:'rgba(255,255,255,.08)'}}
+      }
+    },
+    plugins:[{id:'bossBackgrounds',beforeDraw(chart){
+      const{ctx,chartArea,scales:{x}}=chart;
+      if(!globalBossPhases?.length)return;
+      const cols=['rgba(80,40,120,.35)','rgba(160,120,40,.35)','rgba(20,80,120,.35)','rgba(80,120,40,.35)'];
+      globalBossPhases.forEach((ph,i)=>{
+        const s=Math.max(ph.startSec,from),e=Math.min(ph.endSec,to);
+        if(e<=s)return;
+        const xs=x.getPixelForValue(s-from),xe=x.getPixelForValue(e-from);
+        ctx.save();
+        ctx.fillStyle=cols[i%cols.length];
+        ctx.fillRect(xs,chartArea.top,xe-xs,chartArea.bottom-chartArea.top);
+        ctx.fillStyle='#fff';
+        ctx.font='10px Arial';
+        ctx.textAlign='center';
+        ctx.fillText(ph.name,(xs+xe)/2,chartArea.top+12);
+        ctx.restore();
+      });
+    }}]
+  });
+}
+
+function drawDpsTimeline(){
+  const ctx=document.getElementById('dpsTimeline').getContext('2d');
+  if(dpsTimelineChart)dpsTimelineChart.destroy();
+  const meta=document.getElementById('fightDurationMeta');
+  if(!selectedPlayers.length){meta.textContent='';return;}
+
+  const maxD=Math.max(...selectedPlayers.map(p=>p.duration));
+  const from=timeFilter.from??0;
+  const to=Math.min(timeFilter.to??maxD,maxD);
+  meta.textContent=`${from}s - ${to}s (fight ${maxD}s)`;
+
+  const labels=[];
+  for(let s=from;s<=to;s++)labels.push(`${s}s`);
+
+  const datasets=selectedPlayers.map(p=>{
+    const baseTimeline=selectedTarget && p.damageTimelineByTarget?.[selectedTarget]
+      ? p.damageTimelineByTarget[selectedTarget]
+      : p.damageTimeline;
+    const c=getColorForIndex(p.index);
+    return{
+      label:selectedTarget?`${p.playerName} (${selectedTarget})`:p.playerName,
+      data:labels.map((_,i)=>baseTimeline[from+i]||0),
+      borderColor:c.line,
+      backgroundColor:'transparent',
+      pointRadius:0,
+      borderWidth:1.5,
+      tension:.2
+    };
+  });
+
+  dpsTimelineChart=new Chart(ctx,{
+    type:'line',
+    data:{labels,datasets},
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      animation:false,
+      plugins:{
+        legend:{display:true},
+        title:{display:false},
+        tooltip:{callbacks:{label:ctx=>{const v=ctx.parsed.y||0;return`${ctx.dataset.label}: ${v.toLocaleString('fr-FR')} DPS`;}}}
+      },
+      scales:{
+        x:{ticks:{color:'#fff',maxTicksLimit:15},grid:{color:'rgba(255,255,255,.08)'}},
+        y:{ticks:{color:'#fff'},grid:{color:'rgba(255,255,255,.08)'}}
+      }
+    }
+  });
+}
+
+function refreshCharts(){
+  if(skillChart){skillChart.destroy();skillChart=null;}
+  if(dpsTimelineChart){dpsTimelineChart.destroy();dpsTimelineChart=null;}
+  if(avgDpsTimelineChart){avgDpsTimelineChart.destroy();avgDpsTimelineChart=null;}
+  drawComparisonChart();
+  drawAvgDpsTimeline();
+  drawDpsTimeline();
+}
+
+toggleTargetsBtn.onclick=()=>{
+  const hidden=getComputedStyle(targetsTable).display==='none';
+  if(hidden){
+    renderTargetsTable();
+    targetsTable.style.display='table';
+    toggleTargetsBtn.textContent='Hide other targets';
+  }else{
+    targetsTable.style.display='none';
+    toggleTargetsBtn.textContent='Show other targets';
+  }
+};
+
 resetAvgZoomBtn.onclick=()=>{if(avgDpsTimelineChart)avgDpsTimelineChart.resetZoom();};
 
-playerBody.onclick=e=>{const rm=e.target.closest('.remove-player');if(rm){const idx=+rm.dataset.index;playersData=playersData.filter(p=>p.index!==idx);selectedPlayers=selectedPlayers.filter(p=>p.index!==idx);playersData.forEach((p,i)=>p.index=i);renderPlayerTable(playersData);highlightSelectedRows();const total=playersData.reduce((s,p)=>s+p.totalDamage,0),avg=playersData.length?playersData.reduce((s,p)=>s+p.dps,0)/playersData.length:0;
-document.getElementById('sumTotalDamage').textContent=total.toLocaleString('fr-FR');document.getElementById('sumAvgDps').textContent=Math.round(avg).toLocaleString('fr-FR');document.getElementById('sumPlayers').textContent=playersData.length;refreshCharts();return;}
-const row=e.target.closest('tr');if(!row)return;const idx=+row.dataset.index,p=playersData.find(pl=>pl.index===idx);if(!p)return;const exists=selectedPlayers.some(pl=>pl.index===p.index);selectedPlayers=exists?selectedPlayers.filter(pl=>pl.index!==p.index):[...selectedPlayers,p];renderPlayerTable(playersData);highlightSelectedRows();refreshCharts();};
+playerBody.onclick=e=>{
+  const rm=e.target.closest('.remove-player');
+  if(rm){
+    const idx=+rm.dataset.index;
+    playersData=playersData.filter(p=>p.index!==idx);
+    selectedPlayers=selectedPlayers.filter(p=>p.index!==idx);
+    playersData.forEach((p,i)=>p.index=i);
+    renderPlayerTable(playersData);
+    highlightSelectedRows();
+    const total=playersData.reduce((s,p)=>s+p.totalDamage,0),
+          avg=playersData.length?playersData.reduce((s,p)=>s+p.dps,0)/playersData.length:0;
+    document.getElementById('sumTotalDamage').textContent=total.toLocaleString('fr-FR');
+    document.getElementById('sumAvgDps').textContent=Math.round(avg).toLocaleString('fr-FR');
+    document.getElementById('sumPlayers').textContent=playersData.length;
+    refreshCharts();
+    return;
+  }
+  const row=e.target.closest('tr');if(!row)return;
+  const idx=+row.dataset.index;
+  const p=playersData.find(pl=>pl.index===idx);
+  if(!p)return;
+  const exists=selectedPlayers.some(pl=>pl.index===p.index);
+  selectedPlayers=exists?selectedPlayers.filter(pl=>pl.index!==p.index):[...selectedPlayers,p];
+  renderPlayerTable(playersData);
+  highlightSelectedRows();
+  refreshCharts();
+};
 
-clearLogsBtn.onclick=()=>{playersData=[];selectedPlayers=[];selectedTarget=null;globalBossPhases=[];timeFilter={from:0,to:null};if(timeSlider){timeSlider.noUiSlider.updateOptions({start:[0,0],range:{min:0,max:0}});timeRangeLabel.textContent='0s - 0s';}
-playerBody.innerHTML='';targetsBody.innerHTML='';targetsTable.style.display='none';toggleTargetsBtn.textContent='Show other targets';
-document.getElementById('sumTotalDamage').textContent='0';document.getElementById('sumAvgDps').textContent='0';document.getElementById('sumPlayers').textContent='0';document.getElementById('sumBossName').textContent='---';statusEl.textContent='Logs cleared.';
-if(skillChart){skillChart.destroy();skillChart=null;}if(dpsTimelineChart){dpsTimelineChart.destroy();dpsTimelineChart=null;}if(avgDpsTimelineChart){avgDpsTimelineChart.destroy();avgDpsTimelineChart=null;}};
+clearLogsBtn.onclick=()=>{
+  playersData=[];
+  selectedPlayers=[];
+  selectedTarget=null;
+  globalBossPhases=[];
+  timeFilter={from:0,to:null};
+  if(timeSlider){
+    timeSlider.noUiSlider.updateOptions({start:[0,0],range:{min:0,max:0}});
+    timeRangeLabel.textContent='0s - 0s';
+  }
+  playerBody.innerHTML='';
+  targetsBody.innerHTML='';
+  targetsTable.style.display='none';
+  toggleTargetsBtn.textContent='Show other targets';
+  document.getElementById('sumTotalDamage').textContent='0';
+  document.getElementById('sumAvgDps').textContent='0';
+  document.getElementById('sumPlayers').textContent='0';
+  document.getElementById('sumBossName').textContent='---';
+  statusEl.textContent='Logs cleared.';
+  if(skillChart){skillChart.destroy();skillChart=null;}
+  if(dpsTimelineChart){dpsTimelineChart.destroy();dpsTimelineChart=null;}
+  if(avgDpsTimelineChart){avgDpsTimelineChart.destroy();avgDpsTimelineChart=null;}
+};
 
-function handleFiles(){let files=[...fileInput.files];if(!files.length)return;files=files.filter(f=>f.size<20*1024*1024);if(!files.length){statusEl.textContent='Files are too large.';return;}
-statusEl.textContent='Reading log files...';selectedTarget=null;targetsBody.innerHTML='';targetsTable.style.display='none';toggleTargetsBtn.textContent='Show other targets';
-if(skillChart)skillChart.destroy();if(dpsTimelineChart)dpsTimelineChart.destroy();if(avgDpsTimelineChart)avgDpsTimelineChart.destroy();
-const baseIndex=playersData.length;
-Promise.all(files.map((f,i)=>parseLogFile(f,baseIndex+i))).then(res=>{const newP=res.filter(Boolean);if(!newP.length){statusEl.textContent='No valid data found in the added logs.';return;}
-playersData=playersData.concat(newP);playersData.sort((a,b)=>b.dps-a.dps);playersData.forEach((p,i)=>p.index=i);
-const boss=playersData[0].bossName&&playersData[0].bossName!=='Unknown'?playersData[0].bossName:'Unknown target';document.getElementById('sumBossName').textContent=boss;
-const total=playersData.reduce((s,p)=>s+p.totalDamage,0),avg=playersData.reduce((s,p)=>s+p.dps,0)/playersData.length;
-document.getElementById('sumTotalDamage').textContent=total.toLocaleString('fr-FR');document.getElementById('sumAvgDps').textContent=Math.round(avg).toLocaleString('fr-FR');document.getElementById('sumPlayers').textContent=playersData.length;
-renderPlayerTable(playersData);statusEl.textContent=`Logs loaded: ${playersData.length}`;if(playersData.length>0)selectedPlayers=[playersData[0]];highlightSelectedRows();globalBossPhases=playersData[0].bossPhases||[];
-const maxD=Math.max(...playersData.map(p=>p.duration));initTimeSlider(maxD);refreshCharts();}).catch(err=>{statusEl.textContent='Error: '+err;});}
+function handleFiles(){
+  let files=[...fileInput.files];
+  if(!files.length)return;
+  files=files.filter(f=>f.size<20*1024*1024);
+  if(!files.length){statusEl.textContent='Files are too large.';return;}
+  statusEl.textContent='Reading log files...';
+  selectedTarget=null;
+  targetsBody.innerHTML='';
+  targetsTable.style.display='none';
+  toggleTargetsBtn.textContent='Show other targets';
+  if(skillChart)skillChart.destroy();
+  if(dpsTimelineChart)dpsTimelineChart.destroy();
+  if(avgDpsTimelineChart)avgDpsTimelineChart.destroy();
+
+  const baseIndex=playersData.length;
+  Promise.all(files.map((f,i)=>parseLogFile(f,baseIndex+i))).then(res=>{
+    const newP=res.filter(Boolean);
+    if(!newP.length){statusEl.textContent='No valid data found in the added logs.';return;}
+    playersData=playersData.concat(newP);
+    playersData.sort((a,b)=>b.dps-a.dps);
+    playersData.forEach((p,i)=>p.index=i);
+
+    const boss=playersData[0].bossName&&playersData[0].bossName!=='Unknown'
+      ? playersData[0].bossName:'Unknown target';
+    document.getElementById('sumBossName').textContent=boss;
+
+    const total=playersData.reduce((s,p)=>s+p.totalDamage,0),
+          avg=playersData.reduce((s,p)=>s+p.dps,0)/playersData.length;
+    document.getElementById('sumTotalDamage').textContent=total.toLocaleString('fr-FR');
+    document.getElementById('sumAvgDps').textContent=Math.round(avg).toLocaleString('fr-FR');
+    document.getElementById('sumPlayers').textContent=playersData.length;
+
+    renderPlayerTable(playersData);
+    statusEl.textContent=`Logs loaded: ${playersData.length}`;
+    if(playersData.length>0)selectedPlayers=[playersData[0]];
+    highlightSelectedRows();
+    globalBossPhases=playersData[0].bossPhases||[];
+
+    const maxD=Math.max(...playersData.map(p=>p.duration));
+    initTimeSlider(maxD);
+    refreshCharts();
+  }).catch(err=>{
+    statusEl.textContent='Error: '+err;
+  });
+}
+
 fileInput.addEventListener('change',handleFiles);
 </script>
-</body></html>
+</body>
+</html>
