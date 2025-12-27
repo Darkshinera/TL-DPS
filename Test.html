@@ -298,7 +298,7 @@ function parseLogFile(file,index){return new Promise(res=>{
       damageByTarget,
       bossPhases,
       damageBySkillTimeline,
-      damageTimelineByTarget,
+      damageTimelineByTarget,          // important pour les graphes par cible
       damageBySkillTimelineByTarget
     });
   }catch{res(null);}};
@@ -333,28 +333,19 @@ function initTimeSlider(maxD){
   }
 }
 
-// *** ICI : durée et DPS calculés selon la cible sélectionnée ***
 function buildPlayerStatsInWindow(p){
-  const from=timeFilter.from ?? 0;
-  const toRaw=timeFilter.to ?? p.duration;
+  const from=timeFilter.from??0;
+  const to=Math.min(timeFilter.to??p.duration,p.duration);
 
   const byTarget=p.damageTimelineByTarget && selectedTarget
     ? p.damageTimelineByTarget[selectedTarget]
     : null;
   const baseTimeline=byTarget || p.damageTimeline;
 
-  const secs=Object.keys(baseTimeline).map(Number);
-  const maxSec=secs.length?Math.max(...secs):0;
-  const to=Math.min(toRaw,maxSec);
-
   let total=0,hits=0,max=0;
   for(let s=from;s<=to;s++){
     const dmg=baseTimeline[s]||0;
-    if(dmg>0){
-      total+=dmg;
-      hits++;
-      if(dmg>max)max=dmg;
-    }
+    if(dmg>0){total+=dmg;hits++;if(dmg>max)max=dmg;}
   }
   const duration=Math.max(1,to-from+1);
   const dps=Math.round(total/duration);
@@ -455,7 +446,6 @@ function highlightSelectedRows(){
   });
 }
 
-// *** ICI : clic sur une cible => recalcule tout ***
 function renderTargetsTable(){
   targetsBody.innerHTML='';
   const totals={};
@@ -471,21 +461,18 @@ function renderTargetsTable(){
   Object.entries(totals).sort((a,b)=>b[1].totalDamage-a[1].totalDamage).forEach(([t,info])=>{
     const tr=document.createElement('tr');
     tr.style.cssText='cursor:pointer;transition:background .2s;';
-    tr.innerHTML=`<td>${t}</td><td>${info.totalDamage.toLocaleString('fr-FR')}</td><td>${info.hits.toLocaleString('fr-FR')}</td>`;
+    tr.innerHTML=`<td style="color:#4fd1ff;">${t}</td><td>${info.totalDamage.toLocaleString('fr-FR')}</td><td>${info.hits.toLocaleString('fr-FR')}</td>`;
     tr.onclick=()=>{
       selectedTarget=t;
-
-      const pBoss=playersData.find(p=>p.damageByTarget && p.damageByTarget[t]);
-      globalBossPhases=pBoss ? pBoss.bossPhases || [] : [];
-
       document.getElementById('sumBossName').textContent=t;
-      renderPlayerTable(playersData);
+      renderPlayerTable(playersData);  // ← RECALCULE DPS/Duration
       highlightSelectedRows();
       refreshCharts();
     };
     targetsBody.appendChild(tr);
   });
 }
+
 
 function drawComparisonChart(){
   const ctx=document.getElementById('damageChart').getContext('2d');
@@ -565,7 +552,7 @@ function drawAvgDpsTimeline(){
     return{
       label:selectedTarget?`${p.playerName} (${selectedTarget})`:p.playerName,
       data:labels.map((_,i)=>avg[from+i]||0),
-      borderColor=c.line,
+      borderColor:c.line,
       backgroundColor:'transparent',
       pointRadius:0,
       borderWidth:1.8,
@@ -636,7 +623,7 @@ function drawDpsTimeline(){
     return{
       label:selectedTarget?`${p.playerName} (${selectedTarget})`:p.playerName,
       data:labels.map((_,i)=>baseTimeline[from+i]||0),
-      borderColor=c.line,
+      borderColor:c.line,
       backgroundColor:'transparent',
       pointRadius:0,
       borderWidth:1.5,
