@@ -422,7 +422,11 @@ function renderTargetsTable(){
     tr.onclick=()=>{
       selectedTarget=t;
 
-      // recalcul joueurs
+      // phases du boss choisi (premier joueur qui l’a)
+      const pBoss=playersData.find(p=>p.damageByTarget && p.damageByTarget[t]);
+      globalBossPhases=pBoss ? pBoss.bossPhases || [] : [];
+
+      // tableau joueurs
       renderPlayerTable(playersData);
       highlightSelectedRows();
 
@@ -431,15 +435,13 @@ function renderTargetsTable(){
 
       // résumé haut
       document.getElementById('sumBossName').textContent=t;
-
       let totalOnTarget=0,dpsSum=0,count=0;
       playersData.forEach(p=>{
         const s=buildPlayerStatsInWindow(p);
-        if(s.totalDamage>0){totalOnTarget+=s.totalDamage;dpsSum+=s.dps;count++;}
+        if(s.totalDamage>0){totalOnTarget+=s.totalDamage;dpsSum+=s.dps;count++; }
       });
       document.getElementById('sumTotalDamage').textContent=totalOnTarget.toLocaleString('fr-FR');
-      document.getElementById('sumAvgDps').textContent=
-        (count?Math.round(dpsSum/count):0).toLocaleString('fr-FR');
+      document.getElementById('sumAvgDps').textContent=(count?Math.round(dpsSum/count):0).toLocaleString('fr-FR');
     };
     targetsBody.appendChild(tr);
   });
