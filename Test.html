@@ -60,11 +60,24 @@ td:nth-child(2){text-align:left}
 p{font-size:13px;color:#c2c5dd}
 code{font-family:"JetBrains Mono","Fira Code",monospace}
 
-/* Panneau déroulant de cibles (4 lignes) */
-#targetsScroll{max-height:140px;overflow-y:auto;border-radius:12px;}
-#targetsTable thead th{position:static;}
-#targetsTable tbody tr:nth-child(even){background-color:rgba(17,20,40,.98);}
-#targetsTable tbody tr:nth-child(odd){background-color:rgba(11,13,30,.98);}
+/* Conteneur scrollable pour la liste de cibles */
+#targetsWrapper{
+  display:none;
+  width:95%;
+  max-width:1600px;
+  margin-top:10px;
+  position:relative;
+  z-index:auto;
+}
+#targetsScroll{
+  max-height:140px;
+  overflow-y:auto;
+  border-radius:12px;
+}
+/* Header des cibles non sticky */
+#targetsTable thead th{
+  position:static;
+}
 
 @media (min-width:1800px){body{padding-top:32px}}
 @media (max-width:900px){.summary{flex-direction:column}}
@@ -117,12 +130,10 @@ code{font-family:"JetBrains Mono","Fira Code",monospace}
   <button id="toggleTargetsBtn">Show other targets</button>
 </div>
 
-<div id="targetsWrapper" style="display:none;width:95%;max-width:1600px;margin-top:10px;">
+<div id="targetsWrapper">
   <div id="targetsScroll">
     <table id="targetsTable">
-      <thead>
-        <tr><th>Target</th><th>Total Damage</th><th>Hits</th></tr>
-      </thead>
+      <thead><tr><th>Target</th><th>Total Damage</th><th>Hits</th></tr></thead>
       <tbody id="targetsBody"></tbody>
     </table>
   </div>
@@ -198,7 +209,7 @@ function parseLogFile(file,index){return new Promise(res=>{
           damageByTarget={},
           damageBySkillTimeline={},
           damageTimelineByTarget={},
-          damageBySkillTimelineByTarget={}, // skill timeline par cible
+          damageBySkillTimelineByTarget={},
           bossPhases=[];
     let totalDamage=0,hitCount=0,maxHit=0,firstTs=null,lastTs=null,
         playerName='Unknown',bossName='Unknown',currentBoss=null,currentBossStartSec=0;
@@ -235,6 +246,11 @@ function parseLogFile(file,index){return new Promise(res=>{
         if(!damageBySkillTimeline[sec])damageBySkillTimeline[sec]={};
         damageBySkillTimeline[sec][skillName]=(damageBySkillTimeline[sec][skillName]||0)+dmg;
 
+        // skill timeline par cible
+        if(!damageBySkillTimelineByTarget[boss])damageBySkillTimelineByTarget[boss]={};
+        if(!damageBySkillTimelineByTarget[boss][sec])damageBySkillTimelineByTarget[boss][sec]={};
+        damageBySkillTimelineByTarget[boss][sec][skillName]=(damageBySkillTimelineByTarget[boss][sec][skillName]||0)+dmg;
+
         if(!damageByTarget[boss])damageByTarget[boss]={totalDamage:0,hits:0,bySkill:{}};
         const tgt=damageByTarget[boss];
         tgt.totalDamage+=dmg;
@@ -245,11 +261,6 @@ function parseLogFile(file,index){return new Promise(res=>{
 
         if(!damageTimelineByTarget[boss])damageTimelineByTarget[boss]={};
         damageTimelineByTarget[boss][sec]=(damageTimelineByTarget[boss][sec]||0)+dmg;
-
-        // skill timeline par cible
-        if(!damageBySkillTimelineByTarget[boss])damageBySkillTimelineByTarget[boss]={};
-        if(!damageBySkillTimelineByTarget[boss][sec])damageBySkillTimelineByTarget[boss][sec]={};
-        damageBySkillTimelineByTarget[boss][sec][skillName]=(damageBySkillTimelineByTarget[boss][sec][skillName]||0)+dmg;
       }
 
       lastTs=ts;
@@ -486,8 +497,8 @@ function drawComparisonChart(){
     return{
       label:selectedTarget?`${player.playerName} (${selectedTarget})`:player.playerName,
       data:labels.map(sk=>totals[sk]||0),
-      backgroundColor=c.barBg,
-      borderColor=c.barBorder,
+      backgroundColor:c.barBg,
+      borderColor:c.barBorder,
       borderWidth:1,
       borderRadius:6,
       borderSkipped:false
