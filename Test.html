@@ -29,15 +29,12 @@ button:hover{background:radial-gradient(circle at top left,#335fa8 0,#18233f 55%
 #clearLogsBtn:hover{box-shadow:0 0 0 1px rgba(255,77,106,.9)}
 #timeRangeWrapper{width:95%;max-width:1600px;margin-top:18px}
 #timeRangeLabel{font-weight:500;color:#d0d4ff}
-
-/* rail noUiSlider */
 .noUi-target{background:rgba(22,24,46,.95);border-radius:999px;border:1px solid rgba(84,102,220,.7);box-shadow:inset 0 0 0 1px rgba(0,0,0,.7)}
 .noUi-base{border-radius:999px;overflow:hidden}
 .noUi-connect{background:linear-gradient(90deg,#25d8ff,#4f46e5,#a855f7);box-shadow:0 0 22px rgba(37,216,255,.7)}
 .noUi-handle{width:12px;height:26px;border-radius:999px;border:2px solid #e5f6ff;background:radial-gradient(circle at 30% 20%,#fff 0,#c2e3ff 28%,#4f8dff 60%,#24378c 100%);box-shadow:0 0 12px rgba(37,216,255,.9),0 8px 20px rgba(0,0,0,.9);cursor:pointer}
 .noUi-handle:before,.noUi-handle:after{display:none}
 .noUi-handle:hover{box-shadow:0 0 18px rgba(129,230,217,1),0 0 40px rgba(37,216,255,.9);transform:scale(1.05)}
-
 table{margin-top:22px;border-collapse:collapse;width:95%;max-width:1600px;background:rgba(8,10,26,.96);border-radius:16px;overflow:hidden;box-shadow:0 26px 70px rgba(0,0,0,.9)}
 th,td{padding:9px 12px;text-align:center;font-size:13px;border-right:1px solid #24263a}
 th:last-child,td:last-child{border-right:none}
@@ -52,7 +49,6 @@ td:nth-child(2){text-align:left}
 #targetsTable td:first-child{text-align:left}
 .remove-player{cursor:pointer;color:#ff99a9;font-weight:700;font-size:14px;padding:2px 8px;border-radius:999px;background:rgba(255,77,106,.08);transition:background .18s ease,color .18s ease,transform .08s ease;display:inline-flex;align-items:center;justify-content:center}
 .remove-player:hover{background:rgba(255,77,106,.35);color:#ffeef2;transform:translateY(-1px)}
-
 .panel{width:95%;max-width:1600px;margin-top:22px;background:linear-gradient(145deg,rgba(15,17,32,.98),rgba(7,9,22,.99));border-radius:18px;padding:14px 18px 18px;box-shadow:0 26px 72px rgba(0,0,0,.95);border:1px solid rgba(120,120,200,.45)}
 .panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;border-bottom:1px solid rgba(255,255,255,.05);padding-bottom:8px}
 .panel-title{font-size:12px;font-weight:600;color:#e5e7ff;letter-spacing:.14em;text-transform:uppercase}
@@ -187,7 +183,7 @@ function parseLogFile(file,index){return new Promise(res=>{
           damageTimeline={},
           damageByTarget={},
           damageBySkillTimeline={},
-          damageTimelineByTarget={},   // timelines par cible
+          damageTimelineByTarget={},
           bossPhases=[];
     let totalDamage=0,hitCount=0,maxHit=0,firstTs=null,lastTs=null,
         playerName='Unknown',bossName='Unknown',currentBoss=null,currentBossStartSec=0;
@@ -232,7 +228,6 @@ function parseLogFile(file,index){return new Promise(res=>{
 
         damageTimeline[sec]=(damageTimeline[sec]||0)+dmg;
 
-        // timeline par cible
         if(!damageTimelineByTarget[boss])damageTimelineByTarget[boss]={};
         damageTimelineByTarget[boss][sec]=(damageTimelineByTarget[boss][sec]||0)+dmg;
       }
@@ -310,19 +305,13 @@ function initTimeSlider(maxD){
 function buildPlayerStatsInWindow(p){
   const from=timeFilter.from??0;
   const to=Math.min(timeFilter.to??p.duration,p.duration);
-
   const baseTimeline=selectedTarget && p.damageTimelineByTarget?.[selectedTarget]
     ? p.damageTimelineByTarget[selectedTarget]
     : p.damageTimeline;
-
   let total=0,hits=0,max=0;
   for(let s=from;s<=to;s++){
     const dmg=baseTimeline[s]||0;
-    if(dmg>0){
-      total+=dmg;
-      hits++;
-      if(dmg>max)max=dmg;
-    }
+    if(dmg>0){total+=dmg;hits++;if(dmg>max)max=dmg;}
   }
   const dur=Math.max(1,to-from+1);
   const dps=Math.round(total/dur);
@@ -334,22 +323,17 @@ function buildAvgDpsTimelineWindow(p,from,to){
   const baseTimeline=selectedTarget && p.damageTimelineByTarget?.[selectedTarget]
     ? p.damageTimelineByTarget[selectedTarget]
     : p.damageTimeline;
-
   let cum=0,avg={};
   for(let s=0;s<=p.duration;s++){
     const dmg=baseTimeline[s]||0;
     cum+=dmg;
-    if(s>=from&&s<=to){
-      avg[s]=cum/Math.max(1,s+1);
-    }
+    if(s>=from&&s<=to)avg[s]=cum/Math.max(1,s+1);
   }
   return avg;
 }
 
 function buildDamageBySkillInWindow(p){
-  const from=timeFilter.from??0;
-  const to=Math.min(timeFilter.to??p.duration,p.duration);
-  const tot={};
+  const from=timeFilter.from??0,to=Math.min(timeFilter.to??p.duration,p.duration),tot={};
   for(let s=from;s<=to;s++){
     const skills=p.damageBySkillTimeline?.[s];
     if(!skills)continue;
@@ -361,9 +345,7 @@ function buildDamageBySkillInWindow(p){
 function buildDamageBySkillForTargetInWindow(p,target){
   const tInfo=p.damageByTarget&&p.damageByTarget[target];
   if(!tInfo)return buildDamageBySkillInWindow(p);
-  const from=timeFilter.from??0;
-  const to=Math.min(timeFilter.to??p.duration,p.duration);
-  const tot={},valid=tInfo.bySkill||{};
+  const from=timeFilter.from??0,to=Math.min(timeFilter.to??p.duration,p.duration),tot={},valid=tInfo.bySkill||{};
   for(let s=from;s<=to;s++){
     const skills=p.damageBySkillTimeline?.[s];
     if(!skills)continue;
@@ -385,7 +367,6 @@ function renderPlayerTable(players){
     tr.dataset.index=p.index;
     const c=getColorForIndex(p.index);
     const percent=total>0?s.totalDamage/total*100:0;
-
     tr.innerHTML=`<td>${i+1}</td>
       <td style="color:${c.text};">${p.playerName}</td>
       <td>${s.dps.toLocaleString('fr-FR')}</td>
@@ -396,7 +377,6 @@ function renderPlayerTable(players){
       <td>${s.maxHit.toLocaleString('fr-FR')}</td>
       <td>${s.duration}s</td>
       <td style="width:40px;"><span class="remove-player" data-index="${p.index}" title="Retirer ce joueur des logs">✕</span></td>`;
-
     if(selectedPlayers.some(sp=>sp.index===p.index)){
       tr.classList.add('player-selected');
       tr.style.backgroundColor=c.rowBg;
@@ -439,7 +419,28 @@ function renderTargetsTable(){
   Object.entries(totals).sort((a,b)=>b[1].totalDamage-a[1].totalDamage).forEach(([t,info])=>{
     const tr=document.createElement('tr');
     tr.innerHTML=`<td>${t}</td><td>${info.totalDamage.toLocaleString('fr-FR')}</td><td>${info.hits.toLocaleString('fr-FR')}</td>`;
-    tr.onclick=()=>{selectedTarget=t;refreshCharts();renderPlayerTable(playersData);highlightSelectedRows();};
+    tr.onclick=()=>{
+      selectedTarget=t;
+
+      // recalcul joueurs
+      renderPlayerTable(playersData);
+      highlightSelectedRows();
+
+      // graphes
+      refreshCharts();
+
+      // résumé haut
+      document.getElementById('sumBossName').textContent=t;
+
+      let totalOnTarget=0,dpsSum=0,count=0;
+      playersData.forEach(p=>{
+        const s=buildPlayerStatsInWindow(p);
+        if(s.totalDamage>0){totalOnTarget+=s.totalDamage;dpsSum+=s.dps;count++;}
+      });
+      document.getElementById('sumTotalDamage').textContent=totalOnTarget.toLocaleString('fr-FR');
+      document.getElementById('sumAvgDps').textContent=
+        (count?Math.round(dpsSum/count):0).toLocaleString('fr-FR');
+    };
     targetsBody.appendChild(tr);
   });
 }
