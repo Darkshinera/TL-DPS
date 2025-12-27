@@ -57,6 +57,10 @@ td:nth-child(2){text-align:left}
 #chartContainer,#timelineContainer,#avgTimelineContainer{width:100%;height:100%}
 #dpsTimeline,#damageChart,#avgDpsTimeline{width:100%!important;height:100%!important;max-height:none!important;display:block}
 #avgControls{width:95%;max-width:1600px;margin-top:8px;text-align:right;font-size:12px;color:#a6aad0}
+#pullsWrapper{display:none;width:95%;max-width:1600px;margin-top:22px;}
+#pullsTable{margin-top:0;}
+#pullsTable tbody tr.kill-row{background:rgba(16,185,129,.15)!important;border-left:4px solid #10b981;}
+#pullsTable tbody tr.wipe-row{background:rgba(239,68,68,.12)!important;border-left:3px solid #ef4444;}
 p{font-size:13px;color:#c2c5dd}
 code{font-family:"JetBrains Mono","Fira Code",monospace}
 
@@ -128,6 +132,7 @@ code{font-family:"JetBrains Mono","Fira Code",monospace}
 
 <div style="width:95%;max-width:1600px;margin-top:8px;text-align:right;">
   <button id="toggleTargetsBtn">Show other targets</button>
+  <button id="togglePullsBtn">Show Boss Pulls</button>
 </div>
 
 <div id="targetsWrapper">
@@ -137,6 +142,16 @@ code{font-family:"JetBrains Mono","Fira Code",monospace}
       <tbody id="targetsBody"></tbody>
     </table>
   </div>
+</div>
+
+<div id="pullsWrapper">
+  <h2 style="margin-top:26px;margin-bottom:6px;font-size:18px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#c5caf8;">Boss Pulls Detected</h2>
+  <table id="pullsTable">
+    <thead>
+      <tr><th>#</th><th>Boss</th><th>Start</th><th>Duration</th><th>Total Damage</th><th>DPS</th><th>Status</th></tr>
+    </thead>
+    <tbody id="pullsBody"></tbody>
+  </table>
 </div>
 
 <div class="panel">
@@ -155,6 +170,7 @@ code{font-family:"JetBrains Mono","Fira Code",monospace}
   <div class="panel-header"><span class="panel-title">DPS Timeline (Per Second)</span><span class="panel-meta" id="fightDurationMeta"></span></div>
   <div class="panel-body" id="timelineContainer"><canvas id="dpsTimeline"></canvas></div>
 </div>
+
 <script>
 const fileInput=document.getElementById('logFile'),
       dropZone=document.getElementById('dropZone'),
@@ -164,6 +180,9 @@ const fileInput=document.getElementById('logFile'),
       targetsBody=document.getElementById('targetsBody'),
       targetsWrapper=document.getElementById('targetsWrapper'),
       toggleTargetsBtn=document.getElementById('toggleTargetsBtn'),
+      togglePullsBtn=document.getElementById('togglePullsBtn'),
+      pullsBody=document.getElementById('pullsBody'),
+      pullsWrapper=document.getElementById('pullsWrapper'),
       resetAvgZoomBtn=document.getElementById('resetAvgZoomBtn'),
       logPathEl=document.getElementById('logPath'),
       copyMsgEl=document.getElementById('copyMsg'),
@@ -199,6 +218,41 @@ const parseTs=ts=>{const[d,t]=ts.split('-'),y=+d.slice(0,4),m=+d.slice(4,6)-1,da
 const computeDurationSeconds=(a,b)=>{try{return Math.max(1,Math.round((parseTs(b)-parseTs(a))/1e3));}catch{return 1;}};
 const computeSecondsDiff=(a,b)=>{try{return Math.max(0,Math.floor((parseTs(b)-parseTs(a))/1e3));}catch{return 0;}};
 
+// NOUVEAU : Détection automatique des pulls multiples
+const detectBossPulls = (damageTimelineByTarget, firstTs) => {
+  const pulls = [];
+  let currentPull = null;
+  const MAX_GAP_SECONDS = 30; // Seuil pour séparer les pulls (30s de pause)
+
+  Object.entries(damageTimelineByTarget || {}).forEach(([bossName, timeline]) => {
+    const times = Object.keys(timeline).sort((a, b) => computeSecondsDiff(firstTs, a) - computeSecondsDiff(firstTs, b));
+    
+    for (let i = 0; i < times.length; i++) {
+      const ts = times[i];
+      const sec = computeSecondsDiff(firstTs, ts);
+      
+      if (!currentPull || currentPull.bossName !== bossName || (sec - currentPull.endSec) > MAX_GAP_SECONDS) {
+        // Nouveau pull détecté
+        currentPull = { 
+          bossName, 
+          startSec: sec, 
+          endSec: sec, 
+          damage: timeline[ts] || 0,
+          hits: 1 
+        };
+        pulls.push(currentPull);
+      } else {
+        // Continuation du pull actuel
+        currentPull.endSec = sec;
+        currentPull.damage += timeline[ts] || 0;
+        currentPull.hits += 1;
+      }
+    }
+  });
+  
+  return pulls.sort((a, b) => a.startSec - b.startSec);
+};
+
 function parseLogFile(file,index){return new Promise(res=>{
   if(file.size>20*1024*1024)return res(null);
   const r=new FileReader();
@@ -209,10 +263,9 @@ function parseLogFile(file,index){return new Promise(res=>{
           damageByTarget={},
           damageBySkillTimeline={},
           damageTimelineByTarget={},
-          damageBySkillTimelineByTarget={},
-          bossPhases=[];
+          damageBySkillTimelineByTarget={};
     let totalDamage=0,hitCount=0,maxHit=0,firstTs=null,lastTs=null,
-        playerName='Unknown',bossName='Unknown',currentBoss=null,currentBossStartSec=0;
+        playerName='Unknown',bossName='Unknown';
 
     for(const line of lines){
       if(!line)continue;
@@ -230,12 +283,6 @@ function parseLogFile(file,index){return new Promise(res=>{
       if(!firstTs)firstTs=ts;
       const sec=computeSecondsDiff(firstTs,ts);
 
-      if(boss!==currentBoss){
-        if(currentBoss!==null)bossPhases.push({name:currentBoss,startSec:currentBossStartSec,endSec:sec});
-        currentBoss=boss;
-        currentBossStartSec=sec;
-      }
-
       if(!Number.isNaN(dmg)&&dmg>0){
         totalDamage+=dmg;
         hitCount++;
@@ -250,16 +297,17 @@ function parseLogFile(file,index){return new Promise(res=>{
         if(!damageBySkillTimelineByTarget[boss][sec])damageBySkillTimelineByTarget[boss][sec]={};
         damageBySkillTimelineByTarget[boss][sec][skillName]=(damageBySkillTimelineByTarget[boss][sec][skillName]||0)+dmg;
 
+        // Damage par cible avec timeline
         if(!damageByTarget[boss])damageByTarget[boss]={totalDamage:0,hits:0,bySkill:{}};
         const tgt=damageByTarget[boss];
         tgt.totalDamage+=dmg;
         tgt.hits++;
         tgt.bySkill[skillName]=(tgt.bySkill[skillName]||0)+dmg;
 
-        damageTimeline[sec]=(damageTimeline[sec]||0)+dmg;
-
         if(!damageTimelineByTarget[boss])damageTimelineByTarget[boss]={};
         damageTimelineByTarget[boss][sec]=(damageTimelineByTarget[boss][sec]||0)+dmg;
+
+        damageTimeline[sec]=(damageTimeline[sec]||0)+dmg;
       }
 
       lastTs=ts;
@@ -269,7 +317,9 @@ function parseLogFile(file,index){return new Promise(res=>{
 
     if(!hitCount||!firstTs||!lastTs)return res(null);
     const lastSec=computeSecondsDiff(firstTs,lastTs);
-    if(currentBoss!==null)bossPhases.push({name:currentBoss,startSec:currentBossStartSec,endSec:lastSec});
+
+    // NOUVEAU : Détection des pulls multiples
+    const bossPulls = detectBossPulls(damageTimelineByTarget, firstTs);
 
     const duration=computeDurationSeconds(firstTs,lastTs),
           dps=duration>0?Math.round(totalDamage/duration):totalDamage,
@@ -296,9 +346,9 @@ function parseLogFile(file,index){return new Promise(res=>{
       damageTimeline,
       avgDpsTimeline,
       damageByTarget,
-      bossPhases,
+      bossPulls,  // NOUVEAU : Liste des pulls détectés
       damageBySkillTimeline,
-      damageTimelineByTarget,          // important pour les graphes par cible
+      damageTimelineByTarget,
       damageBySkillTimelineByTarget
     });
   }catch{res(null);}};
@@ -392,6 +442,34 @@ function buildDamageBySkillForTargetInWindow(p,target){
   return tot;
 }
 
+// NOUVEAU : Affichage de la table des pulls
+function renderPullsTable() {
+  const pulls = playersData[0]?.bossPulls || [];
+  pullsBody.innerHTML = '';
+  
+  pulls.forEach((pull, i) => {
+    const duration = pull.endSec - pull.startSec + 1;
+    const dps = duration > 0 ? Math.round(pull.damage / duration) : 0;
+    // Heuristique pour détecter un kill : dernier pull + gros dégâts
+    const isKill = i === pulls.length - 1 && pull.damage > 500000;
+    
+    const tr = document.createElement('tr');
+    tr.className = isKill ? 'kill-row' : 'wipe-row';
+    tr.innerHTML = `
+      <td style="font-weight:600;">${i + 1}</td>
+      <td style="color:#4fd1ff;font-weight:600;">${pull.bossName}</td>
+      <td>${pull.startSec}s</td>
+      <td>${duration}s</td>
+      <td>${pull.damage.toLocaleString('fr-FR')}</td>
+      <td>${dps.toLocaleString('fr-FR')}</td>
+      <td style="color:${isKill ? '#10b981' : '#ef4444'};font-weight:700;font-size:14px;">
+        ${isKill ? '✅ KILL' : '💀 Wipe'}
+      </td>
+    `;
+    pullsBody.appendChild(tr);
+  });
+}
+
 function renderPlayerTable(players){
   playerBody.innerHTML='';
 
@@ -430,6 +508,12 @@ function renderPlayerTable(players){
   const avgDpsFiltered=rows.length?rows.reduce((s,r)=>s+r.stats.dps,0)/rows.length:0;
   document.getElementById('sumTotalDamage').textContent=totalFiltered.toLocaleString('fr-FR');
   document.getElementById('sumAvgDps').textContent=Math.round(avgDpsFiltered).toLocaleString('fr-FR');
+  
+  // NOUVEAU : Affichage du nombre de pulls
+  const pullsInfo = playersData[0]?.bossPulls?.length 
+    ? ` (${playersData[0].bossPulls.length} pulls)` : '';
+  document.getElementById('sumBossName').textContent = 
+    (selectedTarget || playersData[0]?.bossName || '---') + pullsInfo;
 }
 
 function highlightSelectedRows(){
@@ -463,14 +547,9 @@ function renderTargetsTable(){
     tr.innerHTML=`<td>${t}</td><td>${info.totalDamage.toLocaleString('fr-FR')}</td><td>${info.hits.toLocaleString('fr-FR')}</td>`;
     tr.onclick=()=>{
       selectedTarget=t;
-
-      const pBoss=playersData.find(p=>p.damageByTarget && p.damageByTarget[t]);
-      globalBossPhases=pBoss ? pBoss.bossPhases || [] : [];
-
       renderPlayerTable(playersData);
       highlightSelectedRows();
       refreshCharts();
-
       document.getElementById('sumBossName').textContent=t;
     };
     targetsBody.appendChild(tr);
@@ -675,6 +754,19 @@ toggleTargetsBtn.onclick=()=>{
   }
 };
 
+// NOUVEAU : Toggle pour la table des pulls
+togglePullsBtn.onclick=()=>{
+  const hidden=getComputedStyle(pullsWrapper).display==='none';
+  if(hidden){
+    renderPullsTable();
+    pullsWrapper.style.display='block';
+    togglePullsBtn.textContent='Hide Boss Pulls';
+  }else{
+    pullsWrapper.style.display='none';
+    togglePullsBtn.textContent='Show Boss Pulls';
+  }
+};
+
 resetAvgZoomBtn.onclick=()=>{if(avgDpsTimelineChart)avgDpsTimelineChart.resetZoom();};
 
 playerBody.onclick=e=>{
@@ -713,7 +805,6 @@ clearLogsBtn.onclick=()=>{
   playersData=[];
   selectedPlayers=[];
   selectedTarget=null;
-  globalBossPhases=[];
   timeFilter={from:0,to:null};
   if(timeSlider){
     timeSlider.noUiSlider.updateOptions({start:[0,0],range:{min:0,max:0}});
@@ -721,8 +812,11 @@ clearLogsBtn.onclick=()=>{
   }
   playerBody.innerHTML='';
   targetsBody.innerHTML='';
+  pullsBody.innerHTML='';
   targetsWrapper.style.display='none';
+  pullsWrapper.style.display='none';
   toggleTargetsBtn.textContent='Show other targets';
+  togglePullsBtn.textContent='Show Boss Pulls';
   document.getElementById('sumTotalDamage').textContent='0';
   document.getElementById('sumAvgDps').textContent='0';
   document.getElementById('sumPlayers').textContent='0';
@@ -757,19 +851,28 @@ function handleFiles(){
 
     const boss=playersData[0].bossName&&playersData[0].bossName!=='Unknown'
       ? playersData[0].bossName:'Unknown target';
-    document.getElementById('sumBossName').textContent=boss;
+    
+    // NOUVEAU : Auto-show pulls si plusieurs détectés
+    const pullsCount = playersData[0]?.bossPulls?.length || 0;
+    if (pullsCount > 1) {
+      pullsWrapper.style.display = 'block';
+      togglePullsBtn.textContent = 'Hide Boss Pulls';
+      renderPullsTable();
+      statusEl.textContent = `Logs loaded: ${playersData.length} players, ${pullsCount} pulls detected!`;
+    } else {
+      statusEl.textContent = `Logs loaded: ${playersData.length}`;
+    }
 
     const total=playersData.reduce((s,p)=>s+p.totalDamage,0),
           avg=playersData.reduce((s,p)=>s+p.dps,0)/playersData.length;
     document.getElementById('sumTotalDamage').textContent=total.toLocaleString('fr-FR');
     document.getElementById('sumAvgDps').textContent=Math.round(avg).toLocaleString('fr-FR');
     document.getElementById('sumPlayers').textContent=playersData.length;
+    document.getElementById('sumBossName').textContent=boss;
 
     renderPlayerTable(playersData);
-    statusEl.textContent=`Logs loaded: ${playersData.length}`;
     if(playersData.length>0)selectedPlayers=[playersData[0]];
     highlightSelectedRows();
-    globalBossPhases=playersData[0].bossPhases||[];
 
     const maxD=Math.max(...playersData.map(p=>p.duration));
     initTimeSlider(maxD);
@@ -781,7 +884,5 @@ function handleFiles(){
 
 fileInput.addEventListener('change',handleFiles);
 </script>
-
-
-  </body></html>
-
+</body>
+</html>
