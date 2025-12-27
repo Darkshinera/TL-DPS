@@ -460,22 +460,19 @@ function renderTargetsTable(){
 
   Object.entries(totals).sort((a,b)=>b[1].totalDamage-a[1].totalDamage).forEach(([t,info])=>{
     const tr=document.createElement('tr');
-    tr.innerHTML=`<td>${t}</td><td>${info.totalDamage.toLocaleString('fr-FR')}</td><td>${info.hits.toLocaleString('fr-FR')}</td>`;
+    tr.style.cssText='cursor:pointer;transition:background .2s;';
+    tr.innerHTML=`<td style="color:#4fd1ff;">${t}</td><td>${info.totalDamage.toLocaleString('fr-FR')}</td><td>${info.hits.toLocaleString('fr-FR')}</td>`;
     tr.onclick=()=>{
       selectedTarget=t;
-
-      const pBoss=playersData.find(p=>p.damageByTarget && p.damageByTarget[t]);
-      globalBossPhases=pBoss ? pBoss.bossPhases || [] : [];
-
-      renderPlayerTable(playersData);
+      document.getElementById('sumBossName').textContent=t;
+      renderPlayerTable(playersData);  // ← RECALCULE DPS/Duration
       highlightSelectedRows();
       refreshCharts();
-
-      document.getElementById('sumBossName').textContent=t;
     };
     targetsBody.appendChild(tr);
   });
 }
+
 
 function drawComparisonChart(){
   const ctx=document.getElementById('damageChart').getContext('2d');
