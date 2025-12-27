@@ -27,8 +27,23 @@ button{padding:5px 14px;font-size:12px;border-radius:999px;border:1px solid rgba
 button:hover{background:radial-gradient(circle at top left,#335fa8 0,#18233f 55%);box-shadow:0 0 0 1px rgba(79,141,255,.8);transform:translateY(-1px)}
 #clearLogsBtn{background:radial-gradient(circle at top left,#5a1f32 0,#2a1018 55%);border-color:rgba(255,77,106,.8)}
 #clearLogsBtn:hover{box-shadow:0 0 0 1px rgba(255,77,106,.9)}
-#timeRangeWrapper{width:95%;max-width:1600px;margin-top:18px}
+
+/* Slider sticky en haut du viewport */
+#timeRangeWrapper{
+  width:95%;
+  max-width:1600px;
+  margin-top:18px;
+  position:sticky;
+  top:0;
+  z-index:50;
+  padding:6px 10px 10px;
+  background:rgba(5,6,16,0.96);
+  backdrop-filter:blur(8px);
+  border-radius:12px;
+  box-shadow:0 6px 18px rgba(0,0,0,.8);
+}
 #timeRangeLabel{font-weight:500;color:#d0d4ff}
+
 .noUi-target{background:rgba(22,24,46,.95);border-radius:999px;border:1px solid rgba(84,102,220,.7);box-shadow:inset 0 0 0 1px rgba(0,0,0,.7)}
 .noUi-base{border-radius:999px;overflow:hidden}
 .noUi-connect{background:linear-gradient(90deg,#25d8ff,#4f46e5,#a855f7);box-shadow:0 0 22px rgba(37,216,255,.7)}
