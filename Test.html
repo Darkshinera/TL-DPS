@@ -110,10 +110,14 @@ code{font-family:"JetBrains Mono","Fira Code",monospace}
   <button id="toggleTargetsBtn">Show other targets</button>
 </div>
 
-<table id="targetsTable" style="display:none;margin-top:10px;">
-  <thead><tr><th>Target</th><th>Total Damage</th><th>Hits</th></tr></thead>
-  <tbody id="targetsBody"></tbody>
-</table>
+<div id="targetsWrapper" style="display:none;width:95%;max-width:1600px;margin-top:10px;">
+  <div style="max-height:140px;overflow-y:auto;border-radius:12px;">
+    <table id="targetsTable">
+      <thead><tr><th>Target</th><th>Total Damage</th><th>Hits</th></tr></thead>
+      <tbody id="targetsBody"></tbody>
+    </table>
+  </div>
+</div>
 
 <div class="panel">
   <div class="panel-header"><span class="panel-title">Damage By Skill</span><span class="panel-meta" id="playersMeta"></span></div>
@@ -138,6 +142,7 @@ const fileInput=document.getElementById('logFile'),
       playerBody=document.getElementById('playerBody'),
       targetsTable=document.getElementById('targetsTable'),
       targetsBody=document.getElementById('targetsBody'),
+      targetsWrapper=document.getElementById('targetsWrapper'),
       toggleTargetsBtn=document.getElementById('toggleTargetsBtn'),
       resetAvgZoomBtn=document.getElementById('resetAvgZoomBtn'),
       logPathEl=document.getElementById('logPath'),
@@ -422,18 +427,13 @@ function renderTargetsTable(){
     tr.onclick=()=>{
       selectedTarget=t;
 
-      // phases du boss choisi (premier joueur qui l’a)
       const pBoss=playersData.find(p=>p.damageByTarget && p.damageByTarget[t]);
       globalBossPhases=pBoss ? pBoss.bossPhases || [] : [];
 
-      // tableau joueurs
       renderPlayerTable(playersData);
       highlightSelectedRows();
-
-      // graphes
       refreshCharts();
 
-      // résumé haut
       document.getElementById('sumBossName').textContent=t;
       let totalOnTarget=0,dpsSum=0,count=0;
       playersData.forEach(p=>{
@@ -632,13 +632,13 @@ function refreshCharts(){
 }
 
 toggleTargetsBtn.onclick=()=>{
-  const hidden=getComputedStyle(targetsTable).display==='none';
+  const hidden=getComputedStyle(targetsWrapper).display==='none';
   if(hidden){
     renderTargetsTable();
-    targetsTable.style.display='table';
+    targetsWrapper.style.display='block';
     toggleTargetsBtn.textContent='Hide other targets';
   }else{
-    targetsTable.style.display='none';
+    targetsWrapper.style.display='none';
     toggleTargetsBtn.textContent='Show other targets';
   }
 };
@@ -685,7 +685,7 @@ clearLogsBtn.onclick=()=>{
   }
   playerBody.innerHTML='';
   targetsBody.innerHTML='';
-  targetsTable.style.display='none';
+  targetsWrapper.style.display='none';
   toggleTargetsBtn.textContent='Show other targets';
   document.getElementById('sumTotalDamage').textContent='0';
   document.getElementById('sumAvgDps').textContent='0';
@@ -705,7 +705,7 @@ function handleFiles(){
   statusEl.textContent='Reading log files...';
   selectedTarget=null;
   targetsBody.innerHTML='';
-  targetsTable.style.display='none';
+  targetsWrapper.style.display='none';
   toggleTargetsBtn.textContent='Show other targets';
   if(skillChart)skillChart.destroy();
   if(dpsTimelineChart)dpsTimelineChart.destroy();
