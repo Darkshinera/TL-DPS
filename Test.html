@@ -91,17 +91,6 @@ code{font-family:"JetBrains Mono","Fira Code",monospace}
   position:static;
 }
 
-.mapping-badge{
-  display:inline-block;
-  background:#2ecc71;
-  color:#fff;
-  padding:2px 8px;
-  border-radius:12px;
-  font-size:10px;
-  margin-left:8px;
-  font-weight:600;
-}
-
 @media (min-width:1800px){body{padding-top:32px}}
 @media (max-width:900px){.summary{flex-direction:column}}
 </style>
@@ -130,7 +119,6 @@ code{font-family:"JetBrains Mono","Fira Code",monospace}
   <div class="card"><div class="card-title">Average DPS</div><div class="card-value" id="sumAvgDps">0</div></div>
   <div class="card"><div class="card-title">Players</div><div class="card-value" id="sumPlayers">0</div></div>
   <div class="card"><div class="card-title">Target</div><div class="card-value" id="sumBossName">---</div></div>
-  <div class="card"><div class="card-title">Skill Mapping</div><div class="card-value" id="mappingStatus">Loading...</div></div>
 </div>
 
 <div id="timeRangeWrapper">
@@ -193,18 +181,12 @@ const fileInput=document.getElementById('logFile'),
       copyMsgEl=document.getElementById('copyMsg'),
       clearLogsBtn=document.getElementById('clearLogsBtn'),
       timeRangeLabel=document.getElementById('timeRangeLabel'),
-      timeRangeSliderEl=document.getElementById('timeRangeSlider'),
-      mappingStatusEl=document.getElementById('mappingStatus');
+      timeRangeSliderEl=document.getElementById('timeRangeSlider');
 
 let skillChart,dpsTimelineChart,avgDpsTimelineChart;
 let playersData=[],selectedPlayers=[],selectedTarget=null;
 let globalBossPhases=[],timeSlider=null;
 let timeFilter={from:0,to:null};
-
-// ===== MAPPING AUTOMATIQUE DEPUIS GITHUB =====
-let skillMapping = {};
-const MAPPING_URL = 'https://raw.githubusercontent.com/Darkshinera/TL-DPS/main/skill_mappings.json';
-// ==============================================
 
 const BAR_COLORS=['rgba(88,101,242,.8)','rgba(46,204,113,.8)','rgba(231,76,60,.8)','rgba(241,196,15,.8)','rgba(155,89,182,.8)','rgba(26,188,156,.8)','rgba(230,126,34,.8)','rgba(149,165,166,.8)'],
       BAR_BORDER_COLORS=['rgba(88,101,242,1)','rgba(46,204,113,1)','rgba(231,76,60,1)','rgba(241,196,15,1)','rgba(155,89,182,1)','rgba(26,188,156,1)','rgba(230,126,34,1)','rgba(149,165,166,1)'],
@@ -218,43 +200,7 @@ const getColorForIndex=i=>({
   line:LINE_COLORS[i%LINE_COLORS.length]
 });
 
-// ===== CHARGER LE MAPPING AUTOMATIQUEMENT =====
-async function loadSkillMappingFromGitHub() {
-  try {
-    mappingStatusEl.textContent = 'Loading...';
-    const response = await fetch(MAPPING_URL);
-
-    if (!response.ok) {
-      console.warn('Skill mapping not found on GitHub');
-      mappingStatusEl.textContent = 'No mapping';
-      mappingStatusEl.style.color = '#ff9999';
-      return;
-    }
-
-    skillMapping = await response.json();
-    const count = Object.keys(skillMapping).length;
-    console.log(`✅ Skill mapping loaded: ${count} entries`);
-    console.log('Mapping:', skillMapping);
-
-    mappingStatusEl.innerHTML = `${count} skills<span class="mapping-badge">✓</span>`;
-    mappingStatusEl.style.color = '#2ecc71';
-
-    if (playersData.length > 0) {
-      renderPlayerTable(playersData);
-      highlightSelectedRows();
-      refreshCharts();
-    }
-
-  } catch (error) {
-    console.warn('Could not load skill mapping:', error);
-    mappingStatusEl.textContent = 'Failed';
-    mappingStatusEl.style.color = '#ff9999';
-  }
-}
-
-loadSkillMappingFromGitHub();
-// ==============================================
-
+// ======= NOUVEAUTÉ: Détection des noms français =======
 function isLikelyFrench(name){
   if(!name) return false;
   if(/[àâçéèêëîïôûùüÿœæ]/i.test(name)) return true;
@@ -272,12 +218,6 @@ function preferName(oldName, oldIsFr, newName){
 }
 
 function getPreferredSkillName(skillId){
-  // PRIORITÉ 1: Mapping GitHub
-  if (skillMapping[skillId]) {
-    return skillMapping[skillId];
-  }
-
-  // PRIORITÉ 2: Détection française
   let fallback=null;
   let fallbackIsFr=false;
 
@@ -293,6 +233,7 @@ function getPreferredSkillName(skillId){
   }
   return fallback || skillId;
 }
+// ======================================================
 
 logPathEl.onclick=()=>{navigator.clipboard.writeText('%LOCALAPPDATA%\\TL\\SAVED\\COMBATLOGS').then(()=>{copyMsgEl.textContent='Path copied ✔';setTimeout(()=>copyMsgEl.textContent='',2000);});};
 
@@ -310,9 +251,9 @@ function parseLogFile(file,index){return new Promise(res=>{
   const r=new FileReader();
   r.onload=()=>{try{
     const lines=r.result.split(/\r?\n/),
-          damageBySkill={},
-          skillNameById={},
-          skillNameIsFrench={},
+          damageBySkill={},         // skillId -> dmg
+          skillNameById={},         // skillId -> best label
+          skillNameIsFrench={},     // skillId -> bool
           damageTimeline={},
           damageByTarget={},
           damageBySkillTimeline={},
@@ -331,7 +272,7 @@ function parseLogFile(file,index){return new Promise(res=>{
 
       const ts=parts[0].trim(),
             skillName=(parts[2]||'').trim() || 'Unknown',
-            skillId=(parts[3]||'').trim() || skillName,
+            skillId=(parts[3]||'').trim() || skillName,  // ← NOUVEAUTÉ: ID de compétence
             dmg=parseInt(parts[4].trim().replace(/\s/g,''),10),
             player=parts[parts.length-2].trim(),
             boss=parts[parts.length-1].trim();
@@ -350,6 +291,7 @@ function parseLogFile(file,index){return new Promise(res=>{
         hitCount++;
         if(dmg>maxHit)maxHit=dmg;
 
+        // ======= NOUVEAUTÉ: Stocker par ID + meilleur label =======
         const oldName=skillNameById[skillId];
         const oldIsFr=!!skillNameIsFrench[skillId];
         const chosen=preferName(oldName,oldIsFr,skillName);
@@ -364,6 +306,7 @@ function parseLogFile(file,index){return new Promise(res=>{
         if(!damageBySkillTimelineByTarget[boss])damageBySkillTimelineByTarget[boss]={};
         if(!damageBySkillTimelineByTarget[boss][sec])damageBySkillTimelineByTarget[boss][sec]={};
         damageBySkillTimelineByTarget[boss][sec][skillId]=(damageBySkillTimelineByTarget[boss][sec][skillId]||0)+dmg;
+        // ===========================================================
 
         if(!damageByTarget[boss])damageByTarget[boss]={totalDamage:0,hits:0,bySkill:{}};
         const tgt=damageByTarget[boss];
@@ -407,9 +350,9 @@ function parseLogFile(file,index){return new Promise(res=>{
       avgHit,
       duration,
       dps,
-      damageBySkill,
-      skillNameById,
-      skillNameIsFrench,
+      damageBySkill,        // skillId -> dmg
+      skillNameById,        // ← NOUVEAUTÉ
+      skillNameIsFrench,    // ← NOUVEAUTÉ
       damageTimeline,
       avgDpsTimeline,
       damageByTarget,
@@ -590,7 +533,6 @@ function renderTargetsTable(){
   });
 }
 
-// ===== CORRECTION: FUSION DES COMPÉTENCES PAR NOM =====
 function drawComparisonChart(){
   const ctx=document.getElementById('damageChart').getContext('2d');
   if(skillChart)skillChart.destroy();
@@ -609,29 +551,14 @@ function drawComparisonChart(){
     Object.entries(totals).forEach(([skillId,d])=>{global[skillId]=(global[skillId]||0)+d;});
   });
 
-  // FUSION PAR NOM
-  const fusedGlobal = {};
-  Object.entries(global).forEach(([skillId, damage]) => {
-    const unifiedName = getPreferredSkillName(skillId);
-    fusedGlobal[unifiedName] = (fusedGlobal[unifiedName] || 0) + damage;
-  });
+  const skillIds=Array.from(allSkills).sort((a,b)=>(global[b]||0)-(global[a]||0));
+  const labels=skillIds.map(id=>getPreferredSkillName(id));  // ← NOUVEAUTÉ: affiche le meilleur label
 
-  const fusedPerPlayer = perPlayer.map(({player, totals}) => {
-    const fused = {};
-    Object.entries(totals).forEach(([skillId, damage]) => {
-      const unifiedName = getPreferredSkillName(skillId);
-      fused[unifiedName] = (fused[unifiedName] || 0) + damage;
-    });
-    return {player, totals: fused};
-  });
-
-  const labels = Object.keys(fusedGlobal).sort((a,b) => fusedGlobal[b] - fusedGlobal[a]);
-
-  const datasets=fusedPerPlayer.map(({player,totals})=>{
+  const datasets=perPlayer.map(({player,totals})=>{
     const c=getColorForIndex(player.index);
     return{
       label:selectedTarget?`${player.playerName} (${selectedTarget})`:player.playerName,
-      data:labels.map(name=>totals[name]||0),
+      data:skillIds.map(id=>totals[id]||0),
       backgroundColor:c.barBg,
       borderColor:c.barBorder,
       borderWidth:1,
@@ -640,7 +567,7 @@ function drawComparisonChart(){
     };
   });
 
-  meta.textContent=fusedPerPlayer.length===1?fusedPerPlayer[0].player.playerName:fusedPerPlayer.map(p=>p.player.playerName).join(' vs ');
+  meta.textContent=perPlayer.length===1?perPlayer[0].player.playerName:perPlayer.map(p=>p.player.playerName).join(' vs ');
   document.getElementById('chartContainer').style.height=Math.max(450,labels.length*40)+'px';
 
   skillChart=new Chart(ctx,{
@@ -665,7 +592,6 @@ function drawComparisonChart(){
     }
   });
 }
-// ======================================================
 
 function drawAvgDpsTimeline(){
   const ctx=document.getElementById('avgDpsTimeline').getContext('2d');
