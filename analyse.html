@@ -28,7 +28,6 @@ button:hover{background:radial-gradient(circle at top left,#335fa8 0,#18233f 55%
 #clearLogsBtn{background:radial-gradient(circle at top left,#5a1f32 0,#2a1018 55%);border-color:rgba(255,77,106,.8)}
 #clearLogsBtn:hover{box-shadow:0 0 0 1px rgba(255,77,106,.9)}
 
-/* Slider sticky en haut du viewport */
 #timeRangeWrapper{
   width:95%;
   max-width:1600px;
@@ -75,7 +74,6 @@ td:nth-child(2){text-align:left}
 p{font-size:13px;color:#c2c5dd}
 code{font-family:"JetBrains Mono","Fira Code",monospace}
 
-/* Conteneur scrollable pour la liste de cibles */
 #targetsWrapper{
   display:none;
   width:95%;
@@ -89,7 +87,6 @@ code{font-family:"JetBrains Mono","Fira Code",monospace}
   overflow-y:auto;
   border-radius:12px;
 }
-/* Header des cibles non sticky */
 #targetsTable thead th{
   position:static;
 }
@@ -203,6 +200,41 @@ const getColorForIndex=i=>({
   line:LINE_COLORS[i%LINE_COLORS.length]
 });
 
+// ======= NOUVEAUTÉ: Détection des noms français =======
+function isLikelyFrench(name){
+  if(!name) return false;
+  if(/[àâçéèêëîïôûùüÿœæ]/i.test(name)) return true;
+  if(/\b(de|du|des|d'|d')\b/i.test(name)) return true;
+  const c0=name[0];
+  if(c0 && c0===c0.toLowerCase()) return true;
+  return false;
+}
+
+function preferName(oldName, oldIsFr, newName){
+  const newIsFr=isLikelyFrench(newName);
+  if(!oldName) return {name:newName,isFr:newIsFr};
+  if(newIsFr && !oldIsFr) return {name:newName,isFr:true};
+  return {name:oldName,isFr:oldIsFr};
+}
+
+function getPreferredSkillName(skillId){
+  let fallback=null;
+  let fallbackIsFr=false;
+
+  for(const p of selectedPlayers){
+    const n=p.skillNameById && p.skillNameById[skillId];
+    if(!n) continue;
+    const isFr=!!(p.skillNameIsFrench && p.skillNameIsFrench[skillId]);
+    if(isFr) return n;
+    if(!fallback){
+      fallback=n;
+      fallbackIsFr=isFr;
+    }
+  }
+  return fallback || skillId;
+}
+// ======================================================
+
 logPathEl.onclick=()=>{navigator.clipboard.writeText('%LOCALAPPDATA%\\TL\\SAVED\\COMBATLOGS').then(()=>{copyMsgEl.textContent='Path copied ✔';setTimeout(()=>copyMsgEl.textContent='',2000);});};
 
 dropZone.onclick=()=>fileInput.click();
@@ -219,7 +251,9 @@ function parseLogFile(file,index){return new Promise(res=>{
   const r=new FileReader();
   r.onload=()=>{try{
     const lines=r.result.split(/\r?\n/),
-          damageBySkill={},
+          damageBySkill={},         // skillId -> dmg
+          skillNameById={},         // skillId -> best label
+          skillNameIsFrench={},     // skillId -> bool
           damageTimeline={},
           damageByTarget={},
           damageBySkillTimeline={},
@@ -237,7 +271,8 @@ function parseLogFile(file,index){return new Promise(res=>{
       if(!type.includes('damage'))continue;
 
       const ts=parts[0].trim(),
-            skillName=parts[2].trim(),
+            skillName=(parts[2]||'').trim() || 'Unknown',
+            skillId=(parts[3]||'').trim() || skillName,  // ← NOUVEAUTÉ: ID de compétence
             dmg=parseInt(parts[4].trim().replace(/\s/g,''),10),
             player=parts[parts.length-2].trim(),
             boss=parts[parts.length-1].trim();
@@ -256,20 +291,28 @@ function parseLogFile(file,index){return new Promise(res=>{
         hitCount++;
         if(dmg>maxHit)maxHit=dmg;
 
-        damageBySkill[skillName]=(damageBySkill[skillName]||0)+dmg;
+        // ======= NOUVEAUTÉ: Stocker par ID + meilleur label =======
+        const oldName=skillNameById[skillId];
+        const oldIsFr=!!skillNameIsFrench[skillId];
+        const chosen=preferName(oldName,oldIsFr,skillName);
+        skillNameById[skillId]=chosen.name;
+        skillNameIsFrench[skillId]=chosen.isFr;
+
+        damageBySkill[skillId]=(damageBySkill[skillId]||0)+dmg;
 
         if(!damageBySkillTimeline[sec])damageBySkillTimeline[sec]={};
-        damageBySkillTimeline[sec][skillName]=(damageBySkillTimeline[sec][skillName]||0)+dmg;
+        damageBySkillTimeline[sec][skillId]=(damageBySkillTimeline[sec][skillId]||0)+dmg;
 
         if(!damageBySkillTimelineByTarget[boss])damageBySkillTimelineByTarget[boss]={};
         if(!damageBySkillTimelineByTarget[boss][sec])damageBySkillTimelineByTarget[boss][sec]={};
-        damageBySkillTimelineByTarget[boss][sec][skillName]=(damageBySkillTimelineByTarget[boss][sec][skillName]||0)+dmg;
+        damageBySkillTimelineByTarget[boss][sec][skillId]=(damageBySkillTimelineByTarget[boss][sec][skillId]||0)+dmg;
+        // ===========================================================
 
         if(!damageByTarget[boss])damageByTarget[boss]={totalDamage:0,hits:0,bySkill:{}};
         const tgt=damageByTarget[boss];
         tgt.totalDamage+=dmg;
         tgt.hits++;
-        tgt.bySkill[skillName]=(tgt.bySkill[skillName]||0)+dmg;
+        tgt.bySkill[skillId]=(tgt.bySkill[skillId]||0)+dmg;
 
         damageTimeline[sec]=(damageTimeline[sec]||0)+dmg;
 
@@ -307,13 +350,15 @@ function parseLogFile(file,index){return new Promise(res=>{
       avgHit,
       duration,
       dps,
-      damageBySkill,
+      damageBySkill,        // skillId -> dmg
+      skillNameById,        // ← NOUVEAUTÉ
+      skillNameIsFrench,    // ← NOUVEAUTÉ
       damageTimeline,
       avgDpsTimeline,
       damageByTarget,
       bossPhases,
       damageBySkillTimeline,
-      damageTimelineByTarget,          // important pour les graphes par cible
+      damageTimelineByTarget,
       damageBySkillTimelineByTarget
     });
   }catch{res(null);}};
@@ -388,7 +433,7 @@ function buildDamageBySkillInWindow(p){
   for(let s=from;s<=to;s++){
     const skills=p.damageBySkillTimeline?.[s];
     if(!skills)continue;
-    Object.entries(skills).forEach(([sk,d])=>{tot[sk]=(tot[sk]||0)+d;});
+    Object.entries(skills).forEach(([skillId,d])=>{tot[skillId]=(tot[skillId]||0)+d;});
   }
   return tot;
 }
@@ -400,8 +445,8 @@ function buildDamageBySkillForTargetInWindow(p,target){
   for(let s=from;s<=to;s++){
     const skills=base[s];
     if(!skills)continue;
-    Object.entries(skills).forEach(([sk,d])=>{
-      tot[sk]=(tot[sk]||0)+d;
+    Object.entries(skills).forEach(([skillId,d])=>{
+      tot[skillId]=(tot[skillId]||0)+d;
     });
   }
   return tot;
@@ -480,14 +525,13 @@ function renderTargetsTable(){
     tr.onclick=()=>{
       selectedTarget=t;
       document.getElementById('sumBossName').textContent=t;
-      renderPlayerTable(playersData);  // ← RECALCULE DPS/Duration
+      renderPlayerTable(playersData);
       highlightSelectedRows();
       refreshCharts();
     };
     targetsBody.appendChild(tr);
   });
 }
-
 
 function drawComparisonChart(){
   const ctx=document.getElementById('damageChart').getContext('2d');
@@ -504,15 +548,17 @@ function drawComparisonChart(){
 
   const global={};
   perPlayer.forEach(({totals})=>{
-    Object.entries(totals).forEach(([sk,d])=>{global[sk]=(global[sk]||0)+d;});
+    Object.entries(totals).forEach(([skillId,d])=>{global[skillId]=(global[skillId]||0)+d;});
   });
 
-  const labels=Array.from(allSkills).sort((a,b)=>(global[b]||0)-(global[a]||0));
+  const skillIds=Array.from(allSkills).sort((a,b)=>(global[b]||0)-(global[a]||0));
+  const labels=skillIds.map(id=>getPreferredSkillName(id));  // ← NOUVEAUTÉ: affiche le meilleur label
+
   const datasets=perPlayer.map(({player,totals})=>{
     const c=getColorForIndex(player.index);
     return{
       label:selectedTarget?`${player.playerName} (${selectedTarget})`:player.playerName,
-      data:labels.map(sk=>totals[sk]||0),
+      data:skillIds.map(id=>totals[id]||0),
       backgroundColor:c.barBg,
       borderColor:c.barBorder,
       borderWidth:1,
