@@ -200,7 +200,31 @@ const getColorForIndex=i=>({
   line:LINE_COLORS[i%LINE_COLORS.length]
 });
 
-// ======= NOUVEAUTÉ: Détection des noms français =======
+// ======= SYSTÈME DE NORMALISATION DES COMPÉTENCES =======
+const skillNormalizationMap = new Map(); // ID ou Nom → clé normalisée
+
+function normalizeSkill(skillId, skillName) {
+  // Priorité 1: Chercher si cet ID existe déjà
+  if (skillNormalizationMap.has(skillId)) {
+    return skillNormalizationMap.get(skillId);
+  }
+  
+  // Priorité 2: Chercher si ce nom existe déjà (pour un autre ID)
+  for (const [key, normalizedKey] of skillNormalizationMap.entries()) {
+    if (key === skillName || normalizedKey === skillName) {
+      // On a trouvé le même nom avec un autre ID, on fusionne
+      skillNormalizationMap.set(skillId, normalizedKey);
+      return normalizedKey;
+    }
+  }
+  
+  // Priorité 3: Nouveau skill, on utilise le nom comme clé normalisée
+  const normalizedKey = skillName;
+  skillNormalizationMap.set(skillId, normalizedKey);
+  skillNormalizationMap.set(skillName, normalizedKey);
+  return normalizedKey;
+}
+
 function isLikelyFrench(name){
   if(!name) return false;
   if(/[àâçéèêëîïôûùüÿœæ]/i.test(name)) return true;
@@ -217,21 +241,21 @@ function preferName(oldName, oldIsFr, newName){
   return {name:oldName,isFr:oldIsFr};
 }
 
-function getPreferredSkillName(skillId){
-  let fallback=null;
-  let fallbackIsFr=false;
-
+function getPreferredSkillName(normalizedKey){
   for(const p of selectedPlayers){
-    const n=p.skillNameById && p.skillNameById[skillId];
+    const n=p.skillNameById && p.skillNameById[normalizedKey];
     if(!n) continue;
-    const isFr=!!(p.skillNameIsFrench && p.skillNameIsFrench[skillId]);
+    const isFr=!!(p.skillNameIsFrench && p.skillNameIsFrench[normalizedKey]);
     if(isFr) return n;
-    if(!fallback){
-      fallback=n;
-      fallbackIsFr=isFr;
-    }
   }
-  return fallback || skillId;
+  
+  // Fallback sur n'importe quel joueur
+  for(const p of selectedPlayers){
+    const n=p.skillNameById && p.skillNameById[normalizedKey];
+    if(n) return n;
+  }
+  
+  return normalizedKey;
 }
 // ======================================================
 
@@ -251,9 +275,9 @@ function parseLogFile(file,index){return new Promise(res=>{
   const r=new FileReader();
   r.onload=()=>{try{
     const lines=r.result.split(/\r?\n/),
-          damageBySkill={},         // skillId -> dmg
-          skillNameById={},         // skillId -> best label
-          skillNameIsFrench={},     // skillId -> bool
+          damageBySkill={},
+          skillNameById={},
+          skillNameIsFrench={},
           damageTimeline={},
           damageByTarget={},
           damageBySkillTimeline={},
@@ -272,7 +296,7 @@ function parseLogFile(file,index){return new Promise(res=>{
 
       const ts=parts[0].trim(),
             skillName=(parts[2]||'').trim() || 'Unknown',
-            skillId=(parts[3]||'').trim() || skillName,  // ← NOUVEAUTÉ: ID de compétence
+            skillId=(parts[3]||'').trim() || skillName,
             dmg=parseInt(parts[4].trim().replace(/\s/g,''),10),
             player=parts[parts.length-2].trim(),
             boss=parts[parts.length-1].trim();
@@ -291,28 +315,29 @@ function parseLogFile(file,index){return new Promise(res=>{
         hitCount++;
         if(dmg>maxHit)maxHit=dmg;
 
-        // ======= NOUVEAUTÉ: Stocker par ID + meilleur label =======
-        const oldName=skillNameById[skillId];
-        const oldIsFr=!!skillNameIsFrench[skillId];
+        // ======= NORMALISATION: ID en priorité, puis Nom =======
+        const normalizedKey = normalizeSkill(skillId, skillName);
+        
+        const oldName=skillNameById[normalizedKey];
+        const oldIsFr=!!skillNameIsFrench[normalizedKey];
         const chosen=preferName(oldName,oldIsFr,skillName);
-        skillNameById[skillId]=chosen.name;
-        skillNameIsFrench[skillId]=chosen.isFr;
+        skillNameById[normalizedKey]=chosen.name;
+        skillNameIsFrench[normalizedKey]=chosen.isFr;
 
-        damageBySkill[skillId]=(damageBySkill[skillId]||0)+dmg;
+        damageBySkill[normalizedKey]=(damageBySkill[normalizedKey]||0)+dmg;
 
         if(!damageBySkillTimeline[sec])damageBySkillTimeline[sec]={};
-        damageBySkillTimeline[sec][skillId]=(damageBySkillTimeline[sec][skillId]||0)+dmg;
+        damageBySkillTimeline[sec][normalizedKey]=(damageBySkillTimeline[sec][normalizedKey]||0)+dmg;
 
         if(!damageBySkillTimelineByTarget[boss])damageBySkillTimelineByTarget[boss]={};
         if(!damageBySkillTimelineByTarget[boss][sec])damageBySkillTimelineByTarget[boss][sec]={};
-        damageBySkillTimelineByTarget[boss][sec][skillId]=(damageBySkillTimelineByTarget[boss][sec][skillId]||0)+dmg;
-        // ===========================================================
+        damageBySkillTimelineByTarget[boss][sec][normalizedKey]=(damageBySkillTimelineByTarget[boss][sec][normalizedKey]||0)+dmg;
 
         if(!damageByTarget[boss])damageByTarget[boss]={totalDamage:0,hits:0,bySkill:{}};
         const tgt=damageByTarget[boss];
         tgt.totalDamage+=dmg;
         tgt.hits++;
-        tgt.bySkill[skillId]=(tgt.bySkill[skillId]||0)+dmg;
+        tgt.bySkill[normalizedKey]=(tgt.bySkill[normalizedKey]||0)+dmg;
 
         damageTimeline[sec]=(damageTimeline[sec]||0)+dmg;
 
@@ -350,9 +375,9 @@ function parseLogFile(file,index){return new Promise(res=>{
       avgHit,
       duration,
       dps,
-      damageBySkill,        // skillId -> dmg
-      skillNameById,        // ← NOUVEAUTÉ
-      skillNameIsFrench,    // ← NOUVEAUTÉ
+      damageBySkill,
+      skillNameById,
+      skillNameIsFrench,
       damageTimeline,
       avgDpsTimeline,
       damageByTarget,
@@ -433,7 +458,7 @@ function buildDamageBySkillInWindow(p){
   for(let s=from;s<=to;s++){
     const skills=p.damageBySkillTimeline?.[s];
     if(!skills)continue;
-    Object.entries(skills).forEach(([skillId,d])=>{tot[skillId]=(tot[skillId]||0)+d;});
+    Object.entries(skills).forEach(([normalizedKey,d])=>{tot[normalizedKey]=(tot[normalizedKey]||0)+d;});
   }
   return tot;
 }
@@ -445,8 +470,8 @@ function buildDamageBySkillForTargetInWindow(p,target){
   for(let s=from;s<=to;s++){
     const skills=base[s];
     if(!skills)continue;
-    Object.entries(skills).forEach(([skillId,d])=>{
-      tot[skillId]=(tot[skillId]||0)+d;
+    Object.entries(skills).forEach(([normalizedKey,d])=>{
+      tot[normalizedKey]=(tot[normalizedKey]||0)+d;
     });
   }
   return tot;
@@ -548,17 +573,17 @@ function drawComparisonChart(){
 
   const global={};
   perPlayer.forEach(({totals})=>{
-    Object.entries(totals).forEach(([skillId,d])=>{global[skillId]=(global[skillId]||0)+d;});
+    Object.entries(totals).forEach(([normalizedKey,d])=>{global[normalizedKey]=(global[normalizedKey]||0)+d;});
   });
 
-  const skillIds=Array.from(allSkills).sort((a,b)=>(global[b]||0)-(global[a]||0));
-  const labels=skillIds.map(id=>getPreferredSkillName(id));  // ← NOUVEAUTÉ: affiche le meilleur label
+  const skillNames=Array.from(allSkills).sort((a,b)=>(global[b]||0)-(global[a]||0));
+  const labels=skillNames.map(name=>getPreferredSkillName(name));
 
   const datasets=perPlayer.map(({player,totals})=>{
     const c=getColorForIndex(player.index);
     return{
       label:selectedTarget?`${player.playerName} (${selectedTarget})`:player.playerName,
-      data:skillIds.map(id=>totals[id]||0),
+      data:skillNames.map(name=>totals[name]||0),
       backgroundColor:c.barBg,
       borderColor:c.barBorder,
       borderWidth:1,
@@ -773,6 +798,7 @@ clearLogsBtn.onclick=()=>{
   selectedTarget=null;
   globalBossPhases=[];
   timeFilter={from:0,to:null};
+  skillNormalizationMap.clear();
   if(timeSlider){
     timeSlider.noUiSlider.updateOptions({start:[0,0],range:{min:0,max:0}});
     timeRangeLabel.textContent='0s - 0s';
@@ -792,6 +818,7 @@ clearLogsBtn.onclick=()=>{
 };
 
 function handleFiles(){
+  skillNormalizationMap.clear();
   let files=[...fileInput.files];
   if(!files.length)return;
   files=files.filter(f=>f.size<20*1024*1024);
