@@ -27,28 +27,21 @@ button{padding:5px 14px;font-size:12px;border-radius:999px;border:1px solid rgba
 button:hover{background:radial-gradient(circle at top left,#335fa8 0,#18233f 55%);box-shadow:0 0 0 1px rgba(79,141,255,.8);transform:translateY(-1px)}
 #clearLogsBtn{background:radial-gradient(circle at top left,#5a1f32 0,#2a1018 55%);border-color:rgba(255,77,106,.8)}
 #clearLogsBtn:hover{box-shadow:0 0 0 1px rgba(255,77,106,.9)}
-
-#timeRangeWrapper{
-  width:95%;
-  max-width:1600px;
-  margin-top:18px;
-  position:sticky;
-  top:0;
-  z-index:50;
-  padding:6px 10px 10px;
-  background:rgba(5,6,16,0.96);
-  backdrop-filter:blur(8px);
-  border-radius:12px;
-  box-shadow:0 6px 18px rgba(0,0,0,.8);
-}
-#timeRangeLabel{font-weight:500;color:#d0d4ff}
-
-.noUi-target{background:rgba(22,24,46,.95);border-radius:999px;border:1px solid rgba(84,102,220,.7);box-shadow:inset 0 0 0 1px rgba(0,0,0,.7)}
-.noUi-base{border-radius:999px;overflow:hidden}
-.noUi-connect{background:linear-gradient(90deg,#25d8ff,#4f46e5,#a855f7);box-shadow:0 0 22px rgba(37,216,255,.7)}
-.noUi-handle{width:12px;height:26px;border-radius:999px;border:2px solid #e5f6ff;background:radial-gradient(circle at 30% 20%,#fff 0,#c2e3ff 28%,#4f8dff 60%,#24378c 100%);box-shadow:0 0 12px rgba(37,216,255,.9),0 8px 20px rgba(0,0,0,.9);cursor:pointer}
+#timeRangeWrapper{width:95%;max-width:1600px;margin-top:18px;position:sticky;top:0;z-index:50;padding:12px 16px 16px;background:rgba(5,6,16,0.98);backdrop-filter:blur(12px);border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,.9);border:1px solid rgba(120,120,200,.3)}
+#timeRangeLabel{font-weight:600;color:#e0e4ff;font-size:13px;margin-bottom:8px;display:block}
+#selectedDuration{text-align:center;margin-top:8px;margin-bottom:12px;font-size:14px;font-weight:700;color:#4fd1ff;text-shadow:0 0 10px rgba(79,209,255,.6);letter-spacing:.05em}
+#bossTimeline{position:relative;height:32px;margin-bottom:12px;background:rgba(15,18,35,.8);border-radius:8px;overflow:hidden;display:none}
+.boss-segment{height:100%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.8);border-right:1px solid rgba(0,0,0,.3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 4px}
+.noUi-target{background:rgba(22,24,46,.95);border-radius:12px;border:1px solid rgba(84,102,220,.7);box-shadow:inset 0 0 0 1px rgba(0,0,0,.7);height:14px}
+.noUi-base{border-radius:12px;overflow:visible}
+.noUi-connect{background:linear-gradient(90deg,#25d8ff,#4f46e5,#a855f7);box-shadow:0 0 22px rgba(37,216,255,.7);animation:pulseGlow 2s infinite}
+@keyframes pulseGlow{0%,100%{opacity:.85}50%{opacity:1}}
+.noUi-handle{width:18px;height:32px;border-radius:12px;border:2px solid #e5f6ff;background:radial-gradient(circle at 30% 20%,#fff 0,#c2e3ff 28%,#4f8dff 60%,#24378c 100%);box-shadow:0 0 16px rgba(79,209,255,1),0 8px 24px rgba(0,0,0,.9);cursor:grab;transition:transform .2s ease,box-shadow .2s ease;top:-9px}
 .noUi-handle:before,.noUi-handle:after{display:none}
-.noUi-handle:hover{box-shadow:0 0 18px rgba(129,230,217,1),0 0 40px rgba(37,216,255,.9);transform:scale(1.05)}
+.noUi-handle:hover{transform:scale(1.15);box-shadow:0 0 24px rgba(79,209,255,1),0 0 40px rgba(37,216,255,.9)}
+.noUi-handle:active{cursor:grabbing;transform:scale(1.25);box-shadow:0 0 30px rgba(79,209,255,1),0 0 50px rgba(37,216,255,1)}
+.noUi-tooltip{display:none;position:absolute;bottom:40px;padding:4px 10px;background:rgba(0,0,0,.95);color:#4fd1ff;border-radius:8px;font-size:11px;font-weight:700;border:1px solid rgba(79,209,255,.6);box-shadow:0 4px 12px rgba(0,0,0,.8);white-space:nowrap}
+.noUi-handle:hover .noUi-tooltip,.noUi-handle:active .noUi-tooltip{display:block}
 table{margin-top:22px;border-collapse:collapse;width:95%;max-width:1600px;background:rgba(8,10,26,.96);border-radius:16px;overflow:hidden;box-shadow:0 26px 70px rgba(0,0,0,.9)}
 th,td{padding:9px 12px;text-align:center;font-size:13px;border-right:1px solid #24263a}
 th:last-child,td:last-child{border-right:none}
@@ -68,80 +61,53 @@ td:nth-child(2){text-align:left}
 .panel-title{font-size:12px;font-weight:600;color:#e5e7ff;letter-spacing:.14em;text-transform:uppercase}
 .panel-meta{font-size:11px;color:#9fa4ff;letter-spacing:.08em;text-transform:uppercase}
 .panel-body{height:420px}
-#chartContainer,#timelineContainer,#avgTimelineContainer{width:100%;height:100%}
+#timelineContainer,#avgTimelineContainer{height:280px !important}
+#chartContainer{width:100%;height:100%}
 #dpsTimeline,#damageChart,#avgDpsTimeline{width:100%!important;height:100%!important;max-height:none!important;display:block}
 #avgControls{width:95%;max-width:1600px;margin-top:8px;text-align:right;font-size:12px;color:#a6aad0}
 p{font-size:13px;color:#c2c5dd}
 code{font-family:"JetBrains Mono","Fira Code",monospace}
-
-#targetsWrapper{
-  display:none;
-  width:95%;
-  max-width:1600px;
-  margin-top:10px;
-  position:relative;
-  z-index:auto;
-}
-#targetsScroll{
-  max-height:140px;
-  overflow-y:auto;
-  border-radius:12px;
-}
-#targetsTable thead th{
-  position:static;
-}
-
+#targetsWrapper{display:none;width:95%;max-width:1600px;margin-top:10px;position:relative;z-index:auto}
+#targetsScroll{max-height:140px;overflow-y:auto;border-radius:12px}
+#targetsTable thead th{position:static}
 @media (min-width:1800px){body{padding-top:32px}}
 @media (max-width:900px){.summary{flex-direction:column}}
 </style>
 </head>
 <body>
 <h1>Damage By Skill - Throne and Liberty</h1>
-
 <div style="margin-top:4px;text-align:center;font-size:13px;">
-  Logs folder:
-  <code id="logPath" style="cursor:pointer;">%LOCALAPPDATA%\TL\SAVED\COMBATLOGS</code>
+  Logs folder: <code id="logPath" style="cursor:pointer;">%LOCALAPPDATA%\TL\SAVED\COMBATLOGS</code>
   <span id="copyMsg" style="margin-left:6px;font-size:12px;color:#aaa;"></span>
 </div>
-
 <p style="margin-top:16px;">Select one or more combatlog (.txt) files exported from the game.</p>
-
 <input type="file" id="logFile" accept=".txt" multiple style="display:none;">
 <div id="dropZone">Drop your combatlog (.txt) files here<br><span>or click to select them</span></div>
 <div id="status"></div>
-
 <div style="width:95%;max-width:1600px;margin-top:6px;text-align:right;">
   <button id="clearLogsBtn">Clear logs</button>
 </div>
-
 <div class="summary">
   <div class="card"><div class="card-title">Total Damage</div><div class="card-value" id="sumTotalDamage">0</div></div>
   <div class="card"><div class="card-title">Average DPS</div><div class="card-value" id="sumAvgDps">0</div></div>
   <div class="card"><div class="card-title">Players</div><div class="card-value" id="sumPlayers">0</div></div>
   <div class="card"><div class="card-title">Target</div><div class="card-value" id="sumBossName">---</div></div>
 </div>
-
 <div id="timeRangeWrapper">
-  <div style="font-size:12px;color:#ccc;margin-bottom:4px;">
-    Time range: <span id="timeRangeLabel">0s - 0s</span>
-  </div>
+  <span id="timeRangeLabel">Time range: 0s - 0s</span>
+  <div id="selectedDuration">🎯 0s selected</div>
+  <div id="bossTimeline"></div>
   <div id="timeRangeSlider"></div>
 </div>
-
 <h2>Player Statistics</h2>
 <p>Click one or more players to compare them on the charts. ✕ removes from logs completely.</p>
-
 <table>
-  <thead>
-    <tr><th>#</th><th>Player</th><th>DPS</th><th>Total Damage</th><th>% Fight</th><th>Hits</th><th>Avg Hit</th><th>Max Hit</th><th>Duration</th><th></th></tr>
-  </thead>
+  <thead><tr><th>#</th><th>Player</th><th>DPS</th><th>Total Damage</th><th>% Fight</th><th>Hits</th><th>Avg Hit</th><th>Max Hit</th><th>Duration</th><th></th></tr></thead>
   <tbody id="playerBody"></tbody>
 </table>
-
 <div style="width:95%;max-width:1600px;margin-top:8px;text-align:right;">
   <button id="toggleTargetsBtn">Show other targets</button>
 </div>
-
 <div id="targetsWrapper">
   <div id="targetsScroll">
     <table id="targetsTable">
@@ -150,720 +116,60 @@ code{font-family:"JetBrains Mono","Fira Code",monospace}
     </table>
   </div>
 </div>
-
 <div class="panel">
   <div class="panel-header"><span class="panel-title">Damage By Skill</span><span class="panel-meta" id="playersMeta"></span></div>
   <div class="panel-body" id="chartContainer"><canvas id="damageChart"></canvas></div>
 </div>
-
-<div class="panel">
-  <div class="panel-header"><span class="panel-title">Average DPS Over Time</span><span class="panel-meta" id="avgFightDurationMeta"></span></div>
-  <div class="panel-body" id="avgTimelineContainer"><canvas id="avgDpsTimeline"></canvas></div>
-</div>
-
-<div id="avgControls">(Click and drag to zoom) <button id="resetAvgZoomBtn">Reset zoom</button></div>
-
 <div class="panel">
   <div class="panel-header"><span class="panel-title">DPS Timeline (Per Second)</span><span class="panel-meta" id="fightDurationMeta"></span></div>
   <div class="panel-body" id="timelineContainer"><canvas id="dpsTimeline"></canvas></div>
 </div>
+<div class="panel">
+  <div class="panel-header"><span class="panel-title">Average DPS Over Time</span><span class="panel-meta" id="avgFightDurationMeta"></span></div>
+  <div class="panel-body" id="avgTimelineContainer"><canvas id="avgDpsTimeline"></canvas></div>
+</div>
+<div id="avgControls">(Click and drag to zoom) <button id="resetAvgZoomBtn">Reset zoom</button></div>
 <script>
-const fileInput=document.getElementById('logFile'),
-      dropZone=document.getElementById('dropZone'),
-      statusEl=document.getElementById('status'),
-      playerBody=document.getElementById('playerBody'),
-      targetsTable=document.getElementById('targetsTable'),
-      targetsBody=document.getElementById('targetsBody'),
-      targetsWrapper=document.getElementById('targetsWrapper'),
-      toggleTargetsBtn=document.getElementById('toggleTargetsBtn'),
-      resetAvgZoomBtn=document.getElementById('resetAvgZoomBtn'),
-      logPathEl=document.getElementById('logPath'),
-      copyMsgEl=document.getElementById('copyMsg'),
-      clearLogsBtn=document.getElementById('clearLogsBtn'),
-      timeRangeLabel=document.getElementById('timeRangeLabel'),
-      timeRangeSliderEl=document.getElementById('timeRangeSlider');
-
-let skillChart,dpsTimelineChart,avgDpsTimelineChart;
-let playersData=[],selectedPlayers=[],selectedTarget=null;
-let globalBossPhases=[],timeSlider=null;
-let timeFilter={from:0,to:null};
-
-const BAR_COLORS=['rgba(88,101,242,.8)','rgba(46,204,113,.8)','rgba(231,76,60,.8)','rgba(241,196,15,.8)','rgba(155,89,182,.8)','rgba(26,188,156,.8)','rgba(230,126,34,.8)','rgba(149,165,166,.8)'],
-      BAR_BORDER_COLORS=['rgba(88,101,242,1)','rgba(46,204,113,1)','rgba(231,76,60,1)','rgba(241,196,15,1)','rgba(155,89,182,1)','rgba(26,188,156,1)','rgba(230,126,34,1)','rgba(149,165,166,1)'],
-      LINE_COLORS=['rgba(255,99,132,1)','rgba(54,162,235,1)','rgba(75,192,192,1)','rgba(255,206,86,1)','rgba(153,102,255,1)','rgba(255,159,64,1)','rgba(46,204,113,1)','rgba(231,76,60,1)','rgba(52,152,219,1)','rgba(241,196,15,1)'];
-
-const getColorForIndex=i=>({
-  rowBg:BAR_COLORS[i%BAR_COLORS.length],
-  text:'#fff',
-  barBg:BAR_COLORS[i%BAR_COLORS.length],
-  barBorder:BAR_BORDER_COLORS[i%BAR_BORDER_COLORS.length],
-  line:LINE_COLORS[i%LINE_COLORS.length]
-});
-
-// ======= SYSTÈME DE NORMALISATION DES COMPÉTENCES =======
-const skillNormalizationMap = new Map(); // ID ou Nom → clé normalisée
-
-function normalizeSkill(skillId, skillName) {
-  // Priorité 1: Chercher si cet ID existe déjà
-  if (skillNormalizationMap.has(skillId)) {
-    return skillNormalizationMap.get(skillId);
-  }
-  
-  // Priorité 2: Chercher si ce nom existe déjà (pour un autre ID)
-  for (const [key, normalizedKey] of skillNormalizationMap.entries()) {
-    if (key === skillName || normalizedKey === skillName) {
-      // On a trouvé le même nom avec un autre ID, on fusionne
-      skillNormalizationMap.set(skillId, normalizedKey);
-      return normalizedKey;
-    }
-  }
-  
-  // Priorité 3: Nouveau skill, on utilise le nom comme clé normalisée
-  const normalizedKey = skillName;
-  skillNormalizationMap.set(skillId, normalizedKey);
-  skillNormalizationMap.set(skillName, normalizedKey);
-  return normalizedKey;
-}
-
-function isLikelyFrench(name){
-  if(!name) return false;
-  if(/[àâçéèêëîïôûùüÿœæ]/i.test(name)) return true;
-  if(/\b(de|du|des|d'|d')\b/i.test(name)) return true;
-  const c0=name[0];
-  if(c0 && c0===c0.toLowerCase()) return true;
-  return false;
-}
-
-function preferName(oldName, oldIsFr, newName){
-  const newIsFr=isLikelyFrench(newName);
-  if(!oldName) return {name:newName,isFr:newIsFr};
-  if(newIsFr && !oldIsFr) return {name:newName,isFr:true};
-  return {name:oldName,isFr:oldIsFr};
-}
-
-function getPreferredSkillName(normalizedKey){
-  for(const p of selectedPlayers){
-    const n=p.skillNameById && p.skillNameById[normalizedKey];
-    if(!n) continue;
-    const isFr=!!(p.skillNameIsFrench && p.skillNameIsFrench[normalizedKey]);
-    if(isFr) return n;
-  }
-  
-  // Fallback sur n'importe quel joueur
-  for(const p of selectedPlayers){
-    const n=p.skillNameById && p.skillNameById[normalizedKey];
-    if(n) return n;
-  }
-  
-  return normalizedKey;
-}
-// ======================================================
-
-logPathEl.onclick=()=>{navigator.clipboard.writeText('%LOCALAPPDATA%\\TL\\SAVED\\COMBATLOGS').then(()=>{copyMsgEl.textContent='Path copied ✔';setTimeout(()=>copyMsgEl.textContent='',2000);});};
-
+const fileInput=document.getElementById('logFile'),dropZone=document.getElementById('dropZone'),statusEl=document.getElementById('status'),playerBody=document.getElementById('playerBody'),targetsTable=document.getElementById('targetsTable'),targetsBody=document.getElementById('targetsBody'),targetsWrapper=document.getElementById('targetsWrapper'),toggleTargetsBtn=document.getElementById('toggleTargetsBtn'),resetAvgZoomBtn=document.getElementById('resetAvgZoomBtn'),logPathEl=document.getElementById('logPath'),copyMsgEl=document.getElementById('copyMsg'),clearLogsBtn=document.getElementById('clearLogsBtn'),timeRangeLabel=document.getElementById('timeRangeLabel'),selectedDurationEl=document.getElementById('selectedDuration'),bossTimelineEl=document.getElementById('bossTimeline'),timeRangeSliderEl=document.getElementById('timeRangeSlider');
+let skillChart,dpsTimelineChart,avgDpsTimelineChart,playersData=[],selectedPlayers=[],selectedTarget=null,globalBossPhases=[],timeSlider=null,timeFilter={from:0,to:null};
+const BAR_COLORS=['rgba(88,101,242,.8)','rgba(46,204,113,.8)','rgba(231,76,60,.8)','rgba(241,196,15,.8)','rgba(155,89,182,.8)','rgba(26,188,156,.8)','rgba(230,126,34,.8)','rgba(149,165,166,.8)'],BAR_BORDER_COLORS=['rgba(88,101,242,1)','rgba(46,204,113,1)','rgba(231,76,60,1)','rgba(241,196,15,1)','rgba(155,89,182,1)','rgba(26,188,156,1)','rgba(230,126,34,1)','rgba(149,165,166,1)'],LINE_COLORS=['rgba(255,99,132,1)','rgba(54,162,235,1)','rgba(75,192,192,1)','rgba(255,206,86,1)','rgba(153,102,255,1)','rgba(255,159,64,1)','rgba(46,204,113,1)','rgba(231,76,60,1)','rgba(52,152,219,1)','rgba(241,196,15,1)'];
+const BOSS_COLORS=['#8040C0','#A07828','#1450A0','#50A028','#C04060','#40A0A0','#C09040','#6040C0'];
+const getColorForIndex=i=>({rowBg:BAR_COLORS[i%BAR_COLORS.length],text:'#fff',barBg:BAR_COLORS[i%BAR_COLORS.length],barBorder:BAR_BORDER_COLORS[i%BAR_BORDER_COLORS.length],line:LINE_COLORS[i%LINE_COLORS.length]});
+const skillNormalizationMap=new Map();
+function normalizeSkill(skillId,skillName){if(skillNormalizationMap.has(skillId))return skillNormalizationMap.get(skillId);for(const[key,normalizedKey]of skillNormalizationMap.entries())if(key===skillName||normalizedKey===skillName){skillNormalizationMap.set(skillId,normalizedKey);return normalizedKey}const normalizedKey=skillName;skillNormalizationMap.set(skillId,normalizedKey);skillNormalizationMap.set(skillName,normalizedKey);return normalizedKey}
+function isLikelyFrench(name){if(!name)return false;if(/[àâçéèêëîïôûùüÿœæ]/i.test(name))return true;if(/\b(de|du|des|d'|d')\b/i.test(name))return true;const c0=name[0];if(c0&&c0===c0.toLowerCase())return true;return false}
+function preferName(oldName,oldIsFr,newName){const newIsFr=isLikelyFrench(newName);if(!oldName)return{name:newName,isFr:newIsFr};if(newIsFr&&!oldIsFr)return{name:newName,isFr:true};return{name:oldName,isFr:oldIsFr}}
+function getPreferredSkillName(normalizedKey){for(const p of selectedPlayers){const n=p.skillNameById&&p.skillNameById[normalizedKey];if(!n)continue;const isFr=!!(p.skillNameIsFrench&&p.skillNameIsFrench[normalizedKey]);if(isFr)return n}for(const p of selectedPlayers){const n=p.skillNameById&&p.skillNameById[normalizedKey];if(n)return n}return normalizedKey}
+function renderBossTimeline(){bossTimelineEl.innerHTML='';if(!globalBossPhases.length||globalBossPhases.length>8){bossTimelineEl.style.display='none';return}bossTimelineEl.style.display='flex';const maxD=Math.max(...playersData.map(p=>p.duration));globalBossPhases.forEach((ph,i)=>{const duration=ph.endSec-ph.startSec;const widthPercent=duration/maxD*100;const seg=document.createElement('div');seg.className='boss-segment';seg.style.width=widthPercent+'%';seg.style.background=BOSS_COLORS[i%BOSS_COLORS.length];seg.textContent=ph.name;seg.title=`${ph.name} (${ph.startSec}s - ${ph.endSec}s, ${duration}s)`;bossTimelineEl.appendChild(seg)})}
+function updateSelectedDuration(){const from=timeFilter.from??0;const to=timeFilter.to??0;const duration=to-from;selectedDurationEl.textContent=`🎯 ${duration}s selected (${from}s → ${to}s)`}
+logPathEl.onclick=()=>{navigator.clipboard.writeText('%LOCALAPPDATA%\\TL\\SAVED\\COMBATLOGS').then(()=>{copyMsgEl.textContent='Path copied ✔';setTimeout(()=>copyMsgEl.textContent='',2000)})};
 dropZone.onclick=()=>fileInput.click();
-dropZone.ondragover=e=>{e.preventDefault();dropZone.style.borderColor='#4fd1ff';dropZone.style.background='#15172a';};
-dropZone.ondragleave=e=>{e.preventDefault();dropZone.style.borderColor='#5865F2';dropZone.style.background='#10111b';};
-dropZone.ondrop=e=>{e.preventDefault();dropZone.style.borderColor='#5865F2';dropZone.style.background='#10111b';const f=e.dataTransfer.files;if(!f.length)return;fileInput.files=f;handleFiles();};
-
-const parseTs=ts=>{const[d,t]=ts.split('-'),y=+d.slice(0,4),m=+d.slice(4,6)-1,da=+d.slice(6,8),[h,mi,s,ms]=t.split(':').map(Number);return new Date(y,m,da,h,mi,s,ms);};
-const computeDurationSeconds=(a,b)=>{try{return Math.max(1,Math.round((parseTs(b)-parseTs(a))/1e3));}catch{return 1;}};
-const computeSecondsDiff=(a,b)=>{try{return Math.max(0,Math.floor((parseTs(b)-parseTs(a))/1e3));}catch{return 0;}};
-
-function parseLogFile(file,index){return new Promise(res=>{
-  if(file.size>20*1024*1024)return res(null);
-  const r=new FileReader();
-  r.onload=()=>{try{
-    const lines=r.result.split(/\r?\n/),
-          damageBySkill={},
-          skillNameById={},
-          skillNameIsFrench={},
-          damageTimeline={},
-          damageByTarget={},
-          damageBySkillTimeline={},
-          damageTimelineByTarget={},
-          damageBySkillTimelineByTarget={},
-          bossPhases=[];
-    let totalDamage=0,hitCount=0,maxHit=0,firstTs=null,lastTs=null,
-        playerName='Unknown',bossName='Unknown',currentBoss=null,currentBossStartSec=0;
-
-    for(const line of lines){
-      if(!line)continue;
-      const parts=line.split(',');
-      if(parts.length<10)continue;
-      const type=(parts[1]||'').trim().toLowerCase();
-      if(!type.includes('damage'))continue;
-
-      const ts=parts[0].trim(),
-            skillName=(parts[2]||'').trim() || 'Unknown',
-            skillId=(parts[3]||'').trim() || skillName,
-            dmg=parseInt(parts[4].trim().replace(/\s/g,''),10),
-            player=parts[parts.length-2].trim(),
-            boss=parts[parts.length-1].trim();
-
-      if(!firstTs)firstTs=ts;
-      const sec=computeSecondsDiff(firstTs,ts);
-
-      if(boss!==currentBoss){
-        if(currentBoss!==null)bossPhases.push({name:currentBoss,startSec:currentBossStartSec,endSec:sec});
-        currentBoss=boss;
-        currentBossStartSec=sec;
-      }
-
-      if(!Number.isNaN(dmg)&&dmg>0){
-        totalDamage+=dmg;
-        hitCount++;
-        if(dmg>maxHit)maxHit=dmg;
-
-        // ======= NORMALISATION: ID en priorité, puis Nom =======
-        const normalizedKey = normalizeSkill(skillId, skillName);
-        
-        const oldName=skillNameById[normalizedKey];
-        const oldIsFr=!!skillNameIsFrench[normalizedKey];
-        const chosen=preferName(oldName,oldIsFr,skillName);
-        skillNameById[normalizedKey]=chosen.name;
-        skillNameIsFrench[normalizedKey]=chosen.isFr;
-
-        damageBySkill[normalizedKey]=(damageBySkill[normalizedKey]||0)+dmg;
-
-        if(!damageBySkillTimeline[sec])damageBySkillTimeline[sec]={};
-        damageBySkillTimeline[sec][normalizedKey]=(damageBySkillTimeline[sec][normalizedKey]||0)+dmg;
-
-        if(!damageBySkillTimelineByTarget[boss])damageBySkillTimelineByTarget[boss]={};
-        if(!damageBySkillTimelineByTarget[boss][sec])damageBySkillTimelineByTarget[boss][sec]={};
-        damageBySkillTimelineByTarget[boss][sec][normalizedKey]=(damageBySkillTimelineByTarget[boss][sec][normalizedKey]||0)+dmg;
-
-        if(!damageByTarget[boss])damageByTarget[boss]={totalDamage:0,hits:0,bySkill:{}};
-        const tgt=damageByTarget[boss];
-        tgt.totalDamage+=dmg;
-        tgt.hits++;
-        tgt.bySkill[normalizedKey]=(tgt.bySkill[normalizedKey]||0)+dmg;
-
-        damageTimeline[sec]=(damageTimeline[sec]||0)+dmg;
-
-        if(!damageTimelineByTarget[boss])damageTimelineByTarget[boss]={};
-        damageTimelineByTarget[boss][sec]=(damageTimelineByTarget[boss][sec]||0)+dmg;
-      }
-
-      lastTs=ts;
-      playerName=player;
-      bossName=boss;
-    }
-
-    if(!hitCount||!firstTs||!lastTs)return res(null);
-    const lastSec=computeSecondsDiff(firstTs,lastTs);
-    if(currentBoss!==null)bossPhases.push({name:currentBoss,startSec:currentBossStartSec,endSec:lastSec});
-
-    const duration=computeDurationSeconds(firstTs,lastTs),
-          dps=duration>0?Math.round(totalDamage/duration):totalDamage,
-          avgHit=Math.round(totalDamage/hitCount),
-          avgDpsTimeline={};
-    let cum=0;
-    for(let s=0;s<=duration;s++){
-      const dmg=damageTimeline[s]||0;
-      cum+=dmg;
-      avgDpsTimeline[s]=cum/Math.max(1,s+1);
-    }
-
-    res({
-      index,
-      playerName,
-      bossName,
-      totalDamage,
-      hitCount,
-      maxHit,
-      avgHit,
-      duration,
-      dps,
-      damageBySkill,
-      skillNameById,
-      skillNameIsFrench,
-      damageTimeline,
-      avgDpsTimeline,
-      damageByTarget,
-      bossPhases,
-      damageBySkillTimeline,
-      damageTimelineByTarget,
-      damageBySkillTimelineByTarget
-    });
-  }catch{res(null);}};
-  r.onerror=()=>res(null);
-  r.readAsText(file);
-});}
-
-function initTimeSlider(maxD){
-  if(maxD<1)maxD=1;
-  if(!timeSlider){
-    noUiSlider.create(timeRangeSliderEl,{
-      start:[0,maxD],
-      connect:true,
-      step:1,
-      range:{min:0,max:maxD},
-      tooltips:false
-    });
-    timeSlider=timeRangeSliderEl;
-    timeSlider.noUiSlider.on('update',v=>{
-      const[from,to]=v.map(x=>Math.round(x));
-      timeFilter={from,to};
-      timeRangeLabel.textContent=`${from}s - ${to}s`;
-      renderPlayerTable(playersData);
-      highlightSelectedRows();
-      renderTargetsTable();
-      refreshCharts();
-    });
-  }else{
-    timeSlider.noUiSlider.updateOptions({start:[0,maxD],range:{min:0,max:maxD}});
-    timeFilter={from:0,to:maxD};
-    timeRangeLabel.textContent=`0s - ${maxD}s`;
-  }
-}
-
-function buildPlayerStatsInWindow(p){
-  const from=timeFilter.from??0;
-  const to=Math.min(timeFilter.to??p.duration,p.duration);
-
-  const byTarget=p.damageTimelineByTarget && selectedTarget
-    ? p.damageTimelineByTarget[selectedTarget]
-    : null;
-  const baseTimeline=byTarget || p.damageTimeline;
-
-  let total=0,hits=0,max=0;
-  for(let s=from;s<=to;s++){
-    const dmg=baseTimeline[s]||0;
-    if(dmg>0){total+=dmg;hits++;if(dmg>max)max=dmg;}
-  }
-  const duration=Math.max(1,to-from+1);
-  const dps=Math.round(total/duration);
-  const avgHit=hits?Math.round(total/hits):0;
-  return{totalDamage:total,hitCount:hits,maxHit:max,duration,dps,avgHit};
-}
-
-function buildAvgDpsTimelineWindow(p,from,to){
-  const byTarget=p.damageTimelineByTarget && selectedTarget
-    ? p.damageTimelineByTarget[selectedTarget]
-    : null;
-  const baseTimeline=byTarget || p.damageTimeline;
-
-  let cum=0,avg={};
-  for(let s=0;s<=p.duration;s++){
-    const dmg=baseTimeline[s]||0;
-    cum+=dmg;
-    if(s>=from&&s<=to)avg[s]=cum/Math.max(1,s+1);
-  }
-  return avg;
-}
-
-function buildDamageBySkillInWindow(p){
-  const from=timeFilter.from??0,to=Math.min(timeFilter.to??p.duration,p.duration),tot={};
-  for(let s=from;s<=to;s++){
-    const skills=p.damageBySkillTimeline?.[s];
-    if(!skills)continue;
-    Object.entries(skills).forEach(([normalizedKey,d])=>{tot[normalizedKey]=(tot[normalizedKey]||0)+d;});
-  }
-  return tot;
-}
-
-function buildDamageBySkillForTargetInWindow(p,target){
-  const base=p.damageBySkillTimelineByTarget && p.damageBySkillTimelineByTarget[target];
-  if(!base)return buildDamageBySkillInWindow(p);
-  const from=timeFilter.from??0,to=Math.min(timeFilter.to??p.duration,p.duration),tot={};
-  for(let s=from;s<=to;s++){
-    const skills=base[s];
-    if(!skills)continue;
-    Object.entries(skills).forEach(([normalizedKey,d])=>{
-      tot[normalizedKey]=(tot[normalizedKey]||0)+d;
-    });
-  }
-  return tot;
-}
-
-function renderPlayerTable(players){
-  playerBody.innerHTML='';
-
-  const rows=players.map(p=>{
-    const stats=buildPlayerStatsInWindow(p);
-    return{player:p,stats};
-  });
-
-  const totalDamageAll=rows.reduce((s,r)=>s+r.stats.totalDamage,0);
-
-  rows.forEach((row,i)=>{
-    const p=row.player,s=row.stats,tr=document.createElement('tr');
-    tr.dataset.index=p.index;
-    const c=getColorForIndex(p.index);
-    const percent=totalDamageAll>0?s.totalDamage/totalDamageAll*100:0;
-
-    tr.innerHTML=`<td>${i+1}</td>
-      <td style="color:${c.text};">${p.playerName}</td>
-      <td>${s.dps.toLocaleString('fr-FR')}</td>
-      <td>${s.totalDamage.toLocaleString('fr-FR')}</td>
-      <td>${percent.toFixed(2)}%</td>
-      <td>${s.hitCount.toLocaleString('fr-FR')}</td>
-      <td>${s.avgHit?s.avgHit.toLocaleString('fr-FR'):'-'}</td>
-      <td>${s.maxHit.toLocaleString('fr-FR')}</td>
-      <td>${s.duration}s</td>
-      <td style="width:40px;"><span class="remove-player" data-index="${p.index}" title="Retirer ce joueur des logs">✕</span></td>`;
-
-    if(selectedPlayers.some(sp=>sp.index===p.index)){
-      tr.classList.add('player-selected');
-      tr.style.backgroundColor=c.rowBg;
-    }
-    playerBody.appendChild(tr);
-  });
-
-  const totalFiltered=rows.reduce((s,r)=>s+r.stats.totalDamage,0);
-  const avgDpsFiltered=rows.length?rows.reduce((s,r)=>s+r.stats.dps,0)/rows.length:0;
-  document.getElementById('sumTotalDamage').textContent=totalFiltered.toLocaleString('fr-FR');
-  document.getElementById('sumAvgDps').textContent=Math.round(avgDpsFiltered).toLocaleString('fr-FR');
-}
-
-function highlightSelectedRows(){
-  playerBody.querySelectorAll('tr').forEach(r=>{
-    const idx=+r.dataset.index;
-    const p=playersData.find(pl=>pl.index===idx);
-    const sel=selectedPlayers.some(sp=>sp.index===idx);
-    r.classList.toggle('player-selected',sel);
-    r.style.backgroundColor='';
-    if(sel&&p){
-      const c=getColorForIndex(p.index);
-      r.style.backgroundColor=c.rowBg;
-    }
-  });
-}
-
-function renderTargetsTable(){
-  targetsBody.innerHTML='';
-  const totals={};
-  playersData.forEach(p=>{
-    if(!p.damageByTarget)return;
-    Object.entries(p.damageByTarget).forEach(([t,info])=>{
-      if(!totals[t])totals[t]={totalDamage:0,hits:0};
-      totals[t].totalDamage+=info.totalDamage;
-      totals[t].hits+=info.hits;
-    });
-  });
-
-  Object.entries(totals).sort((a,b)=>b[1].totalDamage-a[1].totalDamage).forEach(([t,info])=>{
-    const tr=document.createElement('tr');
-    tr.style.cssText='cursor:pointer;transition:background .2s;';
-    tr.innerHTML=`<td style="color:#4fd1ff;">${t}</td><td>${info.totalDamage.toLocaleString('fr-FR')}</td><td>${info.hits.toLocaleString('fr-FR')}</td>`;
-    tr.onclick=()=>{
-      selectedTarget=t;
-      document.getElementById('sumBossName').textContent=t;
-      renderPlayerTable(playersData);
-      highlightSelectedRows();
-      refreshCharts();
-    };
-    targetsBody.appendChild(tr);
-  });
-}
-
-function drawComparisonChart(){
-  const ctx=document.getElementById('damageChart').getContext('2d');
-  if(skillChart)skillChart.destroy();
-  const meta=document.getElementById('playersMeta');
-  if(!selectedPlayers.length){meta.textContent='';return;}
-
-  const allSkills=new Set();
-  const perPlayer=selectedPlayers.map(p=>{
-    const totals=selectedTarget?buildDamageBySkillForTargetInWindow(p,selectedTarget):buildDamageBySkillInWindow(p);
-    Object.keys(totals).forEach(k=>allSkills.add(k));
-    return{player:p,totals};
-  });
-
-  const global={};
-  perPlayer.forEach(({totals})=>{
-    Object.entries(totals).forEach(([normalizedKey,d])=>{global[normalizedKey]=(global[normalizedKey]||0)+d;});
-  });
-
-  const skillNames=Array.from(allSkills).sort((a,b)=>(global[b]||0)-(global[a]||0));
-  const labels=skillNames.map(name=>getPreferredSkillName(name));
-
-  const datasets=perPlayer.map(({player,totals})=>{
-    const c=getColorForIndex(player.index);
-    return{
-      label:selectedTarget?`${player.playerName} (${selectedTarget})`:player.playerName,
-      data:skillNames.map(name=>totals[name]||0),
-      backgroundColor:c.barBg,
-      borderColor:c.barBorder,
-      borderWidth:1,
-      borderRadius:6,
-      borderSkipped:false
-    };
-  });
-
-  meta.textContent=perPlayer.length===1?perPlayer[0].player.playerName:perPlayer.map(p=>p.player.playerName).join(' vs ');
-  document.getElementById('chartContainer').style.height=Math.max(450,labels.length*40)+'px';
-
-  skillChart=new Chart(ctx,{
-    type:'bar',
-    data:{labels,datasets},
-    options:{
-      indexAxis:'y',
-      responsive:true,
-      maintainAspectRatio:false,
-      categoryPercentage:.9,
-      barPercentage:.7,
-      animation:false,
-      plugins:{
-        legend:{display:true},
-        title:{display:false},
-        tooltip:{callbacks:{label:ctx=>{const v=ctx.parsed.x||0;return`${ctx.dataset.label} – ${ctx.label}: ${v.toLocaleString('fr-FR')} dégâts`;}}}
-      },
-      scales:{
-        x:{ticks:{color:'#fff',maxTicksLimit:10},grid:{color:'rgba(255,255,255,.1)'}},
-        y:{ticks:{color:'#fff'},grid:{color:'rgba(255,255,255,.1)'}}
-      }
-    }
-  });
-}
-
-function drawAvgDpsTimeline(){
-  const ctx=document.getElementById('avgDpsTimeline').getContext('2d');
-  if(avgDpsTimelineChart)avgDpsTimelineChart.destroy();
-  const meta=document.getElementById('avgFightDurationMeta');
-  if(!selectedPlayers.length){meta.textContent='';return;}
-
-  const maxD=Math.max(...selectedPlayers.map(p=>p.duration));
-  const from=timeFilter.from??0;
-  const to=Math.min(timeFilter.to??maxD,maxD);
-  meta.textContent=`${from}s - ${to}s (fight ${maxD}s)`;
-
-  const labels=[];
-  for(let s=from;s<=to;s++)labels.push(`${s}s`);
-
-  const datasets=selectedPlayers.map(p=>{
-    const avg=buildAvgDpsTimelineWindow(p,from,to);
-    const c=getColorForIndex(p.index);
-    return{
-      label:selectedTarget?`${p.playerName} (${selectedTarget})`:p.playerName,
-      data:labels.map((_,i)=>avg[from+i]||0),
-      borderColor:c.line,
-      backgroundColor:'transparent',
-      pointRadius:0,
-      borderWidth:1.8,
-      tension:.15
-    };
-  });
-
-  avgDpsTimelineChart=new Chart(ctx,{
-    type:'line',
-    data:{labels,datasets},
-    options:{
-      responsive:true,
-      maintainAspectRatio:false,
-      animation:false,
-      plugins:{
-        legend:{display:true},
-        title:{display:true,text:'Average DPS Over Time (time‑windowed)'},
-        tooltip:{callbacks:{label:ctx=>{const v=ctx.parsed.y||0;return`${ctx.dataset.label}: ${Math.round(v).toLocaleString('fr-FR')} DPS moyen`;}}},
-        zoom:{zoom:{wheel:{enabled:true},drag:{enabled:true},mode:'x'},pan:{enabled:true,mode:'x'}}
-      },
-      scales:{
-        x:{ticks:{color:'#fff',maxTicksLimit:15},grid:{color:'rgba(255,255,255,.08)'}},
-        y:{ticks:{color:'#fff'},grid:{color:'rgba(255,255,255,.08)'}}
-      }
-    },
-    plugins:[{id:'bossBackgrounds',beforeDraw(chart){
-      const{ctx,chartArea,scales:{x}}=chart;
-      if(!globalBossPhases?.length)return;
-      const cols=['rgba(80,40,120,.35)','rgba(160,120,40,.35)','rgba(20,80,120,.35)','rgba(80,120,40,.35)'];
-      globalBossPhases.forEach((ph,i)=>{
-        const s=Math.max(ph.startSec,from),e=Math.min(ph.endSec,to);
-        if(e<=s)return;
-        const xs=x.getPixelForValue(s-from),xe=x.getPixelForValue(e-from);
-        ctx.save();
-        ctx.fillStyle=cols[i%cols.length];
-        ctx.fillRect(xs,chartArea.top,xe-xs,chartArea.bottom-chartArea.top);
-        ctx.fillStyle='#fff';
-        ctx.font='10px Arial';
-        ctx.textAlign='center';
-        ctx.fillText(ph.name,(xs+xe)/2,chartArea.top+12);
-        ctx.restore();
-      });
-    }}]
-  });
-}
-
-function drawDpsTimeline(){
-  const ctx=document.getElementById('dpsTimeline').getContext('2d');
-  if(dpsTimelineChart)dpsTimelineChart.destroy();
-  const meta=document.getElementById('fightDurationMeta');
-  if(!selectedPlayers.length){meta.textContent='';return;}
-
-  const maxD=Math.max(...selectedPlayers.map(p=>p.duration));
-  const from=timeFilter.from??0;
-  const to=Math.min(timeFilter.to??maxD,maxD);
-  meta.textContent=`${from}s - ${to}s (fight ${maxD}s)`;
-
-  const labels=[];
-  for(let s=from;s<=to;s++)labels.push(`${s}s`);
-
-  const datasets=selectedPlayers.map(p=>{
-    const byTarget=p.damageTimelineByTarget && selectedTarget
-      ? p.damageTimelineByTarget[selectedTarget]
-      : null;
-    const baseTimeline=byTarget || p.damageTimeline;
-
-    const c=getColorForIndex(p.index);
-    return{
-      label:selectedTarget?`${p.playerName} (${selectedTarget})`:p.playerName,
-      data:labels.map((_,i)=>baseTimeline[from+i]||0),
-      borderColor:c.line,
-      backgroundColor:'transparent',
-      pointRadius:0,
-      borderWidth:1.5,
-      tension:.2
-    };
-  });
-
-  dpsTimelineChart=new Chart(ctx,{
-    type:'line',
-    data:{labels,datasets},
-    options:{
-      responsive:true,
-      maintainAspectRatio:false,
-      animation:false,
-      plugins:{
-        legend:{display:true},
-        title:{display:false},
-        tooltip:{callbacks:{label:ctx=>{const v=ctx.parsed.y||0;return`${ctx.dataset.label}: ${v.toLocaleString('fr-FR')} DPS`;}}}
-      },
-      scales:{
-        x:{ticks:{color:'#fff',maxTicksLimit:15},grid:{color:'rgba(255,255,255,.08)'}},
-        y:{ticks:{color:'#fff'},grid:{color:'rgba(255,255,255,.08)'}}
-      }
-    }
-  });
-}
-
-function refreshCharts(){
-  if(skillChart){skillChart.destroy();skillChart=null;}
-  if(dpsTimelineChart){dpsTimelineChart.destroy();dpsTimelineChart=null;}
-  if(avgDpsTimelineChart){avgDpsTimelineChart.destroy();avgDpsTimelineChart=null;}
-  drawComparisonChart();
-  drawAvgDpsTimeline();
-  drawDpsTimeline();
-}
-
-toggleTargetsBtn.onclick=()=>{
-  const hidden=getComputedStyle(targetsWrapper).display==='none';
-  if(hidden){
-    renderTargetsTable();
-    targetsWrapper.style.display='block';
-    toggleTargetsBtn.textContent='Hide other targets';
-  }else{
-    targetsWrapper.style.display='none';
-    toggleTargetsBtn.textContent='Show other targets';
-  }
-};
-
-resetAvgZoomBtn.onclick=()=>{if(avgDpsTimelineChart)avgDpsTimelineChart.resetZoom();};
-
-playerBody.onclick=e=>{
-  const rm=e.target.closest('.remove-player');
-  if(rm){
-    const idx=+rm.dataset.index;
-    playersData=playersData.filter(p=>p.index!==idx);
-    selectedPlayers=selectedPlayers.filter(p=>p.index!==idx);
-    playersData.forEach((p,i)=>p.index=i);
-
-    renderPlayerTable(playersData);
-    highlightSelectedRows();
-    refreshCharts();
-
-    document.getElementById('sumPlayers').textContent=playersData.length;
-    return;
-  }
-
-  const row=e.target.closest('tr');
-  if(!row)return;
-  const idx=+row.dataset.index;
-  const p=playersData.find(pl=>pl.index===idx);
-  if(!p)return;
-
-  const exists=selectedPlayers.some(pl=>pl.index===p.index);
-  selectedPlayers=exists
-    ? selectedPlayers.filter(pl=>pl.index!==p.index)
-    : [...selectedPlayers,p];
-
-  renderPlayerTable(playersData);
-  highlightSelectedRows();
-  refreshCharts();
-};
-
-clearLogsBtn.onclick=()=>{
-  playersData=[];
-  selectedPlayers=[];
-  selectedTarget=null;
-  globalBossPhases=[];
-  timeFilter={from:0,to:null};
-  skillNormalizationMap.clear();
-  if(timeSlider){
-    timeSlider.noUiSlider.updateOptions({start:[0,0],range:{min:0,max:0}});
-    timeRangeLabel.textContent='0s - 0s';
-  }
-  playerBody.innerHTML='';
-  targetsBody.innerHTML='';
-  targetsWrapper.style.display='none';
-  toggleTargetsBtn.textContent='Show other targets';
-  document.getElementById('sumTotalDamage').textContent='0';
-  document.getElementById('sumAvgDps').textContent='0';
-  document.getElementById('sumPlayers').textContent='0';
-  document.getElementById('sumBossName').textContent='---';
-  statusEl.textContent='Logs cleared.';
-  if(skillChart){skillChart.destroy();skillChart=null;}
-  if(dpsTimelineChart){dpsTimelineChart.destroy();dpsTimelineChart=null;}
-  if(avgDpsTimelineChart){avgDpsTimelineChart.destroy();avgDpsTimelineChart=null;}
-};
-
-function handleFiles(){
-  skillNormalizationMap.clear();
-  let files=[...fileInput.files];
-  if(!files.length)return;
-  files=files.filter(f=>f.size<20*1024*1024);
-  if(!files.length){statusEl.textContent='Files are too large.';return;}
-  statusEl.textContent='Reading log files...';
-  selectedTarget=null;
-  targetsBody.innerHTML='';
-  targetsWrapper.style.display='none';
-  toggleTargetsBtn.textContent='Show other targets';
-  if(skillChart)skillChart.destroy();
-  if(dpsTimelineChart)dpsTimelineChart.destroy();
-  if(avgDpsTimelineChart)avgDpsTimelineChart.destroy();
-
-  const baseIndex=playersData.length;
-  Promise.all(files.map((f,i)=>parseLogFile(f,baseIndex+i))).then(res=>{
-    const newP=res.filter(Boolean);
-    if(!newP.length){statusEl.textContent='No valid data found in the added logs.';return;}
-    playersData=playersData.concat(newP);
-    playersData.sort((a,b)=>b.dps-a.dps);
-    playersData.forEach((p,i)=>p.index=i);
-
-    const boss=playersData[0].bossName&&playersData[0].bossName!=='Unknown'
-      ? playersData[0].bossName:'Unknown target';
-    document.getElementById('sumBossName').textContent=boss;
-
-    const total=playersData.reduce((s,p)=>s+p.totalDamage,0),
-          avg=playersData.reduce((s,p)=>s+p.dps,0)/playersData.length;
-    document.getElementById('sumTotalDamage').textContent=total.toLocaleString('fr-FR');
-    document.getElementById('sumAvgDps').textContent=Math.round(avg).toLocaleString('fr-FR');
-    document.getElementById('sumPlayers').textContent=playersData.length;
-
-    renderPlayerTable(playersData);
-    statusEl.textContent=`Logs loaded: ${playersData.length}`;
-    if(playersData.length>0)selectedPlayers=[playersData[0]];
-    highlightSelectedRows();
-    globalBossPhases=playersData[0].bossPhases||[];
-
-    const maxD=Math.max(...playersData.map(p=>p.duration));
-    initTimeSlider(maxD);
-    refreshCharts();
-  }).catch(err=>{
-    statusEl.textContent='Error: '+err;
-  });
-}
-
+dropZone.ondragover=e=>{e.preventDefault();dropZone.style.borderColor='#4fd1ff';dropZone.style.background='#15172a'};
+dropZone.ondragleave=e=>{e.preventDefault();dropZone.style.borderColor='#5865F2';dropZone.style.background='#10111b'};
+dropZone.ondrop=e=>{e.preventDefault();dropZone.style.borderColor='#5865F2';dropZone.style.background='#10111b';const f=e.dataTransfer.files;if(!f.length)return;fileInput.files=f;handleFiles()};
+const parseTs=ts=>{const[d,t]=ts.split('-'),y=+d.slice(0,4),m=+d.slice(4,6)-1,da=+d.slice(6,8),[h,mi,s,ms]=t.split(':').map(Number);return new Date(y,m,da,h,mi,s,ms)};
+const computeDurationSeconds=(a,b)=>{try{return Math.max(1,Math.round((parseTs(b)-parseTs(a))/1e3))}catch{return 1}};
+const computeSecondsDiff=(a,b)=>{try{return Math.max(0,Math.floor((parseTs(b)-parseTs(a))/1e3))}catch{return 0}};
+function parseLogFile(file,index){return new Promise(res=>{if(file.size>20*1024*1024)return res(null);const r=new FileReader();r.onload=()=>{try{const lines=r.result.split(/\r?\n/),damageBySkill={},hitsBySkill={},skillNameById={},skillNameIsFrench={},damageTimeline={},damageByTarget={},damageBySkillTimeline={},hitsBySkillTimeline={},damageTimelineByTarget={},damageBySkillTimelineByTarget={},hitsBySkillTimelineByTarget={},bossPhases=[];let totalDamage=0,hitCount=0,maxHit=0,firstTs=null,lastTs=null,playerName='Unknown',bossName='Unknown',currentBoss=null,currentBossStartSec=0;for(const line of lines){if(!line)continue;const parts=line.split(',');if(parts.length<10)continue;const type=(parts[1]||'').trim().toLowerCase();if(!type.includes('damage'))continue;const ts=parts[0].trim(),skillName=(parts[2]||'').trim()||'Unknown',skillId=(parts[3]||'').trim()||skillName,dmg=parseInt(parts[4].trim().replace(/\s/g,''),10),player=parts[parts.length-2].trim(),boss=parts[parts.length-1].trim();if(!firstTs)firstTs=ts;const sec=computeSecondsDiff(firstTs,ts);if(boss!==currentBoss){if(currentBoss!==null)bossPhases.push({name:currentBoss,startSec:currentBossStartSec,endSec:sec});currentBoss=boss;currentBossStartSec=sec}if(!Number.isNaN(dmg)&&dmg>0){totalDamage+=dmg;hitCount++;if(dmg>maxHit)maxHit=dmg;const normalizedKey=normalizeSkill(skillId,skillName);const oldName=skillNameById[normalizedKey];const oldIsFr=!!skillNameIsFrench[normalizedKey];const chosen=preferName(oldName,oldIsFr,skillName);skillNameById[normalizedKey]=chosen.name;skillNameIsFrench[normalizedKey]=chosen.isFr;damageBySkill[normalizedKey]=(damageBySkill[normalizedKey]||0)+dmg;hitsBySkill[normalizedKey]=(hitsBySkill[normalizedKey]||0)+1;if(!damageBySkillTimeline[sec])damageBySkillTimeline[sec]={};damageBySkillTimeline[sec][normalizedKey]=(damageBySkillTimeline[sec][normalizedKey]||0)+dmg;if(!hitsBySkillTimeline[sec])hitsBySkillTimeline[sec]={};hitsBySkillTimeline[sec][normalizedKey]=(hitsBySkillTimeline[sec][normalizedKey]||0)+1;if(!damageBySkillTimelineByTarget[boss])damageBySkillTimelineByTarget[boss]={};if(!damageBySkillTimelineByTarget[boss][sec])damageBySkillTimelineByTarget[boss][sec]={};damageBySkillTimelineByTarget[boss][sec][normalizedKey]=(damageBySkillTimelineByTarget[boss][sec][normalizedKey]||0)+dmg;if(!hitsBySkillTimelineByTarget[boss])hitsBySkillTimelineByTarget[boss]={};if(!hitsBySkillTimelineByTarget[boss][sec])hitsBySkillTimelineByTarget[boss][sec]={};hitsBySkillTimelineByTarget[boss][sec][normalizedKey]=(hitsBySkillTimelineByTarget[boss][sec][normalizedKey]||0)+1;if(!damageByTarget[boss])damageByTarget[boss]={totalDamage:0,hits:0,bySkill:{}};const tgt=damageByTarget[boss];tgt.totalDamage+=dmg;tgt.hits++;tgt.bySkill[normalizedKey]=(tgt.bySkill[normalizedKey]||0)+dmg;damageTimeline[sec]=(damageTimeline[sec]||0)+dmg;if(!damageTimelineByTarget[boss])damageTimelineByTarget[boss]={};damageTimelineByTarget[boss][sec]=(damageTimelineByTarget[boss][sec]||0)+dmg}lastTs=ts;playerName=player;bossName=boss}if(!hitCount||!firstTs||!lastTs)return res(null);const lastSec=computeSecondsDiff(firstTs,lastTs);if(currentBoss!==null)bossPhases.push({name:currentBoss,startSec:currentBossStartSec,endSec:lastSec});const duration=computeDurationSeconds(firstTs,lastTs),dps=duration>0?Math.round(totalDamage/duration):totalDamage,avgHit=Math.round(totalDamage/hitCount),avgDpsTimeline={};let cum=0;for(let s=0;s<=duration;s++){const dmg=damageTimeline[s]||0;cum+=dmg;avgDpsTimeline[s]=cum/Math.max(1,s+1)}res({index,playerName,bossName,totalDamage,hitCount,maxHit,avgHit,duration,dps,damageBySkill,hitsBySkill,skillNameById,skillNameIsFrench,damageTimeline,avgDpsTimeline,damageByTarget,bossPhases,damageBySkillTimeline,hitsBySkillTimeline,damageTimelineByTarget,damageBySkillTimelineByTarget,hitsBySkillTimelineByTarget})}catch{res(null)}};r.onerror=()=>res(null);r.readAsText(file)})}
+function initTimeSlider(maxD){if(maxD<1)maxD=1;if(!timeSlider){noUiSlider.create(timeRangeSliderEl,{start:[0,maxD],connect:true,step:1,range:{min:0,max:maxD},tooltips:[{to:v=>`${Math.round(v)}s`},{to:v=>`${Math.round(v)}s`}]});timeSlider=timeRangeSliderEl;timeSlider.noUiSlider.on('update',v=>{const[from,to]=v.map(x=>Math.round(x));timeFilter={from,to};timeRangeLabel.textContent=`Time range: ${from}s - ${to}s`;updateSelectedDuration();renderPlayerTable(playersData);highlightSelectedRows();renderTargetsTable();refreshCharts()})}else{timeSlider.noUiSlider.updateOptions({start:[0,maxD],range:{min:0,max:maxD}});timeFilter={from:0,to:maxD};timeRangeLabel.textContent=`Time range: 0s - ${maxD}s`;updateSelectedDuration()}}
+function buildPlayerStatsInWindow(p){const from=timeFilter.from??0,to=Math.min(timeFilter.to??p.duration,p.duration),byTarget=p.damageTimelineByTarget&&selectedTarget?p.damageTimelineByTarget[selectedTarget]:null,baseTimeline=byTarget||p.damageTimeline;let total=0,hits=0,max=0;for(let s=from;s<=to;s++){const dmg=baseTimeline[s]||0;if(dmg>0){total+=dmg;hits++;if(dmg>max)max=dmg}}const duration=Math.max(1,to-from+1),dps=Math.round(total/duration),avgHit=hits?Math.round(total/hits):0;return{totalDamage:total,hitCount:hits,maxHit:max,duration,dps,avgHit}}
+function buildAvgDpsTimelineWindow(p,from,to){const byTarget=p.damageTimelineByTarget&&selectedTarget?p.damageTimelineByTarget[selectedTarget]:null,baseTimeline=byTarget||p.damageTimeline;let cum=0,avg={};for(let s=0;s<=p.duration;s++){const dmg=baseTimeline[s]||0;cum+=dmg;if(s>=from&&s<=to)avg[s]=cum/Math.max(1,s+1)}return avg}
+function buildDamageBySkillInWindow(p){const from=timeFilter.from??0,to=Math.min(timeFilter.to??p.duration,p.duration),tot={};for(let s=from;s<=to;s++){const skills=p.damageBySkillTimeline?.[s];if(!skills)continue;Object.entries(skills).forEach(([normalizedKey,d])=>{tot[normalizedKey]=(tot[normalizedKey]||0)+d})}return tot}
+function buildHitsBySkillInWindow(p){const from=timeFilter.from??0,to=Math.min(timeFilter.to??p.duration,p.duration),tot={};for(let s=from;s<=to;s++){const skills=p.hitsBySkillTimeline?.[s];if(!skills)continue;Object.entries(skills).forEach(([normalizedKey,h])=>{tot[normalizedKey]=(tot[normalizedKey]||0)+h})}return tot}
+function buildDamageBySkillForTargetInWindow(p,target){const base=p.damageBySkillTimelineByTarget&&p.damageBySkillTimelineByTarget[target];if(!base)return buildDamageBySkillInWindow(p);const from=timeFilter.from??0,to=Math.min(timeFilter.to??p.duration,p.duration),tot={};for(let s=from;s<=to;s++){const skills=base[s];if(!skills)continue;Object.entries(skills).forEach(([normalizedKey,d])=>{tot[normalizedKey]=(tot[normalizedKey]||0)+d})}return tot}
+function buildHitsBySkillForTargetInWindow(p,target){const base=p.hitsBySkillTimelineByTarget&&p.hitsBySkillTimelineByTarget[target];if(!base)return buildHitsBySkillInWindow(p);const from=timeFilter.from??0,to=Math.min(timeFilter.to??p.duration,p.duration),tot={};for(let s=from;s<=to;s++){const skills=base[s];if(!skills)continue;Object.entries(skills).forEach(([normalizedKey,h])=>{tot[normalizedKey]=(tot[normalizedKey]||0)+h})}return tot}
+function renderPlayerTable(players){playerBody.innerHTML='';const rows=players.map(p=>{const stats=buildPlayerStatsInWindow(p);return{player:p,stats}});const totalDamageAll=rows.reduce((s,r)=>s+r.stats.totalDamage,0);rows.forEach((row,i)=>{const p=row.player,s=row.stats,tr=document.createElement('tr');tr.dataset.index=p.index;const c=getColorForIndex(p.index),percent=totalDamageAll>0?s.totalDamage/totalDamageAll*100:0;tr.innerHTML=`<td>${i+1}</td><td style="color:${c.text};">${p.playerName}</td><td>${s.dps.toLocaleString('fr-FR')}</td><td>${s.totalDamage.toLocaleString('fr-FR')}</td><td>${percent.toFixed(2)}%</td><td>${s.hitCount.toLocaleString('fr-FR')}</td><td>${s.avgHit?s.avgHit.toLocaleString('fr-FR'):'-'}</td><td>${s.maxHit.toLocaleString('fr-FR')}</td><td>${s.duration}s</td><td style="width:40px;"><span class="remove-player" data-index="${p.index}" title="Retirer ce joueur des logs">✕</span></td>`;if(selectedPlayers.some(sp=>sp.index===p.index)){tr.classList.add('player-selected');tr.style.backgroundColor=c.rowBg}playerBody.appendChild(tr)});const totalFiltered=rows.reduce((s,r)=>s+r.stats.totalDamage,0),avgDpsFiltered=rows.length?rows.reduce((s,r)=>s+r.stats.dps,0)/rows.length:0;document.getElementById('sumTotalDamage').textContent=totalFiltered.toLocaleString('fr-FR');document.getElementById('sumAvgDps').textContent=Math.round(avgDpsFiltered).toLocaleString('fr-FR')}
+function highlightSelectedRows(){playerBody.querySelectorAll('tr').forEach(r=>{const idx=+r.dataset.index,p=playersData.find(pl=>pl.index===idx),sel=selectedPlayers.some(sp=>sp.index===idx);r.classList.toggle('player-selected',sel);r.style.backgroundColor='';if(sel&&p){const c=getColorForIndex(p.index);r.style.backgroundColor=c.rowBg}})}
+function renderTargetsTable(){targetsBody.innerHTML='';const totals={};playersData.forEach(p=>{if(!p.damageByTarget)return;Object.entries(p.damageByTarget).forEach(([t,info])=>{if(!totals[t])totals[t]={totalDamage:0,hits:0};totals[t].totalDamage+=info.totalDamage;totals[t].hits+=info.hits})});Object.entries(totals).sort((a,b)=>b[1].totalDamage-a[1].totalDamage).forEach(([t,info])=>{const tr=document.createElement('tr');tr.style.cssText='cursor:pointer;transition:background .2s;';tr.innerHTML=`<td style="color:#4fd1ff;">${t}</td><td>${info.totalDamage.toLocaleString('fr-FR')}</td><td>${info.hits.toLocaleString('fr-FR')}</td>`;tr.onclick=()=>{selectedTarget=t;document.getElementById('sumBossName').textContent=t;renderPlayerTable(playersData);highlightSelectedRows();refreshCharts()};targetsBody.appendChild(tr)})}
+function drawComparisonChart(){const ctx=document.getElementById('damageChart').getContext('2d');if(skillChart)skillChart.destroy();const meta=document.getElementById('playersMeta');if(!selectedPlayers.length){meta.textContent='';return}const allSkills=new Set();const perPlayer=selectedPlayers.map(p=>{const dmgTotals=selectedTarget?buildDamageBySkillForTargetInWindow(p,selectedTarget):buildDamageBySkillInWindow(p);const hitTotals=selectedTarget?buildHitsBySkillForTargetInWindow(p,selectedTarget):buildHitsBySkillInWindow(p);Object.keys(dmgTotals).forEach(k=>allSkills.add(k));return{player:p,dmgTotals,hitTotals}});const global={};perPlayer.forEach(({dmgTotals})=>{Object.entries(dmgTotals).forEach(([normalizedKey,d])=>{global[normalizedKey]=(global[normalizedKey]||0)+d})});const skillNames=Array.from(allSkills).sort((a,b)=>(global[b]||0)-(global[a]||0));const labels=skillNames.map(name=>{const totalHits=perPlayer.reduce((sum,pp)=>sum+(pp.hitTotals[name]||0),0);return`${getPreferredSkillName(name)} (${totalHits})`});const datasets=perPlayer.map(({player,dmgTotals})=>{const c=getColorForIndex(player.index);return{label:selectedTarget?`${player.playerName} (${selectedTarget})`:player.playerName,data:skillNames.map(name=>dmgTotals[name]||0),backgroundColor:c.barBg,borderColor:c.barBorder,borderWidth:1,borderRadius:6,borderSkipped:false}});meta.textContent=perPlayer.length===1?perPlayer[0].player.playerName:perPlayer.map(p=>p.player.playerName).join(' vs ');document.getElementById('chartContainer').style.height=Math.max(450,labels.length*40)+'px';skillChart=new Chart(ctx,{type:'bar',data:{labels,datasets},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,categoryPercentage:.9,barPercentage:.7,animation:false,plugins:{legend:{display:true},title:{display:false},tooltip:{callbacks:{title:ctx=>ctx[0].label.split(' (')[0],label:ctx=>{const v=ctx.parsed.x||0;const skillKey=skillNames[ctx.dataIndex];const playerBlock=perPlayer.find(pp=>pp.player.playerName===ctx.dataset.label.split(' (')[0]);const hits=playerBlock?.hitTotals?.[skillKey]||0;const avgHit=hits>0?Math.round(v/hits):0;return`${ctx.dataset.label}: ${v.toLocaleString('fr-FR')} dégâts (${hits} hits, ${avgHit.toLocaleString('fr-FR')} dmg/hit)`}}}},scales:{x:{ticks:{color:'#fff',maxTicksLimit:10},grid:{color:'rgba(255,255,255,.1)'}},y:{ticks:{color:'#fff'},grid:{color:'rgba(255,255,255,.1)'}}}}})}
+function drawDpsTimeline(){const ctx=document.getElementById('dpsTimeline').getContext('2d');if(dpsTimelineChart)dpsTimelineChart.destroy();const meta=document.getElementById('fightDurationMeta');if(!selectedPlayers.length){meta.textContent='';return}const maxD=Math.max(...selectedPlayers.map(p=>p.duration)),from=timeFilter.from??0,to=Math.min(timeFilter.to??maxD,maxD);meta.textContent=`${from}s - ${to}s (fight ${maxD}s)`;const labels=[];for(let s=from;s<=to;s++)labels.push(`${s}s`);const datasets=selectedPlayers.map(p=>{const byTarget=p.damageTimelineByTarget&&selectedTarget?p.damageTimelineByTarget[selectedTarget]:null,baseTimeline=byTarget||p.damageTimeline,c=getColorForIndex(p.index);return{label:selectedTarget?`${p.playerName} (${selectedTarget})`:p.playerName,data:labels.map((_,i)=>baseTimeline[from+i]||0),borderColor:c.line,backgroundColor:'transparent',pointRadius:0,borderWidth:1.5,tension:.2}});dpsTimelineChart=new Chart(ctx,{type:'line',data:{labels,datasets},options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{display:true},title:{display:false},tooltip:{callbacks:{label:ctx=>{const v=ctx.parsed.y||0;return`${ctx.dataset.label}: ${v.toLocaleString('fr-FR')} DPS`}}}},scales:{x:{ticks:{color:'#fff',maxTicksLimit:15},grid:{color:'rgba(255,255,255,.08)'}},y:{ticks:{color:'#fff'},grid:{color:'rgba(255,255,255,.08)'}}}}})}
+function drawAvgDpsTimeline(){const ctx=document.getElementById('avgDpsTimeline').getContext('2d');if(avgDpsTimelineChart)avgDpsTimelineChart.destroy();const meta=document.getElementById('avgFightDurationMeta');if(!selectedPlayers.length){meta.textContent='';return}const maxD=Math.max(...selectedPlayers.map(p=>p.duration)),from=timeFilter.from??0,to=Math.min(timeFilter.to??maxD,maxD);meta.textContent=`${from}s - ${to}s (fight ${maxD}s)`;const labels=[];for(let s=from;s<=to;s++)labels.push(`${s}s`);const datasets=selectedPlayers.map(p=>{const avg=buildAvgDpsTimelineWindow(p,from,to),c=getColorForIndex(p.index);return{label:selectedTarget?`${p.playerName} (${selectedTarget})`:p.playerName,data:labels.map((_,i)=>avg[from+i]||0),borderColor:c.line,backgroundColor:'transparent',pointRadius:0,borderWidth:1.8,tension:.15}});avgDpsTimelineChart=new Chart(ctx,{type:'line',data:{labels,datasets},options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{display:true},title:{display:true,text:'Average DPS Over Time (time‑windowed)'},tooltip:{callbacks:{label:ctx=>{const v=ctx.parsed.y||0;return`${ctx.dataset.label}: ${Math.round(v).toLocaleString('fr-FR')} DPS moyen`}}},zoom:{zoom:{wheel:{enabled:true},drag:{enabled:true},mode:'x'},pan:{enabled:true,mode:'x'}}},scales:{x:{ticks:{color:'#fff',maxTicksLimit:15},grid:{color:'rgba(255,255,255,.08)'}},y:{ticks:{color:'#fff'},grid:{color:'rgba(255,255,255,.08)'}}}},plugins:[{id:'bossBackgrounds',beforeDraw(chart){const{ctx,chartArea,scales:{x}}=chart;if(!globalBossPhases?.length)return;const cols=['rgba(80,40,120,.18)','rgba(160,120,40,.18)','rgba(20,80,120,.18)','rgba(80,120,40,.18)','rgba(192,64,96,.18)','rgba(64,160,160,.18)'];globalBossPhases.forEach((ph,i)=>{const s=Math.max(ph.startSec,from),e=Math.min(ph.endSec,to);if(e<=s)return;const xs=x.getPixelForValue(s-from),xe=x.getPixelForValue(e-from);ctx.save();ctx.fillStyle=cols[i%cols.length];ctx.fillRect(xs,chartArea.top,xe-xs,chartArea.bottom-chartArea.top);ctx.fillStyle='#fff';ctx.font='bold 9px Arial';ctx.textAlign='center';ctx.textBaseline='bottom';ctx.shadowColor='rgba(0,0,0,0.9)';ctx.shadowBlur=4;ctx.shadowOffsetX=1;ctx.shadowOffsetY=1;const centerX=(xs+xe)/2;const textY=chartArea.bottom-4;ctx.fillText(ph.name,centerX,textY);ctx.restore()})}}]})}
+function refreshCharts(){if(skillChart){skillChart.destroy();skillChart=null}if(dpsTimelineChart){dpsTimelineChart.destroy();dpsTimelineChart=null}if(avgDpsTimelineChart){avgDpsTimelineChart.destroy();avgDpsTimelineChart=null}drawComparisonChart();drawDpsTimeline();drawAvgDpsTimeline()}
+toggleTargetsBtn.onclick=()=>{const hidden=getComputedStyle(targetsWrapper).display==='none';if(hidden){renderTargetsTable();targetsWrapper.style.display='block';toggleTargetsBtn.textContent='Hide other targets'}else{targetsWrapper.style.display='none';toggleTargetsBtn.textContent='Show other targets'}};
+resetAvgZoomBtn.onclick=()=>{if(avgDpsTimelineChart)avgDpsTimelineChart.resetZoom()};
+playerBody.onclick=e=>{const rm=e.target.closest('.remove-player');if(rm){const idx=+rm.dataset.index;playersData=playersData.filter(p=>p.index!==idx);selectedPlayers=selectedPlayers.filter(p=>p.index!==idx);playersData.forEach((p,i)=>p.index=i);renderPlayerTable(playersData);highlightSelectedRows();refreshCharts();document.getElementById('sumPlayers').textContent=playersData.length;return}const row=e.target.closest('tr');if(!row)return;const idx=+row.dataset.index,p=playersData.find(pl=>pl.index===idx);if(!p)return;const exists=selectedPlayers.some(pl=>pl.index===p.index);selectedPlayers=exists?selectedPlayers.filter(pl=>pl.index!==p.index):[...selectedPlayers,p];renderPlayerTable(playersData);highlightSelectedRows();refreshCharts()};
+clearLogsBtn.onclick=()=>{playersData=[];selectedPlayers=[];selectedTarget=null;globalBossPhases=[];timeFilter={from:0,to:null};skillNormalizationMap.clear();if(timeSlider){timeSlider.noUiSlider.updateOptions({start:[0,0],range:{min:0,max:0}});timeRangeLabel.textContent='Time range: 0s - 0s'}playerBody.innerHTML='';targetsBody.innerHTML='';bossTimelineEl.innerHTML='';bossTimelineEl.style.display='none';targetsWrapper.style.display='none';toggleTargetsBtn.textContent='Show other targets';document.getElementById('sumTotalDamage').textContent='0';document.getElementById('sumAvgDps').textContent='0';document.getElementById('sumPlayers').textContent='0';document.getElementById('sumBossName').textContent='---';selectedDurationEl.textContent='🎯 0s selected';statusEl.textContent='Logs cleared.';if(skillChart){skillChart.destroy();skillChart=null}if(dpsTimelineChart){dpsTimelineChart.destroy();dpsTimelineChart=null}if(avgDpsTimelineChart){avgDpsTimelineChart.destroy();avgDpsTimelineChart=null}};
+function handleFiles(){skillNormalizationMap.clear();let files=[...fileInput.files];if(!files.length)return;files=files.filter(f=>f.size<20*1024*1024);if(!files.length){statusEl.textContent='Files are too large.';return}statusEl.textContent='Reading log files...';selectedTarget=null;targetsBody.innerHTML='';targetsWrapper.style.display='none';toggleTargetsBtn.textContent='Show other targets';if(skillChart)skillChart.destroy();if(dpsTimelineChart)dpsTimelineChart.destroy();if(avgDpsTimelineChart)avgDpsTimelineChart.destroy();const baseIndex=playersData.length;Promise.all(files.map((f,i)=>parseLogFile(f,baseIndex+i))).then(res=>{const newP=res.filter(Boolean);if(!newP.length){statusEl.textContent='No valid data found in the added logs.';return}playersData=playersData.concat(newP);playersData.sort((a,b)=>b.dps-a.dps);playersData.forEach((p,i)=>p.index=i);const boss=playersData[0].bossName&&playersData[0].bossName!=='Unknown'?playersData[0].bossName:'Unknown target';document.getElementById('sumBossName').textContent=boss;const total=playersData.reduce((s,p)=>s+p.totalDamage,0),avg=playersData.reduce((s,p)=>s+p.dps,0)/playersData.length;document.getElementById('sumTotalDamage').textContent=total.toLocaleString('fr-FR');document.getElementById('sumAvgDps').textContent=Math.round(avg).toLocaleString('fr-FR');document.getElementById('sumPlayers').textContent=playersData.length;renderPlayerTable(playersData);statusEl.textContent=`Logs loaded: ${playersData.length}`;if(playersData.length>0)selectedPlayers=[playersData[0]];highlightSelectedRows();globalBossPhases=playersData[0].bossPhases||[];renderBossTimeline();const maxD=Math.max(...playersData.map(p=>p.duration));initTimeSlider(maxD);refreshCharts()}).catch(err=>{statusEl.textContent='Error: '+err})}
 fileInput.addEventListener('change',handleFiles);
 </script>
 </body>
