@@ -264,7 +264,6 @@ const SKILL_ICON_URLS = {
   "Givre tranchant": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_SW2_GaiaCrash_SP.webp",
   "Entaille tournoyante": "https://i.postimg.cc/BXfzJcZY/Entaille-tournoyante.png",
   
-  
 
   
 
@@ -466,7 +465,7 @@ function drawSkillsTable() {
 
       const barLabel = document.createElement('div');
       barLabel.className = 'skill-bar-label';
-      barLabel.textContent = dmg.toLocaleString('fr-FR');
+      barLabel.textContent = dmg.toLocaleString('fr-FR') + ' (' + hits + ' hits)';
       barFill.appendChild(barLabel);
 
       barContainer.appendChild(barFill);
