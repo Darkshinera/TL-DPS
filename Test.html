@@ -60,16 +60,41 @@ td:nth-child(2){text-align:left}
 .panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;border-bottom:1px solid rgba(255,255,255,.05);padding-bottom:8px}
 .panel-title{font-size:12px;font-weight:600;color:#e5e7ff;letter-spacing:.14em;text-transform:uppercase}
 .panel-meta{font-size:11px;color:#9fa4ff;letter-spacing:.08em;text-transform:uppercase}
-.panel-body{height:420px}
+.panel-body{min-height:420px}
 #timelineContainer,#avgTimelineContainer{height:280px !important}
-#chartContainer{width:100%;height:100%}
-#dpsTimeline,#damageChart,#avgDpsTimeline{width:100%!important;height:100%!important;max-height:none!important;display:block}
+#dpsTimeline,#avgDpsTimeline{width:100%!important;height:100%!important;max-height:none!important;display:block}
 #avgControls{width:95%;max-width:1600px;margin-top:8px;text-align:right;font-size:12px;color:#a6aad0}
 p{font-size:13px;color:#c2c5dd}
 code{font-family:"JetBrains Mono","Fira Code",monospace}
 #targetsWrapper{display:none;width:95%;max-width:1600px;margin-top:10px;position:relative;z-index:auto}
 #targetsScroll{max-height:140px;overflow-y:auto;border-radius:12px}
 #targetsTable thead th{position:static}
+
+/* TABLEAU DES SKILLS */
+#skillsTableContainer{width:100%;overflow-x:auto}
+#skillsTable{width:100%;border-collapse:separate;border-spacing:0;table-layout:fixed}
+#skillsTable thead th{background:rgba(20,22,38,.95);color:#c9cffb;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:8px 12px;text-align:left;border-bottom:2px solid rgba(120,120,200,.3)}
+#skillsTable thead th:first-child{width:200px}
+#skillsTable thead th:nth-child(2){width:50px;text-align:center}
+#skillsTable thead th:nth-child(3){width:auto;min-width:500px}
+#skillsTable tbody tr{height:42px}
+#skillsTable tbody tr:nth-child(even){background:rgba(15,16,32,.5)}
+#skillsTable tbody tr:nth-child(odd){background:rgba(11,12,26,.5)}
+#skillsTable tbody tr:hover{background:rgba(79,141,255,.04)}
+#skillsTable tbody td{padding:4px 8px;vertical-align:middle;border-bottom:1px solid rgba(255,255,255,.03)}
+.skill-name-cell{text-align:right;padding-right:12px;color:#e0e4ff;font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.skill-icon-cell{text-align:center;padding:4px}
+.skill-icon-box{width:32px;height:32px;margin:0 auto;border-radius:6px;border:1px solid rgba(120,120,200,.4);background:rgba(15,18,35,.8);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.skill-icon-box img{width:100%;height:100%;object-fit:cover}
+.skill-icon-placeholder{color:#666;font-size:10px;font-weight:bold}
+.skill-bars-cell{position:relative;padding:6px 12px}
+.skill-bars-wrapper{display:flex;flex-direction:column;gap:3px;width:100%}
+.skill-bar-row{display:flex;align-items:center;height:28px;gap:8px}
+.skill-bar-container{flex:1;position:relative;height:100%;background:rgba(15,18,35,.6);border-radius:6px;overflow:hidden;border:1px solid rgba(255,255,255,.05)}
+.skill-bar-fill{height:100%;border-radius:5px;transition:width .3s ease;position:relative;min-width:2px}
+.skill-bar-label{position:absolute;left:8px;top:50%;transform:translateY(-50%);font-size:11px;font-weight:600;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.8);white-space:nowrap;z-index:1;pointer-events:none}
+.player-name-label{min-width:100px;text-align:right;font-size:11px;color:#b0b5ff;font-weight:500}
+
 @media (min-width:1800px){body{padding-top:32px}}
 @media (max-width:900px){.summary{flex-direction:column}}
 </style>
@@ -118,7 +143,21 @@ code{font-family:"JetBrains Mono","Fira Code",monospace}
 </div>
 <div class="panel">
   <div class="panel-header"><span class="panel-title">Damage By Skill</span><span class="panel-meta" id="playersMeta"></span></div>
-  <div class="panel-body" id="chartContainer"><canvas id="damageChart"></canvas></div>
+  <div class="panel-body">
+    <div id="skillsTableContainer">
+      <table id="skillsTable">
+        <thead>
+          <tr>
+            <th>Skill</th>
+            <th></th>
+            <th>Damage Comparison</th>
+          </tr>
+        </thead>
+        <tbody id="skillsTableBody">
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 <div class="panel">
   <div class="panel-header"><span class="panel-title">DPS Timeline (Per Second)</span><span class="panel-meta" id="fightDurationMeta"></span></div>
@@ -130,45 +169,76 @@ code{font-family:"JetBrains Mono","Fira Code",monospace}
 </div>
 <div id="avgControls">(Click and drag to zoom) <button id="resetAvgZoomBtn">Reset zoom</button></div>
 <script>
-// ============================================================================
-// 🎨 BASE DE DONNÉES DES ICÔNES DE SKILLS
-// ============================================================================
-// Remplis ce dictionnaire avec tes propres URLs
-// Format: "Nom du skill dans les logs": "URL_de_l_icône.webp"
-const SKILL_ICON_URLS = {
-  // EXEMPLE (À REMPLIR) :
-  "Déluge infernal": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_ST_S_Meteor_SP.webp",
-  // "Bombardement concentré": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_ST_S_Meteor_Focus.webp",
-  // "Barrage de boules de feu": "https://cdn.questlog.gg/.../S_WP_ST_S_FireBall_Multi.webp",
-  // ... Ajoute tous tes skills ici
-};
-
-// Cache des images préchargées
-const skillIconImages = {};
-
-// Fonction pour précharger une icône
-function preloadSkillIcon(skillName, url) {
-  if (!url || skillIconImages[skillName]) return;
-  const img = new Image();
-  img.src = url;
-  img.onload = () => {
-    skillIconImages[skillName] = img;
-  };
-  img.onerror = () => {
-    console.warn(`Failed to load icon for: ${skillName}`);
-  };
-}
-
-// Précharger toutes les icônes au démarrage
-Object.entries(SKILL_ICON_URLS).forEach(([name, url]) => preloadSkillIcon(name, url));
-
-// ============================================================================
-// 🎮 CODE PRINCIPAL
-// ============================================================================
-const fileInput=document.getElementById('logFile'),dropZone=document.getElementById('dropZone'),statusEl=document.getElementById('status'),playerBody=document.getElementById('playerBody'),targetsTable=document.getElementById('targetsTable'),targetsBody=document.getElementById('targetsBody'),targetsWrapper=document.getElementById('targetsWrapper'),toggleTargetsBtn=document.getElementById('toggleTargetsBtn'),resetAvgZoomBtn=document.getElementById('resetAvgZoomBtn'),logPathEl=document.getElementById('logPath'),copyMsgEl=document.getElementById('copyMsg'),clearLogsBtn=document.getElementById('clearLogsBtn'),timeRangeLabel=document.getElementById('timeRangeLabel'),selectedDurationEl=document.getElementById('selectedDuration'),bossTimelineEl=document.getElementById('bossTimeline'),timeRangeSliderEl=document.getElementById('timeRangeSlider');
-let skillChart,dpsTimelineChart,avgDpsTimelineChart,playersData=[],selectedPlayers=[],selectedTarget=null,globalBossPhases=[],timeSlider=null,timeFilter={from:0,to:null};
+const fileInput=document.getElementById('logFile'),dropZone=document.getElementById('dropZone'),statusEl=document.getElementById('status'),playerBody=document.getElementById('playerBody'),targetsTable=document.getElementById('targetsTable'),targetsBody=document.getElementById('targetsBody'),targetsWrapper=document.getElementById('targetsWrapper'),toggleTargetsBtn=document.getElementById('toggleTargetsBtn'),resetAvgZoomBtn=document.getElementById('resetAvgZoomBtn'),logPathEl=document.getElementById('logPath'),copyMsgEl=document.getElementById('copyMsg'),clearLogsBtn=document.getElementById('clearLogsBtn'),timeRangeLabel=document.getElementById('timeRangeLabel'),selectedDurationEl=document.getElementById('selectedDuration'),bossTimelineEl=document.getElementById('bossTimeline'),timeRangeSliderEl=document.getElementById('timeRangeSlider'),skillsTableBody=document.getElementById('skillsTableBody');
+let dpsTimelineChart,avgDpsTimelineChart,playersData=[],selectedPlayers=[],selectedTarget=null,globalBossPhases=[],timeSlider=null,timeFilter={from:0,to:null};
 const BAR_COLORS=['rgba(88,101,242,.8)','rgba(46,204,113,.8)','rgba(231,76,60,.8)','rgba(241,196,15,.8)','rgba(155,89,182,.8)','rgba(26,188,156,.8)','rgba(230,126,34,.8)','rgba(149,165,166,.8)'],BAR_BORDER_COLORS=['rgba(88,101,242,1)','rgba(46,204,113,1)','rgba(231,76,60,1)','rgba(241,196,15,1)','rgba(155,89,182,1)','rgba(26,188,156,1)','rgba(230,126,34,1)','rgba(149,165,166,1)'],LINE_COLORS=['rgba(255,99,132,1)','rgba(54,162,235,1)','rgba(75,192,192,1)','rgba(255,206,86,1)','rgba(153,102,255,1)','rgba(255,159,64,1)','rgba(46,204,113,1)','rgba(231,76,60,1)','rgba(52,152,219,1)','rgba(241,196,15,1)'];
 const BOSS_COLORS=['#8040C0','#A07828','#1450A0','#50A028','#C04060','#40A0A0','#C09040','#6040C0'];
+
+const SKILL_ICON_URLS = {
+  "Agile Shot": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_BO_DefenceAction_AA.webp",
+  "Appel astral": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_ORB_Active_OrbSummon.webp",
+  "Barrage de boules de feu": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_ST_FireCombo.webp",
+  "Barrière": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_ORB_DefenseActionSkill.webp",
+  "Barrière de riposte": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_SH_BuffAttack_AA.webp",
+  "Bombardement concentré": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_ST_WideAreaAttack_SP.webp",
+  "Bombe dimensionnelle": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_ORB_BasicAttack.webp",
+  "Bouclier mystique": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_ST_defenceAction_AA.webp",
+  "Boule de mana": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_ST_BasicAttack.webp",
+  "Brume karmique": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_WA_GR_CurseSpread.webp",
+  "Cercle magique corrompu": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_WA_CurseArea_AA.webp",
+  "Chaotic Shield": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_WA_DefenceAction.webp",
+  "Combat acharné": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_SW2_MainAttack_AA.webp",
+  "Copier le satellite": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_ORB_Active_Satellite.webp",
+  "Corrupting Hit": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/WeaponSpecialization/M_WP_WA_RARE_SUB.webp",
+  "Coup corrupteur": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/WeaponSpecialization/M_WP_WA_RARE_SUB.webp",
+  "Coup de bouclier": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_SW_SH_S_DebuffAttack_AA.webp",
+  "Coup étourdissant": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_KN_SR_ShockStun_AA.webp",
+  "Crochet à chaîne": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_SW_MoveSkill_AA.webp",
+  "Déluge infernal": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_ST_S_Meteor_SP.webp",
+  "Effleurement du désespoir": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_WA_Corruption_AA.webp",
+  "Effondrement de supernova": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_ORB_Active_GravityCollapse.webp",
+  "Encoche de zéphyr": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_BO_StrongShot_AA.webp",
+  "Entaille": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_SW_BasicAttack.webp",
+  "Entaille du néant": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_ORB_Active_OrbitSlash.webp",
+  "Faille": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_ORB_Passive_ExpandRift.webp",
+  "Faim de Tevent enragé": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_SI_Weapon_92.webp",
+  "Fleur filante": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/WeaponSpecialization/M_ALL_SKILL_4.webp",
+  "Flèche piégeante": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_BO_BindShot_AA.webp",
+  "Frappe de représailles": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_SP_ComboBuff.webp",
+  "Inferno Wave": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_ST_WideAreaDebuffAttack_AA.webp",
+  "Invocation de satellite": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_ORB_Active_Satellite.webp",
+  "Lance de la destruction": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/WeaponSpecialization/M_ALL_SKILL_12.webp",
+  "Lancer de bouclier": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_SW_SH_S_ShieldThrow.webp",
+  "Malédiction explosive": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_WA_GR_CurseBurst_AA.webp",
+  "Marque de détonation": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_CR_ArmorBreakShot_SP.webp",
+  "Moisson d'âmes du faucheur d'argent": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Icon/Item_128/Misc/Perk_crossbow_aa_t3_normal_002.webp",
+  "Nuances de souffrance": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_SW_TauntBuff_Attack_AA.webp",
+  "Pluie de lances de glace": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_ST_IceSpear_SP.webp",
+  "Riposte sagace": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_SW_SH_S_ManaAttack.webp",
+  "Ruée précise": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_KN_SR_DashAttack_AA.webp",
+  "Ruée stellaire": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_ORB_Active_Laser.webp",
+  "Ruée stratégique": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_SW_SH_DashAttack_AA.webp",
+  "Récri de mère Nature": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_CR_AddProjectile.webp",
+  "Strafing": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_BO_MultiShot_AA.webp",
+  "Tir de base": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_BO_BasicShot.webp",
+  "Tir de point faible": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_CR_WeakPointShot.webp",
+  "Toucher putréfiant": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_WA_CurseArea_SP.webp",
+  "Venin corrupteur de la reine Bellandir enragée": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_SI_Weapon_89.webp",
+  "Vitesse de la lumière": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/WeaponSpecialization/M_ALL_SKILL_3.webp",
+  "Voie lactée": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_ORB_Active_OrbShoot_SP_1.webp",
+  "Volonté brisée": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_SW2_DefenseDebuffAttack.webp",
+  "Écho stellaire": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_ORB_Passive_SubProjectile.webp",
+  "Éclair du jugement": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_ST_PowerAttack.webp",
+  "Éclairs en chaîne": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_ST_MainAttack_AA.webp",
+  "Éclatement abyssal": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/WeaponSpecialization/M_WP_WA_HERO_ATK.webp",
+  "Éruption de mana": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/Skill/Active/S_WP_ST_AddProjectile_AA.webp",
+};
+
+function getSkillIcon(skillName) {
+  const url = SKILL_ICON_URLS[skillName];
+  return url && url !== '' ? url : '';
+}
+
 const getColorForIndex=i=>({rowBg:BAR_COLORS[i%BAR_COLORS.length],text:'#fff',barBg:BAR_COLORS[i%BAR_COLORS.length],barBorder:BAR_BORDER_COLORS[i%BAR_BORDER_COLORS.length],line:LINE_COLORS[i%LINE_COLORS.length]});
 const skillNormalizationMap=new Map();
 function normalizeSkill(skillId,skillName){if(skillNormalizationMap.has(skillId))return skillNormalizationMap.get(skillId);for(const[key,normalizedKey]of skillNormalizationMap.entries())if(key===skillName||normalizedKey===skillName){skillNormalizationMap.set(skillId,normalizedKey);return normalizedKey}const normalizedKey=skillName;skillNormalizationMap.set(skillId,normalizedKey);skillNormalizationMap.set(skillName,normalizedKey);return normalizedKey}
@@ -196,15 +266,128 @@ function buildHitsBySkillForTargetInWindow(p,target){const base=p.hitsBySkillTim
 function renderPlayerTable(players){playerBody.innerHTML='';const rows=players.map(p=>{const stats=buildPlayerStatsInWindow(p);return{player:p,stats}});const totalDamageAll=rows.reduce((s,r)=>s+r.stats.totalDamage,0);rows.forEach((row,i)=>{const p=row.player,s=row.stats,tr=document.createElement('tr');tr.dataset.index=p.index;const c=getColorForIndex(p.index),percent=totalDamageAll>0?s.totalDamage/totalDamageAll*100:0;tr.innerHTML=`<td>${i+1}</td><td style="color:${c.text};">${p.playerName}</td><td>${s.dps.toLocaleString('fr-FR')}</td><td>${s.totalDamage.toLocaleString('fr-FR')}</td><td>${percent.toFixed(2)}%</td><td>${s.hitCount.toLocaleString('fr-FR')}</td><td>${s.avgHit?s.avgHit.toLocaleString('fr-FR'):'-'}</td><td>${s.maxHit.toLocaleString('fr-FR')}</td><td>${s.duration}s</td><td style="width:40px;"><span class="remove-player" data-index="${p.index}" title="Retirer ce joueur des logs">✕</span></td>`;if(selectedPlayers.some(sp=>sp.index===p.index)){tr.classList.add('player-selected');tr.style.backgroundColor=c.rowBg}playerBody.appendChild(tr)});const totalFiltered=rows.reduce((s,r)=>s+r.stats.totalDamage,0),avgDpsFiltered=rows.length?rows.reduce((s,r)=>s+r.stats.dps,0)/rows.length:0;document.getElementById('sumTotalDamage').textContent=totalFiltered.toLocaleString('fr-FR');document.getElementById('sumAvgDps').textContent=Math.round(avgDpsFiltered).toLocaleString('fr-FR')}
 function highlightSelectedRows(){playerBody.querySelectorAll('tr').forEach(r=>{const idx=+r.dataset.index,p=playersData.find(pl=>pl.index===idx),sel=selectedPlayers.some(sp=>sp.index===idx);r.classList.toggle('player-selected',sel);r.style.backgroundColor='';if(sel&&p){const c=getColorForIndex(p.index);r.style.backgroundColor=c.rowBg}})}
 function renderTargetsTable(){targetsBody.innerHTML='';const totals={};playersData.forEach(p=>{if(!p.damageByTarget)return;Object.entries(p.damageByTarget).forEach(([t,info])=>{if(!totals[t])totals[t]={totalDamage:0,hits:0};totals[t].totalDamage+=info.totalDamage;totals[t].hits+=info.hits})});Object.entries(totals).sort((a,b)=>b[1].totalDamage-a[1].totalDamage).forEach(([t,info])=>{const tr=document.createElement('tr');tr.style.cssText='cursor:pointer;transition:background .2s;';tr.innerHTML=`<td style="color:#4fd1ff;">${t}</td><td>${info.totalDamage.toLocaleString('fr-FR')}</td><td>${info.hits.toLocaleString('fr-FR')}</td>`;tr.onclick=()=>{selectedTarget=t;document.getElementById('sumBossName').textContent=t;renderPlayerTable(playersData);highlightSelectedRows();refreshCharts()};targetsBody.appendChild(tr)})}
-function drawComparisonChart(){const ctx=document.getElementById('damageChart').getContext('2d');if(skillChart)skillChart.destroy();const meta=document.getElementById('playersMeta');if(!selectedPlayers.length){meta.textContent='';return}const allSkills=new Set();const perPlayer=selectedPlayers.map(p=>{const dmgTotals=selectedTarget?buildDamageBySkillForTargetInWindow(p,selectedTarget):buildDamageBySkillInWindow(p);const hitTotals=selectedTarget?buildHitsBySkillForTargetInWindow(p,selectedTarget):buildHitsBySkillInWindow(p);Object.keys(dmgTotals).forEach(k=>allSkills.add(k));return{player:p,dmgTotals,hitTotals}});const global={};perPlayer.forEach(({dmgTotals})=>{Object.entries(dmgTotals).forEach(([normalizedKey,d])=>{global[normalizedKey]=(global[normalizedKey]||0)+d})});const skillNames=Array.from(allSkills).sort((a,b)=>(global[b]||0)-(global[a]||0));const labels=skillNames.map(name=>{const totalHits=perPlayer.reduce((sum,pp)=>sum+(pp.hitTotals[name]||0),0);const skillName=getPreferredSkillName(name);return`${skillName} (${totalHits})`});const datasets=perPlayer.map(({player,dmgTotals})=>{const c=getColorForIndex(player.index);return{label:selectedTarget?`${player.playerName} (${selectedTarget})`:player.playerName,data:skillNames.map(name=>dmgTotals[name]||0),backgroundColor:c.barBg,borderColor:c.barBorder,borderWidth:1,borderRadius:6,borderSkipped:false}});meta.textContent=perPlayer.length===1?perPlayer[0].player.playerName:perPlayer.map(p=>p.player.playerName).join(' vs ');document.getElementById('chartContainer').style.height=Math.max(450,labels.length*45)+'px';skillChart=new Chart(ctx,{type:'bar',data:{labels,datasets},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,categoryPercentage:.9,barPercentage:.7,animation:false,plugins:{legend:{display:true},title:{display:false},tooltip:{callbacks:{title:ctx=>ctx[0].label.split(' (')[0],label:ctx=>{const v=ctx.parsed.x||0;const skillKey=skillNames[ctx.dataIndex];const playerBlock=perPlayer.find(pp=>pp.player.playerName===ctx.dataset.label.split(' (')[0]);const hits=playerBlock?.hitTotals?.[skillKey]||0;const avgHit=hits>0?Math.round(v/hits):0;return`${ctx.dataset.label}: ${v.toLocaleString('fr-FR')} dégâts (${hits} hits, ${avgHit.toLocaleString('fr-FR')} dmg/hit)`}}}},scales:{x:{ticks:{color:'#fff',maxTicksLimit:10},grid:{color:'rgba(255,255,255,.1)'}},y:{ticks:{color:'#fff',font:{size:11},padding:40},grid:{color:'rgba(255,255,255,.1)'}}}},plugins:[{id:'skillIcons',afterDatasetsDraw(chart){const{ctx,scales:{y}}=chart;skillNames.forEach((name,idx)=>{const skillName=getPreferredSkillName(name);const img=skillIconImages[skillName];if(!img)return;const yPos=y.getPixelForValue(idx);const iconSize=28;const xPos=y.left-iconSize-8;ctx.save();ctx.drawImage(img,xPos,yPos-iconSize/2,iconSize,iconSize);ctx.restore()})}}]})}
+
+function drawSkillsTable() {
+  skillsTableBody.innerHTML = '';
+  const meta = document.getElementById('playersMeta');
+
+  if (!selectedPlayers.length) {
+    meta.textContent = '';
+    return;
+  }
+
+  const allSkills = new Set();
+  const perPlayer = selectedPlayers.map(p => {
+    const dmgTotals = selectedTarget ? buildDamageBySkillForTargetInWindow(p, selectedTarget) : buildDamageBySkillInWindow(p);
+    const hitTotals = selectedTarget ? buildHitsBySkillForTargetInWindow(p, selectedTarget) : buildHitsBySkillInWindow(p);
+    Object.keys(dmgTotals).forEach(k => allSkills.add(k));
+    return { player: p, dmgTotals, hitTotals };
+  });
+
+  const global = {};
+  perPlayer.forEach(({ dmgTotals }) => {
+    Object.entries(dmgTotals).forEach(([normalizedKey, d]) => {
+      global[normalizedKey] = (global[normalizedKey] || 0) + d;
+    });
+  });
+
+  const skillNames = Array.from(allSkills).sort((a, b) => (global[b] || 0) - (global[a] || 0));
+  const maxDamage = Math.max(...Object.values(global));
+
+  skillNames.forEach(normalizedKey => {
+    const preferredName = getPreferredSkillName(normalizedKey);
+    const iconUrl = getSkillIcon(preferredName);
+
+    const tr = document.createElement('tr');
+
+    const tdName = document.createElement('td');
+    tdName.className = 'skill-name-cell';
+    tdName.textContent = preferredName;
+    tdName.title = preferredName;
+    tr.appendChild(tdName);
+
+    const tdIcon = document.createElement('td');
+    tdIcon.className = 'skill-icon-cell';
+    const iconBox = document.createElement('div');
+    iconBox.className = 'skill-icon-box';
+    if (iconUrl) {
+      const img = document.createElement('img');
+      img.src = iconUrl;
+      img.alt = preferredName;
+      img.onerror = function() {
+        this.style.display = 'none';
+        this.parentNode.innerHTML = '<span class="skill-icon-placeholder">?</span>';
+      };
+      iconBox.appendChild(img);
+    } else {
+      iconBox.innerHTML = '<span class="skill-icon-placeholder">?</span>';
+    }
+    tdIcon.appendChild(iconBox);
+    tr.appendChild(tdIcon);
+
+    const tdBars = document.createElement('td');
+    tdBars.className = 'skill-bars-cell';
+    const barsWrapper = document.createElement('div');
+    barsWrapper.className = 'skill-bars-wrapper';
+
+    // NE CRÉER UNE LIGNE QUE SI LE JOUEUR A DES DÉGÂTS > 0
+    perPlayer.forEach(({ player, dmgTotals, hitTotals }) => {
+      const dmg = dmgTotals[normalizedKey] || 0;
+
+      // FILTRE : Ne pas créer de ligne si dmg = 0
+      if (dmg === 0) return;
+
+      const c = getColorForIndex(player.index);
+
+      const barRow = document.createElement('div');
+      barRow.className = 'skill-bar-row';
+
+      const playerLabel = document.createElement('div');
+      playerLabel.className = 'player-name-label';
+      playerLabel.textContent = player.playerName;
+      playerLabel.style.color = c.text;
+      barRow.appendChild(playerLabel);
+
+      const barContainer = document.createElement('div');
+      barContainer.className = 'skill-bar-container';
+
+      const barFill = document.createElement('div');
+      barFill.className = 'skill-bar-fill';
+      barFill.style.width = (dmg / maxDamage * 100) + '%';
+      barFill.style.background = c.barBg;
+      barFill.style.borderLeft = `2px solid ${c.barBorder}`;
+
+      const hits = hitTotals[normalizedKey] || 0;
+      const avgHit = hits > 0 ? Math.round(dmg / hits) : 0;
+      barFill.title = `${dmg.toLocaleString('fr-FR')} (${hits} hits, ${avgHit.toLocaleString('fr-FR')} avg)`;
+
+      const barLabel = document.createElement('div');
+      barLabel.className = 'skill-bar-label';
+      barLabel.textContent = dmg.toLocaleString('fr-FR');
+      barFill.appendChild(barLabel);
+
+      barContainer.appendChild(barFill);
+      barRow.appendChild(barContainer);
+      barsWrapper.appendChild(barRow);
+    });
+
+    tdBars.appendChild(barsWrapper);
+    tr.appendChild(tdBars);
+
+    skillsTableBody.appendChild(tr);
+  });
+
+  meta.textContent = perPlayer.length === 1 ? perPlayer[0].player.playerName : perPlayer.map(p => p.player.playerName).join(' vs ');
+}
+
 function drawDpsTimeline(){const ctx=document.getElementById('dpsTimeline').getContext('2d');if(dpsTimelineChart)dpsTimelineChart.destroy();const meta=document.getElementById('fightDurationMeta');if(!selectedPlayers.length){meta.textContent='';return}const maxD=Math.max(...selectedPlayers.map(p=>p.duration)),from=timeFilter.from??0,to=Math.min(timeFilter.to??maxD,maxD);meta.textContent=`${from}s - ${to}s (fight ${maxD}s)`;const labels=[];for(let s=from;s<=to;s++)labels.push(`${s}s`);const datasets=selectedPlayers.map(p=>{const byTarget=p.damageTimelineByTarget&&selectedTarget?p.damageTimelineByTarget[selectedTarget]:null,baseTimeline=byTarget||p.damageTimeline,c=getColorForIndex(p.index);return{label:selectedTarget?`${p.playerName} (${selectedTarget})`:p.playerName,data:labels.map((_,i)=>baseTimeline[from+i]||0),borderColor:c.line,backgroundColor:'transparent',pointRadius:0,borderWidth:1.5,tension:.2}});dpsTimelineChart=new Chart(ctx,{type:'line',data:{labels,datasets},options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{display:true},title:{display:false},tooltip:{callbacks:{label:ctx=>{const v=ctx.parsed.y||0;return`${ctx.dataset.label}: ${v.toLocaleString('fr-FR')} DPS`}}}},scales:{x:{ticks:{color:'#fff',maxTicksLimit:15},grid:{color:'rgba(255,255,255,.08)'}},y:{ticks:{color:'#fff'},grid:{color:'rgba(255,255,255,.08)'}}}}})}
 function drawAvgDpsTimeline(){const ctx=document.getElementById('avgDpsTimeline').getContext('2d');if(avgDpsTimelineChart)avgDpsTimelineChart.destroy();const meta=document.getElementById('avgFightDurationMeta');if(!selectedPlayers.length){meta.textContent='';return}const maxD=Math.max(...selectedPlayers.map(p=>p.duration)),from=timeFilter.from??0,to=Math.min(timeFilter.to??maxD,maxD);meta.textContent=`${from}s - ${to}s (fight ${maxD}s)`;const labels=[];for(let s=from;s<=to;s++)labels.push(`${s}s`);const datasets=selectedPlayers.map(p=>{const avg=buildAvgDpsTimelineWindow(p,from,to),c=getColorForIndex(p.index);return{label:selectedTarget?`${p.playerName} (${selectedTarget})`:p.playerName,data:labels.map((_,i)=>avg[from+i]||0),borderColor:c.line,backgroundColor:'transparent',pointRadius:0,borderWidth:1.8,tension:.15}});avgDpsTimelineChart=new Chart(ctx,{type:'line',data:{labels,datasets},options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{display:true},title:{display:true,text:'Average DPS Over Time (time‑windowed)'},tooltip:{callbacks:{label:ctx=>{const v=ctx.parsed.y||0;return`${ctx.dataset.label}: ${Math.round(v).toLocaleString('fr-FR')} DPS moyen`}}},zoom:{zoom:{wheel:{enabled:true},drag:{enabled:true},mode:'x'},pan:{enabled:true,mode:'x'}}},scales:{x:{ticks:{color:'#fff',maxTicksLimit:15},grid:{color:'rgba(255,255,255,.08)'}},y:{ticks:{color:'#fff'},grid:{color:'rgba(255,255,255,.08)'}}}},plugins:[{id:'bossBackgrounds',beforeDraw(chart){const{ctx,chartArea,scales:{x}}=chart;if(!globalBossPhases?.length)return;const cols=['rgba(80,40,120,.18)','rgba(160,120,40,.18)','rgba(20,80,120,.18)','rgba(80,120,40,.18)','rgba(192,64,96,.18)','rgba(64,160,160,.18)'];globalBossPhases.forEach((ph,i)=>{const s=Math.max(ph.startSec,from),e=Math.min(ph.endSec,to);if(e<=s)return;const xs=x.getPixelForValue(s-from),xe=x.getPixelForValue(e-from);ctx.save();ctx.fillStyle=cols[i%cols.length];ctx.fillRect(xs,chartArea.top,xe-xs,chartArea.bottom-chartArea.top);ctx.fillStyle='#fff';ctx.font='bold 9px Arial';ctx.textAlign='center';ctx.textBaseline='bottom';ctx.shadowColor='rgba(0,0,0,0.9)';ctx.shadowBlur=4;ctx.shadowOffsetX=1;ctx.shadowOffsetY=1;const centerX=(xs+xe)/2;const textY=chartArea.bottom-4;ctx.fillText(ph.name,centerX,textY);ctx.restore()})}}]})}
-function refreshCharts(){if(skillChart){skillChart.destroy();skillChart=null}if(dpsTimelineChart){dpsTimelineChart.destroy();dpsTimelineChart=null}if(avgDpsTimelineChart){avgDpsTimelineChart.destroy();avgDpsTimelineChart=null}drawComparisonChart();drawDpsTimeline();drawAvgDpsTimeline()}
+function refreshCharts(){drawSkillsTable();drawDpsTimeline();drawAvgDpsTimeline()}
 toggleTargetsBtn.onclick=()=>{const hidden=getComputedStyle(targetsWrapper).display==='none';if(hidden){renderTargetsTable();targetsWrapper.style.display='block';toggleTargetsBtn.textContent='Hide other targets'}else{targetsWrapper.style.display='none';toggleTargetsBtn.textContent='Show other targets'}};
 resetAvgZoomBtn.onclick=()=>{if(avgDpsTimelineChart)avgDpsTimelineChart.resetZoom()};
 playerBody.onclick=e=>{const rm=e.target.closest('.remove-player');if(rm){const idx=+rm.dataset.index;playersData=playersData.filter(p=>p.index!==idx);selectedPlayers=selectedPlayers.filter(p=>p.index!==idx);playersData.forEach((p,i)=>p.index=i);renderPlayerTable(playersData);highlightSelectedRows();refreshCharts();document.getElementById('sumPlayers').textContent=playersData.length;return}const row=e.target.closest('tr');if(!row)return;const idx=+row.dataset.index,p=playersData.find(pl=>pl.index===idx);if(!p)return;const exists=selectedPlayers.some(pl=>pl.index===p.index);selectedPlayers=exists?selectedPlayers.filter(pl=>pl.index!==p.index):[...selectedPlayers,p];renderPlayerTable(playersData);highlightSelectedRows();refreshCharts()};
-clearLogsBtn.onclick=()=>{playersData=[];selectedPlayers=[];selectedTarget=null;globalBossPhases=[];timeFilter={from:0,to:null};skillNormalizationMap.clear();if(timeSlider){timeSlider.noUiSlider.updateOptions({start:[0,0],range:{min:0,max:0}});timeRangeLabel.textContent='Time range: 0s - 0s'}playerBody.innerHTML='';targetsBody.innerHTML='';bossTimelineEl.innerHTML='';bossTimelineEl.style.display='none';targetsWrapper.style.display='none';toggleTargetsBtn.textContent='Show other targets';document.getElementById('sumTotalDamage').textContent='0';document.getElementById('sumAvgDps').textContent='0';document.getElementById('sumPlayers').textContent='0';document.getElementById('sumBossName').textContent='---';selectedDurationEl.textContent='🎯 0s selected';statusEl.textContent='Logs cleared.';if(skillChart){skillChart.destroy();skillChart=null}if(dpsTimelineChart){dpsTimelineChart.destroy();dpsTimelineChart=null}if(avgDpsTimelineChart){avgDpsTimelineChart.destroy();avgDpsTimelineChart=null}};
-function handleFiles(){skillNormalizationMap.clear();let files=[...fileInput.files];if(!files.length)return;files=files.filter(f=>f.size<20*1024*1024);if(!files.length){statusEl.textContent='Files are too large.';return}statusEl.textContent='Reading log files...';selectedTarget=null;targetsBody.innerHTML='';targetsWrapper.style.display='none';toggleTargetsBtn.textContent='Show other targets';if(skillChart)skillChart.destroy();if(dpsTimelineChart)dpsTimelineChart.destroy();if(avgDpsTimelineChart)avgDpsTimelineChart.destroy();const baseIndex=playersData.length;Promise.all(files.map((f,i)=>parseLogFile(f,baseIndex+i))).then(res=>{const newP=res.filter(Boolean);if(!newP.length){statusEl.textContent='No valid data found in the added logs.';return}playersData=playersData.concat(newP);playersData.sort((a,b)=>b.dps-a.dps);playersData.forEach((p,i)=>p.index=i);const boss=playersData[0].bossName&&playersData[0].bossName!=='Unknown'?playersData[0].bossName:'Unknown target';document.getElementById('sumBossName').textContent=boss;const total=playersData.reduce((s,p)=>s+p.totalDamage,0),avg=playersData.reduce((s,p)=>s+p.dps,0)/playersData.length;document.getElementById('sumTotalDamage').textContent=total.toLocaleString('fr-FR');document.getElementById('sumAvgDps').textContent=Math.round(avg).toLocaleString('fr-FR');document.getElementById('sumPlayers').textContent=playersData.length;renderPlayerTable(playersData);statusEl.textContent=`Logs loaded: ${playersData.length}`;if(playersData.length>0)selectedPlayers=[playersData[0]];highlightSelectedRows();globalBossPhases=playersData[0].bossPhases||[];renderBossTimeline();const maxD=Math.max(...playersData.map(p=>p.duration));initTimeSlider(maxD);refreshCharts()}).catch(err=>{statusEl.textContent='Error: '+err})}
+clearLogsBtn.onclick=()=>{playersData=[];selectedPlayers=[];selectedTarget=null;globalBossPhases=[];timeFilter={from:0,to:null};skillNormalizationMap.clear();if(timeSlider){timeSlider.noUiSlider.updateOptions({start:[0,0],range:{min:0,max:0}});timeRangeLabel.textContent='Time range: 0s - 0s'}playerBody.innerHTML='';targetsBody.innerHTML='';skillsTableBody.innerHTML='';bossTimelineEl.innerHTML='';bossTimelineEl.style.display='none';targetsWrapper.style.display='none';toggleTargetsBtn.textContent='Show other targets';document.getElementById('sumTotalDamage').textContent='0';document.getElementById('sumAvgDps').textContent='0';document.getElementById('sumPlayers').textContent='0';document.getElementById('sumBossName').textContent='---';selectedDurationEl.textContent='🎯 0s selected';statusEl.textContent='Logs cleared.';if(dpsTimelineChart){dpsTimelineChart.destroy();dpsTimelineChart=null}if(avgDpsTimelineChart){avgDpsTimelineChart.destroy();avgDpsTimelineChart=null}};
+function handleFiles(){skillNormalizationMap.clear();let files=[...fileInput.files];if(!files.length)return;files=files.filter(f=>f.size<20*1024*1024);if(!files.length){statusEl.textContent='Files are too large.';return}statusEl.textContent='Reading log files...';selectedTarget=null;targetsBody.innerHTML='';targetsWrapper.style.display='none';toggleTargetsBtn.textContent='Show other targets';if(dpsTimelineChart)dpsTimelineChart.destroy();if(avgDpsTimelineChart)avgDpsTimelineChart.destroy();const baseIndex=playersData.length;Promise.all(files.map((f,i)=>parseLogFile(f,baseIndex+i))).then(res=>{const newP=res.filter(Boolean);if(!newP.length){statusEl.textContent='No valid data found in the added logs.';return}playersData=playersData.concat(newP);playersData.sort((a,b)=>b.dps-a.dps);playersData.forEach((p,i)=>p.index=i);const boss=playersData[0].bossName&&playersData[0].bossName!=='Unknown'?playersData[0].bossName:'Unknown target';document.getElementById('sumBossName').textContent=boss;const total=playersData.reduce((s,p)=>s+p.totalDamage,0),avg=playersData.reduce((s,p)=>s+p.dps,0)/playersData.length;document.getElementById('sumTotalDamage').textContent=total.toLocaleString('fr-FR');document.getElementById('sumAvgDps').textContent=Math.round(avg).toLocaleString('fr-FR');document.getElementById('sumPlayers').textContent=playersData.length;renderPlayerTable(playersData);statusEl.textContent=`Logs loaded: ${playersData.length}`;if(playersData.length>0)selectedPlayers=[playersData[0]];highlightSelectedRows();globalBossPhases=playersData[0].bossPhases||[];renderBossTimeline();const maxD=Math.max(...playersData.map(p=>p.duration));initTimeSlider(maxD);refreshCharts()}).catch(err=>{statusEl.textContent='Error: '+err})}
 fileInput.addEventListener('change',handleFiles);
 </script>
 </body>
