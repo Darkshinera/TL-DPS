@@ -465,7 +465,7 @@ function drawSkillsTable() {
 
       const barLabel = document.createElement('div');
       barLabel.className = 'skill-bar-label';
-      barLabel.textContent = dmg.toLocaleString('fr-FR');
+      barLabel.textContent = dmg.toLocaleString('fr-FR') + ' (' + hits + ' hits)';
       barFill.appendChild(barLabel);
 
       barContainer.appendChild(barFill);
