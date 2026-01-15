@@ -563,7 +563,11 @@
 
     function requestNotificationPermission() {
       if ("Notification" in window && Notification.permission === "default") {
-        Notification.requestPermission();
+        Notification.requestPermission().then(function(permission) {
+  if (permission === "granted") {
+    console.log("✅ Notifications autorisées");
+  }
+});
       }
     }
 
@@ -574,6 +578,7 @@
     }
 
     function toggleNotification(day, time, itemName, itemType) {
+      requestNotificationPermission();  // ← AJOUTE CETTE LIGNE
       const existingIndex = notificationPreferences.findIndex(n => 
         n.day === day && n.time === time && n.itemName === itemName && n.week === currentWeek
       );
@@ -652,7 +657,7 @@
       });
     }
 
-    requestNotificationPermission();
+
 
 
     const BOSS_LOGOS_BASE = {
