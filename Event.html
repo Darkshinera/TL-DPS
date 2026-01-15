@@ -1270,8 +1270,8 @@
             { name: "Mica brun cache", type: "event" },
             { name: "Rituel des pierres stellaires", type: "event" },
             { name: "Toucher curatif pour les betes celestes", type: "event" },
-            { name: "Toucher curatif pour les betes celestes", type: "event" },
-            { name: "Destructeurs des tenebres", type: "event" }
+            { name: "Destructeurs des tenebres", type: "event" },
+            { name: "Requiem de lumiere", type: "event" }
           ],
           "20h": [
             { name: "Pakilo", type: "normal" },
@@ -1507,7 +1507,7 @@
             { name: "Rituel des pierres stellaires", type: "event" },
             { name: "Toucher curatif pour les betes celestes", type: "event" },
             { name: "Operation Acquisition d'obsidienne", type: "event" },
-            { name: "Operation Acquisition d'obsidienne", type: "event" }
+            { name: "Operation : Livraison de talismans", type: "event" }
           ],
           "12h": [
             { name: "La ceremonie de passage du Grand arbre", type: "event" },
@@ -1654,126 +1654,53 @@
     const calendar = document.getElementById('calendar');
 
     function renderCalendar() {
-      const data = CALENDAR_DATA[currentWeek];
-      const times = ['00h', '01h', '03h', '06h', '09h', '12h', '13h', '15h', '16h', '19h', '20h', '22h', '23h'];
-      const timeValues = [0, 1, 3, 6, 9, 12, 13, 15, 16, 19, 20, 22, 23];
+  const data = CALENDAR_DATA[currentWeek];
+  const times = ['00h', '01h', '03h', '06h', '09h', '12h', '13h', '15h', '16h', '19h', '20h', '22h', '23h'];
+  const timeValues = [0, 1, 3, 6, 9, 12, 13, 15, 16, 19, 20, 22, 23];
 
-      // Générer les 7 prochains jours à partir d'aujourd'hui
-      const today = new Date();
-      const daysOfWeek = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
-      const days = [];
-      const daysData = [];
+  // Jours FIXES : toujours Lundi à Dimanche
+  const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
 
-      for (let i = 0; i < 7; i++) {
-        const date = new Date(today);
-        date.setDate(today.getDate() + i);
-        const dayName = daysOfWeek[date.getDay()];
-        const dayDisplay = `${dayName} ${date.getDate()}/${(date.getMonth() + 1).toString().padStart(2, '0')}`;
-        days.push(dayDisplay);
-        daysData.push(dayName);
-      }
+  // Trouver la PROCHAINE heure à venir et le jour actuel
+  const today = new Date();
+  const currentHour = today.getHours();
+  const currentMinutes = today.getMinutes();
+  const currentDayIndex = today.getDay(); // 0 = Dimanche, 1 = Lundi, etc.
+  const currentDayName = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'][currentDayIndex];
+  
+  let nextTimeSlotIndex = -1;
+  
+  for (let i = 0; i < timeValues.length; i++) {
+    if (timeValues[i] > currentHour) {
+      nextTimeSlotIndex = i;
+      break;
+    } else if (timeValues[i] === currentHour && currentMinutes < 50) {
+      nextTimeSlotIndex = i;
+      break;
+    }
+  }
+  
+  if (nextTimeSlotIndex === -1) {
+    nextTimeSlotIndex = 0;
+  }
+  
+  const nextTimeSlot = times[nextTimeSlotIndex];
 
-      // Trouver la PROCHAINE heure à venir
-      const currentHour = today.getHours();
-      const currentMinutes = today.getMinutes();
-      let nextTimeSlotIndex = -1;
+  let html = '<div class="calendar-header">Heure</div>';
+  days.forEach(day => {
+    html += `<div class="calendar-header">${day}</div>`;
+  });
 
-      // Trouver le prochain créneau horaire
-      for (let i = 0; i < timeValues.length; i++) {
-        if (timeValues[i] > currentHour) {
-          nextTimeSlotIndex = i;
-          break;
-        } else if (timeValues[i] === currentHour && currentMinutes < 50) {
-          // Si on est dans l'heure mais moins de 50 minutes, on considère que c'est encore le prochain
-          nextTimeSlotIndex = i;
-          break;
-        }
-      }
+  times.forEach(time => {
+    const isNextHour = (time === nextTimeSlot);
+    html += `<div class="time-cell ${isNextHour ? 'next-hour' : ''}">${time}</div>`;
 
-      // Si aucun créneau trouvé aujourd'hui, c'est le premier de demain
-      if (nextTimeSlotIndex === -1) {
-        nextTimeSlotIndex = 0;
-      }
-
-      const nextTimeSlot = times[nextTimeSlotIndex];
-
-      let html = '<div class="calendar-header">Heure</div>';
-      days.forEach(day => {
-        html += `<div class="calendar-header">${day}</div>`;
-      });
-
-      times.forEach(time => {
-        const isNextHour = (time === nextTimeSlot);
-        html += `<div class="time-cell ${isNextHour ? 'next-hour' : ''}">${time}</div>`;
-
-        days.forEach((dayDisplay, index) => {
-          let cellContent = '';
-          const dayName = daysData[index];
-          const items = data[dayName][time] || [];
-          const bosses = items.filter(item => ['normal', 'ascendant', 'archiboss'].includes(item.type));
-          const events = items.filter(item => item.type === 'event');
-
-          // Heures spéciales où les boss prennent toute la largeur avec leur nom
-          const specialBossHours = ['01h', '13h', '16h', '20h', '23h'];
-
-          if (bosses.length > 0 && specialBossHours.includes(time)) {
-            // Afficher les boss en pleine largeur avec nom (comme sur le screenshot)
-            bosses.forEach(boss => {
-              const logoUrl = BOSS_LOGOS_BASE[boss.name] || '';
-              if (logoUrl) {
-                cellContent += `
-                  <div class="boss-full" data-boss-type="${boss.type}">
-                    <div class="boss-full-icon">
-                      <img src="${logoUrl}" alt="${boss.name}" />
-                    </div>
-                    <div class="boss-full-name">${boss.name}</div>
-                  </div>
-                `;
-              }
-            });
-          } else if (bosses.length > 0) {
-            // Pour les autres heures, afficher normalement avec icônes seulement
-            cellContent += '<div class="boss-icons">';
-            bosses.forEach(boss => {
-              const logoUrl = BOSS_LOGOS_BASE[boss.name] || '';
-              if (logoUrl) {
-                cellContent += `
-                  <div class="boss-icon" data-boss-type="${boss.type}">
-                    <img src="${logoUrl}" alt="${boss.name}" title="${boss.name}" />
-                  </div>
-                `;
-              }
-            });
-            cellContent += '</div>';
+    days.forEach((dayName, index) => {
+      let cellContent = '';
+      const items = data[dayName][time] || [];
           }
 
-          if (events.length > 0) {
-            cellContent += '<div class="event-icons">';
-            events.forEach((event, index) => {
-              const iconUrl = EVENT_ICONS[event.name] || "";
-              if (iconUrl) {
-                let eventClass = "";
-                if (index >= 0 && index <= 2) {
-                  eventClass = "event-paix";
-                } else if (index === 3) {
-                  eventClass = "event-coop";
-                } else if (index === 4) {
-                  eventClass = "event-dominion";
-                } else if (index === 5) {
-                  eventClass = "event-guild";
-                }
-
-                cellContent += `
-                  <div class="event-icon ${eventClass}" data-tooltip="${event.name}">
-                    <img src="${iconUrl}" alt="${event.name}" />
-                  </div>
-                `;
-              }
-            });
-            cellContent += '</div>';
-          }
-
-          const isTodayAndNextHour = (index === 0 && isNextHour);
+          const isTodayAndNextHour = (dayName === currentDayName && isNextHour);
           html += `<div class="event-cell ${isTodayAndNextHour ? 'next-hour' : ''}">${cellContent}</div>`;
         });
       });
@@ -1809,6 +1736,11 @@
 
     // Rafraîchir le calendrier toutes les minutes pour mettre à jour le highlight
     setInterval(renderCalendar, 60000);
+
+    // Initialiser avec la bonne semaine
+currentWeek = getCurrentWeekType();
+document.querySelectorAll('.week-toggle button').forEach(btn => btn.classList.remove('active'));
+document.getElementById(`btn-${currentWeek}`).classList.add('active');  
 
     renderCalendar();
       updateCurrentTime();
