@@ -2008,7 +2008,7 @@
               const logoUrl = BOSS_LOGOS_BASE[boss.name] || '';
               if (logoUrl) {
                 const hasNotifBossFull = isNotificationEnabled(day, time, boss.name);
-                const safeBossNameFull = boss.name.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+                const safeBossNameFull = boss.name.replace(/"/g, '&quot;').replace(/'/g, ''');
                 cellContent += `
                   <div class="boss-full ${hasNotifBossFull ? 'has-notification' : ''}" 
                        data-boss-type="${boss.type}"
@@ -2058,7 +2058,7 @@
                 }
 
                 const hasNotif = isNotificationEnabled(day, time, evt.name);
-                const safeEventName = evt.name.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+                const safeEventName = evt.name.replace(/"/g, '&quot;').replace(/'/g, ''');
                 cellContent += `
                   <div class="event-icon ${eventClass} ${hasNotif ? 'has-notification' : ''}" 
                        data-tooltip="${safeEventName}"
@@ -2112,22 +2112,163 @@
       renderCalendar();
     }, 60000);
 
-</script>  <!-- ← Fin de ton script existant -->
+</script>
 
-  <!-- ========== AJOUTE LA VIGNETTE ICI ========== -->
-  <div id="notif-box" style="position:fixed;bottom:20px;right:20px;width:300px;background:#1a1d29;border:2px solid #3b82f6;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.7);z-index:99999;">
-    <div id="notif-header" style="background:linear-gradient(135deg,#3b82f6,#2563eb);padding:12px 16px;border-radius:10px 10px 0 0;cursor:pointer;">
-      <span style="font-weight:700;font-size:14px;color:white;">🔔 Notifications</span>
-      <span id="notif-toggle" style="float:right;color:white;font-size:18px;">−</span>
+  <!-- ========== VIGNETTE DE NOTIFICATIONS (Corrigée) ========== -->
+  <div id="my-notif-widget" style="position:fixed;bottom:20px;right:20px;width:300px;background:#1a1d29;border:2px solid #3b82f6;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.7);z-index:99999;font-family:-apple-system,sans-serif;">
+    <div id="my-notif-header" style="background:linear-gradient(135deg,#3b82f6,#2563eb);padding:12px 16px;border-radius:10px 10px 0 0;display:flex;justify-content:space-between;align-items:center;cursor:pointer;">
+      <span style="font-weight:700;font-size:14px;color:white;">🔔 Mes Notifications</span>
+      <span id="my-notif-toggle" style="color:white;font-size:18px;font-weight:700;">−</span>
     </div>
-    <div id="notif-body" style="padding:12px;max-height:400px;overflow-y:auto;background:#0f1117;">
-      <div id="notif-next"></div>
-      <div style="font-size:11px;color:#9ca3af;margin:12px 0 8px;border-top:1px solid #374151;padding-top:12px;">Événements:</div>
-      <div id="notif-list"></div>
+    <div id="my-notif-body" style="padding:12px;max-height:400px;overflow-y:auto;background:#0f1117;border-radius:0 0 10px 10px;">
+      <div id="my-notif-next"></div>
+      <div style="font-size:11px;font-weight:600;color:#9ca3af;margin:12px 0 8px 0;text-transform:uppercase;border-top:1px solid #374151;padding-top:12px;">Événements programmés:</div>
+      <div id="my-notif-list"></div>
     </div>
   </div>
+
   <script>
-  (function(){var h=false;function t(m){if(m<=0)return"Maintenant!";var s=Math.floor(m/1000),n=Math.floor(s/60),o=Math.floor(n/60),d=Math.floor(o/24);if(d>0)return d+"j "+(o%24)+"h";if(o>0)return o+"h "+(n%60)+"m";if(n>0)return n+"m "+(s%60)+"s";return s+"s"}function u(){var a=document.getElementById('notif-next'),b=document.getElementById('notif-list');if(!a||!b)return;var c=[];try{var s=localStorage.getItem('calendarNotifications');if(s)c=JSON.parse(s)}catch(e){}if(c.length===0){a.style.display='none';b.innerHTML='<div style="text-align:center;padding:20px;color:#9ca3af;font-size:12px;">Aucune notification.<br><br>Cliquez sur un événement!</div>';return}var n=new Date(),p=[],i;c.forEach(function(v,x){var et=null;if(typeof getEventDateTime==='function'){try{et=getEventDateTime(v.day,v.time,v.week)}catch(e){}}if(et){var df=et.getTime()-n.getTime();if(df>0)p.push({idx:x,name:v.itemName,day:v.day,time:v.time,ms:df})}});p.sort(function(a,b){return a.ms-b.ms});if(p.length>0){var f=p[0];a.innerHTML='<div style="background:linear-gradient(135deg,#667eea,#764ba2);padding:12px;border-radius:8px;margin-bottom:12px;color:white;"><div style="font-size:10px;opacity:0.9;margin-bottom:4px;">Prochain événement</div><div style="font-size:14px;font-weight:700;margin-bottom:6px;">'+f.name+'</div><div style="font-size:24px;font-weight:700;font-family:monospace;text-align:center;padding:8px;background:rgba(0,0,0,0.2);border-radius:6px;margin-bottom:4px;">'+t(f.ms)+'</div><div style="font-size:11px;opacity:0.9;text-align:center;">'+f.day+' à '+f.time+'</div></div>';a.style.display='block'}else a.style.display='none';var htm='';p.forEach(function(e){htm+='<div style="background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);border-radius:6px;padding:8px 10px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;"><div style="flex:1;"><div style="font-size:12px;font-weight:600;color:#e5e7eb;margin-bottom:2px;">'+e.name+'</div><div style="font-size:10px;color:#9ca3af;">'+e.day+' '+e.time+' (dans '+t(e.ms)+')</div></div><button onclick="window.rmNotif('+e.idx+')" style="background:rgba(239,68,68,0.2);border:1px solid rgba(239,68,68,0.4);color:#ef4444;width:22px;height:22px;border-radius:4px;cursor:pointer;font-size:14px;">✕</button></div>'});if(htm==='')htm='<div style="text-align:center;padding:20px;color:#9ca3af;font-size:12px;">Tous passés</div>';b.innerHTML=htm}window.rmNotif=function(i){var l=JSON.parse(localStorage.getItem('calendarNotifications')||'[]');l.splice(i,1);localStorage.setItem('calendarNotifications',JSON.stringify(l));u();if(typeof renderCalendar==='function')renderCalendar()};setTimeout(function(){var hd=document.getElementById('notif-header'),bd=document.getElementById('notif-body'),tg=document.getElementById('notif-toggle');if(hd)hd.onclick=function(){h=!h;if(h){bd.style.display='none';tg.textContent='+'}else{bd.style.display='block';tg.textContent='−'}};u();setInterval(u,2000)},500)})();
+    // Vignette de notifications - Code corrigé
+    (function() {
+      var widgetHidden = false;
+      
+      function formatTimeRemaining(ms) {
+        if (ms <= 0) return "Maintenant!";
+        var seconds = Math.floor(ms / 1000);
+        var minutes = Math.floor(seconds / 60);
+        var hours = Math.floor(minutes / 60);
+        var days = Math.floor(hours / 24);
+        
+        if (days > 0) return days + "j " + (hours % 24) + "h";
+        if (hours > 0) return hours + "h " + (minutes % 60) + "m";
+        if (minutes > 0) return minutes + "m " + (seconds % 60) + "s";
+        return seconds + "s";
+      }
+      
+      function updateNotifWidget() {
+        var nextDiv = document.getElementById('my-notif-next');
+        var listDiv = document.getElementById('my-notif-list');
+        
+        if (!nextDiv || !listDiv) return;
+        
+        var notifs = [];
+        try {
+          var stored = localStorage.getItem('calendarNotifications');
+          if (stored) notifs = JSON.parse(stored);
+        } catch(e) {
+          console.error('Erreur lecture notifications:', e);
+        }
+        
+        if (notifs.length === 0) {
+          nextDiv.style.display = 'none';
+          listDiv.innerHTML = '<div style="text-align:center;padding:20px;color:#9ca3af;font-size:12px;line-height:1.6;">Aucune notification programmée.<br><br>Cliquez sur un événement!</div>';
+          return;
+        }
+        
+        var now = new Date();
+        var upcoming = [];
+        
+        notifs.forEach(function(notif, idx) {
+          var eventTime = null;
+          if (typeof getEventDateTime === 'function') {
+            try {
+              eventTime = getEventDateTime(notif.day, notif.time, notif.week);
+            } catch(e) {}
+          }
+          
+          if (eventTime) {
+            var diff = eventTime.getTime() - now.getTime();
+            if (diff > 0) {
+              upcoming.push({
+                index: idx,
+                name: notif.itemName,
+                day: notif.day,
+                time: notif.time,
+                ms: diff
+              });
+            }
+          }
+        });
+        
+        upcoming.sort(function(a, b) { return a.ms - b.ms; });
+        
+        if (upcoming.length > 0) {
+          var next = upcoming[0];
+          nextDiv.innerHTML = 
+            '<div style="background:linear-gradient(135deg,#667eea,#764ba2);padding:12px;border-radius:8px;margin-bottom:12px;color:white;">' +
+              '<div style="font-size:10px;opacity:0.9;margin-bottom:4px;text-transform:uppercase;">Prochain événement</div>' +
+              '<div style="font-size:14px;font-weight:700;margin-bottom:6px;">' + next.name + '</div>' +
+              '<div style="font-size:24px;font-weight:700;font-family:monospace;text-align:center;padding:8px;background:rgba(0,0,0,0.2);border-radius:6px;margin-bottom:4px;">' + formatTimeRemaining(next.ms) + '</div>' +
+              '<div style="font-size:11px;opacity:0.9;text-align:center;">' + next.day + ' à ' + next.time + '</div>' +
+            '</div>';
+          nextDiv.style.display = 'block';
+        } else {
+          nextDiv.style.display = 'none';
+        }
+        
+        var html = '';
+        if (upcoming.length > 0) {
+          upcoming.forEach(function(evt) {
+            html += 
+              '<div style="background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);border-radius:6px;padding:8px 10px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;">' +
+                '<div style="flex:1;">' +
+                  '<div style="font-size:12px;font-weight:600;color:#e5e7eb;margin-bottom:2px;">' + evt.name + '</div>' +
+                  '<div style="font-size:10px;color:#9ca3af;">' + evt.day + ' ' + evt.time + ' (dans ' + formatTimeRemaining(evt.ms) + ')</div>' +
+                '</div>' +
+                '<button onclick="removeMyNotification(' + evt.index + ')" style="background:rgba(239,68,68,0.2);border:1px solid rgba(239,68,68,0.4);color:#ef4444;width:22px;height:22px;border-radius:4px;cursor:pointer;font-size:14px;margin-left:8px;line-height:1;">✕</button>' +
+              '</div>';
+          });
+        } else {
+          html = '<div style="text-align:center;padding:20px;color:#9ca3af;font-size:12px;">Tous les événements sont passés</div>';
+        }
+        
+        listDiv.innerHTML = html;
+      }
+      
+      // ✅ FONCTION CORRIGÉE pour synchroniser avec le calendrier
+      window.removeMyNotification = function(idx) {
+        var notifs = JSON.parse(localStorage.getItem('calendarNotifications') || '[]');
+        notifs.splice(idx, 1);
+        localStorage.setItem('calendarNotifications', JSON.stringify(notifs));
+        
+        // Mettre à jour la vignette
+        updateNotifWidget();
+        
+        // ✅ Mettre à jour le calendrier principal (enlève le highlight doré)
+        if (typeof renderCalendar === 'function') {
+          renderCalendar();
+        }
+        
+        // ✅ Mettre à jour les timers de notification (annule le pop-up)
+        if (typeof setupNotificationTimers === 'function') {
+          setupNotificationTimers();
+        }
+      };
+      
+      setTimeout(function() {
+        var header = document.getElementById('my-notif-header');
+        var body = document.getElementById('my-notif-body');
+        var toggle = document.getElementById('my-notif-toggle');
+        
+        if (header && body && toggle) {
+          header.addEventListener('click', function() {
+            widgetHidden = !widgetHidden;
+            if (widgetHidden) {
+              body.style.display = 'none';
+              toggle.textContent = '+';
+            } else {
+              body.style.display = 'block';
+              toggle.textContent = '−';
+            }
+          });
+        }
+        
+        updateNotifWidget();
+        setInterval(updateNotifWidget, 2000);
+      }, 500);
+    })();
   </script>
+
 </body>
 </html>
+
