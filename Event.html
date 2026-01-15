@@ -270,7 +270,188 @@
       color: #e5e7eb;
       font-size: 13px;
     }
-  </style>
+  
+
+    /* === STYLES DATES ET HIGHLIGHTS === */
+    .calendar-header .day-name {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .calendar-header .day-date {
+      display: block;
+      font-size: 12px;
+      color: #9ca3af;
+      font-weight: 400;
+    }
+
+    .event-cell.next-event {
+      background: #1e3a5f !important;
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
+      border: 2px solid #3b82f6 !important;
+      animation: pulse-glow 2s infinite;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.6); }
+      50% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.9); }
+    }
+
+    .event-cell.next-event::before {
+      content: "PROCHAIN";
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      background: #3b82f6;
+      color: #fff;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 3px 6px;
+      border-radius: 4px;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    /* === HIGHLIGHT DORÉ POUR NOTIFICATIONS === */
+    .boss-small.has-notification,
+    .boss-full.has-notification,
+    .event-icon.has-notification {
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.9), 0 0 25px rgba(255, 215, 0, 0.6) !important;
+      border: 2px solid #ffd700 !important;
+      animation: golden-pulse 2s infinite;
+      position: relative;
+      z-index: 5;
+    }
+
+    @keyframes golden-pulse {
+      0%, 100% {
+        box-shadow: 0 0 15px rgba(255, 215, 0, 0.9), 0 0 25px rgba(255, 215, 0, 0.6);
+        transform: scale(1);
+      }
+      50% {
+        box-shadow: 0 0 20px rgba(255, 215, 0, 1), 0 0 35px rgba(255, 215, 0, 0.8);
+        transform: scale(1.05);
+      }
+    }
+
+    .boss-small.has-notification::after,
+    .boss-full.has-notification::after,
+    .event-icon.has-notification::after {
+      content: "🔔";
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      font-size: 16px;
+      animation: bell-ring 1.5s infinite;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.7));
+      z-index: 10;
+    }
+
+    @keyframes bell-ring {
+      0%, 100% { transform: rotate(0deg); }
+      10%, 30% { transform: rotate(15deg); }
+      20%, 40% { transform: rotate(-15deg); }
+      50%, 100% { transform: rotate(0deg); }
+    }
+
+    /* === POPUPS DE NOTIFICATION === */
+    .notification-popup {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+      z-index: 10000;
+      animation: slideInRight 0.5s ease-out;
+      max-width: 400px;
+      min-width: 300px;
+    }
+
+    @keyframes slideInRight {
+      from {
+        transform: translateX(500px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .notification-content {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .notification-icon {
+      font-size: 32px;
+      animation: bounce 1s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .notification-text {
+      flex: 1;
+    }
+
+    .notification-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .notification-subtitle {
+      font-size: 13px;
+      opacity: 0.9;
+    }
+
+    .notification-close {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: white;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+
+    .notification-close:hover {
+      background: rgba(255,255,255,0.3);
+    }
+
+    /* === CURSEURS ET HOVER === */
+    .boss-small,
+    .boss-full,
+    .event-icon {
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+    }
+
+    .boss-small:hover,
+    .boss-full:hover,
+    .event-icon:hover {
+      transform: scale(1.1);
+      z-index: 10;
+    }
+
+    .event-icon:hover {
+      transform: scale(1.15) !important;
+    }
+
+</style>
 </head>
 <body>
   <div class="page">
@@ -289,6 +470,191 @@
   </div>
 
    <script>
+
+    // === SYSTÈME DE GESTION DES DATES ET NOTIFICATIONS ===
+    const currentRealDate = new Date();
+    const referenceDate = new Date(2026, 0, 15);
+
+    let notificationPreferences = JSON.parse(localStorage.getItem('calendarNotifications') || '[]');
+    let notificationTimers = [];
+
+    function getWeekNumber(d) {
+      const tempDate = new Date(d.valueOf());
+      const dayNum = (tempDate.getDay() + 6) % 7;
+      tempDate.setDate(tempDate.getDate() - dayNum + 3);
+      const firstThursday = tempDate.valueOf();
+      tempDate.setMonth(0, 1);
+      if (tempDate.getDay() !== 4) {
+        tempDate.setMonth(0, 1 + ((4 - tempDate.getDay()) + 7) % 7);
+      }
+      return 1 + Math.ceil((firstThursday - tempDate) / 604800000);
+    }
+
+    function isEvenWeek(date) {
+      const refWeek = getWeekNumber(referenceDate);
+      const currentWeek = getWeekNumber(date);
+      const weekDiff = currentWeek - refWeek;
+      return weekDiff % 2 === 0;
+    }
+
+    function getMondayOfWeek(date) {
+      const d = new Date(date);
+      const day = d.getDay();
+      const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+      return new Date(d.setDate(diff));
+    }
+
+    function getWeekDates(weekType) {
+      const monday = getMondayOfWeek(currentRealDate);
+      const currentIsPair = isEvenWeek(currentRealDate);
+
+      if (weekType === 'impair' && currentIsPair) {
+        monday.setDate(monday.getDate() + 7);
+      } else if (weekType === 'pair' && !currentIsPair) {
+        monday.setDate(monday.getDate() + 7);
+      }
+
+      const dates = [];
+      for (let i = 0; i < 7; i++) {
+        const date = new Date(monday);
+        date.setDate(monday.getDate() + i);
+        dates.push(date);
+      }
+      return dates;
+    }
+
+    function formatDate(date) {
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      return `${day}/${month}`;
+    }
+
+    function findNextEvent() {
+      const currentIsPair = isEvenWeek(currentRealDate);
+      const expectedWeekType = currentIsPair ? 'pair' : 'impair';
+      if (currentWeek !== expectedWeekType) return null;
+
+      const now = currentRealDate;
+      const currentDay = now.getDay() === 0 ? 6 : now.getDay() - 1;
+      const currentHour = now.getHours();
+
+      const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+      const times = ['00h', '01h', '03h', '06h', '09h', '12h', '13h', '15h', '16h', '19h', '20h', '22h', '23h'];
+      const timeToHour = {'00h':0, '01h':1, '03h':3, '06h':6, '09h':9, '12h':12, '13h':13, '15h':15, '16h':16, '19h':19, '20h':20, '22h':22, '23h':23};
+
+      for (let dayOffset = 0; dayOffset < 14; dayOffset++) {
+        const checkDay = (currentDay + dayOffset) % 7;
+        const dayName = days[checkDay];
+
+        for (let timeIdx = 0; timeIdx < times.length; timeIdx++) {
+          const time = times[timeIdx];
+          const hour = timeToHour[time];
+          if (dayOffset === 0 && hour <= currentHour) continue;
+
+          const data = CALENDAR_DATA[currentWeek];
+          const items = data[dayName][time] || [];
+          if (items.length > 0) {
+            return { day: dayName, time: time };
+          }
+        }
+      }
+      return null;
+    }
+
+    function requestNotificationPermission() {
+      if ("Notification" in window && Notification.permission === "default") {
+        Notification.requestPermission();
+      }
+    }
+
+    function isNotificationEnabled(day, time, itemName) {
+      return notificationPreferences.some(n => 
+        n.day === day && n.time === time && n.itemName === itemName && n.week === currentWeek
+      );
+    }
+
+    function toggleNotification(day, time, itemName, itemType) {
+      const existingIndex = notificationPreferences.findIndex(n => 
+        n.day === day && n.time === time && n.itemName === itemName && n.week === currentWeek
+      );
+
+      if (existingIndex !== -1) {
+        notificationPreferences.splice(existingIndex, 1);
+      } else {
+        notificationPreferences.push({
+          week: currentWeek,
+          day: day,
+          time: time,
+          itemName: itemName,
+          itemType: itemType
+        });
+      }
+
+      localStorage.setItem('calendarNotifications', JSON.stringify(notificationPreferences));
+      renderCalendar();
+      setupNotificationTimers();
+    }
+
+    function getEventDateTime(day, time, weekType) {
+      const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+      const dayIndex = days.indexOf(day);
+      const timeToHour = {'00h':0, '01h':1, '03h':3, '06h':6, '09h':9, '12h':12, '13h':13, '15h':15, '16h':16, '19h':19, '20h':20, '22h':22, '23h':23};
+      const hour = timeToHour[time];
+
+      const weekDates = getWeekDates(weekType);
+      const eventDate = new Date(weekDates[dayIndex]);
+      eventDate.setHours(hour, 0, 0, 0);
+
+      return eventDate;
+    }
+
+    function showNotificationPopup(itemName, day, time) {
+      const popup = document.createElement('div');
+      popup.className = 'notification-popup';
+      popup.innerHTML = `
+        <div class="notification-content">
+          <div class="notification-icon">🔔</div>
+          <div class="notification-text">
+            <div class="notification-title">${itemName}</div>
+            <div class="notification-subtitle">Dans 10 minutes - ${day} ${time}</div>
+          </div>
+          <button class="notification-close" onclick="this.parentElement.parentElement.remove()">✕</button>
+        </div>
+      `;
+      document.body.appendChild(popup);
+
+      if (Notification.permission === "granted") {
+        new Notification("Throne and Liberty", {
+          body: `${itemName} commence dans 10 minutes (${day} ${time})`,
+          icon: "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_BFB_LycanthropeNSmuggler_On.webp"
+        });
+      }
+
+      setTimeout(() => popup.remove(), 10000);
+    }
+
+    function setupNotificationTimers() {
+      notificationTimers.forEach(timer => clearTimeout(timer));
+      notificationTimers = [];
+
+      notificationPreferences.forEach(notif => {
+        const eventTime = getEventDateTime(notif.day, notif.time, notif.week);
+        const notificationTime = new Date(eventTime.getTime() - 10 * 60 * 1000);
+        const now = new Date();
+        const timeUntilNotification = notificationTime.getTime() - now.getTime();
+
+        if (timeUntilNotification > 0) {
+          const timer = setTimeout(() => {
+            showNotificationPopup(notif.itemName, notif.day, notif.time);
+          }, timeUntilNotification);
+          notificationTimers.push(timer);
+        }
+      });
+    }
+
+    requestNotificationPermission();
+
+
     const BOSS_LOGOS_BASE = {
       "Daigon": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_FB_Dagon_On.webp",
       "Leviathan": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_FB_Leviathan_On.webp",
@@ -1609,14 +1975,20 @@
       const times = ['00h', '01h', '03h', '06h', '09h', '12h', '13h', '15h', '16h', '19h', '20h', '22h', '23h'];
 
       let html = '<div class="calendar-header">Heure</div>';
-      days.forEach(day => {
-        html += `<div class="calendar-header">${day}</div>`;
+      const weekDates = getWeekDates(currentWeek);
+      days.forEach((day, idx) => {
+        html += `<div class="calendar-header">
+          <div class="day-name">${day}</div>
+          <div class="day-date">${formatDate(weekDates[idx])}</div>
+        </div>`;
       });
 
       times.forEach(time => {
         html += `<div class="time-cell">${time}</div>`;
 
+        const nextEvent = findNextEvent();
         days.forEach(day => {
+          const isNextEvent = nextEvent && nextEvent.day === day && nextEvent.time === time;
           let cellContent = '';
           const items = data[day][time] || [];
           const bosses = items.filter(item => ['normal', 'ascendant', 'archiboss'].includes(item.type));
@@ -1630,10 +2002,17 @@
             bosses.forEach(boss => {
               const logoUrl = BOSS_LOGOS_BASE[boss.name] || '';
               if (logoUrl) {
+                const hasNotifBossFull = isNotificationEnabled(day, time, boss.name);
+                const safeBossNameFull = boss.name.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
                 cellContent += `
-                  <div class="boss-full" data-boss-type="${boss.type}">
+                  <div class="boss-full ${hasNotifBossFull ? 'has-notification' : ''}" 
+                       data-boss-type="${boss.type}"
+                       data-day="${day}"
+                       data-time="${time}"
+                       data-item-name="${safeBossNameFull}"
+                       data-item-type="${boss.type}">
                     <div class="boss-full-icon">
-                      <img src="${logoUrl}" alt="${boss.name}" />
+                      <img src="${logoUrl}" alt="${safeBossNameFull}" />
                     </div>
                     <div class="boss-full-name">${boss.name}</div>
                   </div>
@@ -1658,8 +2037,8 @@
 
           if (events.length > 0) {
             cellContent += '<div class="event-icons">';
-            events.forEach((event, index) => {
-              const iconUrl = EVENT_ICONS[event.name] || "";
+            events.forEach((evt, index) => {
+              const iconUrl = EVENT_ICONS[evt.name] || "";
               if (iconUrl) {
                 // Déterminer la classe selon la position de l'événement
                 let eventClass = "";
@@ -1673,9 +2052,16 @@
                   eventClass = "event-guild"; // 6ème: GUILD (vert clair)
                 }
 
+                const hasNotif = isNotificationEnabled(day, time, evt.name);
+                const safeEventName = evt.name.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
                 cellContent += `
-                  <div class="event-icon ${eventClass}" data-tooltip="${event.name}">
-                    <img src="${iconUrl}" alt="${event.name}" />
+                  <div class="event-icon ${eventClass} ${hasNotif ? 'has-notification' : ''}" 
+                       data-tooltip="${safeEventName}"
+                       data-day="${day}"
+                       data-time="${time}"
+                       data-item-name="${safeEventName}"
+                       data-item-type="event">
+                    <img src="${iconUrl}" alt="${safeEventName}" />
                   </div>
                 `;
               }
@@ -1683,11 +2069,28 @@
             cellContent += '</div>';
           }
 
-          html += `<div class="event-cell">${cellContent}</div>`;
+          html += `<div class="event-cell ${isNextEvent ? 'next-event' : ''}">${cellContent}</div>`;
         });
       });
 
       calendar.innerHTML = html;
+
+      // Ajouter les gestionnaires de clic après le rendu
+      setTimeout(() => {
+        document.querySelectorAll('.event-icon, .boss-small, .boss-full').forEach(elem => {
+          elem.style.cursor = 'pointer';
+          elem.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const day = this.getAttribute('data-day');
+            const time = this.getAttribute('data-time');
+            const itemName = this.getAttribute('data-item-name');
+            const itemType = this.getAttribute('data-item-type');
+            if (day && time && itemName) {
+              toggleNotification(day, time, itemName, itemType);
+            }
+          });
+        });
+      }, 50);
     }
 
     function switchWeek(week) {
@@ -1698,6 +2101,12 @@
     }
 
     renderCalendar();
-  </script>
+  
+    setupNotificationTimers();
+    setInterval(() => {
+      renderCalendar();
+    }, 60000);
+
+</script>
 </body>
 </html>
