@@ -309,7 +309,134 @@
       color: #e5e7eb;
       font-size: 13px;
     }
-  </style>
+  
+    /* ===== SYSTÈME DE NOTIFICATIONS ===== */
+    .event-icon.tracked {
+      border: 3px solid #fbbf24 !important;
+      box-shadow: 0 0 15px rgba(251, 191, 36, 0.6), inset 0 0 10px rgba(251, 191, 36, 0.3);
+      animation: goldPulse 2s infinite;
+    }
+    @keyframes goldPulse {
+      0%, 100% { box-shadow: 0 0 15px rgba(251, 191, 36, 0.6), inset 0 0 10px rgba(251, 191, 36, 0.3); }
+      50% { box-shadow: 0 0 25px rgba(251, 191, 36, 0.9), inset 0 0 15px rgba(251, 191, 36, 0.5); }
+    }
+    .alerts-button {
+      position: fixed; bottom: 30px; right: 30px;
+      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+      color: #000; border: none; padding: 15px 25px; border-radius: 50px;
+      font-size: 16px; font-weight: 600; cursor: pointer;
+      box-shadow: 0 8px 20px rgba(251, 191, 36, 0.4);
+      transition: all 0.3s; z-index: 1000;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .alerts-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(251, 191, 36, 0.6);
+    }
+    .alerts-badge {
+      background: #dc2626; color: #fff; border-radius: 50%;
+      width: 24px; height: 24px; display: flex;
+      align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 700;
+    }
+    .modal {
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.85); z-index: 2000;
+      align-items: center; justify-content: center;
+    }
+    .modal.active { display: flex; }
+    .modal-content {
+      background: #1a1d29; border-radius: 16px; padding: 30px;
+      max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5); border: 1px solid #3b82f6;
+    }
+    .modal-header {
+      display: flex; justify-content: space-between;
+      align-items: center; margin-bottom: 20px;
+    }
+    .modal-title { font-size: 24px; font-weight: 700; color: #fbbf24; }
+    .modal-close {
+      background: transparent; border: none; color: #9ca3af;
+      font-size: 28px; cursor: pointer; transition: color 0.2s; line-height: 1;
+    }
+    .modal-close:hover { color: #fff; }
+    .settings-section {
+      margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #3b82f6;
+    }
+    .settings-title { font-size: 16px; font-weight: 600; color: #fff; margin-bottom: 10px; }
+    .settings-control {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+    }
+    .settings-control label { color: #9ca3af; flex: 1; }
+    .settings-control input {
+      background: #0f1117; border: 1px solid #3b82f6; color: #fff;
+      padding: 8px 12px; border-radius: 6px; width: 80px;
+    }
+    .alert-item {
+      background: #0f1117; padding: 15px; border-radius: 8px;
+      margin-bottom: 10px; display: flex; align-items: center;
+      gap: 15px; border-left: 4px solid #fbbf24;
+    }
+    .alert-item img {
+      width: 40px; height: 40px; border-radius: 6px; border: 2px solid #fbbf24;
+    }
+    .alert-info { flex: 1; }
+    .alert-name { font-weight: 600; color: #fff; margin-bottom: 4px; font-size: 14px; }
+    .alert-time { font-size: 13px; color: #9ca3af; }
+    .alert-remove {
+      background: #dc2626; color: #fff; border: none;
+      padding: 8px 15px; border-radius: 6px; cursor: pointer;
+      font-size: 13px; transition: background 0.2s;
+    }
+    .alert-remove:hover { background: #b91c1c; }
+    .clear-all-btn {
+      background: #dc2626; color: #fff; border: none;
+      padding: 10px 20px; border-radius: 8px; cursor: pointer;
+      font-size: 14px; font-weight: 600; margin-top: 15px;
+      width: 100%; transition: background 0.2s;
+    }
+    .clear-all-btn:hover { background: #b91c1c; }
+    .notification-popup {
+      display: none; position: fixed; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(135deg, #1a1d29 0%, #0f1117 100%);
+      border-radius: 20px; padding: 40px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 0 3px #fbbf24;
+      z-index: 3000; min-width: 400px; text-align: center;
+      animation: popIn 0.3s ease-out;
+    }
+    .notification-popup.active { display: block; }
+    @keyframes popIn {
+      0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+      100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    }
+    .notification-icon {
+      width: 80px; height: 80px; border-radius: 12px;
+      margin: 0 auto 20px; border: 3px solid #fbbf24;
+    }
+    .notification-title {
+      font-size: 22px; font-weight: 700; color: #fbbf24; margin-bottom: 10px;
+    }
+    .notification-time { font-size: 18px; color: #9ca3af; margin-bottom: 15px; }
+    .notification-countdown {
+      font-size: 32px; font-weight: 700; color: #3b82f6; margin-bottom: 20px;
+    }
+    .notification-close {
+      background: #3b82f6; color: #fff; border: none;
+      padding: 12px 30px; border-radius: 8px;
+      font-size: 16px; font-weight: 600; cursor: pointer;
+      transition: background 0.2s;
+    }
+    .notification-close:hover { background: #2563eb; }
+    .empty-alerts {
+      color: #9ca3af; text-align: center; padding: 30px;
+      font-size: 15px; line-height: 1.6;
+    }
+    @media (max-width: 1024px) {
+      .alerts-button { bottom: 15px; right: 15px; padding: 12px 20px; font-size: 14px; }
+      .notification-popup { min-width: 90%; padding: 30px 20px; }
+    }
+</style>
 </head>
 <body>
   <div class="page">
@@ -359,7 +486,6 @@
     };
 
     const EVENT_ICONS = {
-      "Fete des recoltes de peipors": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_DE_OperationFloweringFafer_On_Sprite.webp",
       "Fete des Recoltes de Peipors": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_DE_OperationFloweringFafer_On_Sprite.webp",
       "Toucher curatif pour les betes celestes": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_DE_HealingTouch_001_On_Sprite.webp",
       "Requiem de lumiere": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_DE_RequiemofLight_On_Sprite.webp",
@@ -391,7 +517,158 @@
       return weekNumber % 2 === 0 ? 'pair' : 'impair';
     }
 
+    let trackedEvents = new Set();
+    let notificationDelay = 10;
+    let checkInterval = null;
+    let countdownIntervals = new Map();
+    let shownNotifications = new Set();
     let currentWeek = getCurrentWeekType();
+    function loadSavedData() {
+      const saved = localStorage.getItem('trackedEvents');
+      if (saved) trackedEvents = new Set(JSON.parse(saved));
+      const savedDelay = localStorage.getItem('notificationDelay');
+      if (savedDelay) {
+        notificationDelay = parseInt(savedDelay);
+        setTimeout(() => {
+          const input = document.getElementById('notificationDelay');
+          if (input) input.value = notificationDelay;
+        }, 100);
+      }
+      updateAlertsBadge();
+    }
+    function saveTrackedEvents() {
+      localStorage.setItem('trackedEvents', JSON.stringify([...trackedEvents]));
+      updateAlertsBadge();
+      updateAlertsList();
+    }
+    function saveSettings() {
+      const input = document.getElementById('notificationDelay');
+      if (input) {
+        notificationDelay = parseInt(input.value);
+        localStorage.setItem('notificationDelay', notificationDelay);
+      }
+    }
+    function toggleEventTracking(element) {
+      const eventId = element.dataset.eventId;
+      if (trackedEvents.has(eventId)) {
+        trackedEvents.delete(eventId);
+        element.classList.remove('tracked');
+      } else {
+        trackedEvents.add(eventId);
+        element.classList.add('tracked');
+      }
+      saveTrackedEvents();
+    }
+    function openAlertsModal() {
+      document.getElementById('alertsModal').classList.add('active');
+      updateAlertsList();
+    }
+    function closeAlertsModal() {
+      document.getElementById('alertsModal').classList.remove('active');
+    }
+    function updateAlertsBadge() {
+      const badge = document.getElementById('alertsBadge');
+      if (badge) badge.textContent = trackedEvents.size;
+    }
+    function updateAlertsList() {
+      const container = document.getElementById('alertsList');
+      if (!container) return;
+      if (trackedEvents.size === 0) {
+        container.innerHTML = '<div class="empty-alerts">Aucune alerte active.<br><br>💡 Cliquez sur un événement dans le calendrier pour l\'activer.</div>';
+        return;
+      }
+      let html = '';
+      const sortedEvents = [...trackedEvents].sort();
+      sortedEvents.forEach(eventId => {
+        const parts = eventId.split('_');
+        const day = parts[0];
+        const time = parts[1];
+        const name = parts.slice(2).join('_');
+        const iconUrl = EVENT_ICONS[name] || '';
+        html += `<div class="alert-item"><img src="${iconUrl}" alt="${name}" onerror="this.style.display='none'"><div class="alert-info"><div class="alert-name">${name}</div><div class="alert-time">${day} à ${time}</div></div><button class="alert-remove" onclick="removeAlert('${eventId.replace(/'/g, "\\'")}')\">✕</button></div>`;
+      });
+      if (trackedEvents.size > 1) html += '<button class="clear-all-btn" onclick="clearAllAlerts()">🗑️ Tout supprimer</button>';
+      container.innerHTML = html;
+    }
+    function removeAlert(eventId) {
+      trackedEvents.delete(eventId);
+      saveTrackedEvents();
+      renderCalendar();
+    }
+    function clearAllAlerts() {
+      if (confirm('Voulez-vous vraiment supprimer toutes les alertes ?')) {
+        trackedEvents.clear();
+        saveTrackedEvents();
+        renderCalendar();
+      }
+    }
+    function checkNotifications() {
+      const now = new Date();
+      const currentDay = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'][now.getDay()];
+      trackedEvents.forEach(eventId => {
+        const parts = eventId.split('_');
+        const day = parts[0];
+        const timeStr = parts[1];
+        const name = parts.slice(2).join('_');
+        if (day !== currentDay) return;
+        const eventHour = parseInt(timeStr.replace('h', ''));
+        const eventTime = new Date(now);
+        eventTime.setHours(eventHour, 0, 0, 0);
+        const timeDiff = (eventTime - now) / 1000 / 60;
+        const notifKey = `${eventId}_${Math.floor(timeDiff)}`;
+        if (timeDiff > 0 && timeDiff <= notificationDelay && timeDiff > (notificationDelay - 1)) {
+          if (!shownNotifications.has(notifKey)) {
+            showNotification(name, timeStr, EVENT_ICONS[name], Math.floor(timeDiff));
+            shownNotifications.add(notifKey);
+            setTimeout(() => shownNotifications.delete(notifKey), 3600000);
+          }
+        }
+      });
+    }
+    function showNotification(name, time, iconUrl, minutesLeft) {
+      document.getElementById('notifIcon').src = iconUrl || '';
+      document.getElementById('notifTitle').textContent = name;
+      document.getElementById('notifTime').textContent = `Début à ${time}`;
+      document.getElementById('notifCountdown').textContent = `Dans ${minutesLeft} minute${minutesLeft > 1 ? 's' : ''}`;
+      document.getElementById('notificationPopup').classList.add('active');
+      playNotificationSound();
+      const countdownKey = `${name}_${time}`;
+      if (countdownIntervals.has(countdownKey)) clearInterval(countdownIntervals.get(countdownKey));
+      const interval = setInterval(() => {
+        minutesLeft--;
+        const countdownEl = document.getElementById('notifCountdown');
+        if (countdownEl) {
+          if (minutesLeft <= 0) {
+            countdownEl.textContent = "🎮 C'est maintenant !";
+            clearInterval(interval);
+            countdownIntervals.delete(countdownKey);
+          } else {
+            countdownEl.textContent = `Dans ${minutesLeft} minute${minutesLeft > 1 ? 's' : ''}`;
+          }
+        }
+      }, 60000);
+      countdownIntervals.set(countdownKey, interval);
+    }
+    function closeNotification() {
+      document.getElementById('notificationPopup').classList.remove('active');
+    }
+    function playNotificationSound() {
+      try {
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        oscillator.frequency.value = 800;
+        oscillator.type = 'sine';
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.5);
+      } catch (e) {
+        console.log('Audio non supporté');
+      }
+    }
     const CALENDAR_DATA = {
       "pair": {
 
@@ -1762,9 +2039,13 @@
                 } else if (index === 5) {
                   eventClass = "event-guild";
                 }
-
+                const eventId = `${dayName}_${time}_${event.name}`;
+                const isTracked = trackedEvents.has(eventId) ? 'tracked' : '';
                 cellContent += `
-                  <div class="event-icon ${eventClass}" data-tooltip="${event.name}">
+                  <div class="event-icon ${eventClass} ${isTracked}" 
+                       data-tooltip="${event.name}" 
+                       data-event-id="${eventId}"
+                       onclick="toggleEventTracking(this)">
                     <img src="${iconUrl}" alt="${event.name}" />
                   </div>
                 `;
@@ -1804,12 +2085,12 @@
       }
     }
 
+    loadSavedData();
     updateCurrentTime();
     setInterval(updateCurrentTime, 1000);
-
-    // Rafraîchir le calendrier toutes les minutes pour mettre à jour le highlight
     setInterval(renderCalendar, 60000);
-
+    setInterval(checkNotifications, 60000);
+    checkNotifications();
     renderCalendar();
       updateCurrentTime();
     }
@@ -1833,13 +2114,41 @@
       }
     }
 
+    loadSavedData();
     updateCurrentTime();
     setInterval(updateCurrentTime, 1000);
-
-    // Rafraîchir le calendrier toutes les minutes pour mettre à jour le highlight
     setInterval(renderCalendar, 60000);
-
+    setInterval(checkNotifications, 60000);
+    checkNotifications();
     renderCalendar();
   </script>
+
+  <button class="alerts-button" onclick="openAlertsModal()">
+    <span>🔔 Mes Alertes</span>
+    <span class="alerts-badge" id="alertsBadge">0</span>
+  </button>
+  <div class="modal" id="alertsModal" onclick="if(event.target === this) closeAlertsModal()">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">🔔 Mes Alertes Actives</h2>
+        <button class="modal-close" onclick="closeAlertsModal()">&times;</button>
+      </div>
+      <div class="settings-section">
+        <div class="settings-title">⚙️ Paramètres</div>
+        <div class="settings-control">
+          <label>Minutes avant l'événement :</label>
+          <input type="number" id="notificationDelay" value="10" min="1" max="60" onchange="saveSettings()"> min
+        </div>
+      </div>
+      <div id="alertsList"></div>
+    </div>
+  </div>
+  <div class="notification-popup" id="notificationPopup">
+    <img class="notification-icon" id="notifIcon" src="" alt="">
+    <div class="notification-title" id="notifTitle"></div>
+    <div class="notification-time" id="notifTime"></div>
+    <div class="notification-countdown" id="notifCountdown"></div>
+    <button class="notification-close" onclick="closeNotification()">OK</button>
+  </div>
 </body>
 </html>
