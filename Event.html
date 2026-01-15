@@ -189,6 +189,24 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     }
 
+    /* Bordures colorées pour les événements selon leur type */
+    .event-icon.event-paix {
+      border: 2px solid #3b82f6; /* Bleu */
+    }
+
+    .event-icon.event-coop {
+      border: 2px solid #22c55e; /* Vert */
+    }
+
+    .event-icon.event-dominion {
+      border: 2px solid #ef4444; /* Rouge */
+    }
+
+    .event-icon.event-guild {
+      border: 2px solid #86efac; /* Vert clair */
+    }
+
+
     @media (max-width: 1024px) {
       .calendar-grid {
         font-size: 12px;
@@ -1641,11 +1659,23 @@
 
           if (events.length > 0) {
             cellContent += '<div class="event-icons">';
-            events.forEach(event => {
+            events.forEach((event, index) => {
               const iconUrl = EVENT_ICONS[event.name] || "";
               if (iconUrl) {
+                // Déterminer la classe selon la position de l'événement
+                let eventClass = "";
+                if (index >= 0 && index <= 2) {
+                  eventClass = "event-paix"; // Les 3 premiers: PAIX (bleu)
+                } else if (index === 3) {
+                  eventClass = "event-coop"; // 4ème: COOP (vert)
+                } else if (index === 4) {
+                  eventClass = "event-dominion"; // 5ème: DOMINION (rouge)
+                } else if (index === 5) {
+                  eventClass = "event-guild"; // 6ème: GUILD (vert clair)
+                }
+
                 cellContent += `
-                  <div class="event-icon" data-tooltip="${event.name}">
+                  <div class="event-icon ${eventClass}" data-tooltip="${event.name}">
                     <img src="${iconUrl}" alt="${event.name}" />
                   </div>
                 `;
