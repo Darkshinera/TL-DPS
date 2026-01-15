@@ -150,15 +150,15 @@
     .event-icons {
       display: flex;
       flex-wrap: wrap;
-      gap: 3px;
+      gap: 2px;
       width: 100%;
-      justify-content: space-between;
+      justify-content: flex-start;
     }
 
     .event-icon {
       position: relative;
-      width: 24px;
-      height: 24px;
+      width: 28px;
+      height: 28px;
       border-radius: 4px;
       overflow: hidden;
       background: #1a1d29;
@@ -206,6 +206,45 @@
       border: 2px solid #86efac; /* Vert clair */
     }
 
+    .current-time {
+      font-size: 16px;
+      color: #3b82f6;
+      font-weight: 600;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    /* Highlight pour la PROCHAINE heure à venir */
+    .time-cell.next-hour {
+      background: linear-gradient(90deg, #22c55e 0%, #1a1d29 100%) !important;
+      color: #fff !important;
+      font-weight: 700 !important;
+      box-shadow: 0 0 20px rgba(34, 197, 94, 0.6);
+      position: relative;
+    }
+
+    .time-cell.next-hour::before {
+      content: '▶';
+      position: absolute;
+      left: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #22c55e;
+      font-size: 14px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .event-cell.next-hour {
+      box-shadow: inset 0 0 15px rgba(34, 197, 94, 0.3);
+      border: 1px solid rgba(34, 197, 94, 0.4);
+      background: rgba(34, 197, 94, 0.05) !important;
+    }
+
 
     @media (max-width: 1024px) {
       .calendar-grid {
@@ -216,8 +255,8 @@
         height: 28px;
       }
       .event-icon {
-        width: 20px;
-        height: 20px;
+        width: 24px;
+        height: 24px;
       }
     }
 
@@ -342,7 +381,17 @@
     };
 
 
-    let currentWeek = 'pair';
+    // Fonction pour calculer le numéro de semaine et déterminer si paire ou impaire
+    function getCurrentWeekType() {
+      const now = new Date();
+      const start = new Date(now.getFullYear(), 0, 1);
+      const diff = now - start;
+      const oneWeek = 1000 * 60 * 60 * 24 * 7;
+      const weekNumber = Math.ceil((diff / oneWeek) + (start.getDay() / 7));
+      return weekNumber % 2 === 0 ? 'pair' : 'impair';
+    }
+
+    let currentWeek = getCurrentWeekType();
     const CALENDAR_DATA = {
       "pair": {
 
@@ -1606,8 +1655,47 @@
 
     function renderCalendar() {
       const data = CALENDAR_DATA[currentWeek];
-      const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
       const times = ['00h', '01h', '03h', '06h', '09h', '12h', '13h', '15h', '16h', '19h', '20h', '22h', '23h'];
+      const timeValues = [0, 1, 3, 6, 9, 12, 13, 15, 16, 19, 20, 22, 23];
+
+      // Générer les 7 prochains jours à partir d'aujourd'hui
+      const today = new Date();
+      const daysOfWeek = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+      const days = [];
+      const daysData = [];
+
+      for (let i = 0; i < 7; i++) {
+        const date = new Date(today);
+        date.setDate(today.getDate() + i);
+        const dayName = daysOfWeek[date.getDay()];
+        const dayDisplay = `${dayName} ${date.getDate()}/${(date.getMonth() + 1).toString().padStart(2, '0')}`;
+        days.push(dayDisplay);
+        daysData.push(dayName);
+      }
+
+      // Trouver la PROCHAINE heure à venir
+      const currentHour = today.getHours();
+      const currentMinutes = today.getMinutes();
+      let nextTimeSlotIndex = -1;
+
+      // Trouver le prochain créneau horaire
+      for (let i = 0; i < timeValues.length; i++) {
+        if (timeValues[i] > currentHour) {
+          nextTimeSlotIndex = i;
+          break;
+        } else if (timeValues[i] === currentHour && currentMinutes < 50) {
+          // Si on est dans l'heure mais moins de 50 minutes, on considère que c'est encore le prochain
+          nextTimeSlotIndex = i;
+          break;
+        }
+      }
+
+      // Si aucun créneau trouvé aujourd'hui, c'est le premier de demain
+      if (nextTimeSlotIndex === -1) {
+        nextTimeSlotIndex = 0;
+      }
+
+      const nextTimeSlot = times[nextTimeSlotIndex];
 
       let html = '<div class="calendar-header">Heure</div>';
       days.forEach(day => {
@@ -1615,11 +1703,13 @@
       });
 
       times.forEach(time => {
-        html += `<div class="time-cell">${time}</div>`;
+        const isNextHour = (time === nextTimeSlot);
+        html += `<div class="time-cell ${isNextHour ? 'next-hour' : ''}">${time}</div>`;
 
-        days.forEach(day => {
+        days.forEach((dayDisplay, index) => {
           let cellContent = '';
-          const items = data[day][time] || [];
+          const dayName = daysData[index];
+          const items = data[dayName][time] || [];
           const bosses = items.filter(item => ['normal', 'ascendant', 'archiboss'].includes(item.type));
           const events = items.filter(item => item.type === 'event');
 
@@ -1662,16 +1752,15 @@
             events.forEach((event, index) => {
               const iconUrl = EVENT_ICONS[event.name] || "";
               if (iconUrl) {
-                // Déterminer la classe selon la position de l'événement
                 let eventClass = "";
                 if (index >= 0 && index <= 2) {
-                  eventClass = "event-paix"; // Les 3 premiers: PAIX (bleu)
+                  eventClass = "event-paix";
                 } else if (index === 3) {
-                  eventClass = "event-coop"; // 4ème: COOP (vert)
+                  eventClass = "event-coop";
                 } else if (index === 4) {
-                  eventClass = "event-dominion"; // 5ème: DOMINION (rouge)
+                  eventClass = "event-dominion";
                 } else if (index === 5) {
-                  eventClass = "event-guild"; // 6ème: GUILD (vert clair)
+                  eventClass = "event-guild";
                 }
 
                 cellContent += `
@@ -1684,7 +1773,8 @@
             cellContent += '</div>';
           }
 
-          html += `<div class="event-cell">${cellContent}</div>`;
+          const isTodayAndNextHour = (index === 0 && isNextHour);
+          html += `<div class="event-cell ${isTodayAndNextHour ? 'next-hour' : ''}">${cellContent}</div>`;
         });
       });
 
@@ -1695,8 +1785,59 @@
       currentWeek = week;
       document.querySelectorAll('.week-toggle button').forEach(btn => btn.classList.remove('active'));
       document.getElementById(`btn-${week}`).classList.add('active');
-      renderCalendar();
+      // Fonction pour afficher l'heure actuelle
+    function updateCurrentTime() {
+      const now = new Date();
+      const timeString = now.toLocaleString('fr-FR', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      });
+      const weekType = currentWeek === 'pair' ? 'Paire' : 'Impaire';
+      const subElement = document.querySelector('.page-sub');
+      if (subElement) {
+        subElement.innerHTML = `${timeString} - Semaine ${weekType}`;
+      }
     }
+
+    updateCurrentTime();
+    setInterval(updateCurrentTime, 1000);
+
+    // Rafraîchir le calendrier toutes les minutes pour mettre à jour le highlight
+    setInterval(renderCalendar, 60000);
+
+    renderCalendar();
+      updateCurrentTime();
+    }
+
+    // Fonction pour afficher l'heure actuelle
+    function updateCurrentTime() {
+      const now = new Date();
+      const timeString = now.toLocaleString('fr-FR', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      });
+      const weekType = currentWeek === 'pair' ? 'Paire' : 'Impaire';
+      const subElement = document.querySelector('.page-sub');
+      if (subElement) {
+        subElement.innerHTML = `${timeString} - Semaine ${weekType}`;
+      }
+    }
+
+    updateCurrentTime();
+    setInterval(updateCurrentTime, 1000);
+
+    // Rafraîchir le calendrier toutes les minutes pour mettre à jour le highlight
+    setInterval(renderCalendar, 60000);
 
     renderCalendar();
   </script>
