@@ -1,7 +1,9 @@
-// ===== DONNÉES DU CALENDRIER THRONE AND LIBERTY =====
+// =====================================================
+// CALENDRIER THRONE AND LIBERTY - DONNÉES
 // Fichier externe : calendar-data.js
+// =====================================================
 
-// LOGOS DES BOSS
+// ===== LOGOS DES BOSS =====
 const BOSSLOGOSBASE = {
   'Daigon': 'https://cdn.questlog.gg/throne-and-liberty/assets/GameImage/MapIcon/DEWMFB/DagonOn.webp',
   'Leviathan': 'https://cdn.questlog.gg/throne-and-liberty/assets/GameImage/MapIcon/DEWMFB/LeviathanOn.webp',
@@ -31,7 +33,7 @@ const BOSSLOGOSBASE = {
   'Deluznoah Ascendant': 'https://cdn.questlog.gg/throne-and-liberty/assets/GameImage/MapIcon/DEWMB/WB/DelugeNoahOnSprite.webp',
 };
 
-// ICÔNES DES ÉVÉNEMENTS
+// ===== ICÔNES DES ÉVÉNEMENTS =====
 const EVENTICONS = {
   'Fete des recoltes de peipors': 'https://cdn.questlog.gg/throne-and-liberty/assets/GameImage/MapIcon/DEWMDE/OperationFloweringFaferOnSprite.webp',
   'Toucher curatif pour les betes celestes': 'https://cdn.questlog.gg/throne-and-liberty/assets/GameImage/MapIcon/DEWMDE/HealingTouch001OnSprite.webp',
@@ -53,71 +55,220 @@ const EVENTICONS = {
   'Fete des graines de campanule': 'https://cdn.questlog.gg/throne-and-liberty/assets/GameImage/MapIcon/DEWMDE/BellFlowerSeed001OnSprite.webp',
 };
 
-// CALENDRIER COMPLET (SEMAINES PAIRES ET IMPAIRES)
-    const CALENDAR_DATA = {
-      "pair": {
-
-        //  LUNDI 
-        "Lundi": {
-          "00h": [
-            { name: "La ceremonie de passage du Grand arbre", type: "event" },
-            { name: "Mettre fin a la frenesie de mana", type: "event" },
-            { name: "Concours de louveterie", type: "event" },
-            { name: "Requiem de lumiere", type: "event" },
-            { name: "Le meilleur moyen d'empecher le pire", type: "event" },
-            { name: "Le sceau du blizzard", type: "event" }
-          ],
-          "01h": [
-            { name: "Daigon", type: "normal" },
-            { name: "Excavateur-9", type: "ascendant" }
-          ],
-          "03h": [
-            { name: "Fete des recoltes de peipors", type: "event" },
-            { name: "Mica brun cache", type: "event" },
-            { name: "Concours de louveterie", type: "event" },
-            { name: "Fete des graines de campanule", type: "event" },
-            { name: "Le sceau du blizzard", type: "event" },
-            { name: "Operation Acquisition d'obsidienne", type: "event" }
-          ],
-          "06h": [
-            { name: "Le meilleur moyen d'empecher le pire", type: "event" },
-            { name: "Cueillette de champignons sanglants", type: "event" },
-            { name: "Rituel des pierres stellaires", type: "event" },
-            { name: "Fete du feu", type: "event" },
-            { name: "La ceremonie de passage du Grand arbre", type: "event" },
-            { name: "Fete des recoltes de peipors", type: "event" }            
-          ],
-          "09h": [
-            { name: "Operation Acquisition d'obsidienne", type: "event" },
-            { name: "Operation : Livraison de talismans", type: "event" },
-            { name: "Concours de louveterie", type: "event" },
-            { name: "Fete des graines de campanule", type: "event" },
-            { name: "Le meilleur moyen d'empecher le pire", type: "event" },
-            { name: "Le sceau du blizzard", type: "event" }
-          ],
-          "12h": [
-            { name: "Fete des recoltes de peipors", type: "event" },
-            { name: "Mica brun cache", type: "event" },
-            { name: "Rituel des pierres stellaires", type: "event" },
-            { name: "Toucher curatif pour les betes celestes", type: "event" },
-            { name: "Destructeurs des tenebres", type: "event" },
-            { name: "Requiem de lumiere", type: "event" }
-          ],
-          "13h": [
-            { name: "Manticus", type: "normal" },
-            { name: "Minezerok", type: "ascendant" }
-          ],
-          "15h": [
-            { name: "Le meilleur moyen d'empecher le pire", type: "event" },
-            { name: "Cueillette de champignons sanglants", type: "event" },
-            { name: "Concours de louveterie", type: "event" },
-            { name: "Fete du feu", type: "event" },
-            { name: "Requiem de lumiere", type: "event" },
-            { name: "La ceremonie de passage du Grand arbre", type: "event" }
-          ],
-          "16h": [
-            { name: "Leviathan", type: "normal" },
-            { name: "Junobote", type: "ascendant" }
-          ],
-            }
+// ===== DONNÉES CALENDRIER =====
+const CALENDARDATA = {
+  pair: {
+    'Lundi': {
+      '00h': [{name: 'La ceremonie de passage du Grand arbre', type: 'event'}, {name: 'Mettre fin a la frenesie de mana', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Le sceau du blizzard', type: 'event'}],
+      '01h': [{name: 'Daigon', type: 'normal'}, {name: 'Excavateur-9', type: 'ascendant'}],
+      '03h': [{name: 'Fete des recoltes de peipors', type: 'event'}, {name: 'Mica brun cache', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Fete des graines de campanule', type: 'event'}, {name: 'Le sceau du blizzard', type: 'event'}, {name: 'Operation Acquisition dobsidienne', type: 'event'}],
+      '06h': [{name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Cueillette de champignons sanglants', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'La ceremonie de passage du Grand arbre', type: 'event'}, {name: 'Fete des recoltes de peipors', type: 'event'}],
+      '09h': [{name: 'Operation Acquisition dobsidienne', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Fete des graines de campanule', type: 'event'}, {name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Le sceau du blizzard', type: 'event'}],
+      '12h': [{name: 'Fete des recoltes de peipors', type: 'event'}, {name: 'Mica brun cache', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Destructeurs des tenebres', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}],
+      '13h': [{name: 'Manticus', type: 'normal'}, {name: 'Minezerok', type: 'ascendant'}],
+      '15h': [{name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Cueillette de champignons sanglants', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'La ceremonie de passage du Grand arbre', type: 'event'}],
+      '16h': [{name: 'Leviathan', type: 'normal'}, {name: 'Junobote', type: 'ascendant'}],
+      '19h': [{name: 'Le sceau du blizzard', type: 'event'}, {name: 'La caravane du desert', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Operation Acquisition dobsidienne', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}],
+      '20h': [{name: 'Pakilo', type: 'normal'}, {name: 'Morokai', type: 'ascendant'}],
+      '22h': [{name: 'La ceremonie de passage du Grand arbre', type: 'event'}, {name: 'Mettre fin a la frenesie de mana', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Le sceau du blizzard', type: 'event'}],
+      '23h': [{name: 'Daigon', type: 'normal'}, {name: 'Cornelius', type: 'ascendant'}]
+    },
+    'Mardi': {
+      '00h': [{name: 'Operation Acquisition dobsidienne', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'Le sceau du blizzard', type: 'event'}, {name: 'Le meilleur moyen dempecher le pire', type: 'event'}],
+      '01h': [{name: 'Pakilo', type: 'normal'}, {name: 'Adentus', type: 'ascendant'}],
+      '03h': [{name: 'Fete des recoltes de peipors', type: 'event'}, {name: 'Cueillette de champignons sanglants', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Fete des graines de campanule', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'La ceremonie de passage du Grand arbre', type: 'event'}],
+      '06h': [{name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Mettre fin a la frenesie de mana', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'Fete du feu', type: 'event'}],
+      '09h': [{name: 'Fete des recoltes de peipors', type: 'event'}, {name: 'Mica brun cache', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'La ceremonie de passage du Grand arbre', type: 'event'}, {name: 'Destructeurs des tenebres', type: 'event'}],
+      '12h': [{name: 'Operation Acquisition dobsidienne', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Destructeurs des tenebres', type: 'event'}, {name: 'Fete du feu', type: 'event'}],
+      '13h': [{name: 'Daigon', type: 'normal'}, {name: 'Tchernobog', type: 'ascendant'}],
+      '15h': [{name: 'Le sceau du blizzard', type: 'event'}, {name: 'La caravane du desert', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}, {name: 'Le meilleur moyen dempecher le pire', type: 'event'}],
+      '16h': [{name: 'Manticus', type: 'normal'}, {name: 'Ahzreil', type: 'ascendant'}],
+      '19h': [{name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Cueillette de champignons sanglants', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'Rompre le charme du clair de lune', type: 'event'}, {name: 'La ceremonie de passage du Grand arbre', type: 'event'}],
+      '20h': [{name: 'Leviathan', type: 'normal'}, {name: 'Aridus', type: 'ascendant'}, {name: 'Tevent Ascendant', type: 'ascendant'}, {name: 'Bellandir Ascendant', type: 'ascendant'}],
+      '22h': [{name: 'La ceremonie de passage du Grand arbre', type: 'event'}, {name: 'Mettre fin a la frenesie de mana', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}, {name: 'Fete des recoltes de peipors', type: 'event'}],
+      '23h': [{name: 'Manticus', type: 'normal'}, {name: 'Malakar', type: 'ascendant'}]
+    },
+    'Mercredi': {
+      '00h': [{name: 'Le sceau du blizzard', type: 'event'}, {name: 'La caravane du desert', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'Operation Acquisition dobsidienne', type: 'event'}],
+      '01h': [{name: 'Pakilo', type: 'normal'}, {name: 'Kowazan', type: 'ascendant'}],
+      '03h': [{name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Cueillette de champignons sanglants', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Operation Acquisition dobsidienne', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}],
+      '06h': [{name: 'Le sceau du blizzard', type: 'event'}, {name: 'La caravane du desert', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Fete des graines de campanule', type: 'event'}, {name: 'Fete des recoltes de peipors', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}],
+      '09h': [{name: 'La ceremonie de passage du Grand arbre', type: 'event'}, {name: 'Mettre fin a la frenesie de mana', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Le sceau du blizzard', type: 'event'}],
+      '12h': [{name: 'Fete des recoltes de peipors', type: 'event'}, {name: 'Mica brun cache', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Fete des graines de campanule', type: 'event'}, {name: 'Le sceau du blizzard', type: 'event'}, {name: 'Operation Acquisition dobsidienne', type: 'event'}],
+      '13h': [{name: 'Leviathan', type: 'normal'}, {name: 'Talus', type: 'ascendant'}],
+      '15h': [{name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Cueillette de champignons sanglants', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'La ceremonie de passage du Grand arbre', type: 'event'}, {name: 'Fete des graines de campanule', type: 'event'}],
+      '16h': [{name: 'Manticus', type: 'normal'}, {name: 'Grand Aelon', type: 'ascendant'}],
+      '19h': [{name: 'Operation Acquisition dobsidienne', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Fete des graines de campanule', type: 'event'}, {name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Le sceau du blizzard', type: 'event'}],
+      '20h': [{name: 'Daigon', type: 'normal'}, {name: 'Aridus', type: 'ascendant'}, {name: 'Cordy', type: 'normal'}, {name: 'Tevent', type: 'normal'}],
+      '22h': [{name: 'Fete des recoltes de peipors', type: 'event'}, {name: 'Mica brun cache', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Destructeurs des tenebres', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}],
+      '23h': [{name: 'Pakilo', type: 'normal'}, {name: 'Nirma', type: 'ascendant'}]
+    },
+    'Jeudi': {
+      '00h': [],
+      '01h': [{name: 'Leviathan', type: 'normal'}, {name: 'Ahzreil', type: 'ascendant'}],
+      '03h': [{name: 'Le sceau du blizzard', type: 'event'}, {name: 'La caravane du desert', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Operation Acquisition dobsidienne', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}],
+      '06h': [{name: 'La ceremonie de passage du Grand arbre', type: 'event'}, {name: 'Mettre fin a la frenesie de mana', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'Fete des recoltes de peipors', type: 'event'}, {name: 'Destructeurs des tenebres', type: 'event'}],
+      '09h': [{name: 'Operation Acquisition dobsidienne', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'Le sceau du blizzard', type: 'event'}, {name: 'Le meilleur moyen dempecher le pire', type: 'event'}],
+      '12h': [{name: 'Fete des recoltes de peipors', type: 'event'}, {name: 'Cueillette de champignons sanglants', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'Fete du feu', type: 'event'}],
+      '13h': [{name: 'Daigon', type: 'normal'}, {name: 'Excavateur-9', type: 'ascendant'}],
+      '15h': [{name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Mettre fin a la frenesie de mana', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'Fete du feu', type: 'event'}],
+      '16h': [{name: 'Manticus', type: 'normal'}, {name: 'Minezerok', type: 'ascendant'}],
+      '19h': [{name: 'Fete des recoltes de peipors', type: 'event'}, {name: 'Mica brun cache', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'La ceremonie de passage du Grand arbre', type: 'event'}, {name: 'Destructeurs des tenebres', type: 'event'}],
+      '20h': [{name: 'Leviathan', type: 'normal'}, {name: 'Junobote', type: 'ascendant'}],
+      '22h': [{name: 'Operation Acquisition dobsidienne', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Destructeurs des tenebres', type: 'event'}, {name: 'Fete du feu', type: 'event'}],
+      '23h': [{name: 'Pakilo', type: 'normal'}, {name: 'Morokai', type: 'ascendant'}]
+    },
+    'Vendredi': {
+      '00h': [{name: 'Le sceau du blizzard', type: 'event'}, {name: 'La caravane du desert', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}, {name: 'Le meilleur moyen dempecher le pire', type: 'event'}],
+      '01h': [{name: 'Daigon', type: 'normal'}, {name: 'Cornelius', type: 'ascendant'}],
+      '03h': [{name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Cueillette de champignons sanglants', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'La ceremonie de passage du Grand arbre', type: 'event'}],
+      '06h': [{name: 'La ceremonie de passage du Grand arbre', type: 'event'}, {name: 'Mettre fin a la frenesie de mana', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}, {name: 'Fete des recoltes de peipors', type: 'event'}],
+      '09h': [{name: 'Le sceau du blizzard', type: 'event'}, {name: 'La caravane du desert', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'Operation Acquisition dobsidienne', type: 'event'}],
+      '12h': [{name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Cueillette de champignons sanglants', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Operation Acquisition dobsidienne', type: 'event'}, {name: 'Rompre le charme du clair de lune', type: 'event'}],
+      '13h': [{name: 'Pakilo', type: 'normal'}, {name: 'Adentus', type: 'ascendant'}],
+      '15h': [{name: 'Le sceau du blizzard', type: 'event'}, {name: 'La caravane du desert', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Fete des graines de campanule', type: 'event'}, {name: 'Fete des recoltes de peipors', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}],
+      '16h': [{name: 'Daigon', type: 'normal'}, {name: 'Tchernobog', type: 'ascendant'}],
+      '19h': [{name: 'La ceremonie de passage du Grand arbre', type: 'event'}, {name: 'Mettre fin a la frenesie de mana', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Le sceau du blizzard', type: 'event'}],
+      '20h': [{name: 'Manticus', type: 'normal'}, {name: 'Ahzreil', type: 'ascendant'}, {name: 'Bellandir', type: 'normal'}, {name: 'Deluznoah', type: 'normal'}],
+      '22h': [{name: 'Fete des recoltes de peipors', type: 'event'}, {name: 'Mica brun cache', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Fete des graines de campanule', type: 'event'}, {name: 'Le sceau du blizzard', type: 'event'}, {name: 'Operation Acquisition dobsidienne', type: 'event'}],
+      '23h': [{name: 'Leviathan', type: 'normal'}, {name: 'Aridus', type: 'ascendant'}]
+    },
+    'Samedi': {
+      '00h': [{name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Cueillette de champignons sanglants', type: 'event'}, {name: '', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'La ceremonie de passage du Grand arbre', type: 'event'}, {name: 'Fete des recoltes de peipors', type: 'event'}],
+      '01h': [{name: 'Manticus', type: 'normal'}, {name: 'Malakar', type: 'ascendant'}],
+      '03h': [{name: 'Operation Acquisition dobsidienne', type: 'event'}, {name: 'Rompre le charme du clair de lune', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Fete des graines de campanule', type: 'event'}, {name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Le sceau du blizzard', type: 'event'}],
+      '06h': [{name: 'Fete des recoltes de peipors', type: 'event'}, {name: 'Mica brun cache', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Destructeurs des tenebres', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}],
+      '09h': [{name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Cueillette de champignons sanglants', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'La ceremonie de passage du Grand arbre', type: 'event'}],
+      '12h': [{name: 'Le sceau du blizzard', type: 'event'}, {name: 'La caravane du desert', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Operation Acquisition dobsidienne', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}],
+      '13h': [{name: 'Pakilo', type: 'normal'}, {name: 'Kowazan', type: 'ascendant'}],
+      '15h': [{name: 'La ceremonie de passage du Grand arbre', type: 'event'}, {name: 'Mettre fin a la frenesie de mana', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'Fete des recoltes de peipors', type: 'event'}, {name: 'Destructeurs des tenebres', type: 'event'}],
+      '16h': [{name: 'Leviathan', type: 'normal'}, {name: 'Talus', type: 'ascendant'}],
+      '19h': [{name: 'Operation Acquisition dobsidienne', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'Le sceau du blizzard', type: 'event'}, {name: 'Le meilleur moyen dempecher le pire', type: 'event'}],
+      '20h': [{name: 'Manticus', type: 'normal'}, {name: 'Grand Aelon', type: 'ascendant'}, {name: 'Tevent Ascendant', type: 'ascendant'}, {name: 'Bellandir Ascendant', type: 'ascendant'}],
+      '22h': [{name: 'Fete des recoltes de peipors', type: 'event'}, {name: 'Cueillette de champignons sanglants', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Fete des graines de campanule', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'La ceremonie de passage du Grand arbre', type: 'event'}],
+      '23h': [{name: 'Daigon', type: 'normal'}, {name: 'Adentus', type: 'ascendant'}]
+    },
+    'Dimanche': {
+      '00h': [{name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Mettre fin a la frenesie de mana', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'Fete du feu', type: 'event'}],
+      '01h': [{name: 'Pakilo', type: 'normal'}, {name: 'Nirma', type: 'ascendant'}],
+      '03h': [{name: 'Fete des recoltes de peipors', type: 'event'}, {name: 'Mica brun cache', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'La ceremonie de passage du Grand arbre', type: 'event'}, {name: 'Destructeurs des tenebres', type: 'event'}],
+      '06h': [{name: 'Operation Acquisition dobsidienne', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Destructeurs des tenebres', type: 'event'}, {name: 'Fete du feu', type: 'event'}],
+      '09h': [{name: 'Le sceau du blizzard', type: 'event'}, {name: 'La caravane du desert', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}, {name: 'Le meilleur moyen dempecher le pire', type: 'event'}],
+      '12h': [{name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Cueillette de champignons sanglants', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'La ceremonie de passage du Grand arbre', type: 'event'}],
+      '13h': [{name: 'Leviathan', type: 'normal'}, {name: 'Ahzreil', type: 'ascendant'}],
+      '15h': [{name: 'La ceremonie de passage du Grand arbre', type: 'event'}, {name: 'Mettre fin a la frenesie de mana', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Rompre le charme du clair de lune', type: 'event'}, {name: 'Fete des recoltes de peipors', type: 'event'}],
+      '16h': [{name: 'Daigon', type: 'normal'}, {name: 'Talus', type: 'ascendant'}],
+      '19h': [{name: 'Le sceau du blizzard', type: 'event'}, {name: 'La caravane du desert', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'Operation Acquisition dobsidienne', type: 'event'}],
+      '20h': [{name: 'Manticus', type: 'normal'}, {name: 'Minezerok', type: 'ascendant'}],
+      '22h': [{name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Cueillette de champignons sanglants', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Operation Acquisition dobsidienne', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}],
+      '23h': [{name: 'Leviathan', type: 'normal'}, {name: 'Junobote', type: 'ascendant'}]
+    }
+  },
+  impair: {
+    'Lundi': {
+      '00h': [{name: 'Fete des recoltes de peipors', type: 'event'}, {name: 'Mica brun cache', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Fete des graines de campanule', type: 'event'}, {name: 'Le sceau du blizzard', type: 'event'}, {name: 'Operation Acquisition dobsidienne', type: 'event'}],
+      '01h': [{name: 'Daigon', type: 'normal'}, {name: 'Adentus', type: 'ascendant'}],
+      '03h': [{name: 'Fete des recoltes de peipors', type: 'event'}, {name: 'Cueillette de champignons sanglants', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Fete des graines de campanule', type: 'event'}, {name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Fete du feu', type: 'event'}],
+      '06h': [{name: 'Operation Acquisition dobsidienne', type: 'event'}, {name: 'Rompre le charme du clair de lune', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Fete des graines de campanule', type: 'event'}, {name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Le sceau du blizzard', type: 'event'}],
+      '09h': [{name: 'Fete des recoltes de peipors', type: 'event'}, {name: 'Mica brun cache', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Destructeurs des tenebres', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}],
+      '12h': [{name: 'Le sceau du blizzard', type: 'event'}, {name: 'La caravane du desert', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Operation Acquisition dobsidienne', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}],
+      '13h': [{name: 'Pakilo', type: 'normal'}, {name: 'Kowazan', type: 'ascendant'}],
+      '15h': [{name: 'La ceremonie de passage du Grand arbre', type: 'event'}, {name: 'Mettre fin a la frenesie de mana', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'Fete des recoltes de peipors', type: 'event'}, {name: 'Destructeurs des tenebres', type: 'event'}],
+      '16h': [{name: 'Leviathan', type: 'normal'}, {name: 'Talus', type: 'ascendant'}],
+      '19h': [{name: 'Operation Acquisition dobsidienne', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'Le sceau du blizzard', type: 'event'}, {name: 'Le meilleur moyen dempecher le pire', type: 'event'}],
+      '20h': [{name: 'Manticus', type: 'normal'}, {name: 'Grand Aelon', type: 'ascendant'}],
+      '22h': [{name: 'Fete des recoltes de peipors', type: 'event'}, {name: 'Cueillette de champignons sanglants', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Fete des graines de campanule', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'La ceremonie de passage du Grand arbre', type: 'event'}],
+      '23h': [{name: 'Daigon', type: 'normal'}, {name: 'Adentus', type: 'ascendant'}]
+    },
+    'Mardi': {
+      '00h': [{name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Cueillette de champignons sanglants', type: 'event'}, {name: '', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'La ceremonie de passage du Grand arbre', type: 'event'}, {name: 'Fete des recoltes de peipors', type: 'event'}],
+      '01h': [{name: 'Manticus', type: 'normal'}, {name: 'Malakar', type: 'ascendant'}],
+      '03h': [{name: 'Operation Acquisition dobsidienne', type: 'event'}, {name: 'Rompre le charme du clair de lune', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Fete des graines de campanule', type: 'event'}, {name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Le sceau du blizzard', type: 'event'}],
+      '06h': [{name: 'Fete des recoltes de peipors', type: 'event'}, {name: 'Mica brun cache', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Destructeurs des tenebres', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}],
+      '09h': [{name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Cueillette de champignons sanglants', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'La ceremonie de passage du Grand arbre', type: 'event'}],
+      '12h': [{name: 'Le sceau du blizzard', type: 'event'}, {name: 'La caravane du desert', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Operation Acquisition dobsidienne', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}],
+      '13h': [{name: 'Pakilo', type: 'normal'}, {name: 'Kowazan', type: 'ascendant'}],
+      '15h': [{name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Cueillette de champignons sanglants', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'La ceremonie de passage du Grand arbre', type: 'event'}, {name: 'Fete des graines de campanule', type: 'event'}],
+      '16h': [{name: 'Leviathan', type: 'normal'}, {name: 'Talus', type: 'ascendant'}],
+      '19h': [{name: 'Operation Acquisition dobsidienne', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'Le sceau du blizzard', type: 'event'}, {name: 'Le meilleur moyen dempecher le pire', type: 'event'}],
+      '20h': [{name: 'Manticus', type: 'normal'}, {name: 'Grand Aelon', type: 'ascendant'}, {name: 'Tevent Ascendant', type: 'ascendant'}, {name: 'Bellandir Ascendant', type: 'ascendant'}],
+      '22h': [{name: 'Fete des recoltes de peipors', type: 'event'}, {name: 'Cueillette de champignons sanglants', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Fete des graines de campanule', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'La ceremonie de passage du Grand arbre', type: 'event'}],
+      '23h': [{name: 'Daigon', type: 'normal'}, {name: 'Adentus', type: 'ascendant'}]
+    },
+    'Mercredi': {
+      '00h': [{name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Mettre fin a la frenesie de mana', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'Fete du feu', type: 'event'}],
+      '01h': [{name: 'Pakilo', type: 'normal'}, {name: 'Nirma', type: 'ascendant'}],
+      '03h': [{name: 'Fete des recoltes de peipors', type: 'event'}, {name: 'Mica brun cache', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'La ceremonie de passage du Grand arbre', type: 'event'}, {name: 'Destructeurs des tenebres', type: 'event'}],
+      '06h': [{name: 'Operation Acquisition dobsidienne', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Destructeurs des tenebres', type: 'event'}, {name: 'Fete du feu', type: 'event'}],
+      '09h': [{name: 'Le sceau du blizzard', type: 'event'}, {name: 'La caravane du desert', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}, {name: 'Le meilleur moyen dempecher le pire', type: 'event'}],
+      '12h': [{name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Cueillette de champignons sanglants', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'La ceremonie de passage du Grand arbre', type: 'event'}],
+      '13h': [{name: 'Leviathan', type: 'normal'}, {name: 'Ahzreil', type: 'ascendant'}],
+      '15h': [{name: 'La ceremonie de passage du Grand arbre', type: 'event'}, {name: 'Mettre fin a la frenesie de mana', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Rompre le charme du clair de lune', type: 'event'}, {name: 'Fete des recoltes de peipors', type: 'event'}],
+      '16h': [{name: 'Daigon', type: 'normal'}, {name: 'Talus', type: 'ascendant'}],
+      '19h': [{name: 'Le sceau du blizzard', type: 'event'}, {name: 'La caravane du desert', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'Operation Acquisition dobsidienne', type: 'event'}],
+      '20h': [{name: 'Manticus', type: 'normal'}, {name: 'Minezerok', type: 'ascendant'}],
+      '22h': [{name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Cueillette de champignons sanglants', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Operation Acquisition dobsidienne', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}],
+      '23h': [{name: 'Leviathan', type: 'normal'}, {name: 'Junobote', type: 'ascendant'}]
+    },
+    'Jeudi': {
+      '00h': [{name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Mettre fin a la frenesie de mana', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'Fete du feu', type: 'event'}],
+      '01h': [{name: 'Pakilo', type: 'normal'}, {name: 'Nirma', type: 'ascendant'}],
+      '03h': [{name: 'Fete des recoltes de peipors', type: 'event'}, {name: 'Mica brun cache', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'La ceremonie de passage du Grand arbre', type: 'event'}, {name: 'Destructeurs des tenebres', type: 'event'}],
+      '06h': [{name: 'Operation Acquisition dobsidienne', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Destructeurs des tenebres', type: 'event'}, {name: 'Fete du feu', type: 'event'}],
+      '09h': [{name: 'Le sceau du blizzard', type: 'event'}, {name: 'La caravane du desert', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}, {name: 'Le meilleur moyen dempecher le pire', type: 'event'}],
+      '12h': [{name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Cueillette de champignons sanglants', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'La ceremonie de passage du Grand arbre', type: 'event'}],
+      '13h': [{name: 'Leviathan', type: 'normal'}, {name: 'Ahzreil', type: 'ascendant'}],
+      '15h': [{name: 'La ceremonie de passage du Grand arbre', type: 'event'}, {name: 'Mettre fin a la frenesie de mana', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Rompre le charme du clair de lune', type: 'event'}, {name: 'Fete des recoltes de peipors', type: 'event'}],
+      '16h': [{name: 'Daigon', type: 'normal'}, {name: 'Talus', type: 'ascendant'}],
+      '19h': [{name: 'Le sceau du blizzard', type: 'event'}, {name: 'La caravane du desert', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'Operation Acquisition dobsidienne', type: 'event'}],
+      '20h': [{name: 'Manticus', type: 'normal'}, {name: 'Minezerok', type: 'ascendant'}],
+      '22h': [{name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Cueillette de champignons sanglants', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Operation Acquisition dobsidienne', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}],
+      '23h': [{name: 'Leviathan', type: 'normal'}, {name: 'Junobote', type: 'ascendant'}]
+    },
+    'Vendredi': {
+      '00h': [{name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Mettre fin a la frenesie de mana', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'Fete du feu', type: 'event'}],
+      '01h': [{name: 'Pakilo', type: 'normal'}, {name: 'Nirma', type: 'ascendant'}],
+      '03h': [{name: 'Fete des recoltes de peipors', type: 'event'}, {name: 'Mica brun cache', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'La ceremonie de passage du Grand arbre', type: 'event'}, {name: 'Destructeurs des tenebres', type: 'event'}],
+      '06h': [{name: 'Operation Acquisition dobsidienne', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Destructeurs des tenebres', type: 'event'}, {name: 'Fete du feu', type: 'event'}],
+      '09h': [{name: 'Le sceau du blizzard', type: 'event'}, {name: 'La caravane du desert', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}, {name: 'Le meilleur moyen dempecher le pire', type: 'event'}],
+      '12h': [{name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Cueillette de champignons sanglants', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'La ceremonie de passage du Grand arbre', type: 'event'}],
+      '13h': [{name: 'Leviathan', type: 'normal'}, {name: 'Ahzreil', type: 'ascendant'}],
+      '15h': [{name: 'La ceremonie de passage du Grand arbre', type: 'event'}, {name: 'Mettre fin a la frenesie de mana', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Rompre le charme du clair de lune', type: 'event'}, {name: 'Fete des recoltes de peipors', type: 'event'}],
+      '16h': [{name: 'Daigon', type: 'normal'}, {name: 'Talus', type: 'ascendant'}],
+      '19h': [{name: 'Le sceau du blizzard', type: 'event'}, {name: 'La caravane du desert', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'Operation Acquisition dobsidienne', type: 'event'}],
+      '20h': [{name: 'Manticus', type: 'normal'}, {name: 'Minezerok', type: 'ascendant'}],
+      '22h': [{name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Cueillette de champignons sanglants', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Operation Acquisition dobsidienne', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}],
+      '23h': [{name: 'Leviathan', type: 'normal'}, {name: 'Junobote', type: 'ascendant'}]
+    },
+    'Samedi': {
+      '00h': [{name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Mettre fin a la frenesie de mana', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'Fete du feu', type: 'event'}],
+      '01h': [{name: 'Pakilo', type: 'normal'}, {name: 'Nirma', type: 'ascendant'}],
+      '03h': [{name: 'Fete des recoltes de peipors', type: 'event'}, {name: 'Mica brun cache', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'La ceremonie de passage du Grand arbre', type: 'event'}, {name: 'Destructeurs des tenebres', type: 'event'}],
+      '06h': [{name: 'Operation Acquisition dobsidienne', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Destructeurs des tenebres', type: 'event'}, {name: 'Fete du feu', type: 'event'}],
+      '09h': [{name: 'Le sceau du blizzard', type: 'event'}, {name: 'La caravane du desert', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}, {name: 'Le meilleur moyen dempecher le pire', type: 'event'}],
+      '12h': [{name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Cueillette de champignons sanglants', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'La ceremonie de passage du Grand arbre', type: 'event'}],
+      '13h': [{name: 'Leviathan', type: 'normal'}, {name: 'Ahzreil', type: 'ascendant'}],
+      '15h': [{name: 'La ceremonie de passage du Grand arbre', type: 'event'}, {name: 'Mettre fin a la frenesie de mana', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Rompre le charme du clair de lune', type: 'event'}, {name: 'Fete des recoltes de peipors', type: 'event'}],
+      '16h': [{name: 'Daigon', type: 'normal'}, {name: 'Talus', type: 'ascendant'}],
+      '19h': [{name: 'Le sceau du blizzard', type: 'event'}, {name: 'La caravane du desert', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'Operation Acquisition dobsidienne', type: 'event'}],
+      '20h': [{name: 'Manticus', type: 'normal'}, {name: 'Minezerok', type: 'ascendant'}],
+      '22h': [{name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Cueillette de champignons sanglants', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Operation Acquisition dobsidienne', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}],
+      '23h': [{name: 'Leviathan', type: 'normal'}, {name: 'Junobote', type: 'ascendant'}]
+    },
+    'Dimanche': {
+      '00h': [{name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Mettre fin a la frenesie de mana', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'Fete du feu', type: 'event'}],
+      '01h': [{name: 'Pakilo', type: 'normal'}, {name: 'Nirma', type: 'ascendant'}],
+      '03h': [{name: 'Fete des recoltes de peipors', type: 'event'}, {name: 'Mica brun cache', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'La ceremonie de passage du Grand arbre', type: 'event'}, {name: 'Destructeurs des tenebres', type: 'event'}],
+      '06h': [{name: 'Operation Acquisition dobsidienne', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Destructeurs des tenebres', type: 'event'}, {name: 'Fete du feu', type: 'event'}],
+      '09h': [{name: 'Le sceau du blizzard', type: 'event'}, {name: 'La caravane du desert', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}, {name: 'Le meilleur moyen dempecher le pire', type: 'event'}],
+      '12h': [{name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Cueillette de champignons sanglants', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'La ceremonie de passage du Grand arbre', type: 'event'}],
+      '13h': [{name: 'Leviathan', type: 'normal'}, {name: 'Ahzreil', type: 'ascendant'}],
+      '15h': [{name: 'La ceremonie de passage du Grand arbre', type: 'event'}, {name: 'Mettre fin a la frenesie de mana', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Rompre le charme du clair de lune', type: 'event'}, {name: 'Fete des recoltes de peipors', type: 'event'}],
+      '16h': [{name: 'Daigon', type: 'normal'}, {name: 'Talus', type: 'ascendant'}],
+      '19h': [{name: 'Le sceau du blizzard', type: 'event'}, {name: 'La caravane du desert', type: 'event'}, {name: 'Rituel des pierres stellaires', type: 'event'}, {name: 'Requiem de lumiere', type: 'event'}, {name: 'Fete du feu', type: 'event'}, {name: 'Operation Acquisition dobsidienne', type: 'event'}],
+      '20h': [{name: 'Manticus', type: 'normal'}, {name: 'Minezerok', type: 'ascendant'}],
+      '22h': [{name: 'Le meilleur moyen dempecher le pire', type: 'event'}, {name: 'Cueillette de champignons sanglants', type: 'event'}, {name: 'Concours de louveterie', type: 'event'}, {name: 'Toucher curatif pour les betes celestes', type: 'event'}, {name: 'Operation Acquisition dobsidienne', type: 'event'}, {name: 'Operation Livraison de talismans', type: 'event'}],
+      '23h': [{name: 'Leviathan', type: 'normal'}, {name: 'Junobote', type: 'ascendant'}]
+    }
+  }
 };
