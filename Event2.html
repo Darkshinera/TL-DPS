@@ -12,6 +12,33 @@
       padding: 0;
     }
 
+    .notification-settings {
+    text-align: center;
+  margin: 15px 0;
+}
+
+#toggle-notifications {
+  padding: 10px 20px;
+  border: 2px solid #ef4444;
+  background: transparent;
+  color: #ef4444;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+
+#toggle-notifications.active {
+  background: #10b981;
+  border-color: #10b981;
+  color: white;
+}
+
+#toggle-notifications:hover {
+  transform: scale(1.05);
+}
+    
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       background: #050814;
@@ -464,6 +491,12 @@
         <button id="btn-pair" class="active" onclick="switchWeek('pair')">Semaine 1</button>
         <button id="btn-impair" onclick="switchWeek('impair')">Semaine 2</button>
       </div>
+      <div class="notification-settings">
+  <button id="toggle-notifications" onclick="toggleNotifications()">
+    🔕 Notifications désactivées
+  </button>
+</div>
+
     </div>
 
     <div id="calendar" class="calendar-grid"></div>
@@ -471,7 +504,63 @@
 
    <script>
 
-    // === SYSTÈME DE GESTION DES DATES ET NOTIFICATIONS ===
+    // Vérifier l'état des notifications au chargement
+function initNotifications() {
+  const enabled = localStorage.getItem('notificationsEnabled') === 'true';
+  const button = document.getElementById('toggle-notifications');
+  
+  if (enabled) {
+    button.textContent = '🔔 Notifications activées';
+    button.classList.add('active');
+  } else {
+    button.textContent = '🔕 Notifications désactivées';
+    button.classList.remove('active');
+  }
+}
+
+// Activer/Désactiver les notifications
+function toggleNotifications() {
+  const button = document.getElementById('toggle-notifications');
+  const currentState = localStorage.getItem('notificationsEnabled') === 'true';
+  
+  if (!currentState) {
+    // Demander la permission
+    if (Notification.permission === 'default') {
+      Notification.requestPermission().then(permission => {
+        if (permission === 'granted') {
+          localStorage.setItem('notificationsEnabled', 'true');
+          button.textContent = '🔔 Notifications activées';
+          button.classList.add('active');
+          
+          // Notification de test
+          new Notification("Throne and Liberty", {
+            body: "Notifications activées avec succès ! 🎉",
+            icon: "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_BFB_LycanthropeNSmuggler_On.webp"
+          });
+        } else {
+          alert("⚠️ Permission refusée. Active les notifications dans les paramètres de ton navigateur.");
+        }
+      });
+    } else if (Notification.permission === 'granted') {
+      localStorage.setItem('notificationsEnabled', 'true');
+      button.textContent = '🔔 Notifications activées';
+      button.classList.add('active');
+    } else {
+      alert("❌ Les notifications sont bloquées. Va dans les paramètres de ton navigateur pour les autoriser.");
+    }
+  } else {
+    // Désactiver
+    localStorage.setItem('notificationsEnabled', 'false');
+    button.textContent = '🔕 Notifications désactivées';
+    button.classList.remove('active');
+  }
+}
+
+// Appeler au chargement de la page
+window.addEventListener('DOMContentLoaded', initNotifications);
+     
+     
+     // === SYSTÈME DE GESTION DES DATES ET NOTIFICATIONS ===
     const currentRealDate = new Date();
     const referenceDate = new Date(2026, 0, 15);
 
@@ -694,15 +783,22 @@
     clearInterval(interval);
   });
 
-  // Notification système
-  if (Notification.permission === "granted") {
-    new Notification("Throne and Liberty", {
-      body: `${itemName} commence dans 10 minutes (${day} ${time})`,
-      icon: "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_BFB_LycanthropeNSmuggler_On.webp"
-    });
-  }
-}
+// ✅ Vérifier si l'utilisateur a activé les notifications
+const notificationsEnabled = localStorage.getItem('notificationsEnabled') === 'true';
 
+if (notificationsEnabled && Notification.permission === "granted") {
+  const notification = new Notification("Throne and Liberty", {
+    body: `${itemName} commence dans 10 minutes (${day} ${time})`,
+    icon: "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_BFB_LycanthropeNSmuggler_On.webp",
+    requireInteraction: true,  // Reste affichée
+    tag: itemName
+  });
+  
+  notification.onclick = () => {
+    window.focus();
+    notification.close();
+  };
+}
 
     function setupNotificationTimers() {
       notificationTimers.forEach(timer => clearTimeout(timer));
