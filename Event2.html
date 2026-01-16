@@ -650,11 +650,24 @@
     
     // ❌ ÉVÉNEMENT PASSÉ
     if (timeLeft <= 0) {
-      countdownElement.textContent = "⚠️ Événement passé";
-      popup.style.background = 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)';
-      setTimeout(() => popup.remove(), 10000); // Supprime après 10 secondes
-      return;
-    }
+  countdownElement.textContent = "⚠️ Événement passé";
+  popup.style.background = 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)';
+  
+  // ✅ DÉCOCHER AUTOMATIQUEMENT LA CHECKBOX
+  const checkbox = document.querySelector(`input[data-item="${itemName}"][data-day="${day}"][data-time="${time}"]`);
+  if (checkbox && checkbox.checked) {
+    checkbox.checked = false;
+    
+    // Mettre à jour le localStorage
+    const savedState = JSON.parse(localStorage.getItem('checkedItems')) || {};
+    const key = `${itemName}-${day}-${time}-${currentWeek}`;
+    delete savedState[key];
+    localStorage.setItem('checkedItems', JSON.stringify(savedState));
+  }
+  
+  setTimeout(() => popup.remove(), 10000);
+  return;
+}
     
     const totalSeconds = Math.floor(timeLeft / 1000);
     const minutes = Math.floor(totalSeconds / 60);
