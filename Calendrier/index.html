@@ -175,7 +175,7 @@ function showNotificationPopup(itemName, day, time) {
   popup.setAttribute('data-event', `${itemName}-${day}-${time}`);
   popup.innerHTML = `
     <div class="notification-content">
-      <div class="notification-icon">${BOSSLOGOSBASE[itemName] || EVENTICONS[itemName] ? '⚔️' : '📅'}</div>
+      <div class="notification-icon">⚔️</div>
       <div class="notification-text">
         <div class="notification-title">${itemName}</div>
         <div class="notification-subtitle" id="countdown-${itemName.replace(/\W/g, '')}">Calcul...</div>
@@ -218,8 +218,7 @@ function showNotificationPopup(itemName, day, time) {
 
   if (Notification.permission === 'granted') {
     new Notification('Throne and Liberty', {
-      body: `${itemName} commence dans 10 minutes - ${day} ${time}`,
-      icon: BOSSLOGOSBASE[itemName] || EVENTICONS[itemName]
+      body: `${itemName} commence dans 10 minutes - ${day} ${time}`
     });
   }
 }
@@ -237,6 +236,11 @@ function setupNotificationTimers() {
       notificationTimers.push(timer);
     }
   });
+}
+
+// ✅ FONCTION POUR DÉTECTER SI C'EST UNE URL OU UN EMOJI
+function isURL(str) {
+  return str && (str.startsWith('http://') || str.startsWith('https://') || str.startsWith('//'));
 }
 
 let currentWeek = 'pair';
@@ -277,7 +281,16 @@ function renderCalendar() {
             const bossIcon = BOSSLOGOSBASE[item.name] || '';
             if (bossIcon) {
               const hasNotif = isNotificationEnabled(day, time, item.name);
-              cellContent += `<div class="boss-small ${hasNotif ? 'has-notification' : ''}" data-boss-type="${item.type}" data-tooltip="${item.name}" onclick="toggleNotification('${day}', '${time}', '${item.name.replace(/'/g, "\\'")}', '${item.type}')"><img src="${bossIcon}" alt="${item.name}" /></div>`;
+              const safeName = item.name.replace(/'/g, "\\'");
+              
+              // ✅ CORRECTION : Détecter URL vs Emoji
+              if (isURL(bossIcon)) {
+                // C'est une URL d'image
+                cellContent += `<div class="boss-small ${hasNotif ? 'has-notification' : ''}" data-boss-type="${item.type}" data-tooltip="${item.name}" onclick="toggleNotification('${day}', '${time}', '${safeName}', '${item.type}')"><img src="${bossIcon}" alt="${item.name}" onerror="this.parentElement.innerHTML='${item.name.substring(0,3)}';" /></div>`;
+              } else {
+                // C'est un emoji ou texte
+                cellContent += `<div class="boss-small ${hasNotif ? 'has-notification' : ''}" data-boss-type="${item.type}" data-tooltip="${item.name}" onclick="toggleNotification('${day}', '${time}', '${safeName}', '${item.type}')" style="display: flex; align-items: center; justify-content: center; font-size: 20px;">${bossIcon}</div>`;
+              }
             }
           }
         }
@@ -299,10 +312,10 @@ function renderCalendar() {
         cellContent += '<div class="event-icons">';
         events.forEach((evt, index) => {
           const iconUrl = evt.isCustom 
-            ? (evt.icon && evt.icon.startsWith('http') ? evt.icon : null)
+            ? (evt.icon || "")
             : (EVENTICONS[evt.name] || "");
           
-          if (iconUrl || (evt.isCustom && evt.icon)) {
+          if (iconUrl) {
             let eventClass = "";
             if (index >= 0 && index <= 2) eventClass = "event-paix";
             else if (index === 3) eventClass = "event-coop";
@@ -310,22 +323,35 @@ function renderCalendar() {
             else if (index === 5) eventClass = "event-guild";
 
             const hasNotif = evt.notifications && isNotificationEnabled(day, evt.time || time, evt.name);
-            const safeEventName = (evt.name || evt.time).replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+            const safeEventName = (evt.name || evt.time).replace(/"/g, '&quot;').replace(/'/g, '&#39;'); // ✅ CORRECTION ICI
             
-            cellContent += `
-              <div class="event-icon ${eventClass} ${hasNotif ? 'has-notification' : ''} ${evt.isCustom ? 'custom-event' : ''}"
-                   data-tooltip="${safeEventName}"
-                   onclick="toggleNotification('${day}', '${evt.time || time}', '${safeEventName}', 'event')"
-                   data-day="${day}" data-time="${evt.time || time}" data-item-name="${safeEventName}" data-item-type="event">
-                ${iconUrl ? `<img src="${iconUrl}" alt="${safeEventName}" />` : (evt.icon || '📅')}
-              </div>
-            `;
+            // ✅ CORRECTION : Détecter URL vs Emoji pour les événements
+            if (isURL(iconUrl)) {
+              cellContent += `
+                <div class="event-icon ${eventClass} ${hasNotif ? 'has-notification' : ''} ${evt.isCustom ? 'custom-event' : ''}"
+                     data-tooltip="${safeEventName}"
+                     onclick="toggleNotification('${day}', '${evt.time || time}', '${safeEventName}', 'event')">
+                  <img src="${iconUrl}" alt="${safeEventName}" onerror="this.parentElement.innerHTML='${(evt.name || '').substring(0,2)}';" />
+                </div>
+              `;
+            } else {
+              // C'est un emoji
+              cellContent += `
+                <div class="event-icon ${eventClass} ${hasNotif ? 'has-notification' : ''} ${evt.isCustom ? 'custom-event' : ''}"
+                     data-tooltip="${safeEventName}"
+                     onclick="toggleNotification('${day}', '${evt.time || time}', '${safeEventName}', 'event')"
+                     style="display: flex; align-items: center; justify-content: center; font-size: 18px;">
+                  ${iconUrl}
+                </div>
+              `;
+            }
           }
         });
         cellContent += '</div>';
       }
 
-      const isNextEvent = findNextEvent()?.day === day && findNextEvent()?.time === time;
+      const nextEvent = findNextEvent();
+      const isNextEvent = nextEvent && nextEvent.day === day && nextEvent.time === time;
       html += `<div class="event-cell ${isNextEvent ? 'next-event' : ''}">${cellContent}</div>`;
     });
   });
