@@ -1,179 +1,241 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-<meta charset="UTF-8">
-<title>Calendrier Throne and Liberty - Événements PRO</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>Calendrier Throne and Liberty - Événements PRO</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-<div class="page">
-  <div class="page-header">
-    <div>
-      <h1 class="page-title">📅 Calendrier Throne and Liberty</h1>
-      <p class="page-sub">Bosses et événements dynamiques</p>
-    </div>
-    <div class="controls-wrapper">
-      <div class="week-toggle">
-        <button id="btn-pair" class="active" onclick="switchWeek('pair')">Semaine 1</button>
-        <button id="btn-impair" onclick="switchWeek('impair')">Semaine 2</button>
+  <div class="page">
+    <div class="main-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">📅 Calendrier Throne and Liberty</h1>
+          <p class="page-sub">Bosses et événements dynamiques</p>
+        </div>
+        <div class="controls-wrapper">
+          <div class="week-toggle">
+            <button id="btn-pair" class="active" onclick="switchWeek('pair')">Semaine 1</button>
+            <button id="btn-impair" onclick="switchWeek('impair')">Semaine 2</button>
+          </div>
+          <button id="add-custom-event">➕ Événement</button>
+          <button id="manage-custom-events">🛠️ Gérer Events</button>
+          <button id="discord-import-btn"
+            style="background: linear-gradient(135deg, #5865F2, #4752c4); color:white; border:none; padding:8px 16px; border-radius:6px; font-weight:bold; display:flex; align-items:center; gap:8px; cursor:pointer; box-shadow:0 2px 4px rgba(0,0,0,0.2);">
+            👾 Discord
+          </button>
+        </div>
       </div>
-      <button id="add-custom-event">➕ Événement PRO</button>
+      <div id="calendar" class="calendar-grid"></div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar-container">
+      <div class="sidebar-panel">
+        <div class="sidebar-title">⏱️ Prochain Événement</div>
+        <div class="next-event-countdown" id="sidebar-countdown">
+          <div class="countdown-label">Commence dans</div>
+          <div class="countdown-timer" id="global-timer">--:--:--</div>
+          <div class="countdown-event-name" id="global-event-name">Aucun événement suivi</div>
+        </div>
+
+        <div class="sidebar-title">🔔 Événements Suivis</div>
+        <div class="tracked-events-list" id="tracked-list">
+          <!-- Populated by JS -->
+          <div style="color: #6b7280; font-size: 13px; text-align: center; padding: 20px;">
+            Cliquez sur un événement pour le suivre
+          </div>
+        </div>
+
+        <!-- MENU DISCORD (Inséré ici) -->
+        <div id="discord-sidebar-panel" style="margin-top: 20px; margin-bottom: 20px;">
+          <div class="sidebar-title" style="display: flex; align-items: center; justify-content: space-between;">
+            <div style="cursor: pointer; display:flex; align-items:center; gap:6px;"
+              onclick="discordManager.openModal()">
+              <span id="discord-sidebar-icon">👾</span> Événements Discord <span
+                style="font-size:12px; opacity:0.7;">⚙️</span>
+            </div>
+            <button onclick="discordManager.toggleSidebar()" id="discord-toggle-btn"
+              style="background:transparent; border:none; color:white; font-size:16px; cursor:pointer;"
+              title="Réduire/Agrandir">➖</button>
+          </div>
+          <div class="tracked-events-list" id="discord-sidebar-list"
+            style="transition: max-height 0.3s ease-out; overflow: hidden;">
+            <!-- Rempli par JS -->
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div id="calendar" class="calendar-grid"></div>
-</div>
+  <!-- ⚠️ ORDRE CRUCIAL : D'ABORD LES DONNÉES -->
+  <script src="calendar-data.js"></script>
 
-<!-- ⚠️ ORDRE CRUCIAL : D'ABORD LES DONNÉES -->
-<script src="calendar-data.js"></script>
+  <!-- PUIS LA LOGIQUE -->
+  <script>
+    // Vérification que les données sont chargées
+    if (typeof CALENDARDATA === 'undefined') {
+      alert('❌ ERREUR : calendar-data.js non chargé !');
+      console.error('Les données du calendrier ne sont pas disponibles');
+    }
 
-<!-- PUIS LA LOGIQUE -->
-<script>
-// Vérification que les données sont chargées
-if (typeof CALENDARDATA === 'undefined') {
-  alert('❌ ERREUR : calendar-data.js non chargé !');
-  console.error('Les données du calendrier ne sont pas disponibles');
-}
+    // ===== SYSTÈME DE GESTION DES DATES ET NOTIFICATIONS =====
+    const currentRealDate = new Date();
+    const referenceDate = new Date(2026, 0, 15);
+    let notificationPreferences = JSON.parse(localStorage.getItem('calendarNotifications') || '[]');
+    let notificationTimers = [];
 
-// ===== SYSTÈME DE GESTION DES DATES ET NOTIFICATIONS =====
-const currentRealDate = new Date();
-const referenceDate = new Date(2026, 0, 15);
-let notificationPreferences = JSON.parse(localStorage.getItem('calendarNotifications') || '[]');
-let notificationTimers = [];
+    // ===== ÉVÉNEMENTS PERSONNELS PRO =====
+    let CUSTOM_EVENTS = JSON.parse(localStorage.getItem('customEventsPro') || '[]');
+    let slotCount = 1;
 
-// ===== ÉVÉNEMENTS PERSONNELS PRO =====
-let CUSTOM_EVENTS = JSON.parse(localStorage.getItem('customEventsPro') || '[]');
-let slotCount = 1;
+    function getWeekNumber(d) {
+      const tempDate = new Date(d.valueOf());
+      const dayNum = tempDate.getDay() === 6 ? 7 : tempDate.getDay();
+      tempDate.setDate(tempDate.getDate() - dayNum + 3);
+      const firstThursday = tempDate.valueOf();
+      tempDate.setMonth(0, 1);
+      if (tempDate.getDay() !== 4) {
+        tempDate.setMonth(0, 1 + ((4 - tempDate.getDay()) + 7) % 7);
+      }
+      return 1 + Math.ceil((firstThursday - tempDate) / 604800000);
+    }
 
-function getWeekNumber(d) {
-  const tempDate = new Date(d.valueOf());
-  const dayNum = tempDate.getDay() === 6 ? 7 : tempDate.getDay();
-  tempDate.setDate(tempDate.getDate() - dayNum + 3);
-  const firstThursday = tempDate.valueOf();
-  tempDate.setMonth(0, 1);
-  if (tempDate.getDay() !== 4) {
-    tempDate.setMonth(0, 1 + ((4 - tempDate.getDay()) + 7) % 7);
-  }
-  return 1 + Math.ceil((firstThursday - tempDate) / 604800000);
-}
+    function isEvenWeek(date) {
+      const refWeek = getWeekNumber(referenceDate);
+      const currentWeek = getWeekNumber(date);
+      const weekDiff = currentWeek - refWeek;
+      return (weekDiff % 2) === 0;
+    }
 
-function isEvenWeek(date) {
-  const refWeek = getWeekNumber(referenceDate);
-  const currentWeek = getWeekNumber(date);
-  const weekDiff = currentWeek - refWeek;
-  return (weekDiff % 2) === 0;
-}
+    function getMondayOfWeek(date) {
+      const d = new Date(date);
+      const day = d.getDay();
+      const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+      return new Date(d.setDate(diff));
+    }
 
-function getMondayOfWeek(date) {
-  const d = new Date(date);
-  const day = d.getDay();
-  const diff = d.getDate() - day + (day === 0 ? -6 : 1);
-  return new Date(d.setDate(diff));
-}
+    function getWeekDates(weekType) {
+      const monday = getMondayOfWeek(currentRealDate);
+      const currentIsPair = isEvenWeek(currentRealDate);
+      if (weekType === 'impair' && currentIsPair) {
+        monday.setDate(monday.getDate() + 7);
+      } else if (weekType === 'pair' && !currentIsPair) {
+        monday.setDate(monday.getDate() + 7);
+      }
+      const dates = [];
+      for (let i = 0; i < 7; i++) {
+        const date = new Date(monday);
+        date.setDate(monday.getDate() + i);
+        dates.push(date);
+      }
+      return dates;
+    }
 
-function getWeekDates(weekType) {
-  const monday = getMondayOfWeek(currentRealDate);
-  const currentIsPair = isEvenWeek(currentRealDate);
-  if (weekType === 'impair' && currentIsPair) {
-    monday.setDate(monday.getDate() + 7);
-  } else if (weekType === 'pair' && !currentIsPair) {
-    monday.setDate(monday.getDate() + 7);
-  }
-  const dates = [];
-  for (let i = 0; i < 7; i++) {
-    const date = new Date(monday);
-    date.setDate(monday.getDate() + i);
-    dates.push(date);
-  }
-  return dates;
-}
+    function formatDate(date) {
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      return `${day}/${month}`;
+    }
 
-function formatDate(date) {
-  const day = String(date.getDate()).padStart(2, '0');
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  return `${day}/${month}`;
-}
+    function findNextEvent() {
+      const now = new Date();
+      const currentIsPair = isEvenWeek(now);
+      const weekType = currentIsPair ? 'pair' : 'impair';
+      if (currentWeek !== weekType) return null;
 
-function findNextEvent() {
-  const now = new Date();
-  const currentIsPair = isEvenWeek(now);
-  const weekType = currentIsPair ? 'pair' : 'impair';
-  if (currentWeek !== weekType) return null;
+      const currentDay = now.getDay() === 0 ? 6 : now.getDay() - 1;
+      const currentHour = now.getHours();
+      const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+      const times = ['00h', '01h', '03h', '06h', '09h', '12h', '13h', '15h', '16h', '19h', '20h', '22h', '23h'];
+      const timeToHour = { '00h': 0, '01h': 1, '03h': 3, '06h': 6, '09h': 9, '12h': 12, '13h': 13, '15h': 15, '16h': 16, '19h': 19, '20h': 20, '22h': 22, '23h': 23 };
 
-  const currentDay = now.getDay() === 0 ? 6 : now.getDay() - 1;
-  const currentHour = now.getHours();
-  const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
-  const times = ['00h', '01h', '03h', '06h', '09h', '12h', '13h', '15h', '16h', '19h', '20h', '22h', '23h'];
-  const timeToHour = { '00h': 0, '01h': 1, '03h': 3, '06h': 6, '09h': 9, '12h': 12, '13h': 13, '15h': 15, '16h': 16, '19h': 19, '20h': 20, '22h': 22, '23h': 23 };
+      for (let dayOffset = 0; dayOffset < 14; dayOffset++) {
+        const checkDay = (currentDay + dayOffset) % 7;
+        const dayName = days[checkDay];
+        for (let timeIdx = 0; timeIdx < times.length; timeIdx++) {
+          const time = times[timeIdx];
+          const hour = timeToHour[time];
+          if (dayOffset === 0 && hour <= currentHour) continue;
+          const data = CALENDARDATA[currentWeek];
+          const items = data[dayName][time];
+          if (items.length > 0) {
+            return { day: dayName, time: time };
+          }
+        }
+      }
+      return null;
+    }
 
-  for (let dayOffset = 0; dayOffset < 14; dayOffset++) {
-    const checkDay = (currentDay + dayOffset) % 7;
-    const dayName = days[checkDay];
-    for (let timeIdx = 0; timeIdx < times.length; timeIdx++) {
-      const time = times[timeIdx];
-      const hour = timeToHour[time];
-      if (dayOffset === 0 && hour <= currentHour) continue;
-      const data = CALENDARDATA[currentWeek];
-      const items = data[dayName][time];
-      if (items.length > 0) {
-        return { day: dayName, time: time };
+    function requestNotificationPermission() {
+      if ('Notification' in window) {
+        if (Notification.permission === 'default') {
+          Notification.requestPermission().then(function (permission) {
+            if (permission === 'granted') {
+              console.log('Notifications autorisées');
+            }
+          });
+        }
       }
     }
-  }
-  return null;
-}
 
-function requestNotificationPermission() {
-  if ('Notification' in window) {
-    if (Notification.permission === 'default') {
-      Notification.requestPermission().then(function(permission) {
-        if (permission === 'granted') {
-          console.log('Notifications autorisées');
-        }
-      });
+    function isNotificationEnabled(day, time, itemName) {
+      return notificationPreferences.some(n => n.day === day && n.time === time && n.itemName === itemName && n.week === currentWeek);
     }
-  }
-}
 
-function isNotificationEnabled(day, time, itemName) {
-  return notificationPreferences.some(n => n.day === day && n.time === time && n.itemName === itemName && n.week === currentWeek);
-}
+    function toggleNotification(day, time, itemName, itemType) {
+      requestNotificationPermission();
+      const existingIndex = notificationPreferences.findIndex(n => n.day === day && n.time === time && n.itemName === itemName && n.week === currentWeek);
+      if (existingIndex !== -1) {
+        notificationPreferences.splice(existingIndex, 1);
+      } else {
+        notificationPreferences.push({ week: currentWeek, day: day, time: time, itemName: itemName, itemType: itemType });
+      }
+      localStorage.setItem('calendarNotifications', JSON.stringify(notificationPreferences));
+      localStorage.setItem('calendarNotifications', JSON.stringify(notificationPreferences));
+      renderCalendar();
+      setupNotificationTimers();
+      updateNotificationSidebar();
+    }
 
-function toggleNotification(day, time, itemName, itemType) {
-  requestNotificationPermission();
-  const existingIndex = notificationPreferences.findIndex(n => n.day === day && n.time === time && n.itemName === itemName && n.week === currentWeek);
-  if (existingIndex !== -1) {
-    notificationPreferences.splice(existingIndex, 1);
-  } else {
-    notificationPreferences.push({ week: currentWeek, day: day, time: time, itemName: itemName, itemType: itemType });
-  }
-  localStorage.setItem('calendarNotifications', JSON.stringify(notificationPreferences));
-  renderCalendar();
-  setupNotificationTimers();
-}
+    function getEventDateTime(day, time, weekType) {
+      const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+      const dayIndex = days.indexOf(day);
+      const weekDates = getWeekDates(weekType);
 
-function getEventDateTime(day, time, weekType) {
-  const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
-  const dayIndex = days.indexOf(day);
-  const timeToHour = { '00h': 0, '01h': 1, '03h': 3, '06h': 6, '09h': 9, '12h': 12, '13h': 13, '15h': 15, '16h': 16, '19h': 19, '20h': 20, '22h': 22, '23h': 23 };
-  const hour = timeToHour[time] || 0;
-  const weekDates = getWeekDates(weekType);
-  const eventDate = new Date(weekDates[dayIndex]);
-  eventDate.setHours(hour, 0, 0, 0);
-  return eventDate;
-}
+      if (dayIndex === -1 || !weekDates[dayIndex]) return new Date(); // Fallback
 
-function showNotificationPopup(itemName, day, time) {
-  const existingPopup = document.querySelector(`[data-event="${itemName}-${day}-${time}"]`);
-  if (existingPopup) return;
+      const eventDate = new Date(weekDates[dayIndex]);
 
-  if (document.hidden) window.focus();
+      // Parse time string (supports "10h", "10:30", "10h30", "14:05" etc.)
+      let h = 0, m = 0;
+      if (time) {
+        const normalized = time.toString().replace('h', ':');
+        const parts = normalized.split(':');
+        if (parts.length >= 1) h = parseInt(parts[0], 10);
+        if (parts.length >= 2) m = parseInt(parts[1], 10);
+      }
 
-  const popup = document.createElement('div');
-  popup.className = 'notification-popup';
-  popup.setAttribute('data-event', `${itemName}-${day}-${time}`);
-  popup.innerHTML = `
+      if (isNaN(h)) h = 0;
+      if (isNaN(m)) m = 0;
+
+      eventDate.setHours(h, m, 0, 0);
+      return eventDate;
+    }
+
+    function showNotificationPopup(itemName, day, time) {
+      const existingPopup = document.querySelector(`[data-event="${itemName}-${day}-${time}"]`);
+      if (existingPopup) return;
+
+      if (document.hidden) window.focus();
+
+      const popup = document.createElement('div');
+      popup.className = 'notification-popup';
+      popup.setAttribute('data-event', `${itemName}-${day}-${time}`);
+      popup.innerHTML = `
     <div class="notification-content">
       <div class="notification-icon">⚔️</div>
       <div class="notification-text">
@@ -183,160 +245,441 @@ function showNotificationPopup(itemName, day, time) {
       <button class="notification-close" onclick="this.parentElement.parentElement.remove()">✕</button>
     </div>
   `;
-  document.body.appendChild(popup);
+      document.body.appendChild(popup);
 
-  const countdownElement = document.getElementById(`countdown-${itemName.replace(/\W/g, '')}`);
-  const eventDateTime = getEventDateTime(day, time, currentWeek);
+      const countdownElement = document.getElementById(`countdown-${itemName.replace(/\W/g, '')}`);
+      const eventDateTime = getEventDateTime(day, time, currentWeek);
 
-  function updateCountdown() {
-    const now = new Date();
-    const timeLeft = eventDateTime.getTime() - now.getTime();
-    if (timeLeft < 0) {
-      countdownElement.textContent = 'événement passé';
-      popup.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
-      setTimeout(() => popup.remove(), 10000);
-      return;
+      function updateCountdown() {
+        const now = new Date();
+        const timeLeft = eventDateTime.getTime() - now.getTime();
+        if (timeLeft < 0) {
+          countdownElement.textContent = 'événement passé';
+          popup.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
+          setTimeout(() => popup.remove(), 10000);
+          return;
+        }
+        const totalSeconds = Math.floor(timeLeft / 1000);
+        const minutes = Math.floor(totalSeconds / 60);
+        const seconds = totalSeconds % 60;
+        const hours = Math.floor(minutes / 60);
+        const mins = minutes % 60;
+        if (hours > 0) {
+          countdownElement.textContent = `Dans ${hours}h ${mins}m ${seconds}s - ${day} ${time}`;
+        } else if (minutes > 0) {
+          countdownElement.textContent = `Dans ${minutes}m ${seconds}s - ${day} ${time}`;
+        } else {
+          countdownElement.textContent = `Dans ${seconds} secondes ! - ${day} ${time}`;
+          popup.style.background = 'linear-gradient(135deg, #f59e0b, #d97706)';
+        }
+        if (timeLeft > 0) {
+          setTimeout(updateCountdown, 1000);
+        }
+      }
+      updateCountdown();
+
+      if (Notification.permission === 'granted') {
+        new Notification('Throne and Liberty', {
+          body: `${itemName} commence dans 10 minutes - ${day} ${time}`
+        });
+      }
     }
-    const totalSeconds = Math.floor(timeLeft / 1000);
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = totalSeconds % 60;
-    const hours = Math.floor(minutes / 60);
-    const mins = minutes % 60;
-    if (hours > 0) {
-      countdownElement.textContent = `Dans ${hours}h ${mins}m ${seconds}s - ${day} ${time}`;
-    } else if (minutes > 0) {
-      countdownElement.textContent = `Dans ${minutes}m ${seconds}s - ${day} ${time}`;
-    } else {
-      countdownElement.textContent = `Dans ${seconds} secondes ! - ${day} ${time}`;
-      popup.style.background = 'linear-gradient(135deg, #f59e0b, #d97706)';
+
+    function setupNotificationTimers() {
+      notificationTimers.forEach(timer => clearTimeout(timer));
+      notificationTimers = [];
+      notificationPreferences.forEach(notif => {
+        const eventTime = getEventDateTime(notif.day, notif.time, notif.week);
+        const notificationTime = new Date(eventTime.getTime() - 10 * 60 * 1000);
+        const now = new Date();
+        const timeUntilNotification = notificationTime.getTime() - now.getTime();
+        if (timeUntilNotification > 0) {
+          const timer = setTimeout(() => showNotificationPopup(notif.itemName, notif.day, notif.time), timeUntilNotification);
+          notificationTimers.push(timer);
+        }
+      });
+      // Start global sidebar timer
+      updateSidebarCountdown();
     }
-    if (timeLeft > 0) {
-      setTimeout(updateCountdown, 1000);
-    }
-  }
-  updateCountdown();
 
-  if (Notification.permission === 'granted') {
-    new Notification('Throne and Liberty', {
-      body: `${itemName} commence dans 10 minutes - ${day} ${time}`
-    });
-  }
-}
+    // ===== SIDEBAR LOGIC =====
+    let sidebarInterval = null;
 
-function setupNotificationTimers() {
-  notificationTimers.forEach(timer => clearTimeout(timer));
-  notificationTimers = [];
-  notificationPreferences.forEach(notif => {
-    const eventTime = getEventDateTime(notif.day, notif.time, notif.week);
-    const notificationTime = new Date(eventTime.getTime() - 10 * 60 * 1000);
-    const now = new Date();
-    const timeUntilNotification = notificationTime.getTime() - now.getTime();
-    if (timeUntilNotification > 0) {
-      const timer = setTimeout(() => showNotificationPopup(notif.itemName, notif.day, notif.time), timeUntilNotification);
-      notificationTimers.push(timer);
-    }
-  });
-}
+    function updateNotificationSidebar() {
+      const list = document.getElementById('tracked-list');
+      if (!list) return;
 
-// ✅ FONCTION POUR DÉTECTER SI C'EST UNE URL OU UN EMOJI
-function isURL(str) {
-  return str && (str.startsWith('http://') || str.startsWith('https://') || str.startsWith('//'));
-}
+      list.innerHTML = '';
 
-let currentWeek = 'pair';
+      const upcomingEvents = [];
+      const now = new Date();
 
-// ===== FONCTION RENDRE CALENDRIER =====
-function renderCalendar() {
-  const calendar = document.getElementById('calendar');
-  let html = '';
-  const weekDates = getWeekDates(currentWeek);
+      notificationPreferences.forEach((notif, index) => {
+        const eventTime = getEventDateTime(notif.day, notif.time, notif.week);
 
-  html += '<div class="calendar-header"></div>';
-  for (let i = 0; i < 7; i++) {
-    const date = weekDates[i];
-    const day = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'][date.getDay()];
-    html += `<div class="calendar-header">
-      <span class="day-name">${day}</span>
-      <span class="day-date">${formatDate(date)}</span>
-    </div>`;
-  }
+        const isPast = eventTime < now;
 
-  const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
-  const times = ['00h', '01h', '03h', '06h', '09h', '12h', '13h', '15h', '16h', '19h', '20h', '22h', '23h'];
+        // Find icon
+        let iconSrc = '';
+        if (notif.itemType === 'event') {
+          const customEvt = CUSTOM_EVENTS.find(e => e.name === notif.itemName);
+          if (customEvt) iconSrc = customEvt.icon;
+          else iconSrc = EVENTICONS[notif.itemName] || '';
+        } else {
+          iconSrc = BOSSLOGOSBASE[notif.itemName] || '';
+        }
 
-  times.forEach(time => {
-    html += `<div class="time-cell">${time}</div>`;
+        let iconHtml = '📌';
+        if (iconSrc) {
+          if (isURL(iconSrc)) iconHtml = `<img src="${iconSrc}" />`;
+          else iconHtml = iconSrc;
+        }
 
-    days.forEach(day => {
-      let cellContent = '';
-      const data = CALENDARDATA[currentWeek];
-      const items = data[day][time] || [];
-      let events = [];
+        // Updated Date Format: Day Date Month Hour
+        const timeStr = eventTime.toLocaleString('fr-FR', {
+          weekday: 'long',
+          day: 'numeric',
+          month: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
 
-      items.forEach(item => {
-        if (item.name) {
-          if (item.type === 'event') {
-            events.push(item);
-          } else {
-            const bossIcon = BOSSLOGOSBASE[item.name] || '';
-            if (bossIcon) {
-              const hasNotif = isNotificationEnabled(day, time, item.name);
-              const safeName = item.name.replace(/'/g, "\\'");
-              
-              // ✅ CORRECTION : Détecter URL vs Emoji
-              if (isURL(bossIcon)) {
-                // C'est une URL d'image
-                cellContent += `<div class="boss-small ${hasNotif ? 'has-notification' : ''}" data-boss-type="${item.type}" data-tooltip="${item.name}" onclick="toggleNotification('${day}', '${time}', '${safeName}', '${item.type}')"><img src="${bossIcon}" alt="${item.name}" onerror="this.parentElement.innerHTML='${item.name.substring(0,3)}';" /></div>`;
-              } else {
-                // C'est un emoji ou texte
-                cellContent += `<div class="boss-small ${hasNotif ? 'has-notification' : ''}" data-boss-type="${item.type}" data-tooltip="${item.name}" onclick="toggleNotification('${day}', '${time}', '${safeName}', '${item.type}')" style="display: flex; align-items: center; justify-content: center; font-size: 20px;">${bossIcon}</div>`;
-              }
-            }
-          }
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'tracked-item';
+        itemDiv.innerHTML = `
+           <div class="tracked-icon">${iconHtml}</div>
+           <div class="tracked-info">
+             <div class="tracked-name" title="${notif.itemName}">${notif.itemName}</div>
+             <div class="tracked-time">${timeStr}</div>
+           </div>
+           <button class="tracked-remove" title="Supprimer" onclick="removeNotification(${index})">🗑️</button>
+         `;
+        list.appendChild(itemDiv);
+
+        if (!isPast) {
+          upcomingEvents.push({ ...notif, date: eventTime, iconHtml: iconHtml });
         }
       });
 
-      // === ÉVÉNEMENTS PERSO PRO ===
-      const customEventsThisWeek = CUSTOM_EVENTS.filter(e => 
-        (e.week === currentWeek || e.recurrence === 'every') && e.day === day
-      );
-      customEventsThisWeek.forEach(evt => {
-        evt.timeSlots.forEach(slot => {
-          if (slot.start === time) {
-            events.push({ ...evt, time: slot.start, timeEnd: slot.end, isCustom: true });
+      if (notificationPreferences.length === 0) {
+        list.innerHTML = '<div style="color: #6b7280; font-size: 13px; text-align: center; padding: 20px;">Cliquez sur un événement pour le suivre</div>';
+      }
+
+      // Update Global Countdown
+      upcomingEvents.sort((a, b) => a.date - b.date);
+      const nextEvent = upcomingEvents[0];
+
+      const countdownPanel = document.getElementById('sidebar-countdown');
+      const timerDisplay = document.getElementById('global-timer');
+      const nameDisplay = document.getElementById('global-event-name');
+
+      if (nextEvent) {
+        window.nextEventTarget = nextEvent.date;
+        window.nextEventName = nextEvent.itemName;
+
+        let bgStyle = 'linear-gradient(135deg, #3b82f6, #2563eb)';
+        let borderStyle = 'none';
+
+        if (nextEvent.itemType === 'archiboss') {
+          bgStyle = 'linear-gradient(135deg, #ef4444, #b91c1c)';
+        } else if (nextEvent.itemType === 'ascendant') {
+          bgStyle = 'linear-gradient(135deg, #8b5cf6, #7c3aed)';
+        } else if (nextEvent.itemType === 'normal') {
+          bgStyle = 'linear-gradient(135deg, #dc2626, #991b1b)';
+        } else if (nextEvent.itemType === 'event') {
+          const customEvt = CUSTOM_EVENTS.find(e => e.name === nextEvent.itemName);
+          if (customEvt) {
+            bgStyle = 'linear-gradient(135deg, #10b981, #059669)';
+          } else {
+            bgStyle = 'linear-gradient(135deg, #3b82f6, #2563eb)';
           }
-        });
+        }
+
+        countdownPanel.style.background = bgStyle;
+        countdownPanel.style.border = borderStyle;
+        countdownPanel.style.padding = '0';
+        countdownPanel.style.overflow = 'hidden';
+
+        let largeIconHtml = nextEvent.iconHtml;
+        if (largeIconHtml && largeIconHtml.includes('<img')) {
+          largeIconHtml = largeIconHtml.replace('<img', '<img style="width:100%; height:100%; object-fit:cover;"');
+        }
+
+        countdownPanel.innerHTML = `
+          <div style="display: flex; height: 100%; align-items: stretch;">
+            <div style="
+                width: 35%; 
+                background: rgba(0,0,0,0.2); 
+                display: flex; 
+                align-items: center; 
+                justify-content: center; 
+                font-size: 36px;
+                padding: 10px;
+            ">
+              ${largeIconHtml}
+            </div>
+
+            <div style="
+                flex: 1; 
+                padding: 12px; 
+                display: flex; 
+                flex-direction: column; 
+                justify-content: center; 
+                text-align: left;
+            ">
+              <div class="countdown-label" style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.9; margin-bottom: 4px;">Commence dans</div>
+              <div id="global-timer" style="font-size: 22px; font-weight: 800; line-height: 1.1; margin-bottom: 6px;">--:--:--</div>
+              <div id="global-event-name" style="font-size: 14px; font-weight: 600; line-height: 1.2; opacity: 1;">
+                ${nextEvent.itemName}
+              </div>
+            </div>
+          </div>
+        `;
+
+        updateSidebarCountdown();
+      } else {
+        window.nextEventTarget = null;
+        countdownPanel.style.background = 'linear-gradient(135deg, #3b82f6, #2563eb)';
+        countdownPanel.style.padding = '';
+        countdownPanel.innerHTML = `
+           <div style="padding: 20px; text-align: center;">
+              <div class="countdown-label">Commence dans</div>
+              <div id="global-timer" style="font-size: 24px; font-weight: bold; margin: 10px 0;">--:--:--</div>
+              <div id="global-event-name">Aucun futur événement</div>
+           </div>
+        `;
+      }
+    }
+
+    function removeNotification(index) {
+      notificationPreferences.splice(index, 1);
+      localStorage.setItem('calendarNotifications', JSON.stringify(notificationPreferences));
+      renderCalendar();
+      setupNotificationTimers();
+      updateNotificationSidebar();
+    }
+
+    function updateSidebarCountdown() {
+      if (sidebarInterval) clearInterval(sidebarInterval);
+
+      function step() {
+        const timerDisplay = document.getElementById('global-timer');
+        if (!window.nextEventTarget) return;
+
+        const now = new Date();
+        const diff = window.nextEventTarget - now;
+
+        if (diff <= 0) {
+          timerDisplay.textContent = 'EN COURS';
+          // Refresh to find next
+          updateNotificationSidebar();
+          return;
+        }
+
+        const hours = Math.floor(diff / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        timerDisplay.textContent = `${hours}h ${minutes}m ${seconds}s`;
+      }
+
+      step();
+      sidebarInterval = setInterval(step, 1000);
+    }
+
+
+    // ✅ FONCTION POUR DÉTECTER SI C'EST UNE URL OU UN EMOJI
+    function isURL(str) {
+      return str && (str.startsWith('http://') || str.startsWith('https://') || str.startsWith('//'));
+    }
+
+    let currentWeek = 'pair';
+
+    // ===== FONCTION RENDRE CALENDRIER =====
+    function renderCalendar() {
+      const calendar = document.getElementById('calendar');
+      let html = '';
+      const weekDates = getWeekDates(currentWeek);
+
+      html += '<div class="calendar-header"></div>';
+      for (let i = 0; i < 7; i++) {
+        const date = weekDates[i];
+        const day = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'][date.getDay()];
+        html += `<div class="calendar-header">
+      <span class="day-name">${day}</span>
+      <span class="day-date">${formatDate(date)}</span>
+    </div>`;
+      }
+
+      const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+
+      // 1. Collect all default times
+      let allTimes = new Set(['00h', '01h', '03h', '06h', '09h', '12h', '13h', '15h', '16h', '19h', '20h', '22h', '23h']);
+
+      // 2. Add custom event times
+      CUSTOM_EVENTS.forEach(evt => {
+        if (evt.week === currentWeek || evt.recurrence === 'every') {
+          evt.timeSlots.forEach(slot => {
+            // Use full start time (e.g. "10:05" or "10h")
+            // If input was "10:05", keep it. 
+            // We normalize later for sort.
+            allTimes.add(slot.start);
+          });
+        }
       });
 
-      if (events.length > 0) {
-        cellContent += '<div class="event-icons">';
-        events.forEach((evt, index) => {
-          const iconUrl = evt.isCustom 
-            ? (evt.icon || "")
-            : (EVENTICONS[evt.name] || "");
-          
-          if (iconUrl) {
-            let eventClass = "";
-            if (index >= 0 && index <= 2) eventClass = "event-paix";
-            else if (index === 3) eventClass = "event-coop";
-            else if (index === 4) eventClass = "event-dominion";
-            else if (index === 5) eventClass = "event-guild";
+      // 3. Sort times explicitly (Handling "HHh" and "HH:mm")
+      const sortedTimes = Array.from(allTimes).sort((a, b) => {
+        // Convert "10h" -> "10:00", "10:05" -> "10:05"
+        const normalize = (t) => {
+          if (t.includes('h') && !t.includes(':')) return t.replace('h', ':00');
+          if (!t.includes(':') && !t.includes('h')) return t + ':00'; // fallback
+          return t;
+        };
+        const timeA = normalize(a);
+        const timeB = normalize(b);
+        return timeA.localeCompare(timeB);
+      });
 
-            const hasNotif = evt.notifications && isNotificationEnabled(day, evt.time || time, evt.name);
-            const safeEventName = (evt.name || evt.time).replace(/"/g, '&quot;').replace(/'/g, '&#39;'); // ✅ CORRECTION ICI
-            
-            // ✅ CORRECTION : Détecter URL vs Emoji pour les événements
-            if (isURL(iconUrl)) {
-              cellContent += `
+      sortedTimes.forEach(time => {
+        html += `<div class="time-cell">${time}</div>`;
+
+        days.forEach(day => {
+          let cellContent = '';
+          const data = CALENDARDATA[currentWeek];
+          const items = data[day][time] || [];
+          let events = [];
+
+          items.forEach(item => {
+            if (item.name) {
+              if (item.type === 'event') {
+                events.push(item);
+              } else {
+                const bossIcon = BOSSLOGOSBASE[item.name] || '';
+                if (bossIcon) {
+                  const hasNotif = isNotificationEnabled(day, time, item.name);
+                  const safeName = item.name.replace(/'/g, "\\'");
+
+                  // ✅ CORRECTION : Détecter URL vs Emoji
+                  // Check for Panel Mode
+                  const showAsPanel = ['01h', '13h', '16h', '20h', '23h'].includes(time);
+
+                  if (showAsPanel) {
+                    // RENDER AS PANEL (Card)
+                    if (isURL(bossIcon)) {
+                      cellContent += `<div class="boss-full ${hasNotif ? 'has-notification' : ''}" data-boss-type="${item.type}" onclick="toggleNotification('${day}', '${time}', '${safeName}', '${item.type}')">
+                         <div class="boss-full-icon"><img src="${bossIcon}" alt="${item.name}" /></div>
+                         <div class="boss-full-name">${item.name}</div>
+                       </div>`;
+                    } else {
+                      cellContent += `<div class="boss-full ${hasNotif ? 'has-notification' : ''}" data-boss-type="${item.type}" onclick="toggleNotification('${day}', '${time}', '${safeName}', '${item.type}')">
+                         <div class="boss-full-icon" style="display:flex;align-items:center;justify-content:center;">${bossIcon}</div>
+                         <div class="boss-full-name">${item.name}</div>
+                       </div>`;
+                    }
+
+                  } else {
+                    // RENDER AS ICON (Small)
+                    if (isURL(bossIcon)) {
+                      cellContent += `<div class="boss-small ${hasNotif ? 'has-notification' : ''}" data-boss-type="${item.type}" data-tooltip="${item.name}" onclick="toggleNotification('${day}', '${time}', '${safeName}', '${item.type}')"><img src="${bossIcon}" alt="${item.name}" onerror="this.parentElement.innerHTML='${item.name.substring(0, 3)}';" /></div>`;
+                    } else {
+                      cellContent += `<div class="boss-small ${hasNotif ? 'has-notification' : ''}" data-boss-type="${item.type}" data-tooltip="${item.name}" onclick="toggleNotification('${day}', '${time}', '${safeName}', '${item.type}')" style="display: flex; align-items: center; justify-content: center; font-size: 20px;">${bossIcon}</div>`;
+                    }
+                  }
+                }
+              }
+            }
+          });
+
+          // === ÉVÉNEMENTS PERSO PRO ===
+          const customEventsThisWeek = CUSTOM_EVENTS.filter(e => {
+            const isWeekMatch = (e.week === currentWeek || e.recurrence === 'every');
+            // Support ancienne structure (e.day) ET nouvelle (e.days array)
+            const isDayMatch = (e.days && e.days.includes(day)) || e.day === day;
+            return isWeekMatch && isDayMatch;
+          });
+          customEventsThisWeek.forEach(evt => {
+            evt.timeSlots.forEach(slot => {
+              // Normalize for comparison: "10:05" vs "10h05"? 
+              // The time variable comes from sortedTimes which contains exactly what we put in allTimes.
+              // So exact match should work if data remains consistent.
+              if (slot.start === time) {
+                const timeLabel = `${slot.start.replace(':', 'h')} - ${slot.end ? slot.end.replace(':', 'h') : '...'}`;
+
+                if (!evt.icon || evt.icon.trim() === '') {
+                  // Placeholder si pas d'icone
+                  const hasNotif = isNotificationEnabled(day, slot.start, evt.name);
+                  const safeName = evt.name.replace(/'/g, "\\'");
+
+                  cellContent += `<div class="boss-full custom-event-panel ${hasNotif ? 'has-notification' : ''}" 
+                     data-tooltip="${evt.name}" 
+                     onclick="toggleNotification('${day}', '${slot.start}', '${safeName}', 'event')">
+                     <div class="boss-full-icon" style="background: rgba(16, 185, 129, 0.2); color: #10b981; font-size: 18px; border: 1px solid #10b981;">
+                       📌
+                     </div>
+                     <div class="boss-full-name">
+                        <div style="line-height:1.2">${evt.name}</div>
+                        <div style="font-size: 11px; opacity: 0.8; margin-top: 2px;">⏰ ${timeLabel}</div>
+                     </div>
+                   </div>`;
+
+                } else {
+                  // Custom event AVEC icone -> Render as CARD (boss-full)
+                  const hasNotif = isNotificationEnabled(day, slot.start, evt.name);
+                  const safeName = evt.name.replace(/'/g, "\\'");
+
+                  let iconHtml = '';
+                  if (isURL(evt.icon)) {
+                    iconHtml = `<img src="${evt.icon}" alt="${evt.name}" onerror="this.parentElement.innerHTML='📌';" />`;
+                  } else {
+                    iconHtml = evt.icon;
+                  }
+
+                  cellContent += `<div class="boss-full custom-event-panel ${hasNotif ? 'has-notification' : ''}" 
+                     data-tooltip="${evt.name}" 
+                     onclick="toggleNotification('${day}', '${slot.start}', '${safeName}', 'event')">
+                     <div class="boss-full-icon">
+                       ${iconHtml}
+                     </div>
+                     <div class="boss-full-name">
+                        <div style="line-height:1.2">${evt.name}</div>
+                        <div style="font-size: 11px; opacity: 0.8; margin-top: 2px;">⏰ ${timeLabel}</div>
+                     </div>
+                   </div>`;
+                }
+              }
+            });
+          });
+
+          if (events.length > 0) {
+            cellContent += '<div class="event-icons">';
+            events.forEach((evt, index) => {
+              const iconUrl = evt.isCustom
+                ? (evt.icon || "")
+                : (EVENTICONS[evt.name] || "");
+
+              if (iconUrl) {
+                let eventClass = "";
+                if (index >= 0 && index <= 2) eventClass = "event-paix";
+                else if (index === 3) eventClass = "event-coop";
+                else if (index === 4) eventClass = "event-dominion";
+                else if (index === 5) eventClass = "event-guild";
+
+                const hasNotif = isNotificationEnabled(day, evt.time || time, evt.name);
+                const safeEventName = (evt.name || evt.time).replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+
+                // ✅ CORRECTION : Détecter URL vs Emoji pour les événements
+                if (isURL(iconUrl)) {
+                  cellContent += `
                 <div class="event-icon ${eventClass} ${hasNotif ? 'has-notification' : ''} ${evt.isCustom ? 'custom-event' : ''}"
                      data-tooltip="${safeEventName}"
                      onclick="toggleNotification('${day}', '${evt.time || time}', '${safeEventName}', 'event')">
-                  <img src="${iconUrl}" alt="${safeEventName}" onerror="this.parentElement.innerHTML='${(evt.name || '').substring(0,2)}';" />
+                  <img src="${iconUrl}" alt="${safeEventName}" onerror="this.parentElement.innerHTML='${(evt.name || '').substring(0, 2)}';" />
                 </div>
               `;
-            } else {
-              // C'est un emoji
-              cellContent += `
+                } else {
+                  // C'est un emoji
+                  cellContent += `
                 <div class="event-icon ${eventClass} ${hasNotif ? 'has-notification' : ''} ${evt.isCustom ? 'custom-event' : ''}"
                      data-tooltip="${safeEventName}"
                      onclick="toggleNotification('${day}', '${evt.time || time}', '${safeEventName}', 'event')"
@@ -344,25 +687,25 @@ function renderCalendar() {
                   ${iconUrl}
                 </div>
               `;
-            }
+                }
+              }
+            });
+            cellContent += '</div>';
           }
+
+          const nextEvent = findNextEvent();
+          const isNextEvent = nextEvent && nextEvent.day === day && nextEvent.time === time;
+          html += `<div class="event-cell ${isNextEvent ? 'next-event' : ''}">${cellContent}</div>`;
         });
-        cellContent += '</div>';
-      }
+      });
 
-      const nextEvent = findNextEvent();
-      const isNextEvent = nextEvent && nextEvent.day === day && nextEvent.time === time;
-      html += `<div class="event-cell ${isNextEvent ? 'next-event' : ''}">${cellContent}</div>`;
-    });
-  });
+      calendar.innerHTML = html;
+      setupNotificationTimers();
+    }
 
-  calendar.innerHTML = html;
-  setupNotificationTimers();
-}
-
-// ===== FONCTION AJOUTER ÉVÉNEMENT PRO =====
-function addCustomEventPro() {
-  document.body.insertAdjacentHTML('beforeend', `
+    // ===== FONCTION AJOUTER ÉVÉNEMENT PRO =====
+    function addCustomEventPro() {
+      document.body.insertAdjacentHTML('beforeend', `
     <div class="custom-event-form" id="custom-form">
       <h3>🚀 Créer Événement PRO</h3>
       
@@ -387,23 +730,12 @@ function addCustomEventPro() {
       <div id="time-slots">
         <h4 style="color: #f59e0b; margin: 20px 0 12px 0;">⏰ Créneaux horaires</h4>
         <div class="time-slot" data-slot="1">
-          <select id="start-hour-1">
-            <option value="">Heure début</option>
-            ${Array.from({length:24}, (_, h) => `<option value="${h.toString().padStart(2,'0')}">${h}h</option>`).join('')}
-          </select>
-          <select id="start-min-1">
-            <option value="">Min</option><option value="00">00</option><option value="15">15</option><option value="30">30</option><option value="45">45</option>
-          </select>
-          <span style="font-size: 18px; color: #3b82f6; font-weight: bold;">→</span>
-          <select id="end-hour-1">
-            <option value="">Heure fin</option>
-            ${Array.from({length:24}, (_, h) => `<option value="${h.toString().padStart(2,'0')}">${h}h</option>`).join('')}
-          </select>
-          <select id="end-min-1">
-            <option value="">Min</option><option value="00">00</option><option value="15">15</option><option value="30">30</option><option value="45">45</option>
-          </select>
+            <input type="time" id="start-time-1" class="time-input" required />
+            <span style="font-size: 18px; color: #3b82f6; font-weight: bold;">→</span>
+            <input type="time" id="end-time-1" class="time-input" />
         </div>
       </div>
+
       
       <button class="btn-add-slot" onclick="addTimeSlot()">➕ Ajouter créneau</button>
       
@@ -418,99 +750,708 @@ function addCustomEventPro() {
       </div>
     </div>
   `);
-  
-  document.querySelectorAll('.day-checkbox').forEach(day => {
-    day.addEventListener('click', function() {
-      this.classList.toggle('checked');
-    });
-  });
-}
 
-function addTimeSlot() {
-  slotCount++;
-  document.getElementById('time-slots').insertAdjacentHTML('beforeend', `
+      document.querySelectorAll('.day-checkbox').forEach(day => {
+        day.addEventListener('click', function () {
+          this.classList.toggle('checked');
+        });
+      });
+    }
+
+    function addTimeSlot() {
+      slotCount++;
+      document.getElementById('time-slots').insertAdjacentHTML('beforeend', `
     <div class="time-slot" data-slot="${slotCount}">
-      <select id="start-hour-${slotCount}">
-        <option value="">Heure début</option>
-        ${Array.from({length:24}, (_, h) => `<option value="${h.toString().padStart(2,'0')}">${h}h</option>`).join('')}
-      </select>
-      <select id="start-min-${slotCount}">
-        <option value="">Min</option><option value="00">00</option><option value="15">15</option><option value="30">30</option><option value="45">45</option>
-      </select>
+      <input type="time" id="start-time-${slotCount}" class="time-input" required />
       <span style="font-size: 18px; color: #3b82f6; font-weight: bold;">→</span>
-      <select id="end-hour-${slotCount}">
-        <option value="">Heure fin</option>
-        ${Array.from({length:24}, (_, h) => `<option value="${h.toString().padStart(2,'0')}">${h}h</option>`).join('')}
-      </select>
-      <select id="end-min-${slotCount}">
-        <option value="">Min</option><option value="00">00</option><option value="15">15</option><option value="30">30</option><option value="45">45</option>
-      </select>
+      <input type="time" id="end-time-${slotCount}" class="time-input" />
       <button class="remove-slot" onclick="this.parentElement.remove()">🗑️ Supprimer</button>
     </div>
   `);
-}
+    }
 
-function saveCustomEventPro() {
-  const name = document.getElementById('event-name').value.trim();
-  const icon = document.getElementById('event-icon').value.trim();
-  const recurrence = document.getElementById('event-recurrence').value;
-  const notifications = document.getElementById('enable-notif').checked;
+    function saveCustomEventPro() {
+      const name = document.getElementById('event-name').value.trim();
+      const icon = document.getElementById('event-icon').value.trim();
+      const recurrence = document.getElementById('event-recurrence').value;
+      const notifications = document.getElementById('enable-notif').checked;
 
-  if (!name) return alert('⚠️ Le nom est obligatoire !');
+      if (!name) return alert('⚠️ Le nom est obligatoire !');
 
-  const selectedDays = Array.from(document.querySelectorAll('.day-checkbox.checked')).map(d => d.dataset.day);
-  if (selectedDays.length === 0) return alert('⚠️ Sélectionne au moins 1 jour !');
+      const selectedDays = Array.from(document.querySelectorAll('.day-checkbox.checked')).map(d => d.dataset.day);
+      if (selectedDays.length === 0) return alert('⚠️ Sélectionne au moins 1 jour !');
 
-  const timeSlots = [];
-  document.querySelectorAll('.time-slot').forEach((slot, idx) => {
-    const slotNum = idx + 1;
-    const startH = document.getElementById(`start-hour-${slotNum}`)?.value;
-    const startM = document.getElementById(`start-min-${slotNum}`)?.value || '00';
-    const endH = document.getElementById(`end-hour-${slotNum}`)?.value || startH;
-    const endM = document.getElementById(`end-min-${slotNum}`)?.value || startM;
+      const timeSlots = [];
+      document.querySelectorAll('.time-slot').forEach((slot, idx) => {
+        const startInput = slot.querySelector('input[type="time"]:nth-of-type(1)');
+        const endInput = slot.querySelector('input[type="time"]:nth-of-type(2)');
 
-    if (startH) timeSlots.push({ start: `${startH}h`, end: `${endH}:${endM}` });
-  });
+        if (startInput && startInput.value) {
+          timeSlots.push({ start: startInput.value, end: endInput.value || startInput.value });
+        }
+      });
 
-  if (timeSlots.length === 0) return alert('⚠️ Ajoute au moins 1 créneau horaire !');
+      if (timeSlots.length === 0) return alert('⚠️ Ajoute au moins 1 créneau horaire !');
 
-  selectedDays.forEach(day => {
-    CUSTOM_EVENTS.push({
-      name, icon, day, timeSlots, recurrence, notifications,
-      isCustom: true, created: new Date().toISOString().split('T')[0],
-      week: recurrence === 'current' ? currentWeek : 'every'
+      // NE PLUS SPLITTER : On sauvegarde un seul objet avec un tableau 'days'
+      CUSTOM_EVENTS.push({
+        name, icon, days: selectedDays, timeSlots, recurrence, notifications,
+        isCustom: true, created: new Date().toISOString().split('T')[0],
+        week: recurrence === 'current' ? currentWeek : 'every'
+      });
+
+      localStorage.setItem('customEventsPro', JSON.stringify(CUSTOM_EVENTS));
+      closeCustomForm();
+      renderCalendar();
+      setupNotificationTimers();
+      updateNotificationSidebar(); // Update sidebar
+    }
+
+    function closeCustomForm() {
+      document.getElementById('custom-form')?.remove();
+    }
+
+    // ===== GESTION DES ÉVÉNEMENTS PRO =====
+    function openManageEventsModal() {
+      if (CUSTOM_EVENTS.length === 0) {
+        alert('Aucun événement personnalisé créé pour le moment.');
+        return;
+      }
+
+      let modalHTML = `
+        <div class="manage-events-modal" id="manage-modal">
+          <div class="manage-header">
+            <h3>🛠️ Gestion des Événements PRO</h3>
+            <button class="btn-close-manage" onclick="closeManageModal()">✕</button>
+          </div>
+          <div class="events-list">
+      `;
+
+      CUSTOM_EVENTS.forEach((evt, index) => {
+        const iconPreview = evt.icon && evt.icon.trim() !== ''
+          ? (isURL(evt.icon)
+            ? `<img src="${evt.icon}" alt="icon" onerror="this.src=''" />`
+            : `<span style="font-size: 24px;">${evt.icon}</span>`)
+          : `<div class="placeholder-content-small"><span class="placeholder-emoji">📌</span></div>`;
+
+        const recurrenceText = evt.recurrence === 'every' ? '♾️ Toutes les semaines' : '⚡ Semaine ' + (evt.week === 'pair' ? '1' : '2');
+        const timeSlotsText = evt.timeSlots.map(s => s.start).join(', ');
+
+        modalHTML += `
+          <div class="event-card" data-index="${index}">
+            <div class="event-icon-preview">${iconPreview}</div>
+            <div class="event-info">
+              <div class="event-info-name">${evt.name}</div>
+              <div class="event-info-details">
+                <span>📅 ${evt.days ? evt.days.join(', ') : evt.day}</span>
+                <span>⏰ ${timeSlotsText}</span>
+              </div>
+              <div class="event-info-meta">${recurrenceText}</div>
+            </div>
+            <div class="event-actions">
+              <button class="btn-edit" onclick="editCustomEvent(${index})">✏️</button>
+              <button class="btn-delete" onclick="deleteCustomEvent(${index})">🗑️</button>
+            </div>
+          </div>
+        `;
+      });
+
+      modalHTML += `
+          </div>
+        </div>
+      `;
+
+      document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+      // Re-attach listeners or logic if needed
+      // Force repaint or similar if needed
+    }
+
+    function closeManageModal() {
+      document.getElementById('manage-modal')?.remove();
+    }
+
+    function deleteCustomEvent(index) {
+      if (index < 0 || index >= CUSTOM_EVENTS.length) {
+        console.error("Invalid index for deletion:", index);
+        return;
+      }
+      const event = CUSTOM_EVENTS[index];
+      // Removed confirm() to prevent blocking issues and ensure it works.
+      CUSTOM_EVENTS.splice(index, 1);
+      localStorage.setItem('customEventsPro', JSON.stringify(CUSTOM_EVENTS));
+      closeManageModal();
+      renderCalendar();
+      openManageEventsModal();
+    }
+
+    let editingEventIndex = null;
+
+    function editCustomEvent(index) {
+      editingEventIndex = index;
+      const evt = CUSTOM_EVENTS[index];
+
+      closeManageModal();
+
+      // Créer le formulaire d'édition
+      const formHTML = `
+        <div class="custom-event-form" id="custom-form">
+          <h3>✏️ Modifier Événement PRO</h3>
+          
+          <input id="event-name" placeholder="Nom (ex: Raid Semaine XL)" value="${evt.name}" />
+          <input id="event-icon" placeholder="Icône (URL ou Emoji 🏆)" value="${evt.icon || ''}" />
+          
+          <div class="days-grid" id="days-grid">
+            ${['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'].map(d => {
+        const isChecked = (evt.days && evt.days.includes(d)) || evt.day === d;
+        return `<div class="day-checkbox ${isChecked ? 'checked' : ''}" data-day="${d}">${d}</div>`;
+      }).join('')}
+          </div>
+          
+          <select id="event-recurrence">
+            <option value="current" ${evt.recurrence === 'current' ? 'selected' : ''}>⚡ Cette semaine seulement</option>
+            <option value="every" ${evt.recurrence === 'every' ? 'selected' : ''}>♾️ Toutes les semaines</option>
+          </select>
+          
+          <div id="time-slots">
+            <h4 style="color: #f59e0b; margin: 20px 0 12px 0;">⏰ Créneaux horaires</h4>
+            ${evt.timeSlots.map((slot, idx) => {
+        const slotNum = idx + 1;
+
+        // Helper to format time to HH:MM
+        const formatTime = (t) => {
+          if (!t) return '';
+          // Handle "10h" format
+          if (t.includes('h')) {
+            const parts = t.replace('h', ':').split(':');
+            return `${parts[0].padStart(2, '0')}:${parts[1] ? parts[1].padEnd(2, '0') : '00'}`;
+          }
+          // Handle "10:05" or "10:05:00" format
+          const parts = t.split(':');
+          return `${parts[0].padStart(2, '0')}:${parts[1] ? parts[1].padEnd(2, '0') : '00'}`;
+        };
+
+        const startVal = formatTime(slot.start);
+        const endVal = formatTime(slot.end);
+
+        return `
+                <div class="time-slot" data-slot="${slotNum}">
+                  <input type="time" id="start-time-${slotNum}" class="time-input" value="${startVal}" required />
+                  <span style="font-size: 18px; color: #3b82f6; font-weight: bold;">→</span>
+                  <input type="time" id="end-time-${slotNum}" class="time-input" value="${endVal}" />
+                  
+                  ${idx > 0 ? '<button class="remove-slot" onclick="this.parentElement.remove()">🗑️ Supprimer</button>' : ''}
+                </div>
+              `;
+      }).join('')}
+          </div>
+          
+          <button class="btn-add-slot" onclick="addTimeSlotEdit()">➕ Ajouter créneau</button>
+          
+          <label class="notif-label">
+            <input type="checkbox" id="enable-notif" ${evt.notifications ? 'checked' : ''}>
+            🔔 Notifications 10min avant chaque créneau
+          </label>
+          
+          <div class="form-buttons">
+            <button class="btn-create" onclick="updateCustomEvent()">💾 SAUVEGARDER</button>
+            <button class="btn-close" onclick="cancelEdit()">❌ Annuler</button>
+          </div>
+        </div>
+      `;
+
+      document.body.insertAdjacentHTML('beforeend', formHTML);
+
+      slotCount = evt.timeSlots.length;
+
+      document.querySelectorAll('.day-checkbox').forEach(day => {
+        day.addEventListener('click', function () {
+          this.classList.toggle('checked');
+        });
+      });
+    }
+
+    // FUNCTION TO ADD NEW SLOT IN EDIT MODE
+    function addTimeSlotEdit() {
+      const container = document.getElementById('time-slots');
+      const count = container.querySelectorAll('.time-slot').length + 1;
+      const html = `
+        <div class="time-slot" data-slot="${count}">
+            <input type="time" id="start-time-${count}" class="time-input" required />
+            <span style="font-size: 18px; color: #3b82f6; font-weight: bold;">→</span>
+            <input type="time" id="end-time-${count}" class="time-input" />
+            <button class="remove-slot" onclick="this.parentElement.remove()">🗑️ Supprimer</button>
+        </div>`;
+      container.insertAdjacentHTML('beforeend', html);
+    }
+
+    function updateCustomEvent() {
+      const name = document.getElementById('event-name').value.trim();
+      const icon = document.getElementById('event-icon').value.trim();
+      const recurrence = document.getElementById('event-recurrence').value;
+      const notifications = document.getElementById('enable-notif').checked;
+
+      if (!name) return alert('⚠️ Le nom est obligatoire !');
+
+      const selectedDays = Array.from(document.querySelectorAll('.day-checkbox.checked')).map(d => d.dataset.day);
+      if (selectedDays.length === 0) return alert('⚠️ Sélectionne au moins 1 jour !');
+
+      const timeSlots = [];
+      document.querySelectorAll('.time-slot').forEach((slot, idx) => {
+        // Use querySelector on the slot element for robustness, or ID
+        // Since we generated IDs based on slotNum (which relies on map index), 
+        // using querySelector within the slot is safer if IDs get messed up, 
+        // but the IDs `start-time-${slotNum}` are generated in the previous map.
+        // However, `querySelectorAll` returns nodes in document order.
+
+        // Better to use the inputs directly within the slot div
+        const startInput = slot.querySelector('input[type="time"]:nth-of-type(1)');
+        const endInput = slot.querySelector('input[type="time"]:nth-of-type(2)');
+
+        if (startInput && startInput.value) {
+          timeSlots.push({
+            start: startInput.value,
+            end: endInput && endInput.value ? endInput.value : startInput.value
+          });
+        }
+      });
+
+      if (timeSlots.length === 0) return alert('⚠️ Ajoute au moins 1 créneau horaire !');
+
+      CUSTOM_EVENTS[editingEventIndex] = {
+        name, icon, days: selectedDays, timeSlots, recurrence, notifications,
+        isCustom: true, created: CUSTOM_EVENTS[editingEventIndex].created,
+        week: recurrence === 'current' ? currentWeek : 'every'
+      };
+
+      localStorage.setItem('customEventsPro', JSON.stringify(CUSTOM_EVENTS));
+
+      const form = document.getElementById('custom-form');
+      if (form) form.remove();
+
+      renderCalendar();
+      setupNotificationTimers();
+      editingEventIndex = null;
+    }
+
+    function cancelEdit() {
+      editingEventIndex = null;
+      const form = document.getElementById('custom-form');
+      if (form) form.remove();
+    }
+
+    function switchWeek(week) {
+      currentWeek = week;
+      document.getElementById('btn-pair').classList.toggle('active', week === 'pair');
+      document.getElementById('btn-impair').classList.toggle('active', week === 'impair');
+      renderCalendar();
+    }
+
+    // Event Listeners
+    document.addEventListener('click', e => {
+      if (e.target.id === 'add-custom-event') addCustomEventPro();
+      if (e.target.id === 'manage-custom-events') openManageEventsModal();
+      if (e.target.id === 'discord-import-btn') discordManager.openModal();
     });
-  });
 
-  localStorage.setItem('customEventsPro', JSON.stringify(CUSTOM_EVENTS));
-  closeCustomForm();
-  renderCalendar();
-  setupNotificationTimers();
-  alert(`✅ "${name}" créé sur ${selectedDays.length} jour${selectedDays.length > 1 ? 's' : ''} avec ${timeSlots.length} créneau${timeSlots.length > 1 ? 'x' : ''} !`);
-}
+    // ===== DISCORD MANAGER (RAID-HELPER) =====
+    const discordManager = {
+      modalId: 'discord-modal',
+      apiKey: localStorage.getItem('discordApiKey') || '',
+      serverId: localStorage.getItem('discordServerId') || '',
 
-function closeCustomForm() {
-  document.getElementById('custom-form')?.remove();
-}
+      openModal() {
+        if (document.getElementById(this.modalId)) return;
 
-function switchWeek(week) {
-  currentWeek = week;
-  document.getElementById('btn-pair').classList.toggle('active', week === 'pair');
-  document.getElementById('btn-impair').classList.toggle('active', week === 'impair');
-  renderCalendar();
-}
+        const html = `
+          <div class="discord-modal" id="${this.modalId}">
+            <div class="discord-header">
+              <h3>👾 Import Discord (Raid-Helper)</h3>
+              <button class="btn-close-manage" onclick="discordManager.closeModal()">✕</button>
+            </div>
+            
+            <div class="discord-content">
+              <div class="discord-settings">
+                <div class="discord-input-group">
+                  <label>🔑 Clé API Raid-Helper (Stockée uniquement en local)</label>
+                  <input type="password" id="discord-api-key" placeholder="Entrez votre clé API..." value="${this.apiKey}">
+                </div>
+                <div class="discord-input-group">
+                  <label>🆔 ID Serveur Discord</label>
+                  <input type="text" id="discord-server-id" placeholder="Entrez l'ID du serveur..." value="${this.serverId}">
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                   <label class="notif-label" style="margin:0; padding:10px; background:rgba(114, 137, 218, 0.1);">
+                     <input type="checkbox" id="discord-use-proxy" style="width:18px; height:18px;">
+                     <span>🌍 Utiliser un Proxy (Contourner le blocage CORS)</span>
+                   </label>
+                   <div style="font-size:11px; color:#f59e0b; margin-top:4px;">⚠️ À utiliser seulement si le chargement standard échoue.</div>
+                </div>
 
-// Event Listeners
-document.addEventListener('click', e => {
-  if (e.target.id === 'add-custom-event') addCustomEventPro();
-});
+                <button class="btn-discord-action" onclick="discordManager.fetchEvents()">🔄 Charger via API</button>
+              </div>
 
-// INIT
-console.log('✅ Initialisation du calendrier...');
-console.log('📊 Données chargées:', typeof CALENDARDATA !== 'undefined');
-renderCalendar();
-setupNotificationTimers();
-requestNotificationPermission();
-</script>
+              <div class="discord-tabs">
+                 <button class="discord-tab active" onclick="discordManager.switchTab('api')">API</button>
+                 <button class="discord-tab" onclick="discordManager.switchTab('manual')">Mode Manuel (JSON)</button>
+              </div>
+
+              <div id="discord-manual-tab" style="display:none;">
+                 <p style="color:#99aab5; font-size:13px; margin-bottom:10px;">Si l'API est bloquée (CORS), collez le JSON exporté ici :</p>
+                 <textarea id="discord-json-paste" class="discord-textarea" placeholder='[{"title":"Raid", "unix_start_time": 178999...}]'></textarea>
+                 <button class="btn-discord-action" style="margin-top:10px;" onclick="discordManager.parseManualJson()">📥 Analyser JSON</button>
+              </div>
+
+              <div id="discord-results" class="discord-results-list"></div>
+            </div>
+          </div>
+        `;
+        document.body.insertAdjacentHTML('beforeend', html);
+
+        // Restore Proxy Checkbox state
+        if (localStorage.getItem('discordUseProxy') === 'true') {
+          setTimeout(() => { document.getElementById('discord-use-proxy').checked = true; }, 0);
+        }
+      },
+
+      closeModal() {
+        document.getElementById(this.modalId)?.remove();
+      },
+
+      switchTab(tab) {
+        // Simple toggle for now, UI refinement if needed
+        const manualDiv = document.getElementById('discord-manual-tab');
+        if (tab === 'manual') manualDiv.style.display = 'block';
+        else manualDiv.style.display = 'none';
+      },
+
+      saveSettings() {
+        const key = document.getElementById('discord-api-key').value.trim();
+        const server = document.getElementById('discord-server-id').value.trim();
+        const useProxy = document.getElementById('discord-use-proxy').checked;
+
+        if (key) {
+          this.apiKey = key;
+          localStorage.setItem('discordApiKey', key);
+        }
+
+        if (server) {
+          this.serverId = server;
+          localStorage.setItem('discordServerId', server);
+        }
+
+        localStorage.setItem('discordUseProxy', useProxy);
+      },
+
+      async fetchEvents() {
+        this.saveSettings();
+        const resultsDiv = document.getElementById('discord-results');
+        const useProxy = document.getElementById('discord-use-proxy').checked;
+
+        resultsDiv.innerHTML = '<div style="color:white;text-align:center;">Chargement...</div>';
+
+        if (!this.apiKey) {
+          resultsDiv.innerHTML = '<div style="color:#ef4444;text-align:center;">⚠️ Clé API manquante</div>';
+          return;
+        }
+
+        try {
+          let sid = this.serverId;
+          if (!sid) {
+            resultsDiv.innerHTML = '<div style="color:#ef4444;text-align:center;">⚠️ ID Serveur manquant (Remplissez le champ ci-dessus)</div>';
+            return;
+          }
+
+          const targetUrl = `https://raid-helper.dev/api/v3/servers/${sid}/events`;
+          // Use corsproxy.io if checked. 
+          // Format: https://corsproxy.io/?<EncodedURL>
+          const finalUrl = useProxy ? `https://corsproxy.io/?${encodeURIComponent(targetUrl)}` : targetUrl;
+
+          console.log("Fetching:", finalUrl);
+
+          const response = await fetch(finalUrl, {
+            headers: {
+              'Authorization': this.apiKey,
+              'Content-Type': 'application/json'
+            }
+          });
+
+          if (!response.ok) throw new Error(`Erreur API: ${response.status}`);
+          const data = await response.json();
+
+          // Revert to 'postedEvents' which worked, but filter OLD events
+          const events = data.postedEvents || [];
+          this.renderList(events);
+
+        } catch (e) {
+          console.error(e);
+          resultsDiv.innerHTML = `
+             <div style="color:#f59e0b;text-align:center;padding:20px;">
+               ⚠️ <b>Échec de connexion</b> (${e.message})<br><br>
+               ${!useProxy ? '💡 Essayez de cocher la case <b>"Utiliser un Proxy"</b> ci-dessus pour contourner le blocage.' : '❌ Même avec le proxy, cela échoue. Utilisez le Mode Manuel.'}
+             </div>
+           `;
+          // Do not auto switch immediately, let user see message
+        }
+      },
+
+      parseManualJson() {
+        const text = document.getElementById('discord-json-paste').value;
+        try {
+          // Try to clean data if needed (some exports wrap in objects)
+          const json = JSON.parse(text);
+          // Standardize input: if array, use it. If object with 'data', use data.
+          let events = [];
+          if (Array.isArray(json)) events = json;
+          else if (json.data && Array.isArray(json.data)) events = json.data;
+          else if (json.postedEvents && Array.isArray(json.postedEvents)) events = json.postedEvents; // Some exports
+          else if (typeof json === 'object') events = [json]; // Single event
+
+          this.renderList(events);
+        } catch (e) {
+          alert("❌ JSON Invalide ! Vérifiez votre copier-coller.");
+        }
+      },
+
+      renderList(events) {
+        const resultsDiv = document.getElementById('discord-results');
+        if (!events || events.length === 0) {
+          resultsDiv.innerHTML = '<div style="color:#99aab5;text-align:center;">Aucun événement trouvé.</div>';
+          return;
+        }
+
+        const now = Date.now() / 1000; // Current unix timestamp
+
+        // Filter Future Events
+        const futureEvents = events.filter(evt => {
+          const t = evt.unix_start_time || evt.startTime || evt.start_time;
+          return t && t >= now;
+        });
+
+        // Save to cache for Sidebar
+        localStorage.setItem('discordCachedEvents', JSON.stringify(futureEvents));
+        this.updateSidebar(); // Refresh sidebar immediately
+
+        let html = '';
+
+        futureEvents.forEach((evt, idx) => {
+          // RaidHelper fields
+          const title = evt.title || evt.name || 'Événement Discord';
+          const startUnix = evt.unix_start_time || evt.startTime || evt.start_time;
+          const leader = evt.leader_name || evt.leaderName || 'Inconnu';
+
+          const dateObj = new Date(startUnix * 1000);
+          const dateStr = dateObj.toLocaleString('fr-FR');
+
+          // We use 'idx' which corresponds to index in 'futureEvents' IF we set currentList = futureEvents
+          html += `
+            <div class="discord-event-card" onclick="discordManager.importEvent(${idx})">
+              <div class="discord-event-title">${title}</div>
+              <div class="discord-event-meta">📅 ${dateStr}</div>
+              <div class="discord-event-meta">👑 ${leader}</div>
+              <div style="margin-top:8px; font-size:12px; color:#10b981; font-weight:bold;">✚ Ajouter au calendrier</div>
+            </div>
+          `;
+        });
+
+        // Update currentList to match the rendered indices
+        this.currentList = futureEvents;
+
+        if (html === '') {
+          resultsDiv.innerHTML = '<div style="color:#99aab5;text-align:center;">Aucun événement futur trouvé.</div>';
+        } else {
+          resultsDiv.innerHTML = html;
+        }
+      },
+
+      importEvent(index) {
+        // Handle import from current modal list
+        const evt = this.currentList[index];
+        this.addEventToCalendar(evt);
+      },
+
+      importFromSidebar(index) {
+        // Handle import from cached/sidebar list
+        const cached = JSON.parse(localStorage.getItem('discordCachedEvents') || '[]');
+        if (cached[index]) {
+          this.addEventToCalendar(cached[index]);
+        }
+      },
+
+      addEventToCalendar(evt) {
+        const title = evt.title || evt.name || 'Import Discord';
+        const startUnix = evt.unix_start_time || evt.startTime || evt.start_time;
+
+        const dateObj = new Date(startUnix * 1000);
+
+        // Convert to our App Format
+        // 1. Determine Day name (Lundi, Mardi...)
+        const days = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+        const dayName = days[dateObj.getDay()];
+
+        // 2. Determine Time (HH:MM)
+        const h = String(dateObj.getHours()).padStart(2, '0');
+        const m = String(dateObj.getMinutes()).padStart(2, '0');
+        const timeStr = `${h}:${m}`;
+
+        const eventWeekNumber = getWeekNumber(dateObj);
+        const refWeekNumber = getWeekNumber(referenceDate);
+        const diff = eventWeekNumber - refWeekNumber;
+        const isPair = (diff % 2) === 0;
+        const weekType = isPair ? 'pair' : 'impair';
+
+        // Add to CUSTOM_EVENTS
+        const newItemName = `[D] ${title}`;
+        CUSTOM_EVENTS.push({
+          name: newItemName,
+          // Use Pin Emoji 📌 as default icon instead of potentially broken Discord URL
+          icon: evt.image_url || '📌',
+          days: [dayName],
+          timeSlots: [{ start: timeStr, end: timeStr }],
+          recurrence: 'current',
+          week: weekType,
+          notifications: true,
+          isCustom: true,
+          created: new Date().toISOString().split('T')[0]
+        });
+
+        localStorage.setItem('customEventsPro', JSON.stringify(CUSTOM_EVENTS));
+
+        // AUTO-TRACK: Add to notificationPreferences logic
+        // We need to check if it's already there (unlikely for new event) but good practice
+        // Note: 'week' in notifications matches the cycle week (pair/impair)
+        const notifExists = notificationPreferences.some(n => n.day === dayName && n.time === timeStr && n.itemName === newItemName && n.week === weekType);
+
+        if (!notifExists) {
+          notificationPreferences.push({
+            week: weekType,
+            day: dayName,
+            time: timeStr,
+            itemName: newItemName,
+            itemType: 'event' // Custom event type
+          });
+          localStorage.setItem('calendarNotifications', JSON.stringify(notificationPreferences));
+        }
+
+        renderCalendar();
+        setupNotificationTimers();
+        updateNotificationSidebar();
+
+        alert(`✅ Événement "${title}" importé et suivi !`);
+      },
+
+      updateSidebar() {
+        const cached = JSON.parse(localStorage.getItem('discordCachedEvents') || '[]');
+        const container = document.getElementById('discord-sidebar-panel');
+        const list = document.getElementById('discord-sidebar-list');
+        const toggleBtn = document.getElementById('discord-toggle-btn');
+
+        const isCollapsed = localStorage.getItem('discordSidebarCollapsed') === 'true';
+
+        if (cached.length === 0) {
+          container.style.display = 'none';
+          return;
+        }
+
+        container.style.display = 'block';
+
+        // Apply collapsed state
+        if (isCollapsed) {
+          list.style.display = 'none';
+          toggleBtn.textContent = '➕';
+        } else {
+          list.style.display = 'block';
+          toggleBtn.textContent = '➖';
+        }
+
+        let html = '';
+        const now = Date.now() / 1000;
+
+        cached.forEach((evt, idx) => {
+          const startUnix = evt.unix_start_time || evt.startTime || evt.start_time;
+          if (startUnix < now) return; // Don't show old events in sidebar
+
+          const dateObj = new Date(startUnix * 1000);
+          const dateStr = dateObj.toLocaleString('fr-FR', { weekday: 'short', day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' });
+          const title = evt.title || evt.name;
+
+          html += `
+               <div class="sidebar-event-card" style="background: rgba(88, 101, 242, 0.1); border-left: 3px solid #5865F2; padding: 8px; margin-bottom: 8px; border-radius: 4px; display: flex; align-items: center; justify-content: space-between; transition: background 0.2s;">
+                  <div onclick="discordManager.importFromSidebar(${idx})" style="cursor: pointer; flex: 1;">
+                      <div style="font-weight:bold; font-size:13px; color:#ddd;">${title}</div>
+                      <div style="font-size:11px; color:#5865F2; margin-top:2px;">📅 ${dateStr}</div>
+                  </div>
+                  <button onclick="discordManager.removeEvent(${idx})" title="Supprimer" style="background: transparent; border: none; font-size: 14px; cursor: pointer; padding: 4px; opacity: 0.7; transition: opacity 0.2s; margin-left:8px;">🗑️</button>
+               </div>
+             `;
+        });
+
+        if (html === '') {
+          list.innerHTML = '<div style="font-size:12px; color:#888; text-align:center;">Aucun événement futur.</div>';
+        } else {
+          list.innerHTML = html;
+        }
+      },
+
+      toggleSidebar() {
+        const isCollapsed = localStorage.getItem('discordSidebarCollapsed') === 'true';
+        localStorage.setItem('discordSidebarCollapsed', !isCollapsed);
+        this.updateSidebar();
+      },
+
+      removeEvent(index) {
+        const cached = JSON.parse(localStorage.getItem('discordCachedEvents') || '[]');
+        if (index >= 0 && index < cached.length) {
+          const evtToRemove = cached[index];
+          const eventTitle = evtToRemove.title || evtToRemove.name;
+
+          // 1. Remove from Sidebar Cache
+          const removedArray = cached.filter((_, i) => i !== index);
+          localStorage.setItem('discordCachedEvents', JSON.stringify(removedArray));
+
+          // 2. Remove from CUSTOM_EVENTS (Main Calendar)
+          // We look for events with specific Discord prefix
+          const expectedName = `[D] ${eventTitle}`;
+
+          const initialLength = CUSTOM_EVENTS.length;
+          CUSTOM_EVENTS = CUSTOM_EVENTS.filter(e => e.name !== expectedName);
+
+          if (CUSTOM_EVENTS.length < initialLength) {
+            localStorage.setItem('customEventsPro', JSON.stringify(CUSTOM_EVENTS));
+          }
+
+          // 3. Remove from Notification Preferences (Tracked Events sidebar)
+          const initialNotifLength = notificationPreferences.length;
+          notificationPreferences = notificationPreferences.filter(n => n.itemName !== expectedName);
+
+          if (notificationPreferences.length < initialNotifLength) {
+            localStorage.setItem('calendarNotifications', JSON.stringify(notificationPreferences));
+          }
+
+          // 4. Refresh All UIs
+          this.updateSidebar();
+          renderCalendar();
+          setupNotificationTimers();
+          updateNotificationSidebar();
+
+          console.log(`🗑️ Event supprimé: ${expectedName}`);
+        }
+      }
+    };
+
+    // INIT
+    console.log('✅ Initialisation du calendrier...');
+    console.log('📊 Données chargées:', typeof CALENDARDATA !== 'undefined');
+
+    // Check local storage for Discord cache
+    discordManager.updateSidebar();
+
+    renderCalendar();
+    setupNotificationTimers();
+    updateNotificationSidebar();
+    requestNotificationPermission();
+  </script>
 </body>
+
 </html>
