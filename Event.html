@@ -616,29 +616,93 @@
     }
 
     function showNotificationPopup(itemName, day, time) {
-      const popup = document.createElement('div');
-      popup.className = 'notification-popup';
-      popup.innerHTML = `
-        <div class="notification-content">
-          <div class="notification-icon">🔔</div>
-          <div class="notification-text">
-            <div class="notification-title">${itemName}</div>
-            <div class="notification-subtitle">Dans 10 minutes - ${day} ${time}</div>
-          </div>
-          <button class="notification-close" onclick="this.parentElement.parentElement.remove()">✕</button>
-        </div>
-      `;
-      document.body.appendChild(popup);
+  // Vérifier si un popup existe déjà pour cet événement
+  const existingPopup = document.querySelector(`.notification-popup[data-event="${itemName}-${day}-${time}"]`);
+  if (existingPopup) return;
+  
+  // 🔔 FORCER L'AFFICHAGE DE L'ONGLET
+  if (document.hidden) {
+    window.focus();
+  }
+  
+  const popup = document.createElement('div');
+  popup.className = 'notification-popup';
+  popup.setAttribute('data-event', `${itemName}-${day}-${time}`);
+  popup.innerHTML = `
+    <div class="notification-content">
+      <div class="notification-icon">🔔</div>
+      <div class="notification-text">
+        <div class="notification-title">${itemName}</div>
+        <div class="notification-subtitle" id="countdown-${itemName.replace(/\s/g, '')}">Calcul...</div>
+      </div>
+      <button class="notification-close" onclick="this.parentElement.parentElement.remove()">✕</button>
+    </div>
+  `;
+  document.body.appendChild(popup);
 
-      if (Notification.permission === "granted") {
-        new Notification("Throne and Liberty", {
-          body: `${itemName} commence dans 10 minutes (${day} ${time})`,
-          icon: "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_BFB_LycanthropeNSmuggler_On.webp"
-        });
-      }
-
-      
+  // ⏱️ COMPTE À REBOURS DYNAMIQUE
+  const countdownElement = document.getElementById(`countdown-${itemName.replace(/\s/g, '')}`);
+  const eventDateTime = getEventDateTime(day, time, currentWeek);
+  
+  function updateCountdown() {
+    const now = new Date();
+    const timeLeft = eventDateTime.getTime() - now.getTime();
+    
+    // ❌ ÉVÉNEMENT PASSÉ
+    if (timeLeft <= 0) {
+  countdownElement.textContent = "⚠️ Événement passé";
+  popup.style.background = 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)';
+  
+  // ✅ DÉCOCHER AUTOMATIQUEMENT LA CHECKBOX
+  const checkbox = document.querySelector(`input[data-item="${itemName}"][data-day="${day}"][data-time="${time}"]`);
+  if (checkbox && checkbox.checked) {
+    checkbox.checked = false;
+    
+    // Mettre à jour le localStorage
+    const savedState = JSON.parse(localStorage.getItem('checkedItems')) || {};
+    const key = `${itemName}-${day}-${time}-${currentWeek}`;
+    delete savedState[key];
+    localStorage.setItem('checkedItems', JSON.stringify(savedState));
+  }
+  
+  setTimeout(() => popup.remove(), 10000);
+  return;
+}
+    
+    const totalSeconds = Math.floor(timeLeft / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    
+    // Affichage selon le temps restant
+    if (hours > 0) {
+      countdownElement.textContent = `Dans ${hours}h ${mins}m ${seconds}s - ${day} ${time}`;
+    } else if (minutes > 0) {
+      countdownElement.textContent = `Dans ${minutes}m ${seconds}s - ${day} ${time}`;
+    } else {
+      countdownElement.textContent = `Dans ${seconds} secondes ! - ${day} ${time}`;
+      popup.style.background = 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)'; // Orange quand < 1min
     }
+  }
+  
+  updateCountdown();
+  const interval = setInterval(updateCountdown, 1000); // ⏱️ Mise à jour chaque seconde
+  
+  // Nettoyer l'intervalle quand le popup est fermé
+  popup.querySelector('.notification-close').addEventListener('click', () => {
+    clearInterval(interval);
+  });
+
+  // Notification système
+  if (Notification.permission === "granted") {
+    new Notification("Throne and Liberty", {
+      body: `${itemName} commence dans 10 minutes (${day} ${time})`,
+      icon: "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_BFB_LycanthropeNSmuggler_On.webp"
+    });
+  }
+}
+
 
     function setupNotificationTimers() {
       notificationTimers.forEach(timer => clearTimeout(timer));
