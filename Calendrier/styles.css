@@ -15,7 +15,23 @@ body {
   max-width: 1600px;
   margin: 0 auto;
   padding: 24px 16px 40px;
+  display: flex;
+  gap: 20px;
 }
+
+.main-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.sidebar-container {
+  width: 320px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 
 .page-header {
   display: flex;
@@ -93,6 +109,24 @@ body {
   box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6);
 }
 
+#manage-custom-events {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+  transition: all 0.3s;
+}
+
+#manage-custom-events:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.6);
+}
+
 .calendar-grid {
   display: grid;
   grid-template-columns: 80px repeat(7, 1fr);
@@ -125,7 +159,7 @@ body {
 
 .time-cell {
   background: #1a1d29;
-  padding: 12px 8px;
+  padding: 4px 8px;
   text-align: center;
   font-weight: 500;
   font-size: 13px;
@@ -137,8 +171,8 @@ body {
 
 .event-cell {
   background: #0f1117;
-  padding: 6px;
-  min-height: 40px;
+  padding: 2px;
+  min-height: 30px;
   position: relative;
 }
 
@@ -178,10 +212,10 @@ body {
 
 .event-icons {
   display: flex;
-  flex-wrap: wrap;
-  gap: 3px;
   width: 100%;
   justify-content: space-between;
+  flex-wrap: nowrap;
+  /* Prevent wrapping to second line */
 }
 
 .event-icon {
@@ -193,6 +227,8 @@ body {
   background: #1a1d29;
   cursor: pointer;
   flex: 0 0 auto;
+  /* Allow shrinking if needed? No, auto prevents shrinking too much if width set. */
+  /* Actually, user wants them on one line. Flexbox default shrink is 1. */
 }
 
 .event-icon img {
@@ -241,9 +277,12 @@ body {
 }
 
 @keyframes pulse-custom {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 0 10px rgba(16, 185, 129, 0.7);
   }
+
   50% {
     box-shadow: 0 0 25px rgba(16, 185, 129, 1);
   }
@@ -433,10 +472,12 @@ body {
   .calendar-grid {
     font-size: 12px;
   }
+
   .boss-icon {
     width: 28px;
     height: 28px;
   }
+
   .event-icon {
     width: 20px;
     height: 20px;
@@ -466,9 +507,12 @@ body {
 }
 
 @keyframes pulse-glow {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
   }
+
   50% {
     box-shadow: 0 0 30px rgba(59, 130, 246, 0.9);
   }
@@ -481,14 +525,30 @@ body {
   border: 2px solid #ffd700 !important;
   animation: golden-pulse 2s infinite;
   position: relative;
-  z-index: 5;
+  z-index: 20;
 }
 
+/* Ensure dynamic events get the border even with specific classes */
+
+.event-icon.has-notification.event-paix,
+.event-icon.has-notification.event-coop,
+.event-icon.has-notification.event-dominion,
+.event-icon.has-notification.event-guild,
+.event-icon.has-notification {
+  border-color: #ffd700 !important;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.9), 0 0 25px rgba(255, 215, 0, 0.6) !important;
+}
+
+
+
 @keyframes golden-pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 0 15px rgba(255, 215, 0, 0.9), 0 0 25px rgba(255, 215, 0, 0.6);
     transform: scale(1);
   }
+
   50% {
     box-shadow: 0 0 20px rgba(255, 215, 0, 1), 0 0 35px rgba(255, 215, 0, 0.8);
     transform: scale(1.05);
@@ -509,15 +569,22 @@ body {
 }
 
 @keyframes bell-ring {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: rotate(0deg);
   }
-  10%, 30% {
+
+  10%,
+  30% {
     transform: rotate(15deg);
   }
-  20%, 40% {
+
+  20%,
+  40% {
     transform: rotate(-15deg);
   }
+
   50% {
     transform: rotate(0deg);
   }
@@ -543,6 +610,7 @@ body {
     transform: translateX(500px);
     opacity: 0;
   }
+
   to {
     transform: translateX(0);
     opacity: 1;
@@ -561,9 +629,12 @@ body {
 }
 
 @keyframes bounce {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-10px);
   }
@@ -628,6 +699,19 @@ body {
   background: rgba(139, 92, 246, 0.15);
 }
 
+.boss-full.custom-event-panel {
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.15);
+}
+
+.boss-full.custom-event-panel .boss-full-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+
 .boss-full[data-boss-type="normal"] {
   border-color: #dc2626;
   background: rgba(220, 38, 38, 0.15);
@@ -674,6 +758,8 @@ body {
 
 .event-icon:hover {
   transform: scale(1.15) !important;
+  overflow: visible;
+  z-index: 100;
 }
 
 .boss-small img {
@@ -693,3 +779,525 @@ body {
 .boss-small[data-boss-type="normal"] {
   border: 2px solid #6b7280;
 }
+
+/* ===== PLACEHOLDER POUR ÉVÉNEMENTS SANS ICÔNE ===== */
+.custom-event-placeholder {
+  border: 3px solid #10b981 !important;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(5, 150, 105, 0.3)) !important;
+  position: relative;
+  overflow: visible;
+}
+
+.custom-event-placeholder .placeholder-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  gap: 1px;
+}
+
+.custom-event-placeholder .placeholder-emoji {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.custom-event-placeholder .placeholder-name {
+  font-size: 8px;
+  font-weight: 700;
+  color: #10b981;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+/* ===== FENÊTRE DE GESTION DES ÉVÉNEMENTS ===== */
+.manage-events-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(135deg, #1a1d29, #111827);
+  border: 2px solid #f59e0b;
+  border-radius: 16px;
+  padding: 0;
+  z-index: 10002;
+  max-width: 700px;
+  width: 90%;
+  max-height: 80vh;
+  overflow: hidden;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.95);
+  animation: slideInDown 0.3s ease-out;
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.manage-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 28px;
+  background: rgba(245, 158, 11, 0.1);
+  border-bottom: 2px solid #f59e0b;
+}
+
+.manage-header h3 {
+  color: #f59e0b;
+  font-size: 22px;
+  margin: 0;
+}
+
+.btn-close-manage {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid #9ca3af;
+  color: #e5e7eb;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.btn-close-manage:hover {
+  background: #ef4444;
+  border-color: #ef4444;
+  color: white;
+  transform: rotate(90deg);
+}
+
+.events-list {
+  padding: 20px;
+  max-height: calc(80vh - 100px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.event-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: rgba(15, 17, 23, 0.8);
+  border: 2px solid #374151;
+  border-radius: 12px;
+  transition: all 0.3s;
+}
+
+.event-card:hover {
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.05);
+  transform: translateX(4px);
+}
+
+.event-icon-preview {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  background: #1a1d29;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 2px solid #10b981;
+  overflow: hidden;
+}
+
+.event-icon-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.placeholder-content-small {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.placeholder-content-small .placeholder-emoji {
+  font-size: 28px;
+}
+
+.event-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.event-info-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #e5e7eb;
+}
+
+.event-info-details {
+  display: flex;
+  gap: 16px;
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+.event-info-meta {
+  font-size: 12px;
+  color: #6b7280;
+  font-style: italic;
+}
+
+.event-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.btn-edit,
+.btn-delete {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-edit {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+}
+
+.btn-edit:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.5);
+}
+
+.btn-delete {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+}
+
+.btn-delete:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.5);
+}
+
+/* SIDEBAR STYLES */
+.sidebar-panel {
+  background: #1a1d29;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.next-event-countdown {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  padding: 12px;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.countdown-label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 4px;
+}
+
+.countdown-timer {
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.countdown-event-name {
+  font-size: 13px;
+  color: #fff;
+  margin-top: 4px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tracked-events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.tracked-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #0f1117;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #374151;
+  transition: all 0.2s;
+}
+
+.tracked-item:hover {
+  border-color: #3b82f6;
+  background: #1f2937;
+}
+
+.tracked-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #1a1d29;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.tracked-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tracked-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.tracked-name {
+  font-size: 13px;
+  color: #e5e7eb;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tracked-time {
+  font-size: 11px;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tracked-remove {
+  background: transparent;
+  border: none;
+  color: #ef4444;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tracked-remove:hover {
+  background: rgba(239, 68, 68, 0.1);
+}
+
+@media (max-width: 1200px) {
+  .page {
+    flex-direction: column;
+  }
+
+  .sidebar-container {
+    width: 100%;
+  }
+}
+
+/* FORCED GOLDEN BORDER FIX */
+div.event-icon.has-notification {
+  border: 2px solid #ffd700 !important;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.9) !important;
+  z-index: 100 !important;
+  animation: golden-pulse 2s infinite !important;
+}
+/* DISCORD IMPORT STYLES */
+.discord-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(135deg, #2c2f33, #23272a);
+  border: 2px solid #7289da;
+  border-radius: 16px;
+  padding: 0;
+  z-index: 10003;
+  max-width: 800px;
+  width: 90%;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.95);
+  animation: slideInDown 0.3s ease-out;
+}
+
+.discord-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 28px;
+  background: rgba(114, 137, 218, 0.1);
+  border-bottom: 2px solid #7289da;
+}
+
+.discord-header h3 {
+  color: #7289da;
+  font-size: 22px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.discord-content {
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.discord-settings {
+  background: #23272a;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #7289da;
+}
+
+.discord-input-group {
+  margin-bottom: 15px;
+}
+
+.discord-input-group label {
+  display: block;
+  color: #99aab5;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.discord-input-group input,
+.discord-textarea {
+  width: 100%;
+  padding: 12px;
+  background: #2c2f33;
+  border: 1px solid #23272a;
+  border-radius: 6px;
+  color: #fff;
+  font-family: inherit;
+}
+
+.discord-textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.btn-discord-action {
+  background: #7289da;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+.btn-discord-action:hover {
+  background: #5b6eae;
+}
+
+.discord-results-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.discord-event-card {
+  background: #23272a;
+  border: 1px solid #7289da;
+  border-radius: 8px;
+  padding: 15px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.discord-event-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(114, 137, 218, 0.3);
+  border-color: #fff;
+}
+
+.discord-event-title {
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.discord-event-meta {
+  font-size: 13px;
+  color: #99aab5;
+  margin-bottom: 4px;
+}
+
+.discord-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #444;
+  padding-bottom: 10px;
+}
+
+.discord-tab {
+  background: none;
+  border: none;
+  color: #99aab5;
+  cursor: pointer;
+  padding: 5px 10px;
+  font-weight: bold;
+}
+
+.discord-tab.active {
+  color: #7289da;
+  border-bottom: 2px solid #7289da;
+}
+
