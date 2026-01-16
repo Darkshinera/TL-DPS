@@ -314,8 +314,24 @@
       const upcomingEvents = [];
       const now = new Date();
 
-      notificationPreferences.forEach((notif, index) => {
+      // 0. Update logic to use notificationPreferences mapped with calculated dates
+      const itemsWithDates = notificationPreferences.map((notif, index) => {
         const eventTime = getEventDateTime(notif.day, notif.time, notif.week);
+        return {
+          notif: notif,
+          index: index, // Original index for deletion
+          eventTime: eventTime
+        };
+      });
+
+      // 1. Sort by Date (ascending)
+      itemsWithDates.sort((a, b) => a.eventTime - b.eventTime);
+
+      // 2. Render
+      itemsWithDates.forEach((item) => {
+        const notif = item.notif;
+        const index = item.index;
+        const eventTime = item.eventTime;
 
         const isPast = eventTime < now;
 
@@ -1144,31 +1160,39 @@
         localStorage.setItem('discordUseProxy', useProxy);
       },
 
-      async fetchEvents() {
-        this.saveSettings();
-        const resultsDiv = document.getElementById('discord-results');
-        const useProxy = document.getElementById('discord-use-proxy').checked;
+      async fetchEvents(isBackground = false) {
+        if (!isBackground) {
+          this.saveSettings();
+        }
 
-        resultsDiv.innerHTML = '<div style="color:white;text-align:center;">Chargement...</div>';
+        // If background, ensure we have keys loaded from Init
+        if (!this.apiKey && isBackground) this.apiKey = localStorage.getItem('discordApiKey') || '';
+        if (!this.serverId && isBackground) this.serverId = localStorage.getItem('discordServerId') || '';
+
+        const resultsDiv = document.getElementById('discord-results');
+        const useProxyVal = isBackground ? (localStorage.getItem('discordUseProxy') === 'true') : document.getElementById('discord-use-proxy').checked;
+
+        if (!isBackground && resultsDiv) {
+          resultsDiv.innerHTML = '<div style="color:white;text-align:center;">Chargement...</div>';
+        }
 
         if (!this.apiKey) {
-          resultsDiv.innerHTML = '<div style="color:#ef4444;text-align:center;">⚠️ Clé API manquante</div>';
+          if (!isBackground && resultsDiv) resultsDiv.innerHTML = '<div style="color:#ef4444;text-align:center;">⚠️ Clé API manquante</div>';
           return;
         }
 
         try {
           let sid = this.serverId;
           if (!sid) {
-            resultsDiv.innerHTML = '<div style="color:#ef4444;text-align:center;">⚠️ ID Serveur manquant (Remplissez le champ ci-dessus)</div>';
+            if (!isBackground && resultsDiv) resultsDiv.innerHTML = '<div style="color:#ef4444;text-align:center;">⚠️ ID Serveur manquant (Remplissez le champ ci-dessus)</div>';
             return;
           }
 
           const targetUrl = `https://raid-helper.dev/api/v3/servers/${sid}/events`;
           // Use corsproxy.io if checked. 
-          // Format: https://corsproxy.io/?<EncodedURL>
-          const finalUrl = useProxy ? `https://corsproxy.io/?${encodeURIComponent(targetUrl)}` : targetUrl;
+          const finalUrl = useProxyVal ? `https://corsproxy.io/?${encodeURIComponent(targetUrl)}` : targetUrl;
 
-          console.log("Fetching:", finalUrl);
+          if (!isBackground) console.log("Fetching:", finalUrl);
 
           const response = await fetch(finalUrl, {
             headers: {
@@ -1178,21 +1202,27 @@
           });
 
           if (!response.ok) throw new Error(`Erreur API: ${response.status}`);
+
           const data = await response.json();
+          // Endpoint /events returns { postedEvents: [...] } or { results: [...] } depending on version
+          // Common RaidHelper format: { status: "success", postedEvents: [...] }
 
-          // Revert to 'postedEvents' which worked, but filter OLD events
-          const events = data.postedEvents || [];
-          this.renderList(events);
+          let events = [];
+          if (data.postedEvents) events = data.postedEvents;
+          else if (data.scheduledevents) events = data.scheduledevents;
+          else if (Array.isArray(data)) events = data;
 
-        } catch (e) {
-          console.error(e);
-          resultsDiv.innerHTML = `
-             <div style="color:#f59e0b;text-align:center;padding:20px;">
-               ⚠️ <b>Échec de connexion</b> (${e.message})<br><br>
-               ${!useProxy ? '💡 Essayez de cocher la case <b>"Utiliser un Proxy"</b> ci-dessus pour contourner le blocage.' : '❌ Même avec le proxy, cela échoue. Utilisez le Mode Manuel.'}
-             </div>
-           `;
-          // Do not auto switch immediately, let user see message
+          if (isBackground) {
+            console.log(`🔄 Auto-Refresh Discord: ${events.length} événements trouvés.`);
+          }
+
+          this.renderList(events, isBackground);
+
+        } catch (err) {
+          console.error("Discord Fetch Error:", err);
+          if (!isBackground && resultsDiv) {
+            resultsDiv.innerHTML = `<div style="color:#ef4444;text-align:center;">Erreur: ${err.message}<br><small>Essayez de cocher la case Proxy ou vérifiez vos identifiants.</small></div>`;
+          }
         }
       },
 
@@ -1214,19 +1244,23 @@
         }
       },
 
-      renderList(events) {
+      renderList(events, isBackground = false) {
         const resultsDiv = document.getElementById('discord-results');
+
         if (!events || events.length === 0) {
-          resultsDiv.innerHTML = '<div style="color:#99aab5;text-align:center;">Aucun événement trouvé.</div>';
+          if (!isBackground && resultsDiv) resultsDiv.innerHTML = '<div style="color:gray;text-align:center;">Aucun événement trouvé.</div>';
           return;
         }
 
-        const now = Date.now() / 1000; // Current unix timestamp
-
-        // Filter Future Events
-        const futureEvents = events.filter(evt => {
-          const t = evt.unix_start_time || evt.startTime || evt.start_time;
-          return t && t >= now;
+        // Filter valid events
+        const futureEvents = events.filter(e => {
+          const start = e.unix_start_time || e.startTime || e.start_time;
+          const now = Date.now() / 1000;
+          return start > (now - 86400); // Keep events from last 24h just in case, or strictly future? Let's keep strictly future for Sidebar
+        }).sort((a, b) => {
+          const tA = a.unix_start_time || a.startTime || a.start_time;
+          const tB = b.unix_start_time || b.startTime || b.start_time;
+          return tA - tB;
         });
 
         // Save to cache for Sidebar
@@ -1444,8 +1478,18 @@
     console.log('✅ Initialisation du calendrier...');
     console.log('📊 Données chargées:', typeof CALENDARDATA !== 'undefined');
 
-    // Check local storage for Discord cache
+    // Check local storage for Discord cache and Refresh
     discordManager.updateSidebar();
+
+    // Auto-Refresh Discord if configured
+    if (localStorage.getItem('discordApiKey') && localStorage.getItem('discordServerId')) {
+      console.log("🔄 Lancement de l'auto-refresh Discord...");
+      discordManager.fetchEvents(true); // First fetch on load
+      setInterval(() => {
+        console.log("🔄 Auto-refresh Discord interval...");
+        discordManager.fetchEvents(true);
+      }, 300000); // Every 5 minutes
+    }
 
     renderCalendar();
     setupNotificationTimers();
