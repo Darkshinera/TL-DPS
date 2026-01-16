@@ -4,34 +4,58 @@
 // =====================================================
 
 // ===== LOGOS DES BOSS =====
-const BOSSLOGOSBASE = {
-  'Daigon': 'https://cdn.questlog.gg/throne-and-liberty/assets/GameImage/MapIcon/DEWMFB/DagonOn.webp',
-  'Leviathan': 'https://cdn.questlog.gg/throne-and-liberty/assets/GameImage/MapIcon/DEWMFB/LeviathanOn.webp',
-  'Pakilo': 'https://cdn.questlog.gg/throne-and-liberty/assets/GameImage/MapIcon/DEWMFB/PakiloNaruOn.webp',
-  'Manticus': 'https://cdn.questlog.gg/throne-and-liberty/assets/GameImage/MapIcon/DEWMFB/ManticusOn.webp',
-  'Minezerok': 'https://cdn.questlog.gg/throne-and-liberty/assets/GameImage/MapIcon/DEWMB/FB/LichMaenZerokSprite.webp',
-  'Grand Aelon': 'https://cdn.questlog.gg/throne-and-liberty/assets/GameImage/MapIcon/DEWMB/FB/SpiritTreeGuardianSprite.webp',
-  'Cornelius': 'https://cdn.questlog.gg/throne-and-liberty/assets/GameImage/MapIcon/DEWMB/FB/LivingArmorCornelusSprite.webp',
-  'Nirma': 'https://cdn.questlog.gg/throne-and-liberty/assets/GameImage/MapIcon/DEWMB/FB/ElderSemaSprite.webp',
-  'Kowazan': 'https://cdn.questlog.gg/throne-and-liberty/assets/GameImage/MapIcon/DEWMB/FB/LycanthropeNSmugglerOn.webp',
-  'Morokai': 'https://cdn.questlog.gg/throne-and-liberty/assets/GameImage/MapIcon/DEWMB/FB/ElderTurncoatSprite.webp',
-  'Tchernobog': 'https://cdn.questlog.gg/throne-and-liberty/assets/GameImage/MapIcon/DEWMB/FB/BasiliskDarknessOn.webp',
-  'Ahzreil': 'https://cdn.questlog.gg/throne-and-liberty/assets/GameImage/MapIcon/DEWMB/FB/DeathAzraelSprite.webp',
-  'Adentus': 'https://cdn.questlog.gg/throne-and-liberty/assets/GameImage/MapIcon/DEWMB/FB/BugbearWarderOnSprite.webp',
-  'Aridus': 'https://cdn.questlog.gg/throne-and-liberty/assets/GameImage/MapIcon/DEWMB/FB/ElderBlathasarSprite.webp',
-  'Excavateur-9': 'https://cdn.questlog.gg/throne-and-liberty/assets/GameImage/MapIcon/DEWMB/FB/KingmineBoomOn.webp',
-  'Junobote': 'https://cdn.questlog.gg/throne-and-liberty/assets/GameImage/MapIcon/DEWMB/FB/LesserDemonJunoboatOn.webp',
-  'Malakar': 'https://cdn.questlog.gg/throne-and-liberty/assets/GameImage/MapIcon/DEWMB/FB/EvilEyeSurveilantOn.webp',
-  'Talus': 'https://cdn.questlog.gg/throne-and-liberty/assets/GameImage/MapIcon/DEWMB/FB/GolemTalusOn.webp',
-  'Tevent': 'https://cdn.questlog.gg/throne-and-liberty/assets/GameImage/MapIcon/DEWMW/B/TeventOnSprite.webp',
-  'Cordy': 'https://cdn.questlog.gg/throne-and-liberty/assets/GameImage/MapIcon/DEW/BW/B/GiantBroorkOnSprite.webp',
-  'Bellandir': 'https://cdn.questlog.gg/throne-and-liberty/assets/GameImage/MapIcon/DEW/MW/B/QueenBlendyOnSprite.webp',
-  'Deluznoah': 'https://cdn.questlog.gg/throne-and-liberty/assets/GameImage/MapIcon/DEW/MW/B/DelugeNoahOnSprite.webp',
-  'Tevent Ascendant': 'https://cdn.questlog.gg/throne-and-liberty/assets/GameImage/MapIcon/DEWMB/WB/TeventOnSprite.webp',
-  'Bellandir Ascendant': 'https://cdn.questlog.gg/throne-and-liberty/assets/GameImage/MapIcon/DEWMB/WB/QueenBlendyOnSprite.webp',
-  'Cordy Ascendant': 'https://cdn.questlog.gg/throne-and-liberty/assets/GameImage/MapIcon/DEWMB/WB/GiantBroorkOnSprite.webp',
-  'Deluznoah Ascendant': 'https://cdn.questlog.gg/throne-and-liberty/assets/GameImage/MapIcon/DEWMB/WB/DelugeNoahOnSprite.webp',
-};
+    const BOSS_LOGOS_BASE = {
+      "Daigon": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_FB_Dagon_On.webp",
+      "Leviathan": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_FB_Leviathan_On.webp",
+      "Pakilo": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_FB_PakiloNaru_On.webp",
+      "Manticus": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_FB_Manticus_On.webp",
+      "Minezerok": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_BFB_LichMaenZerok_Sprite.webp",
+      "Grand Aelon": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_BFB_SpiritTreeGuardian_Sprite.webp",
+      "Cornelius": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_BFB_LivingArmorCornelus_Sprite.webp",
+      "Nirma": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_BFB_ElderSema_Sprite.webp",
+      "Kowazan": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_BFB_LycanthropeNSmuggler_On.webp",
+      "Morokai": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_BFB_ElderTurncoat_Sprite.webp",
+      "Tchernobog": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_BFB_BasiliskDarkness_On.webp",
+      "Ahzreil": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_BFB_DeathAzrael_Sprite.webp",
+      "Adentus": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_BFB_BugbearWarder_On_Sprite.webp",
+      "Aridus": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_BFB_ElderBlathasar_Sprite.webp",
+      "Excavateur-9": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_BFB_KingmineBoom_On.webp",
+      "Junobote": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_BFB_LesserDemonJunoboat_On.webp",
+      "Malakar": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_BFB_EvilEyeSurveilant_On.webp",
+      "Talus": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_BFB_GolemTalus_On.webp",
+      "Tevent": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_WB_Tevent_On_Sprite.webp",
+      "Cordy": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WB_WB_GiantBroork_On_Sprite.webp",
+      "Bellandir": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_WB_QueenBlendy_On_Sprite.webp",
+      "Deluznoah": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_WB_DelugeNoah_On_Sprite.webp",
+      "Tevent Ascendant": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_BWB_Tevent_On_Sprite.webp",
+      "Bellandir Ascendant": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_BWB_QueenBlendy_On_Sprite.webp",
+      "Cordy Ascendant": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_BWB_GiantBroork_On_Sprite.webp",
+      "Deluznoah Ascendant": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_BWB_DelugeNoah_On_Sprite.webp"
+      
+    };
+
+    const EVENT_ICONS = {
+      "Fete des recoltes de peipors": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_DE_OperationFloweringFafer_On_Sprite.webp",
+      "Toucher curatif pour les betes celestes": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_DE_HealingTouch_001_On_Sprite.webp",
+      "Requiem de lumiere": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_DE_RequiemofLight_On_Sprite.webp",
+      "Destructeurs des tenebres": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_DE_DarkDestroyers_On_Sprite.webp",
+      "Mica brun cache": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_DE_Phlogopite_On_Sprite.webp",
+      "Rituel des pierres stellaires": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_DE_StarlightStonesRitual_On_Sprite.webp",
+      "Le meilleur moyen d'empecher le pire": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_DE_BestWorst_On_Sprite.webp",
+      "La ceremonie de passage du Grand arbre": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_DE_BigTreeSong_001_On_Sprite.webp",
+      "Fete du feu": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_DE_FestivalofFire_On_Sprite.webp",
+      "Cueillette de champignons sanglants": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_DE_Mushroom_On_Sprite.webp",
+      "Concours de louveterie": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_DE_WolfHuntingContest_On_Sprite.webp",
+      "Operation Acquisition d'obsidienne": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_DE_ObsidianShard_001_On_Sprite.webp",
+      "Le sceau du blizzard": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_DE_FrostStorm_001_On_Sprite.webp",
+      "Operation : Livraison de talismans": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_DE_TalismanMission_001_On_Sprite.webp",
+      "La caravane du desert": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_DE_Caravan_On_Sprite.webp",
+      "Mettre fin a la frenesie de mana": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_DE_Manaflood_On_Sprite.webp",
+      "Rompre le charme du clair de lune": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_DE_Moonlight_On_Sprite.webp",
+      "Fete des graines de campanule": "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_DE_BellFlowerSeed_001_On_Sprite.webp"
+    };
+
+
 
 // ===== ICÔNES DES ÉVÉNEMENTS =====
 const EVENTICONS = {
