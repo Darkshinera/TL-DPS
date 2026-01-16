@@ -54,17 +54,70 @@ const EVENTICONS = {
 };
 
 // CALENDRIER COMPLET (SEMAINES PAIRES ET IMPAIRES)
-const CALENDARDATA = {
-  pair: {
-    'Lundi': {
-      // ... copier toutes vos données de la semaine paire
-    },
-    // ... tous les autres jours
-  },
-  impair: {
-    'Lundi': {
-      // ... copier toutes vos données de la semaine impaire  
-    },
-    // ... tous les autres jours
-  }
+    const CALENDAR_DATA = {
+      "pair": {
+
+        //  LUNDI 
+        "Lundi": {
+          "00h": [
+            { name: "La ceremonie de passage du Grand arbre", type: "event" },
+            { name: "Mettre fin a la frenesie de mana", type: "event" },
+            { name: "Concours de louveterie", type: "event" },
+            { name: "Requiem de lumiere", type: "event" },
+            { name: "Le meilleur moyen d'empecher le pire", type: "event" },
+            { name: "Le sceau du blizzard", type: "event" }
+          ],
+          "01h": [
+            { name: "Daigon", type: "normal" },
+            { name: "Excavateur-9", type: "ascendant" }
+          ],
+          "03h": [
+            { name: "Fete des recoltes de peipors", type: "event" },
+            { name: "Mica brun cache", type: "event" },
+            { name: "Concours de louveterie", type: "event" },
+            { name: "Fete des graines de campanule", type: "event" },
+            { name: "Le sceau du blizzard", type: "event" },
+            { name: "Operation Acquisition d'obsidienne", type: "event" }
+          ],
+          "06h": [
+            { name: "Le meilleur moyen d'empecher le pire", type: "event" },
+            { name: "Cueillette de champignons sanglants", type: "event" },
+            { name: "Rituel des pierres stellaires", type: "event" },
+            { name: "Fete du feu", type: "event" },
+            { name: "La ceremonie de passage du Grand arbre", type: "event" },
+            { name: "Fete des recoltes de peipors", type: "event" }            
+          ],
+          "09h": [
+            { name: "Operation Acquisition d'obsidienne", type: "event" },
+            { name: "Operation : Livraison de talismans", type: "event" },
+            { name: "Concours de louveterie", type: "event" },
+            { name: "Fete des graines de campanule", type: "event" },
+            { name: "Le meilleur moyen d'empecher le pire", type: "event" },
+            { name: "Le sceau du blizzard", type: "event" }
+          ],
+          "12h": [
+            { name: "Fete des recoltes de peipors", type: "event" },
+            { name: "Mica brun cache", type: "event" },
+            { name: "Rituel des pierres stellaires", type: "event" },
+            { name: "Toucher curatif pour les betes celestes", type: "event" },
+            { name: "Destructeurs des tenebres", type: "event" },
+            { name: "Requiem de lumiere", type: "event" }
+          ],
+          "13h": [
+            { name: "Manticus", type: "normal" },
+            { name: "Minezerok", type: "ascendant" }
+          ],
+          "15h": [
+            { name: "Le meilleur moyen d'empecher le pire", type: "event" },
+            { name: "Cueillette de champignons sanglants", type: "event" },
+            { name: "Concours de louveterie", type: "event" },
+            { name: "Fete du feu", type: "event" },
+            { name: "Requiem de lumiere", type: "event" },
+            { name: "La ceremonie de passage du Grand arbre", type: "event" }
+          ],
+          "16h": [
+            { name: "Leviathan", type: "normal" },
+            { name: "Junobote", type: "ascendant" }
+          ],
+            }
 };
