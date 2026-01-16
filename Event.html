@@ -530,36 +530,38 @@
     }
 
     function findNextEvent() {
-      const currentIsPair = isEvenWeek(currentRealDate);
-      const expectedWeekType = currentIsPair ? 'pair' : 'impair';
-      if (currentWeek !== expectedWeekType) return null;
+  const now = new Date();  // ← Date ACTUELLE à chaque appel (au lieu de currentRealDate figé)
+  
+  const currentIsPair = isEvenWeek(now);  // ← Utilise la date actuelle
+  const expectedWeekType = currentIsPair ? 'pair' : 'impair';
+  if (currentWeek !== expectedWeekType) return null;
 
-      const now = currentRealDate;
-      const currentDay = now.getDay() === 0 ? 6 : now.getDay() - 1;
-      const currentHour = now.getHours();
+  const currentDay = now.getDay() === 0 ? 6 : now.getDay() - 1;
+  const currentHour = now.getHours();
 
-      const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
-      const times = ['00h', '01h', '03h', '06h', '09h', '12h', '13h', '15h', '16h', '19h', '20h', '22h', '23h'];
-      const timeToHour = {'00h':0, '01h':1, '03h':3, '06h':6, '09h':9, '12h':12, '13h':13, '15h':15, '16h':16, '19h':19, '20h':20, '22h':22, '23h':23};
+  const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+  const times = ['00h', '01h', '03h', '06h', '09h', '12h', '13h', '15h', '16h', '19h', '20h', '22h', '23h'];
+  const timeToHour = {'00h':0, '01h':1, '03h':3, '06h':6, '09h':9, '12h':12, '13h':13, '15h':15, '16h':16, '19h':19, '20h':20, '22h':22, '23h':23};
 
-      for (let dayOffset = 0; dayOffset < 14; dayOffset++) {
-        const checkDay = (currentDay + dayOffset) % 7;
-        const dayName = days[checkDay];
+  for (let dayOffset = 0; dayOffset < 14; dayOffset++) {
+    const checkDay = (currentDay + dayOffset) % 7;
+    const dayName = days[checkDay];
 
-        for (let timeIdx = 0; timeIdx < times.length; timeIdx++) {
-          const time = times[timeIdx];
-          const hour = timeToHour[time];
-          if (dayOffset === 0 && hour <= currentHour) continue;
+    for (let timeIdx = 0; timeIdx < times.length; timeIdx++) {
+      const time = times[timeIdx];
+      const hour = timeToHour[time];
+      if (dayOffset === 0 && hour <= currentHour) continue;
 
-          const data = CALENDAR_DATA[currentWeek];
-          const items = data[dayName][time] || [];
-          if (items.length > 0) {
-            return { day: dayName, time: time };
-          }
-        }
+      const data = CALENDAR_DATA[currentWeek];
+      const items = data[dayName][time] || [];
+      if (items.length > 0) {
+        return { day: dayName, time: time };
       }
-      return null;
     }
+  }
+  return null;
+}
+
 
     function requestNotificationPermission() {
       if ("Notification" in window && Notification.permission === "default") {
