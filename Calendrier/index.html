@@ -25,11 +25,17 @@
   <div id="calendar" class="calendar-grid"></div>
 </div>
 
-<!-- Chargement des données externes -->
+<!-- ⚠️ ORDRE CRUCIAL : D'ABORD LES DONNÉES -->
 <script src="calendar-data.js"></script>
 
-<!-- Logique de l'application -->
+<!-- PUIS LA LOGIQUE -->
 <script>
+// Vérification que les données sont chargées
+if (typeof CALENDARDATA === 'undefined') {
+  alert('❌ ERREUR : calendar-data.js non chargé !');
+  console.error('Les données du calendrier ne sont pas disponibles');
+}
+
 // ===== SYSTÈME DE GESTION DES DATES ET NOTIFICATIONS =====
 const currentRealDate = new Date();
 const referenceDate = new Date(2026, 0, 15);
@@ -270,7 +276,8 @@ function renderCalendar() {
           } else {
             const bossIcon = BOSSLOGOSBASE[item.name] || '';
             if (bossIcon) {
-              cellContent += `<div class="boss-small" data-boss-type="${item.type}" data-tooltip="${item.name}"><img src="${bossIcon}" alt="${item.name}" /></div>`;
+              const hasNotif = isNotificationEnabled(day, time, item.name);
+              cellContent += `<div class="boss-small ${hasNotif ? 'has-notification' : ''}" data-boss-type="${item.type}" data-tooltip="${item.name}" onclick="toggleNotification('${day}', '${time}', '${item.name.replace(/'/g, "\\'")}', '${item.type}')"><img src="${bossIcon}" alt="${item.name}" /></div>`;
             }
           }
         }
@@ -283,7 +290,7 @@ function renderCalendar() {
       customEventsThisWeek.forEach(evt => {
         evt.timeSlots.forEach(slot => {
           if (slot.start === time) {
-            events.push({ ...evt, time: slot.start, timeEnd: slot.end });
+            events.push({ ...evt, time: slot.start, timeEnd: slot.end, isCustom: true });
           }
         });
       });
@@ -308,6 +315,7 @@ function renderCalendar() {
             cellContent += `
               <div class="event-icon ${eventClass} ${hasNotif ? 'has-notification' : ''} ${evt.isCustom ? 'custom-event' : ''}"
                    data-tooltip="${safeEventName}"
+                   onclick="toggleNotification('${day}', '${evt.time || time}', '${safeEventName}', 'event')"
                    data-day="${day}" data-time="${evt.time || time}" data-item-name="${safeEventName}" data-item-type="event">
                 ${iconUrl ? `<img src="${iconUrl}" alt="${safeEventName}" />` : (evt.icon || '📅')}
               </div>
@@ -472,10 +480,11 @@ document.addEventListener('click', e => {
 });
 
 // INIT
+console.log('✅ Initialisation du calendrier...');
+console.log('📊 Données chargées:', typeof CALENDARDATA !== 'undefined');
 renderCalendar();
 setupNotificationTimers();
 requestNotificationPermission();
 </script>
 </body>
 </html>
-
