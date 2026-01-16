@@ -1,1 +1,480 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Calendrier Throne and Liberty - Événements PRO</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="page">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">📅 Calendrier Throne and Liberty</h1>
+      <p class="page-sub">Bosses et événements dynamiques</p>
+    </div>
+    <div class="controls-wrapper">
+      <div class="week-toggle">
+        <button id="btn-pair" class="active" onclick="switchWeek('pair')">Semaine 1</button>
+        <button id="btn-impair" onclick="switchWeek('impair')">Semaine 2</button>
+      </div>
+      <button id="add-custom-event">➕ Événement PRO</button>
+    </div>
+  </div>
 
+  <div id="calendar" class="calendar-grid"></div>
+</div>
+
+<!-- Chargement des données externes -->
+<script src="calendar-data.js"></script>
+
+<!-- Logique de l'application -->
+<script>
+// ===== SYSTÈME DE GESTION DES DATES ET NOTIFICATIONS =====
+const currentRealDate = new Date();
+const referenceDate = new Date(2026, 0, 15);
+let notificationPreferences = JSON.parse(localStorage.getItem('calendarNotifications') || '[]');
+let notificationTimers = [];
+
+// ===== ÉVÉNEMENTS PERSONNELS PRO =====
+let CUSTOM_EVENTS = JSON.parse(localStorage.getItem('customEventsPro') || '[]');
+let slotCount = 1;
+
+function getWeekNumber(d) {
+  const tempDate = new Date(d.valueOf());
+  const dayNum = tempDate.getDay() === 6 ? 7 : tempDate.getDay();
+  tempDate.setDate(tempDate.getDate() - dayNum + 3);
+  const firstThursday = tempDate.valueOf();
+  tempDate.setMonth(0, 1);
+  if (tempDate.getDay() !== 4) {
+    tempDate.setMonth(0, 1 + ((4 - tempDate.getDay()) + 7) % 7);
+  }
+  return 1 + Math.ceil((firstThursday - tempDate) / 604800000);
+}
+
+function isEvenWeek(date) {
+  const refWeek = getWeekNumber(referenceDate);
+  const currentWeek = getWeekNumber(date);
+  const weekDiff = currentWeek - refWeek;
+  return (weekDiff % 2) === 0;
+}
+
+function getMondayOfWeek(date) {
+  const d = new Date(date);
+  const day = d.getDay();
+  const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+  return new Date(d.setDate(diff));
+}
+
+function getWeekDates(weekType) {
+  const monday = getMondayOfWeek(currentRealDate);
+  const currentIsPair = isEvenWeek(currentRealDate);
+  if (weekType === 'impair' && currentIsPair) {
+    monday.setDate(monday.getDate() + 7);
+  } else if (weekType === 'pair' && !currentIsPair) {
+    monday.setDate(monday.getDate() + 7);
+  }
+  const dates = [];
+  for (let i = 0; i < 7; i++) {
+    const date = new Date(monday);
+    date.setDate(monday.getDate() + i);
+    dates.push(date);
+  }
+  return dates;
+}
+
+function formatDate(date) {
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  return `${day}/${month}`;
+}
+
+function findNextEvent() {
+  const now = new Date();
+  const currentIsPair = isEvenWeek(now);
+  const weekType = currentIsPair ? 'pair' : 'impair';
+  if (currentWeek !== weekType) return null;
+
+  const currentDay = now.getDay() === 0 ? 6 : now.getDay() - 1;
+  const currentHour = now.getHours();
+  const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+  const times = ['00h', '01h', '03h', '06h', '09h', '12h', '13h', '15h', '16h', '19h', '20h', '22h', '23h'];
+  const timeToHour = { '00h': 0, '01h': 1, '03h': 3, '06h': 6, '09h': 9, '12h': 12, '13h': 13, '15h': 15, '16h': 16, '19h': 19, '20h': 20, '22h': 22, '23h': 23 };
+
+  for (let dayOffset = 0; dayOffset < 14; dayOffset++) {
+    const checkDay = (currentDay + dayOffset) % 7;
+    const dayName = days[checkDay];
+    for (let timeIdx = 0; timeIdx < times.length; timeIdx++) {
+      const time = times[timeIdx];
+      const hour = timeToHour[time];
+      if (dayOffset === 0 && hour <= currentHour) continue;
+      const data = CALENDARDATA[currentWeek];
+      const items = data[dayName][time];
+      if (items.length > 0) {
+        return { day: dayName, time: time };
+      }
+    }
+  }
+  return null;
+}
+
+function requestNotificationPermission() {
+  if ('Notification' in window) {
+    if (Notification.permission === 'default') {
+      Notification.requestPermission().then(function(permission) {
+        if (permission === 'granted') {
+          console.log('Notifications autorisées');
+        }
+      });
+    }
+  }
+}
+
+function isNotificationEnabled(day, time, itemName) {
+  return notificationPreferences.some(n => n.day === day && n.time === time && n.itemName === itemName && n.week === currentWeek);
+}
+
+function toggleNotification(day, time, itemName, itemType) {
+  requestNotificationPermission();
+  const existingIndex = notificationPreferences.findIndex(n => n.day === day && n.time === time && n.itemName === itemName && n.week === currentWeek);
+  if (existingIndex !== -1) {
+    notificationPreferences.splice(existingIndex, 1);
+  } else {
+    notificationPreferences.push({ week: currentWeek, day: day, time: time, itemName: itemName, itemType: itemType });
+  }
+  localStorage.setItem('calendarNotifications', JSON.stringify(notificationPreferences));
+  renderCalendar();
+  setupNotificationTimers();
+}
+
+function getEventDateTime(day, time, weekType) {
+  const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+  const dayIndex = days.indexOf(day);
+  const timeToHour = { '00h': 0, '01h': 1, '03h': 3, '06h': 6, '09h': 9, '12h': 12, '13h': 13, '15h': 15, '16h': 16, '19h': 19, '20h': 20, '22h': 22, '23h': 23 };
+  const hour = timeToHour[time] || 0;
+  const weekDates = getWeekDates(weekType);
+  const eventDate = new Date(weekDates[dayIndex]);
+  eventDate.setHours(hour, 0, 0, 0);
+  return eventDate;
+}
+
+function showNotificationPopup(itemName, day, time) {
+  const existingPopup = document.querySelector(`[data-event="${itemName}-${day}-${time}"]`);
+  if (existingPopup) return;
+
+  if (document.hidden) window.focus();
+
+  const popup = document.createElement('div');
+  popup.className = 'notification-popup';
+  popup.setAttribute('data-event', `${itemName}-${day}-${time}`);
+  popup.innerHTML = `
+    <div class="notification-content">
+      <div class="notification-icon">${BOSSLOGOSBASE[itemName] || EVENTICONS[itemName] ? '⚔️' : '📅'}</div>
+      <div class="notification-text">
+        <div class="notification-title">${itemName}</div>
+        <div class="notification-subtitle" id="countdown-${itemName.replace(/\W/g, '')}">Calcul...</div>
+      </div>
+      <button class="notification-close" onclick="this.parentElement.parentElement.remove()">✕</button>
+    </div>
+  `;
+  document.body.appendChild(popup);
+
+  const countdownElement = document.getElementById(`countdown-${itemName.replace(/\W/g, '')}`);
+  const eventDateTime = getEventDateTime(day, time, currentWeek);
+
+  function updateCountdown() {
+    const now = new Date();
+    const timeLeft = eventDateTime.getTime() - now.getTime();
+    if (timeLeft < 0) {
+      countdownElement.textContent = 'événement passé';
+      popup.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
+      setTimeout(() => popup.remove(), 10000);
+      return;
+    }
+    const totalSeconds = Math.floor(timeLeft / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    if (hours > 0) {
+      countdownElement.textContent = `Dans ${hours}h ${mins}m ${seconds}s - ${day} ${time}`;
+    } else if (minutes > 0) {
+      countdownElement.textContent = `Dans ${minutes}m ${seconds}s - ${day} ${time}`;
+    } else {
+      countdownElement.textContent = `Dans ${seconds} secondes ! - ${day} ${time}`;
+      popup.style.background = 'linear-gradient(135deg, #f59e0b, #d97706)';
+    }
+    if (timeLeft > 0) {
+      setTimeout(updateCountdown, 1000);
+    }
+  }
+  updateCountdown();
+
+  if (Notification.permission === 'granted') {
+    new Notification('Throne and Liberty', {
+      body: `${itemName} commence dans 10 minutes - ${day} ${time}`,
+      icon: BOSSLOGOSBASE[itemName] || EVENTICONS[itemName]
+    });
+  }
+}
+
+function setupNotificationTimers() {
+  notificationTimers.forEach(timer => clearTimeout(timer));
+  notificationTimers = [];
+  notificationPreferences.forEach(notif => {
+    const eventTime = getEventDateTime(notif.day, notif.time, notif.week);
+    const notificationTime = new Date(eventTime.getTime() - 10 * 60 * 1000);
+    const now = new Date();
+    const timeUntilNotification = notificationTime.getTime() - now.getTime();
+    if (timeUntilNotification > 0) {
+      const timer = setTimeout(() => showNotificationPopup(notif.itemName, notif.day, notif.time), timeUntilNotification);
+      notificationTimers.push(timer);
+    }
+  });
+}
+
+let currentWeek = 'pair';
+
+// ===== FONCTION RENDRE CALENDRIER =====
+function renderCalendar() {
+  const calendar = document.getElementById('calendar');
+  let html = '';
+  const weekDates = getWeekDates(currentWeek);
+
+  html += '<div class="calendar-header"></div>';
+  for (let i = 0; i < 7; i++) {
+    const date = weekDates[i];
+    const day = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'][date.getDay()];
+    html += `<div class="calendar-header">
+      <span class="day-name">${day}</span>
+      <span class="day-date">${formatDate(date)}</span>
+    </div>`;
+  }
+
+  const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+  const times = ['00h', '01h', '03h', '06h', '09h', '12h', '13h', '15h', '16h', '19h', '20h', '22h', '23h'];
+
+  times.forEach(time => {
+    html += `<div class="time-cell">${time}</div>`;
+
+    days.forEach(day => {
+      let cellContent = '';
+      const data = CALENDARDATA[currentWeek];
+      const items = data[day][time] || [];
+      let events = [];
+
+      items.forEach(item => {
+        if (item.name) {
+          if (item.type === 'event') {
+            events.push(item);
+          } else {
+            const bossIcon = BOSSLOGOSBASE[item.name] || '';
+            if (bossIcon) {
+              cellContent += `<div class="boss-small" data-boss-type="${item.type}" data-tooltip="${item.name}"><img src="${bossIcon}" alt="${item.name}" /></div>`;
+            }
+          }
+        }
+      });
+
+      // === ÉVÉNEMENTS PERSO PRO ===
+      const customEventsThisWeek = CUSTOM_EVENTS.filter(e => 
+        (e.week === currentWeek || e.recurrence === 'every') && e.day === day
+      );
+      customEventsThisWeek.forEach(evt => {
+        evt.timeSlots.forEach(slot => {
+          if (slot.start === time) {
+            events.push({ ...evt, time: slot.start, timeEnd: slot.end });
+          }
+        });
+      });
+
+      if (events.length > 0) {
+        cellContent += '<div class="event-icons">';
+        events.forEach((evt, index) => {
+          const iconUrl = evt.isCustom 
+            ? (evt.icon && evt.icon.startsWith('http') ? evt.icon : null)
+            : (EVENTICONS[evt.name] || "");
+          
+          if (iconUrl || (evt.isCustom && evt.icon)) {
+            let eventClass = "";
+            if (index >= 0 && index <= 2) eventClass = "event-paix";
+            else if (index === 3) eventClass = "event-coop";
+            else if (index === 4) eventClass = "event-dominion";
+            else if (index === 5) eventClass = "event-guild";
+
+            const hasNotif = evt.notifications && isNotificationEnabled(day, evt.time || time, evt.name);
+            const safeEventName = (evt.name || evt.time).replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+            
+            cellContent += `
+              <div class="event-icon ${eventClass} ${hasNotif ? 'has-notification' : ''} ${evt.isCustom ? 'custom-event' : ''}"
+                   data-tooltip="${safeEventName}"
+                   data-day="${day}" data-time="${evt.time || time}" data-item-name="${safeEventName}" data-item-type="event">
+                ${iconUrl ? `<img src="${iconUrl}" alt="${safeEventName}" />` : (evt.icon || '📅')}
+              </div>
+            `;
+          }
+        });
+        cellContent += '</div>';
+      }
+
+      const isNextEvent = findNextEvent()?.day === day && findNextEvent()?.time === time;
+      html += `<div class="event-cell ${isNextEvent ? 'next-event' : ''}">${cellContent}</div>`;
+    });
+  });
+
+  calendar.innerHTML = html;
+  setupNotificationTimers();
+}
+
+// ===== FONCTION AJOUTER ÉVÉNEMENT PRO =====
+function addCustomEventPro() {
+  document.body.insertAdjacentHTML('beforeend', `
+    <div class="custom-event-form" id="custom-form">
+      <h3>🚀 Créer Événement PRO</h3>
+      
+      <input id="event-name" placeholder="Nom (ex: Raid Semaine XL)" />
+      <input id="event-icon" placeholder="Icône (URL ou Emoji 🏆)" />
+      
+      <div class="days-grid" id="days-grid">
+        <div class="day-checkbox" data-day="Lundi">Lundi</div>
+        <div class="day-checkbox" data-day="Mardi">Mardi</div>
+        <div class="day-checkbox" data-day="Mercredi">Mercredi</div>
+        <div class="day-checkbox" data-day="Jeudi">Jeudi</div>
+        <div class="day-checkbox" data-day="Vendredi">Vendredi</div>
+        <div class="day-checkbox" data-day="Samedi">Samedi</div>
+        <div class="day-checkbox" data-day="Dimanche">Dimanche</div>
+      </div>
+      
+      <select id="event-recurrence">
+        <option value="current">⚡ Cette semaine seulement</option>
+        <option value="every">♾️ Toutes les semaines</option>
+      </select>
+      
+      <div id="time-slots">
+        <h4 style="color: #f59e0b; margin: 20px 0 12px 0;">⏰ Créneaux horaires</h4>
+        <div class="time-slot" data-slot="1">
+          <select id="start-hour-1">
+            <option value="">Heure début</option>
+            ${Array.from({length:24}, (_, h) => `<option value="${h.toString().padStart(2,'0')}">${h}h</option>`).join('')}
+          </select>
+          <select id="start-min-1">
+            <option value="">Min</option><option value="00">00</option><option value="15">15</option><option value="30">30</option><option value="45">45</option>
+          </select>
+          <span style="font-size: 18px; color: #3b82f6; font-weight: bold;">→</span>
+          <select id="end-hour-1">
+            <option value="">Heure fin</option>
+            ${Array.from({length:24}, (_, h) => `<option value="${h.toString().padStart(2,'0')}">${h}h</option>`).join('')}
+          </select>
+          <select id="end-min-1">
+            <option value="">Min</option><option value="00">00</option><option value="15">15</option><option value="30">30</option><option value="45">45</option>
+          </select>
+        </div>
+      </div>
+      
+      <button class="btn-add-slot" onclick="addTimeSlot()">➕ Ajouter créneau</button>
+      
+      <label class="notif-label">
+        <input type="checkbox" id="enable-notif" checked>
+        🔔 Notifications 10min avant chaque créneau
+      </label>
+      
+      <div class="form-buttons">
+        <button class="btn-create" onclick="saveCustomEventPro()">🎉 CRÉER L'ÉVÉNEMENT</button>
+        <button class="btn-close" onclick="closeCustomForm()">❌ Fermer</button>
+      </div>
+    </div>
+  `);
+  
+  document.querySelectorAll('.day-checkbox').forEach(day => {
+    day.addEventListener('click', function() {
+      this.classList.toggle('checked');
+    });
+  });
+}
+
+function addTimeSlot() {
+  slotCount++;
+  document.getElementById('time-slots').insertAdjacentHTML('beforeend', `
+    <div class="time-slot" data-slot="${slotCount}">
+      <select id="start-hour-${slotCount}">
+        <option value="">Heure début</option>
+        ${Array.from({length:24}, (_, h) => `<option value="${h.toString().padStart(2,'0')}">${h}h</option>`).join('')}
+      </select>
+      <select id="start-min-${slotCount}">
+        <option value="">Min</option><option value="00">00</option><option value="15">15</option><option value="30">30</option><option value="45">45</option>
+      </select>
+      <span style="font-size: 18px; color: #3b82f6; font-weight: bold;">→</span>
+      <select id="end-hour-${slotCount}">
+        <option value="">Heure fin</option>
+        ${Array.from({length:24}, (_, h) => `<option value="${h.toString().padStart(2,'0')}">${h}h</option>`).join('')}
+      </select>
+      <select id="end-min-${slotCount}">
+        <option value="">Min</option><option value="00">00</option><option value="15">15</option><option value="30">30</option><option value="45">45</option>
+      </select>
+      <button class="remove-slot" onclick="this.parentElement.remove()">🗑️ Supprimer</button>
+    </div>
+  `);
+}
+
+function saveCustomEventPro() {
+  const name = document.getElementById('event-name').value.trim();
+  const icon = document.getElementById('event-icon').value.trim();
+  const recurrence = document.getElementById('event-recurrence').value;
+  const notifications = document.getElementById('enable-notif').checked;
+
+  if (!name) return alert('⚠️ Le nom est obligatoire !');
+
+  const selectedDays = Array.from(document.querySelectorAll('.day-checkbox.checked')).map(d => d.dataset.day);
+  if (selectedDays.length === 0) return alert('⚠️ Sélectionne au moins 1 jour !');
+
+  const timeSlots = [];
+  document.querySelectorAll('.time-slot').forEach((slot, idx) => {
+    const slotNum = idx + 1;
+    const startH = document.getElementById(`start-hour-${slotNum}`)?.value;
+    const startM = document.getElementById(`start-min-${slotNum}`)?.value || '00';
+    const endH = document.getElementById(`end-hour-${slotNum}`)?.value || startH;
+    const endM = document.getElementById(`end-min-${slotNum}`)?.value || startM;
+
+    if (startH) timeSlots.push({ start: `${startH}h`, end: `${endH}:${endM}` });
+  });
+
+  if (timeSlots.length === 0) return alert('⚠️ Ajoute au moins 1 créneau horaire !');
+
+  selectedDays.forEach(day => {
+    CUSTOM_EVENTS.push({
+      name, icon, day, timeSlots, recurrence, notifications,
+      isCustom: true, created: new Date().toISOString().split('T')[0],
+      week: recurrence === 'current' ? currentWeek : 'every'
+    });
+  });
+
+  localStorage.setItem('customEventsPro', JSON.stringify(CUSTOM_EVENTS));
+  closeCustomForm();
+  renderCalendar();
+  setupNotificationTimers();
+  alert(`✅ "${name}" créé sur ${selectedDays.length} jour${selectedDays.length > 1 ? 's' : ''} avec ${timeSlots.length} créneau${timeSlots.length > 1 ? 'x' : ''} !`);
+}
+
+function closeCustomForm() {
+  document.getElementById('custom-form')?.remove();
+}
+
+function switchWeek(week) {
+  currentWeek = week;
+  document.getElementById('btn-pair').classList.toggle('active', week === 'pair');
+  document.getElementById('btn-impair').classList.toggle('active', week === 'impair');
+  renderCalendar();
+}
+
+// Event Listeners
+document.addEventListener('click', e => {
+  if (e.target.id === 'add-custom-event') addCustomEventPro();
+});
+
+// INIT
+renderCalendar();
+setupNotificationTimers();
+requestNotificationPermission();
+</script>
+</body>
+</html>
