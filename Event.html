@@ -630,7 +630,7 @@
   popup.setAttribute('data-event', `${itemName}-${day}-${time}`);
   popup.innerHTML = `
     <div class="notification-content">
-      <div class="notification-icon">🔔</div>
+      ${BOSSLOGOSBASE[itemName] || EVENTICONS[itemName] ? `<img src="${BOSSLOGOSBASE[itemName] || EVENTICONS[itemName]}" alt="${itemName}" style="width: 48px; height: 48px; border-radius: 8px; object-fit: cover; border: 2px solid #ffd700;">` : '<div class="notification-icon">🔔</div>'}
       <div class="notification-text">
         <div class="notification-title">${itemName}</div>
         <div class="notification-subtitle" id="countdown-${itemName.replace(/\s/g, '')}">Calcul...</div>
@@ -698,7 +698,7 @@
   if (Notification.permission === "granted") {
     new Notification("Throne and Liberty", {
       body: `${itemName} commence dans 10 minutes (${day} ${time})`,
-      icon: "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_BFB_LycanthropeNSmuggler_On.webp"
+      icon: BOSSLOGOSBASE[itemName] || EVENTICONS[itemName] || ''
     });
   }
 }
