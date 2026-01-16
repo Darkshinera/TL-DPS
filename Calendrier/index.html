@@ -315,7 +315,7 @@
       const now = new Date();
 
       // 0. Update logic to use notificationPreferences mapped with calculated dates
-      const itemsWithDates = notificationPreferences.map((notif, index) => {
+      let itemsWithDates = notificationPreferences.map((notif, index) => {
         const eventTime = getEventDateTime(notif.day, notif.time, notif.week);
         return {
           notif: notif,
@@ -323,6 +323,9 @@
           eventTime: eventTime
         };
       });
+
+      // Filter out past events
+      itemsWithDates = itemsWithDates.filter(item => item.eventTime >= now);
 
       // 1. Sort by Date (ascending)
       itemsWithDates.sort((a, b) => a.eventTime - b.eventTime);
