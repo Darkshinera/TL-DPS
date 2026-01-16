@@ -461,8 +461,8 @@
         <div class="page-sub">Boss et événements dynamiques</div>
       </div>
       <div class="week-toggle">
-        <button id="btn-pair" class="active" onclick="switchWeek('pair')">Semaine Paire</button>
-        <button id="btn-impair" onclick="switchWeek('impair')">Semaine Impaire</button>
+        <button id="btn-pair" class="active" onclick="switchWeek('pair')">Semaine 1</button>
+        <button id="btn-impair" onclick="switchWeek('impair')">Semaine 2</button>
       </div>
     </div>
 
@@ -530,36 +530,38 @@
     }
 
     function findNextEvent() {
-      const currentIsPair = isEvenWeek(currentRealDate);
-      const expectedWeekType = currentIsPair ? 'pair' : 'impair';
-      if (currentWeek !== expectedWeekType) return null;
+  const now = new Date();  // ← Date ACTUELLE à chaque appel (au lieu de currentRealDate figé)
+  
+  const currentIsPair = isEvenWeek(now);  // ← Utilise la date actuelle
+  const expectedWeekType = currentIsPair ? 'pair' : 'impair';
+  if (currentWeek !== expectedWeekType) return null;
 
-      const now = currentRealDate;
-      const currentDay = now.getDay() === 0 ? 6 : now.getDay() - 1;
-      const currentHour = now.getHours();
+  const currentDay = now.getDay() === 0 ? 6 : now.getDay() - 1;
+  const currentHour = now.getHours();
 
-      const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
-      const times = ['00h', '01h', '03h', '06h', '09h', '12h', '13h', '15h', '16h', '19h', '20h', '22h', '23h'];
-      const timeToHour = {'00h':0, '01h':1, '03h':3, '06h':6, '09h':9, '12h':12, '13h':13, '15h':15, '16h':16, '19h':19, '20h':20, '22h':22, '23h':23};
+  const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+  const times = ['00h', '01h', '03h', '06h', '09h', '12h', '13h', '15h', '16h', '19h', '20h', '22h', '23h'];
+  const timeToHour = {'00h':0, '01h':1, '03h':3, '06h':6, '09h':9, '12h':12, '13h':13, '15h':15, '16h':16, '19h':19, '20h':20, '22h':22, '23h':23};
 
-      for (let dayOffset = 0; dayOffset < 14; dayOffset++) {
-        const checkDay = (currentDay + dayOffset) % 7;
-        const dayName = days[checkDay];
+  for (let dayOffset = 0; dayOffset < 14; dayOffset++) {
+    const checkDay = (currentDay + dayOffset) % 7;
+    const dayName = days[checkDay];
 
-        for (let timeIdx = 0; timeIdx < times.length; timeIdx++) {
-          const time = times[timeIdx];
-          const hour = timeToHour[time];
-          if (dayOffset === 0 && hour <= currentHour) continue;
+    for (let timeIdx = 0; timeIdx < times.length; timeIdx++) {
+      const time = times[timeIdx];
+      const hour = timeToHour[time];
+      if (dayOffset === 0 && hour <= currentHour) continue;
 
-          const data = CALENDAR_DATA[currentWeek];
-          const items = data[dayName][time] || [];
-          if (items.length > 0) {
-            return { day: dayName, time: time };
-          }
-        }
+      const data = CALENDAR_DATA[currentWeek];
+      const items = data[dayName][time] || [];
+      if (items.length > 0) {
+        return { day: dayName, time: time };
       }
-      return null;
     }
+  }
+  return null;
+}
+
 
     function requestNotificationPermission() {
       if ("Notification" in window && Notification.permission === "default") {
@@ -614,29 +616,80 @@
     }
 
     function showNotificationPopup(itemName, day, time) {
-      const popup = document.createElement('div');
-      popup.className = 'notification-popup';
-      popup.innerHTML = `
-        <div class="notification-content">
-          <div class="notification-icon">🔔</div>
-          <div class="notification-text">
-            <div class="notification-title">${itemName}</div>
-            <div class="notification-subtitle">Dans 10 minutes - ${day} ${time}</div>
-          </div>
-          <button class="notification-close" onclick="this.parentElement.parentElement.remove()">✕</button>
-        </div>
-      `;
-      document.body.appendChild(popup);
+  // Vérifier si un popup existe déjà pour cet événement
+  const existingPopup = document.querySelector(`.notification-popup[data-event="${itemName}-${day}-${time}"]`);
+  if (existingPopup) return;
+  
+  // 🔔 FORCER L'AFFICHAGE DE L'ONGLET
+  if (document.hidden) {
+    window.focus();
+  }
+  
+  const popup = document.createElement('div');
+  popup.className = 'notification-popup';
+  popup.setAttribute('data-event', `${itemName}-${day}-${time}`);
+  popup.innerHTML = `
+    <div class="notification-content">
+      <div class="notification-icon">🔔</div>
+      <div class="notification-text">
+        <div class="notification-title">${itemName}</div>
+        <div class="notification-subtitle" id="countdown-${itemName.replace(/\s/g, '')}">Calcul...</div>
+      </div>
+      <button class="notification-close" onclick="this.parentElement.parentElement.remove()">✕</button>
+    </div>
+  `;
+  document.body.appendChild(popup);
 
-      if (Notification.permission === "granted") {
-        new Notification("Throne and Liberty", {
-          body: `${itemName} commence dans 10 minutes (${day} ${time})`,
-          icon: "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_BFB_LycanthropeNSmuggler_On.webp"
-        });
-      }
-
-      
+  // ⏱️ COMPTE À REBOURS DYNAMIQUE
+  const countdownElement = document.getElementById(`countdown-${itemName.replace(/\s/g, '')}`);
+  const eventDateTime = getEventDateTime(day, time, currentWeek);
+  
+  function updateCountdown() {
+    const now = new Date();
+    const timeLeft = eventDateTime.getTime() - now.getTime();
+    
+    // ❌ ÉVÉNEMENT PASSÉ
+    if (timeLeft <= 0) {
+      countdownElement.textContent = "⚠️ Événement passé";
+      popup.style.background = 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)';
+      setTimeout(() => popup.remove(), 10000); // Supprime après 10 secondes
+      return;
     }
+    
+    const totalSeconds = Math.floor(timeLeft / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    
+    // Affichage selon le temps restant
+    if (hours > 0) {
+      countdownElement.textContent = `Dans ${hours}h ${mins}m ${seconds}s - ${day} ${time}`;
+    } else if (minutes > 0) {
+      countdownElement.textContent = `Dans ${minutes}m ${seconds}s - ${day} ${time}`;
+    } else {
+      countdownElement.textContent = `Dans ${seconds} secondes ! - ${day} ${time}`;
+      popup.style.background = 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)'; // Orange quand < 1min
+    }
+  }
+  
+  updateCountdown();
+  const interval = setInterval(updateCountdown, 1000); // ⏱️ Mise à jour chaque seconde
+  
+  // Nettoyer l'intervalle quand le popup est fermé
+  popup.querySelector('.notification-close').addEventListener('click', () => {
+    clearInterval(interval);
+  });
+
+  // Notification système
+  if (Notification.permission === "granted") {
+    new Notification("Throne and Liberty", {
+      body: `${itemName} commence dans 10 minutes (${day} ${time})`,
+      icon: "https://cdn.questlog.gg/throne-and-liberty/assets/Game/Image/MapIcon/DE/WM_BFB_LycanthropeNSmuggler_On.webp"
+    });
+  }
+}
+
 
     function setupNotificationTimers() {
       notificationTimers.forEach(timer => clearTimeout(timer));
@@ -2127,7 +2180,7 @@
     </div>
   </div>
   <script>
-  (function(){var h=false;function t(m){if(m<=0)return"Maintenant!";var s=Math.floor(m/1000),n=Math.floor(s/60),o=Math.floor(n/60),d=Math.floor(o/24);if(d>0)return d+"j "+(o%24)+"h";if(o>0)return o+"h "+(n%60)+"m";if(n>0)return n+"m "+(s%60)+"s";return s+"s"}function u(){var a=document.getElementById('notif-next'),b=document.getElementById('notif-list');if(!a||!b)return;var c=[];try{var s=localStorage.getItem('calendarNotifications');if(s)c=JSON.parse(s)}catch(e){}if(c.length===0){a.style.display='none';b.innerHTML='<div style="text-align:center;padding:20px;color:#9ca3af;font-size:12px;">Aucune notification.<br><br>Cliquez sur un événement!</div>';return}var n=new Date(),p=[],i;c.forEach(function(v,x){var et=null;if(typeof getEventDateTime==='function'){try{et=getEventDateTime(v.day,v.time,v.week)}catch(e){}}if(et){var df=et.getTime()-n.getTime();if(df>0)p.push({idx:x,name:v.itemName,day:v.day,time:v.time,ms:df})}});p.sort(function(a,b){return a.ms-b.ms});if(p.length>0){var f=p[0];a.innerHTML='<div style="background:linear-gradient(135deg,#667eea,#764ba2);padding:12px;border-radius:8px;margin-bottom:12px;color:white;"><div style="font-size:10px;opacity:0.9;margin-bottom:4px;">Prochain événement</div><div style="font-size:14px;font-weight:700;margin-bottom:6px;">'+f.name+'</div><div style="font-size:24px;font-weight:700;font-family:monospace;text-align:center;padding:8px;background:rgba(0,0,0,0.2);border-radius:6px;margin-bottom:4px;">'+t(f.ms)+'</div><div style="font-size:11px;opacity:0.9;text-align:center;">'+f.day+' à '+f.time+'</div></div>';a.style.display='block'}else a.style.display='none';var htm='';p.forEach(function(e){htm+='<div style="background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);border-radius:6px;padding:8px 10px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;"><div style="flex:1;"><div style="font-size:12px;font-weight:600;color:#e5e7eb;margin-bottom:2px;">'+e.name+'</div><div style="font-size:10px;color:#9ca3af;">'+e.day+' '+e.time+' (dans '+t(e.ms)+')</div></div><button onclick="window.rmNotif('+e.idx+')" style="background:rgba(239,68,68,0.2);border:1px solid rgba(239,68,68,0.4);color:#ef4444;width:22px;height:22px;border-radius:4px;cursor:pointer;font-size:14px;">✕</button></div>'});if(htm==='')htm='<div style="text-align:center;padding:20px;color:#9ca3af;font-size:12px;">Tous passés</div>';b.innerHTML=htm}window.rmNotif=function(i){var l=JSON.parse(localStorage.getItem('calendarNotifications')||'[]');l.splice(i,1);localStorage.setItem('calendarNotifications',JSON.stringify(l));u();if(typeof renderCalendar==='function')renderCalendar();if(typeof setupNotificationTimers==='function')setupNotificationTimers()};setTimeout(function(){var hd=document.getElementById('notif-header'),bd=document.getElementById('notif-body'),tg=document.getElementById('notif-toggle');if(hd)hd.onclick=function(){h=!h;if(h){bd.style.display='none';tg.textContent='+'}else{bd.style.display='block';tg.textContent='−'}};u();setInterval(u,2000)},500)})();
+  (function(){var h=false;function t(m){if(m<=0)return"Maintenant!";var s=Math.floor(m/1000),n=Math.floor(s/60),o=Math.floor(n/60),d=Math.floor(o/24);if(d>0)return d+"j "+(o%24)+"h";if(o>0)return o+"h "+(n%60)+"m";if(n>0)return n+"m "+(s%60)+"s";return s+"s"}function u(){var a=document.getElementById('notif-next'),b=document.getElementById('notif-list');if(!a||!b)return;var c=[];try{var s=localStorage.getItem('calendarNotifications');if(s)c=JSON.parse(s)}catch(e){}if(c.length===0){a.style.display='none';b.innerHTML='<div style="text-align:center;padding:20px;color:#9ca3af;font-size:12px;">Aucune notification.<br><br>Cliquez sur un événement!</div>';return}var n=new Date(),p=[],i;c.forEach(function(v,x){var et=null;if(typeof getEventDateTime==='function'){try{et=getEventDateTime(v.day,v.time,v.week)}catch(e){}}if(et){var df=et.getTime()-n.getTime();if(df>0)p.push({idx:x,name:v.itemName,day:v.day,time:v.time,ms:df})}});p.sort(function(a,b){return a.ms-b.ms});if(p.length>0){var f=p[0];a.innerHTML='<div style="background:linear-gradient(135deg,#667eea,#764ba2);padding:12px;border-radius:8px;margin-bottom:12px;color:white;"><div style="font-size:10px;opacity:0.9;margin-bottom:4px;">Prochain événement</div><div style="font-size:14px;font-weight:700;margin-bottom:6px;">'+f.name+'</div><div style="font-size:24px;font-weight:700;font-family:monospace;text-align:center;padding:8px;background:rgba(0,0,0,0.2);border-radius:6px;margin-bottom:4px;">'+t(f.ms)+'</div><div style="font-size:11px;opacity:0.9;text-align:center;">'+f.day+' à '+f.time+'</div></div>';a.style.display='block'}else a.style.display='none';var htm='';p.forEach(function(e){htm+='<div style="background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);border-radius:6px;padding:8px 10px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;"><div style="flex:1;"><div style="font-size:12px;font-weight:600;color:#e5e7eb;margin-bottom:2px;">'+e.name+'</div><div style="font-size:10px;color:#9ca3af;">'+e.day+' '+e.time+' (dans '+t(e.ms)+')</div></div><button onclick="window.rmNotif('+e.idx+')" style="background:rgba(239,68,68,0.2);border:1px solid rgba(239,68,68,0.4);color:#ef4444;width:22px;height:22px;border-radius:4px;cursor:pointer;font-size:14px;">✕</button></div>'});if(htm==='')htm='<div style="text-align:center;padding:20px;color:#9ca3af;font-size:12px;">Tous passés</div>';b.innerHTML=htm}window.rmNotif=function(i){var l=JSON.parse(localStorage.getItem('calendarNotifications')||'[]');l.splice(i,1);localStorage.setItem('calendarNotifications',JSON.stringify(l));u();if(typeof renderCalendar==='function')renderCalendar()};setTimeout(function(){var hd=document.getElementById('notif-header'),bd=document.getElementById('notif-body'),tg=document.getElementById('notif-toggle');if(hd)hd.onclick=function(){h=!h;if(h){bd.style.display='none';tg.textContent='+'}else{bd.style.display='block';tg.textContent='−'}};u();setInterval(u,2000)},500)})();
   </script>
 </body>
 </html>
