@@ -18,8 +18,8 @@
         </div>
         <div class="controls-wrapper">
           <div class="week-toggle">
-            <button id="btn-pair" class="active" onclick="switchWeek('pair')">Semaine 1</button>
-            <button id="btn-impair" onclick="switchWeek('impair')">Semaine 2</button>
+            <button id="btn-pair" class="active" onclick="switchWeek('impair')">Semaine 1</button>
+            <button id="btn-impair" onclick="switchWeek('pair')">Semaine 2</button>
           </div>
           <button id="add-custom-event">➕ Événement</button>
           <button id="manage-custom-events">🛠️ Gérer Events</button>
@@ -160,7 +160,7 @@
           const time = times[timeIdx];
           const hour = timeToHour[time];
           if (dayOffset === 0 && hour <= currentHour) continue;
-          const data = CALENDARDATA[currentWeek];
+          const data = CALENDARDATA[getDataWeek(currentWeek)];
           const items = data[dayName][time];
           if (items.length > 0) {
             return { day: dayName, time: time };
@@ -512,7 +512,12 @@
       return str && (str.startsWith('http://') || str.startsWith('https://') || str.startsWith('//'));
     }
 
-    let currentWeek = 'pair';
+    // Helper pour inverser la lecture des données : Semaine 1 affiche dates 'impair' mais lit données 'pair'
+    function getDataWeek(displayWeek) {
+      return displayWeek === 'pair' ? 'impair' : 'pair';
+    }
+
+    let currentWeek = 'impair';
 
     // ===== FONCTION RENDRE CALENDRIER =====
     function renderCalendar() {
@@ -565,7 +570,7 @@
 
         days.forEach(day => {
           let cellContent = '';
-          const data = CALENDARDATA[currentWeek];
+          const data = CALENDARDATA[getDataWeek(currentWeek)];
           const items = data[day][time] || [];
           let events = [];
 
@@ -1061,8 +1066,9 @@
 
     function switchWeek(week) {
       currentWeek = week;
-      document.getElementById('btn-pair').classList.toggle('active', week === 'pair');
-      document.getElementById('btn-impair').classList.toggle('active', week === 'impair');
+      // Inverser la logique : btn-pair (Semaine 1) appelle 'impair', donc il doit être actif quand week='impair'
+      document.getElementById('btn-pair').classList.toggle('active', week === 'impair');
+      document.getElementById('btn-impair').classList.toggle('active', week === 'pair');
       renderCalendar();
     }
 
