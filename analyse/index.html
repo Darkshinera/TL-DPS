@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Damage By Skill - Throne and Liberty</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.8.1/nouislider.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.8.1/nouislider.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <h1>Damage By Skill - Throne and Liberty</h1>
+  <div style="margin-top:4px;text-align:center;font-size:13px;">
+    Logs folder: <code id="logPath" style="cursor:pointer;">%LOCALAPPDATA%\TL\SAVED\COMBATLOGS</code>
+    <span id="copyMsg" style="margin-left:6px;font-size:12px;color:#aaa;"></span>
+  </div>
+  <p style="margin-top:16px;">Select one or more combatlog (.txt) files exported from the game.</p>
+  <input type="file" id="logFile" accept=".txt" multiple style="display:none;">
+  <div id="dropZone">Drop your combatlog (.txt) files here<br><span>or click to select them</span></div>
+  <div id="status"></div>
+  <div style="width:95%;max-width:1600px;margin-top:6px;display:flex;justify-content:space-between;align-items:center;">
+    <label style="font-size:11px;color:#9fa4ff;cursor:pointer;display:flex;align-items:center;gap:6px;">
+      <input type="checkbox" id="excludeEpeeCheckbox" style="cursor:pointer;">
+      <span>Exclure "Épée du jugement" des calculs</span>
+    </label>
+    <button id="clearLogsBtn">Clear logs</button>
+  </div>
+  <div class="summary">
+    <div class="card">
+      <div class="card-title">Total Damage</div>
+      <div class="card-value" id="sumTotalDamage">0</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Average DPS</div>
+      <div class="card-value" id="sumAvgDps">0</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Players</div>
+      <div class="card-value" id="sumPlayers">0</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Target</div>
+      <div class="card-value" id="sumBossName">---</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Date</div>
+      <div class="card-value" id="fightDate">---</div>
+    </div>
+  </div>
+  <div id="timeRangeWrapper">
+    <span id="timeRangeLabel">Time range: 0s - 0s</span>
+    <div id="selectedDuration">🎯 0s selected</div>
+    <div id="bossTimeline"></div>
+    <div id="timeRangeSlider"></div>
+  </div>
+  <h2>Player Statistics</h2>
+  <p>Click one or more players to compare them on the charts. ✕ removes from logs completely.</p>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Player</th>
+        <th>DPS</th>
+        <th>Total Damage</th>
+        <th>% Fight</th>
+        <th>Hits</th>
+        <th>Avg Hit</th>
+        <th>Max Hit</th>
+        <th>Duration</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="playerBody"></tbody>
+  </table>
+  <div style="width:95%;max-width:1600px;margin-top:8px;text-align:right;">
+    <button id="toggleTargetsBtn">Show other targets</button>
+  </div>
+  <div id="targetsWrapper">
+    <div id="targetsScroll">
+      <table id="targetsTable">
+        <thead>
+          <tr>
+            <th>Target</th>
+            <th>Total Damage</th>
+            <th>Hits</th>
+          </tr>
+        </thead>
+        <tbody id="targetsBody"></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><span class="panel-title">Damage By Skill</span><span class="panel-meta"
+        id="playersMeta"></span></div>
+    <div class="panel-body">
+      <div id="skillsTableContainer">
+        <table id="skillsTable">
+          <thead>
+            <tr>
+              <th>Skill</th>
+              <th></th>
+              <th>Damage Comparison</th>
+            </tr>
+          </thead>
+          <tbody id="skillsTableBody">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><span class="panel-title">DPS Timeline (Per Second)</span><span class="panel-meta"
+        id="fightDurationMeta"></span></div>
+    <div class="panel-body" id="timelineContainer"><canvas id="dpsTimeline"></canvas></div>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><span class="panel-title">Average DPS Over Time</span><span class="panel-meta"
+        id="avgFightDurationMeta"></span></div>
+    <div class="panel-body" id="avgTimelineContainer"><canvas id="avgDpsTimeline"></canvas></div>
+  </div>
+  <div id="avgControls">(Click and drag to zoom) <button id="resetAvgZoomBtn">Reset zoom</button></div>
+
+  <script src="data-logo.js"></script>
+
+  <script>
+    const fileInput = document.getElementById('logFile'), dropZone = document.getElementById('dropZone'), statusEl = document.getElementById('status'), playerBody = document.getElementById('playerBody'), targetsTable = document.getElementById('targetsTable'), targetsBody = document.getElementById('targetsBody'), targetsWrapper = document.getElementById('targetsWrapper'), toggleTargetsBtn = document.getElementById('toggleTargetsBtn'), resetAvgZoomBtn = document.getElementById('resetAvgZoomBtn'), logPathEl = document.getElementById('logPath'), copyMsgEl = document.getElementById('copyMsg'), clearLogsBtn = document.getElementById('clearLogsBtn'), timeRangeLabel = document.getElementById('timeRangeLabel'), selectedDurationEl = document.getElementById('selectedDuration'), bossTimelineEl = document.getElementById('bossTimeline'), timeRangeSliderEl = document.getElementById('timeRangeSlider'), skillsTableBody = document.getElementById('skillsTableBody');
+    let dpsTimelineChart, avgDpsTimelineChart, playersData = [], selectedPlayers = [], selectedTarget = null, globalBossPhases = [], timeSlider = null, timeFilter = { from: 0, to: null };
+    let excludeEpeeJugement = false
+    let allLoadedFiles = [];;
+    const BAR_COLORS = ['rgba(88,101,242,.8)', 'rgba(46,204,113,.8)', 'rgba(231,76,60,.8)', 'rgba(241,196,15,.8)', 'rgba(155,89,182,.8)', 'rgba(26,188,156,.8)', 'rgba(230,126,34,.8)', 'rgba(149,165,166,.8)'], BAR_BORDER_COLORS = ['rgba(88,101,242,1)', 'rgba(46,204,113,1)', 'rgba(231,76,60,1)', 'rgba(241,196,15,1)', 'rgba(155,89,182,1)', 'rgba(26,188,156,1)', 'rgba(230,126,34,1)', 'rgba(149,165,166,1)'], LINE_COLORS = ['rgba(255,99,132,1)', 'rgba(54,162,235,1)', 'rgba(75,192,192,1)', 'rgba(255,206,86,1)', 'rgba(153,102,255,1)', 'rgba(255,159,64,1)', 'rgba(46,204,113,1)', 'rgba(231,76,60,1)', 'rgba(52,152,219,1)', 'rgba(241,196,15,1)'];
+    const BOSS_COLORS = ['#8040C0', '#A07828', '#1450A0', '#50A028', '#C04060', '#40A0A0', '#C09040', '#6040C0'];
+
+    /* SKILL_ICON_URLS and getSkillIcon moved to data-logo.js */
+
+    const getColorForIndex = i => ({ rowBg: BAR_COLORS[i % BAR_COLORS.length], text: '#fff', barBg: BAR_COLORS[i % BAR_COLORS.length], barBorder: BAR_BORDER_COLORS[i % BAR_BORDER_COLORS.length], line: LINE_COLORS[i % LINE_COLORS.length] });
+    const skillNormalizationMap = new Map();
+    function normalizeSkill(skillId, skillName) { if (skillNormalizationMap.has(skillId)) return skillNormalizationMap.get(skillId); for (const [key, normalizedKey] of skillNormalizationMap.entries()) if (key === skillName || normalizedKey === skillName) { skillNormalizationMap.set(skillId, normalizedKey); return normalizedKey } const normalizedKey = skillName; skillNormalizationMap.set(skillId, normalizedKey); skillNormalizationMap.set(skillName, normalizedKey); return normalizedKey }
+    function isLikelyFrench(name) { if (!name) return false; if (/[àâçéèêëîïôûùüÿœæ]/i.test(name)) return true; if (/\b(de|du|des|d'|d')\b/i.test(name)) return true; const c0 = name[0]; if (c0 && c0 === c0.toLowerCase()) return true; return false }
+    function preferName(oldName, oldIsFr, newName) { const newIsFr = isLikelyFrench(newName); if (!oldName) return { name: newName, isFr: newIsFr }; if (newIsFr && !oldIsFr) return { name: newName, isFr: true }; return { name: oldName, isFr: oldIsFr } }
+    function getPreferredSkillName(normalizedKey) { for (const p of selectedPlayers) { const n = p.skillNameById && p.skillNameById[normalizedKey]; if (!n) continue; const isFr = !!(p.skillNameIsFrench && p.skillNameIsFrench[normalizedKey]); if (isFr) return n } for (const p of selectedPlayers) { const n = p.skillNameById && p.skillNameById[normalizedKey]; if (n) return n } return normalizedKey }
+
+    /* Hash boss name to one of 8 colors */
+    function getBossColor(name) {
+      let hash = 0;
+      for (let i = 0; i < name.length; i++) {
+        hash = name.charCodeAt(i) + ((hash << 5) - hash);
+      }
+      const idx = Math.abs(hash) % BOSS_COLORS.length;
+      // Convert HEX to RGBA with low opacity
+      const hex = BOSS_COLORS[idx];
+      const r = parseInt(hex.substring(1, 3), 16);
+      const g = parseInt(hex.substring(3, 5), 16);
+      const b = parseInt(hex.substring(5, 7), 16);
+      return `rgba(${r}, ${g}, ${b}, 0.18)`; // Same opacity as before
+    }
+
+    /* Helper to format seconds to mm:ss or just seconds */
+    function formatDuration(sec) {
+      if (sec < 60) return `${sec}s`;
+      const m = Math.floor(sec / 60);
+      const s = sec % 60;
+      return `${m}m${s < 10 ? '0' : ''}${s}`;
+    }
+
+    function renderBossTimeline() { bossTimelineEl.innerHTML = ''; if (!globalBossPhases.length || globalBossPhases.length > 8) { bossTimelineEl.style.display = 'none'; return } bossTimelineEl.style.display = 'flex'; const maxD = Math.max(...playersData.map(p => p.duration)); globalBossPhases.forEach((ph, i) => { const duration = ph.endSec - ph.startSec; const widthPercent = duration / maxD * 100; const seg = document.createElement('div'); seg.className = 'boss-segment'; seg.style.width = widthPercent + '%'; seg.style.background = BOSS_COLORS[i % BOSS_COLORS.length]; seg.textContent = ph.name; seg.title = `${ph.name} (${ph.startSec}s - ${ph.endSec}s, ${duration}s)`; bossTimelineEl.appendChild(seg) }) }
+    function updateSelectedDuration() {
+      const from = timeFilter.from ?? 0; const to = timeFilter.to ?? 0; const duration = to - from;
+      /* Use formatDuration for display */
+      selectedDurationEl.textContent = `🎯 ${formatDuration(duration)} selected (${formatDuration(from)} → ${formatDuration(to)})`
+    }
+    logPathEl.onclick = () => { navigator.clipboard.writeText('%LOCALAPPDATA%\\TL\\SAVED\\COMBATLOGS').then(() => { copyMsgEl.textContent = 'Path copied ✔'; setTimeout(() => copyMsgEl.textContent = '', 2000) }) };
+    dropZone.onclick = () => fileInput.click();
+    dropZone.ondragover = e => { e.preventDefault(); dropZone.style.borderColor = '#4fd1ff'; dropZone.style.background = '#15172a' };
+    dropZone.ondragleave = e => { e.preventDefault(); dropZone.style.borderColor = '#5865F2'; dropZone.style.background = '#10111b' };
+    dropZone.ondrop = e => { e.preventDefault(); dropZone.style.borderColor = '#5865F2'; dropZone.style.background = '#10111b'; const f = e.dataTransfer.files; if (!f.length) return; fileInput.files = f; handleFiles() };
+    const parseTs = ts => { const [d, t] = ts.split('-'), y = +d.slice(0, 4), m = +d.slice(4, 6) - 1, da = +d.slice(6, 8), [h, mi, s, ms] = t.split(':').map(Number); return new Date(y, m, da, h, mi, s, ms) };
+    const computeDurationSeconds = (a, b) => { try { return Math.max(1, Math.round((parseTs(b) - parseTs(a)) / 1e3)) } catch { return 1 } };
+    const computeSecondsDiff = (a, b) => { try { return Math.max(0, Math.floor((parseTs(b) - parseTs(a)) / 1e3)) } catch { return 0 } };
+    function parseLogFile(file, index) {
+      return new Promise(res => {
+        if (file.size > 20 * 1024 * 1024) return res(null); const r = new FileReader(); r.onload = () => {
+          try {
+            const lines = r.result.split(/\r?\n/), damageBySkill = {}, hitsBySkill = {}, skillNameById = {}, skillNameIsFrench = {}, damageTimeline = {}, damageByTarget = {}, damageBySkillTimeline = {}, hitsBySkillTimeline = {}, damageTimelineByTarget = {}, damageBySkillTimelineByTarget = {}, hitsBySkillTimelineByTarget = {}, bossPhases = []; let totalDamage = 0, hitCount = 0, maxHit = 0, firstTs = null, lastTs = null, playerName = 'Unknown', bossName = 'Unknown', currentBoss = null, currentBossStartSec = 0; for (const line of lines) {
+              if (!line) continue; const parts = line.split(','); if (parts.length < 10) continue; const type = (parts[1] || '').trim().toLowerCase(); if (!type.includes('damage')) continue; const ts = parts[0].trim(), skillName = (parts[2] || '').trim() || 'Unknown', skillId = (parts[3] || '').trim() || skillName, dmg = parseInt(parts[4].trim().replace(/\s/g, ''), 10), player = parts[parts.length - 2].trim(), boss = parts[parts.length - 1].trim();
+              // Filtrer Épée du jugement si nécessaire
+              if (excludeEpeeJugement && (skillName.includes('Épée du jugement') || skillName.includes('IMG_PartyMatching_MainAttacker'))) {
+                continue;
+              }
+              if (!firstTs) firstTs = ts; const sec = computeSecondsDiff(firstTs, ts); if (boss !== currentBoss) { if (currentBoss !== null) bossPhases.push({ name: currentBoss, startSec: currentBossStartSec, endSec: sec }); currentBoss = boss; currentBossStartSec = sec } if (!Number.isNaN(dmg) && dmg > 0) { totalDamage += dmg; hitCount++; if (dmg > maxHit) maxHit = dmg; const normalizedKey = normalizeSkill(skillId, skillName); const oldName = skillNameById[normalizedKey]; const oldIsFr = !!skillNameIsFrench[normalizedKey]; const chosen = preferName(oldName, oldIsFr, skillName); skillNameById[normalizedKey] = chosen.name; skillNameIsFrench[normalizedKey] = chosen.isFr; damageBySkill[normalizedKey] = (damageBySkill[normalizedKey] || 0) + dmg; hitsBySkill[normalizedKey] = (hitsBySkill[normalizedKey] || 0) + 1; if (!damageBySkillTimeline[sec]) damageBySkillTimeline[sec] = {}; damageBySkillTimeline[sec][normalizedKey] = (damageBySkillTimeline[sec][normalizedKey] || 0) + dmg; if (!hitsBySkillTimeline[sec]) hitsBySkillTimeline[sec] = {}; hitsBySkillTimeline[sec][normalizedKey] = (hitsBySkillTimeline[sec][normalizedKey] || 0) + 1; if (!damageBySkillTimelineByTarget[boss]) damageBySkillTimelineByTarget[boss] = {}; if (!damageBySkillTimelineByTarget[boss][sec]) damageBySkillTimelineByTarget[boss][sec] = {}; damageBySkillTimelineByTarget[boss][sec][normalizedKey] = (damageBySkillTimelineByTarget[boss][sec][normalizedKey] || 0) + dmg; if (!hitsBySkillTimelineByTarget[boss]) hitsBySkillTimelineByTarget[boss] = {}; if (!hitsBySkillTimelineByTarget[boss][sec]) hitsBySkillTimelineByTarget[boss][sec] = {}; hitsBySkillTimelineByTarget[boss][sec][normalizedKey] = (hitsBySkillTimelineByTarget[boss][sec][normalizedKey] || 0) + 1; if (!damageByTarget[boss]) damageByTarget[boss] = { totalDamage: 0, hits: 0, bySkill: {} }; const tgt = damageByTarget[boss]; tgt.totalDamage += dmg; tgt.hits++; tgt.bySkill[normalizedKey] = (tgt.bySkill[normalizedKey] || 0) + dmg; damageTimeline[sec] = (damageTimeline[sec] || 0) + dmg; if (!damageTimelineByTarget[boss]) damageTimelineByTarget[boss] = {}; damageTimelineByTarget[boss][sec] = (damageTimelineByTarget[boss][sec] || 0) + dmg } lastTs = ts; playerName = player; bossName = boss
+            } if (!hitCount || !firstTs || !lastTs) return res(null); const lastSec = computeSecondsDiff(firstTs, lastTs); if (currentBoss !== null) bossPhases.push({ name: currentBoss, startSec: currentBossStartSec, endSec: lastSec }); const duration = computeDurationSeconds(firstTs, lastTs), dps = duration > 0 ? Math.round(totalDamage / duration) : totalDamage, avgHit = Math.round(totalDamage / hitCount), avgDpsTimeline = {}, startTime = parseTs(firstTs); let cum = 0; for (let s = 0; s <= duration; s++) { const dmg = damageTimeline[s] || 0; cum += dmg; avgDpsTimeline[s] = cum / Math.max(1, s + 1) } res({ index, playerName, bossName, totalDamage, hitCount, maxHit, avgHit, duration, dps, damageBySkill, hitsBySkill, skillNameById, skillNameIsFrench, damageTimeline, avgDpsTimeline, damageByTarget, bossPhases, damageBySkillTimeline, hitsBySkillTimeline, damageTimelineByTarget, damageBySkillTimelineByTarget, hitsBySkillTimelineByTarget, startTime })
+          } catch { res(null) }
+        }; r.onerror = () => res(null); r.readAsText(file)
+      })
+    }
+    /* Helper for tooltips: shows duration + real time */
+    function formatSliderTooltip(v) {
+      const sec = Math.round(v);
+      let text = formatDuration(sec);
+      if (playersData[0] && playersData[0].startTime) {
+        const d = new Date(playersData[0].startTime.getTime() + sec * 1000);
+        // Display time only to keep it short: 14:30:05
+        const timeStr = d.toLocaleTimeString('fr-FR');
+        text += `\n(${timeStr})`;
+      }
+      return text;
+    }
+
+    function initTimeSlider(maxD) {
+      if (maxD < 1) maxD = 1; if (!timeSlider) {
+        noUiSlider.create(timeRangeSliderEl, {
+          start: [0, maxD], connect: true, step: 1, range: { min: 0, max: maxD },
+          /* Use formatDuration for tooltips and range label */
+          tooltips: [{ to: v => formatSliderTooltip(v) }, { to: v => formatSliderTooltip(v) }]
+        }); timeSlider = timeRangeSliderEl; timeSlider.noUiSlider.on('update', v => {
+          const [from, to] = v.map(x => Math.round(x));
+          timeFilter = { from, to };
+          timeRangeLabel.textContent = `Time range: ${formatDuration(from)} - ${formatDuration(to)}`;
+
+          /* Update Dynamic Date */
+          if (playersData[0] && playersData[0].startTime) {
+            const dynamicDate = new Date(playersData[0].startTime.getTime() + from * 1000);
+            document.getElementById('fightDate').textContent = dynamicDate.toLocaleString('fr-FR');
+          }
+
+          updateSelectedDuration(); renderPlayerTable(playersData); highlightSelectedRows(); renderTargetsTable(); refreshCharts()
+        })
+      } else { timeSlider.noUiSlider.updateOptions({ start: [0, maxD], range: { min: 0, max: maxD } }); timeFilter = { from: 0, to: maxD }; timeRangeLabel.textContent = `Time range: 0s - ${formatDuration(maxD)}`; updateSelectedDuration() }
+    }
+    function buildPlayerStatsInWindow(p) { const from = timeFilter.from ?? 0, to = Math.min(timeFilter.to ?? p.duration, p.duration), byTarget = p.damageTimelineByTarget && selectedTarget ? p.damageTimelineByTarget[selectedTarget] : null, baseTimeline = byTarget || p.damageTimeline; let total = 0, hits = 0, max = 0; for (let s = from; s <= to; s++) { const dmg = baseTimeline[s] || 0; if (dmg > 0) { total += dmg; hits++; if (dmg > max) max = dmg } } const duration = Math.max(1, to - from + 1), dps = Math.round(total / duration), avgHit = hits ? Math.round(total / hits) : 0; return { totalDamage: total, hitCount: hits, maxHit: max, duration, dps, avgHit } }
+    function buildAvgDpsTimelineWindow(p, from, to) { const byTarget = p.damageTimelineByTarget && selectedTarget ? p.damageTimelineByTarget[selectedTarget] : null, baseTimeline = byTarget || p.damageTimeline; let cum = 0, avg = {}; for (let s = 0; s <= p.duration; s++) { const dmg = baseTimeline[s] || 0; cum += dmg; if (s >= from && s <= to) avg[s] = cum / Math.max(1, s + 1) } return avg }
+    function buildDamageBySkillInWindow(p) { const from = timeFilter.from ?? 0, to = Math.min(timeFilter.to ?? p.duration, p.duration), tot = {}; for (let s = from; s <= to; s++) { const skills = p.damageBySkillTimeline?.[s]; if (!skills) continue; Object.entries(skills).forEach(([normalizedKey, d]) => { tot[normalizedKey] = (tot[normalizedKey] || 0) + d }) } return tot }
+    function buildHitsBySkillInWindow(p) { const from = timeFilter.from ?? 0, to = Math.min(timeFilter.to ?? p.duration, p.duration), tot = {}; for (let s = from; s <= to; s++) { const skills = p.hitsBySkillTimeline?.[s]; if (!skills) continue; Object.entries(skills).forEach(([normalizedKey, h]) => { tot[normalizedKey] = (tot[normalizedKey] || 0) + h }) } return tot }
+    function buildDamageBySkillForTargetInWindow(p, target) { const base = p.damageBySkillTimelineByTarget && p.damageBySkillTimelineByTarget[target]; if (!base) return buildDamageBySkillInWindow(p); const from = timeFilter.from ?? 0, to = Math.min(timeFilter.to ?? p.duration, p.duration), tot = {}; for (let s = from; s <= to; s++) { const skills = base[s]; if (!skills) continue; Object.entries(skills).forEach(([normalizedKey, d]) => { tot[normalizedKey] = (tot[normalizedKey] || 0) + d }) } return tot }
+    function buildHitsBySkillForTargetInWindow(p, target) { const base = p.hitsBySkillTimelineByTarget && p.hitsBySkillTimelineByTarget[target]; if (!base) return buildHitsBySkillInWindow(p); const from = timeFilter.from ?? 0, to = Math.min(timeFilter.to ?? p.duration, p.duration), tot = {}; for (let s = from; s <= to; s++) { const skills = base[s]; if (!skills) continue; Object.entries(skills).forEach(([normalizedKey, h]) => { tot[normalizedKey] = (tot[normalizedKey] || 0) + h }) } return tot }
+    function renderPlayerTable(players) { playerBody.innerHTML = ''; const rows = players.map(p => { const stats = buildPlayerStatsInWindow(p); return { player: p, stats } }); const totalDamageAll = rows.reduce((s, r) => s + r.stats.totalDamage, 0); rows.forEach((row, i) => { const p = row.player, s = row.stats, tr = document.createElement('tr'); tr.dataset.index = p.index; const c = getColorForIndex(p.index), percent = totalDamageAll > 0 ? s.totalDamage / totalDamageAll * 100 : 0; tr.innerHTML = `<td>${i + 1}</td><td style="color:${c.text};">${p.playerName}</td><td>${s.dps.toLocaleString('fr-FR')}</td><td>${s.totalDamage.toLocaleString('fr-FR')}</td><td>${percent.toFixed(2)}%</td><td>${s.hitCount.toLocaleString('fr-FR')}</td><td>${s.avgHit ? s.avgHit.toLocaleString('fr-FR') : '-'}</td><td>${s.maxHit.toLocaleString('fr-FR')}</td><td>${s.duration}s</td><td style="width:40px;"><span class="remove-player" data-index="${p.index}" title="Retirer ce joueur des logs">✕</span></td>`; if (selectedPlayers.some(sp => sp.index === p.index)) { tr.classList.add('player-selected'); tr.style.backgroundColor = c.rowBg } playerBody.appendChild(tr) }); const totalFiltered = rows.reduce((s, r) => s + r.stats.totalDamage, 0), avgDpsFiltered = rows.length ? rows.reduce((s, r) => s + r.stats.dps, 0) / rows.length : 0; document.getElementById('sumTotalDamage').textContent = totalFiltered.toLocaleString('fr-FR'); document.getElementById('sumAvgDps').textContent = Math.round(avgDpsFiltered).toLocaleString('fr-FR') }
+    function highlightSelectedRows() { playerBody.querySelectorAll('tr').forEach(r => { const idx = +r.dataset.index, p = playersData.find(pl => pl.index === idx), sel = selectedPlayers.some(sp => sp.index === idx); r.classList.toggle('player-selected', sel); r.style.backgroundColor = ''; if (sel && p) { const c = getColorForIndex(p.index); r.style.backgroundColor = c.rowBg } }) }
+    function renderTargetsTable() { targetsBody.innerHTML = ''; const totals = {}; playersData.forEach(p => { if (!p.damageByTarget) return; Object.entries(p.damageByTarget).forEach(([t, info]) => { if (!totals[t]) totals[t] = { totalDamage: 0, hits: 0 }; totals[t].totalDamage += info.totalDamage; totals[t].hits += info.hits }) }); Object.entries(totals).sort((a, b) => b[1].totalDamage - a[1].totalDamage).forEach(([t, info]) => { const tr = document.createElement('tr'); tr.style.cssText = 'cursor:pointer;transition:background .2s;'; tr.innerHTML = `<td style="color:#4fd1ff;">${t}</td><td>${info.totalDamage.toLocaleString('fr-FR')}</td><td>${info.hits.toLocaleString('fr-FR')}</td>`; tr.onclick = () => { selectedTarget = t; document.getElementById('sumBossName').textContent = t; renderPlayerTable(playersData); highlightSelectedRows(); refreshCharts() }; targetsBody.appendChild(tr) }) }
+
+    function drawSkillsTable() {
+      skillsTableBody.innerHTML = '';
+      const meta = document.getElementById('playersMeta');
+
+      if (!selectedPlayers.length) {
+        meta.textContent = '';
+        return;
+      }
+
+      const allSkills = new Set();
+      const perPlayer = selectedPlayers.map(p => {
+        const dmgTotals = selectedTarget ? buildDamageBySkillForTargetInWindow(p, selectedTarget) : buildDamageBySkillInWindow(p);
+        const hitTotals = selectedTarget ? buildHitsBySkillForTargetInWindow(p, selectedTarget) : buildHitsBySkillInWindow(p);
+        Object.keys(dmgTotals).forEach(k => allSkills.add(k));
+        return { player: p, dmgTotals, hitTotals };
+      });
+
+      const global = {};
+      perPlayer.forEach(({ dmgTotals }) => {
+        Object.entries(dmgTotals).forEach(([normalizedKey, d]) => {
+          global[normalizedKey] = (global[normalizedKey] || 0) + d;
+        });
+      });
+
+      const skillNames = Array.from(allSkills).sort((a, b) => (global[b] || 0) - (global[a] || 0));
+      const maxDamage = Math.max(...Object.values(global));
+
+      skillNames.forEach(normalizedKey => {
+        const preferredName = getPreferredSkillName(normalizedKey);
+        const iconUrl = getSkillIcon(preferredName);
+
+        const tr = document.createElement('tr');
+
+        const tdName = document.createElement('td');
+        tdName.className = 'skill-name-cell';
+        tdName.textContent = preferredName;
+        tdName.title = preferredName;
+        tr.appendChild(tdName);
+
+        const tdIcon = document.createElement('td');
+        tdIcon.className = 'skill-icon-cell';
+        const iconBox = document.createElement('div');
+        iconBox.className = 'skill-icon-box';
+        if (iconUrl) {
+          const img = document.createElement('img');
+          img.src = iconUrl;
+          img.alt = preferredName;
+          img.onerror = function () {
+            this.style.display = 'none';
+            this.parentNode.innerHTML = '<span class="skill-icon-placeholder">?</span>';
+          };
+          iconBox.appendChild(img);
+        } else {
+          iconBox.innerHTML = '<span class="skill-icon-placeholder">?</span>';
+        }
+        tdIcon.appendChild(iconBox);
+        tr.appendChild(tdIcon);
+
+        const tdBars = document.createElement('td');
+        tdBars.className = 'skill-bars-cell';
+        const barsWrapper = document.createElement('div');
+        barsWrapper.className = 'skill-bars-wrapper';
+
+        // NE CRÉER UNE LIGNE QUE SI LE JOUEUR A DES DÉGÂTS > 0
+        perPlayer.forEach(({ player, dmgTotals, hitTotals }) => {
+          const dmg = dmgTotals[normalizedKey] || 0;
+
+          // FILTRE : Ne pas créer de ligne si dmg = 0
+          if (dmg === 0) return;
+
+          const c = getColorForIndex(player.index);
+
+          const barRow = document.createElement('div');
+          barRow.className = 'skill-bar-row';
+
+          const playerLabel = document.createElement('div');
+          playerLabel.className = 'player-name-label';
+          playerLabel.textContent = player.playerName;
+          playerLabel.style.color = c.text;
+          barRow.appendChild(playerLabel);
+
+          const barContainer = document.createElement('div');
+          barContainer.className = 'skill-bar-container';
+
+          const barFill = document.createElement('div');
+          barFill.className = 'skill-bar-fill';
+          barFill.style.width = (dmg / maxDamage * 100) + '%';
+          barFill.style.background = c.barBg;
+          barFill.style.borderLeft = `2px solid ${c.barBorder}`;
+
+          const hits = hitTotals[normalizedKey] || 0;
+          const avgHit = hits > 0 ? Math.round(dmg / hits) : 0;
+          barFill.title = `${dmg.toLocaleString('fr-FR')} (${hits} hits, ${avgHit.toLocaleString('fr-FR')} avg)`;
+
+          const barLabel = document.createElement('div');
+          barLabel.className = 'skill-bar-label';
+          barLabel.textContent = dmg.toLocaleString('fr-FR') + ' (' + hits + ' hits)';
+          barFill.appendChild(barLabel);
+
+          barContainer.appendChild(barFill);
+          barRow.appendChild(barContainer);
+          barsWrapper.appendChild(barRow);
+        });
+
+        tdBars.appendChild(barsWrapper);
+        tr.appendChild(tdBars);
+
+        skillsTableBody.appendChild(tr);
+      });
+
+      meta.textContent = perPlayer.length === 1 ? perPlayer[0].player.playerName : perPlayer.map(p => p.player.playerName).join(' vs ');
+    }
+
+    function drawDpsTimeline() { const ctx = document.getElementById('dpsTimeline').getContext('2d'); if (dpsTimelineChart) dpsTimelineChart.destroy(); const meta = document.getElementById('fightDurationMeta'); if (!selectedPlayers.length) { meta.textContent = ''; return } const maxD = Math.max(...selectedPlayers.map(p => p.duration)), from = timeFilter.from ?? 0, to = Math.min(timeFilter.to ?? maxD, maxD); meta.textContent = `${from}s - ${to}s (fight ${maxD}s)`; const labels = []; for (let s = from; s <= to; s++)labels.push(`${s}s`); const datasets = selectedPlayers.map(p => { const byTarget = p.damageTimelineByTarget && selectedTarget ? p.damageTimelineByTarget[selectedTarget] : null, baseTimeline = byTarget || p.damageTimeline, c = getColorForIndex(p.index); return { label: selectedTarget ? `${p.playerName} (${selectedTarget})` : p.playerName, data: labels.map((_, i) => baseTimeline[from + i] || 0), borderColor: c.line, backgroundColor: 'transparent', pointRadius: 0, borderWidth: 1.5, tension: .2 } }); dpsTimelineChart = new Chart(ctx, { type: 'line', data: { labels, datasets }, options: { responsive: true, maintainAspectRatio: false, animation: false, plugins: { legend: { display: true }, title: { display: false }, tooltip: { callbacks: { label: ctx => { const v = ctx.parsed.y || 0; return `${ctx.dataset.label}: ${v.toLocaleString('fr-FR')} DPS` } } }, zoom: { zoom: { wheel: { enabled: false }, drag: { enabled: true }, mode: 'x', onZoomComplete: ({ chart }) => { const xScale = chart.scales.x; const min = Math.round(xScale.min); const max = Math.round(xScale.max); if (timeSlider) { timeSlider.noUiSlider.set([min, max]); } if (avgDpsTimelineChart) { avgDpsTimelineChart.zoomScale('x', { min, max }); } } }, pan: { enabled: true, mode: 'x' } } }, scales: { x: { ticks: { color: '#fff', maxTicksLimit: 15 }, grid: { color: 'rgba(255,255,255,.08)' } }, y: { ticks: { color: '#fff' }, grid: { color: 'rgba(255,255,255,.08)' } } } } }) }
+    function drawAvgDpsTimeline() {
+      const ctx = document.getElementById('avgDpsTimeline').getContext('2d'); if (avgDpsTimelineChart) avgDpsTimelineChart.destroy(); const meta = document.getElementById('avgFightDurationMeta'); if (!selectedPlayers.length) { meta.textContent = ''; return } const maxD = Math.max(...selectedPlayers.map(p => p.duration)), from = timeFilter.from ?? 0, to = Math.min(timeFilter.to ?? maxD, maxD); meta.textContent = `${from}s - ${to}s (fight ${maxD}s)`; const labels = []; for (let s = from; s <= to; s++)labels.push(`${s}s`); const datasets = selectedPlayers.map(p => { const avg = buildAvgDpsTimelineWindow(p, from, to), c = getColorForIndex(p.index); return { label: selectedTarget ? `${p.playerName} (${selectedTarget})` : p.playerName, data: labels.map((_, i) => avg[from + i] || 0), borderColor: c.line, backgroundColor: 'transparent', pointRadius: 0, borderWidth: 1.8, tension: .15 } }); avgDpsTimelineChart = new Chart(ctx, {
+        type: 'line', data: { labels, datasets }, options: { responsive: true, maintainAspectRatio: false, animation: false, plugins: { legend: { display: true }, title: { display: true, text: 'Average DPS Over Time (time‑windowed)' }, tooltip: { callbacks: { label: ctx => { const v = ctx.parsed.y || 0; return `${ctx.dataset.label}: ${Math.round(v).toLocaleString('fr-FR')} DPS moyen` } } }, zoom: { zoom: { wheel: { enabled: false }, drag: { enabled: true }, mode: 'x', onZoomComplete: ({ chart }) => { const xScale = chart.scales.x; const min = Math.round(xScale.min); const max = Math.round(xScale.max); if (timeSlider) { timeSlider.noUiSlider.set([min, max]); } if (dpsTimelineChart) { dpsTimelineChart.zoomScale('x', { min, max }); } } }, pan: { enabled: true, mode: 'x' } } }, scales: { x: { ticks: { color: '#fff', maxTicksLimit: 15 }, grid: { color: 'rgba(255,255,255,.08)' } }, y: { ticks: { color: '#fff' }, grid: { color: 'rgba(255,255,255,.08)' } } } }, plugins: [{
+          id: 'bossBackgrounds', beforeDraw(chart) {
+            const { ctx, chartArea, scales: { x } } = chart; if (!globalBossPhases?.length) return;
+            const targetTotals = {}; let grandTotal = 0; playersData.forEach(p => { if (!p.damageByTarget) return; Object.entries(p.damageByTarget).forEach(([t, info]) => { if (!targetTotals[t]) targetTotals[t] = 0; targetTotals[t] += info.totalDamage; grandTotal += info.totalDamage }) });
+            globalBossPhases.forEach((ph, i) => {
+              const tName = ph.name; const dmg = targetTotals[tName] || 0; if (grandTotal > 0 && (dmg / grandTotal) < 0.01) return; const s = Math.max(ph.startSec, from), e = Math.min(ph.endSec, to); if (e <= s) return; const xs = x.getPixelForValue(s - from), xe = x.getPixelForValue(e - from); ctx.save();
+              /* Use persistent color based on name */
+              ctx.fillStyle = getBossColor(ph.name);
+              ctx.fillRect(xs, chartArea.top, xe - xs, chartArea.bottom - chartArea.top);
+              /* Name filtering if too narrow */
+              if (xe - xs > 40) { ctx.fillStyle = '#fff'; ctx.font = 'bold 9px Arial'; ctx.textAlign = 'center'; ctx.textBaseline = 'bottom'; ctx.shadowColor = 'rgba(0,0,0,0.9)'; ctx.shadowBlur = 4; ctx.shadowOffsetX = 1; ctx.shadowOffsetY = 1; const centerX = (xs + xe) / 2; const textY = chartArea.bottom - 4; ctx.fillText(ph.name, centerX, textY) }
+              ctx.restore()
+            })
+          }
+        }]
+      })
+    }
+    function refreshCharts() { drawSkillsTable(); drawDpsTimeline(); drawAvgDpsTimeline() }
+    toggleTargetsBtn.onclick = () => { const hidden = getComputedStyle(targetsWrapper).display === 'none'; if (hidden) { renderTargetsTable(); targetsWrapper.style.display = 'block'; toggleTargetsBtn.textContent = 'Hide other targets' } else { targetsWrapper.style.display = 'none'; toggleTargetsBtn.textContent = 'Show other targets' } };
+    resetAvgZoomBtn.onclick = () => { if (avgDpsTimelineChart) avgDpsTimelineChart.resetZoom(); if (dpsTimelineChart) dpsTimelineChart.resetZoom(); if (timeSlider) { const maxD = Math.max(...selectedPlayers.map(p => p.duration)); timeSlider.noUiSlider.set([0, maxD]); timeFilter = { from: 0, to: maxD }; } };
+    playerBody.onclick = e => { const rm = e.target.closest('.remove-player'); if (rm) { const idx = +rm.dataset.index; playersData = playersData.filter(p => p.index !== idx); allLoadedFiles = []; selectedPlayers = selectedPlayers.filter(p => p.index !== idx); playersData.forEach((p, i) => p.index = i); renderPlayerTable(playersData); highlightSelectedRows(); refreshCharts(); document.getElementById('sumPlayers').textContent = playersData.length; return } const row = e.target.closest('tr'); if (!row) return; const idx = +row.dataset.index, p = playersData.find(pl => pl.index === idx); if (!p) return; const exists = selectedPlayers.some(pl => pl.index === p.index); selectedPlayers = exists ? selectedPlayers.filter(pl => pl.index !== p.index) : [...selectedPlayers, p]; renderPlayerTable(playersData); highlightSelectedRows(); refreshCharts() };
+    clearLogsBtn.onclick = () => { playersData = []; selectedPlayers = []; selectedTarget = null; globalBossPhases = []; timeFilter = { from: 0, to: null }; skillNormalizationMap.clear(); allLoadedFiles = []; if (timeSlider) { timeSlider.noUiSlider.updateOptions({ start: [0, 0], range: { min: 0, max: 0 } }); timeRangeLabel.textContent = 'Time range: 0s - 0s' } playerBody.innerHTML = ''; targetsBody.innerHTML = ''; skillsTableBody.innerHTML = ''; bossTimelineEl.innerHTML = ''; bossTimelineEl.style.display = 'none'; targetsWrapper.style.display = 'none'; toggleTargetsBtn.textContent = 'Show other targets'; document.getElementById('sumTotalDamage').textContent = '0'; document.getElementById('sumAvgDps').textContent = '0'; document.getElementById('sumPlayers').textContent = '0'; document.getElementById('sumBossName').textContent = '---'; document.getElementById('fightDate').textContent = '---'; selectedDurationEl.textContent = '🎯 0s selected'; statusEl.textContent = 'Logs cleared.'; if (dpsTimelineChart) { dpsTimelineChart.destroy(); dpsTimelineChart = null } if (avgDpsTimelineChart) { avgDpsTimelineChart.destroy(); avgDpsTimelineChart = null } };
+    function handleFiles() {/* skillNormalizationMap.clear(); */let files = [...fileInput.files]; allLoadedFiles = [...new Set([...allLoadedFiles, ...files])]; if (!files.length) return; files = files.filter(f => f.size < 20 * 1024 * 1024); if (!files.length) { statusEl.textContent = 'Files are too large.'; return } statusEl.textContent = 'Reading log files...'; selectedTarget = null; targetsBody.innerHTML = ''; targetsWrapper.style.display = 'none'; toggleTargetsBtn.textContent = 'Show other targets'; if (dpsTimelineChart) dpsTimelineChart.destroy(); if (avgDpsTimelineChart) avgDpsTimelineChart.destroy(); const baseIndex = playersData.length; Promise.all(files.map((f, i) => parseLogFile(f, baseIndex + i))).then(res => { const newP = res.filter(Boolean); if (!newP.length) { statusEl.textContent = 'No valid data found in the added logs.'; return } playersData = playersData.concat(newP); playersData.sort((a, b) => b.dps - a.dps); playersData.forEach((p, i) => p.index = i); const boss = playersData[0].bossName && playersData[0].bossName !== 'Unknown' ? playersData[0].bossName : 'Unknown target'; document.getElementById('sumBossName').textContent = boss; if (playersData[0].startTime) document.getElementById('fightDate').textContent = playersData[0].startTime.toLocaleString('fr-FR'); const total = playersData.reduce((s, p) => s + p.totalDamage, 0), avg = playersData.reduce((s, p) => s + p.dps, 0) / playersData.length; document.getElementById('sumTotalDamage').textContent = total.toLocaleString('fr-FR'); document.getElementById('sumAvgDps').textContent = Math.round(avg).toLocaleString('fr-FR'); document.getElementById('sumPlayers').textContent = playersData.length; renderPlayerTable(playersData); statusEl.textContent = `Logs loaded: ${playersData.length}`; if (playersData.length > 0) selectedPlayers = [playersData[0]]; highlightSelectedRows(); globalBossPhases = playersData[0].bossPhases || []; renderBossTimeline(); const maxD = Math.max(...playersData.map(p => p.duration)); initTimeSlider(maxD); refreshCharts() }).catch(err => { statusEl.textContent = 'Error: ' + err }) }
+    document.getElementById('excludeEpeeCheckbox').addEventListener('change', function (e) { excludeEpeeJugement = e.target.checked; if (allLoadedFiles.length > 0) { playersData = []; selectedPlayers = []; skillNormalizationMap.clear(); const dt = new DataTransfer(); allLoadedFiles.forEach(f => dt.items.add(f)); fileInput.files = dt.files; handleFiles(); } });
+    fileInput.addEventListener('change', handleFiles);
+  </script>
+</body>
+
+</html>
