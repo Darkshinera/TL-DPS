@@ -1208,7 +1208,7 @@ const CALENDARDATA = {
           "20h": [
             { name: "Manticus", type: "normal" },
             { name: "Grand Aelon", type: "ascendant" },
-            { name: "Bellandir Ascendant", type: "ascendant" },
+            { name: "Cordy Ascendant", type: "ascendant" },
             { name: "Tevent Ascendant", type: "ascendant" }
           ],
           "22h": [
