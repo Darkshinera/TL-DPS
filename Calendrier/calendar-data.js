@@ -57,7 +57,7 @@ const EVENTICONS = {
 
 // ===== DONNÉES CALENDRIER =====
 const CALENDARDATA = {
-"impair": {
+"pair": {
 
         //  LUNDI 
         "Lundi": {
@@ -685,9 +685,9 @@ const CALENDARDATA = {
       },
 
       // 
-      // SEMAINE PAIRE
+      // SEMAINE IMPAIRE
       // 
-       "pair": {
+       "impair": {
 
         //  LUNDI 
         "Lundi": {
