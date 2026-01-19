@@ -1342,7 +1342,9 @@
         const refWeekNumber = getWeekNumber(referenceDate);
         const diff = eventWeekNumber - refWeekNumber;
         const isPair = (diff % 2) === 0;
-        const weekType = isPair ? 'pair' : 'impair';
+        // ⚠️ INVERSION : Pour correspondre à la logique inversée du calendrier (voir getDataWeek)
+        // Si l'événement est dans une semaine paire, on le stocke comme 'impair' et vice-versa
+        const weekType = isPair ? 'impair' : 'pair';
 
         // Add to CUSTOM_EVENTS
         const newItemName = `[D] ${title}`;
