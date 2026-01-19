@@ -18,8 +18,8 @@
         </div>
         <div class="controls-wrapper">
           <div class="week-toggle">
-            <button id="btn-pair" class="active" onclick="switchWeek('impair')">Semaine 1</button>
-            <button id="btn-impair" onclick="switchWeek('pair')">Semaine 2</button>
+            <button id="btn-impair" class="active" onclick="switchWeek('impair')">Semaine 1</button>
+            <button id="btn-pair" onclick="switchWeek('pair')">Semaine 2</button>
           </div>
           <button id="add-custom-event">➕ Événement</button>
           <button id="manage-custom-events">🛠️ Gérer Events</button>
@@ -512,12 +512,13 @@
       return str && (str.startsWith('http://') || str.startsWith('https://') || str.startsWith('//'));
     }
 
-    // Helper pour inverser la lecture des données : Semaine 1 affiche dates 'impair' mais lit données 'pair'
+    // Helper pour récupérer le type de semaine (plus d'inversion)
     function getDataWeek(displayWeek) {
-      return displayWeek === 'pair' ? 'impair' : 'pair';
+      return displayWeek;
     }
 
-    let currentWeek = 'impair';
+    // Initialisation dynamique de la semaine en fonction de la date réelle
+    let currentWeek = isEvenWeek(new Date()) ? 'pair' : 'impair';
 
     // ===== FONCTION RENDRE CALENDRIER =====
     function renderCalendar() {
@@ -1066,9 +1067,8 @@
 
     function switchWeek(week) {
       currentWeek = week;
-      // Inverser la logique : btn-pair (Semaine 1) appelle 'impair', donc il doit être actif quand week='impair'
-      document.getElementById('btn-pair').classList.toggle('active', week === 'impair');
-      document.getElementById('btn-impair').classList.toggle('active', week === 'pair');
+      document.getElementById('btn-impair').classList.toggle('active', week === 'impair');
+      document.getElementById('btn-pair').classList.toggle('active', week === 'pair');
       renderCalendar();
     }
 
@@ -1342,9 +1342,8 @@
         const refWeekNumber = getWeekNumber(referenceDate);
         const diff = eventWeekNumber - refWeekNumber;
         const isPair = (diff % 2) === 0;
-        // ⚠️ INVERSION : Pour correspondre à la logique inversée du calendrier (voir getDataWeek)
-        // Si l'événement est dans une semaine paire, on le stocke comme 'impair' et vice-versa
-        const weekType = isPair ? 'impair' : 'pair';
+
+        const weekType = isPair ? 'pair' : 'impair';
 
         // Add to CUSTOM_EVENTS
         const newItemName = `[D] ${title}`;
