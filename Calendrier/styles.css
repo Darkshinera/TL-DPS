@@ -528,9 +528,6 @@ body {
   overflow: visible;
 }
 
-#cycle-progress-bar {
-  /* Glow supprimé pour retirer le contour carré */
-}
 
 /* Segments Overlay */
 .clock-markers {
@@ -1087,12 +1084,35 @@ body {
   text-overflow: ellipsis;
 }
 
+/* Global Scrollbar Style */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.3);
+  border-radius: 10px;
+  transition: background 0.3s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(59, 130, 246, 0.6);
+}
+
 .tracked-events-list {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  max-height: 600px;
+  max-height: 260px;
+  /* Environ 5 événements */
   overflow-y: auto;
+  padding-right: 4px;
 }
 
 .tracked-item {
