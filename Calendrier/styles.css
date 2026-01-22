@@ -518,6 +518,43 @@ body {
   }
 }
 
+#cycle-status-panel {
+  border: none;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.tl-clock-container svg {
+  overflow: visible;
+}
+
+#cycle-progress-bar {
+  /* Glow supprimé pour retirer le contour carré */
+}
+
+/* Segments Overlay */
+.clock-markers {
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+#cycle-current-symbol {
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  overflow: visible;
+}
+
+#check-date::-webkit-calendar-picker-indicator,
+#check-time::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
+}
+
 .boss-small.has-notification,
 .boss-full.has-notification,
 .event-icon.has-notification {
@@ -1148,6 +1185,7 @@ div.event-icon.has-notification {
   z-index: 100 !important;
   animation: golden-pulse 2s infinite !important;
 }
+
 /* DISCORD IMPORT STYLES */
 .discord-modal {
   position: fixed;
@@ -1300,4 +1338,3 @@ div.event-icon.has-notification {
   color: #7289da;
   border-bottom: 2px solid #7289da;
 }
-
