@@ -50,25 +50,92 @@
           </div>
         </div>
 
-        <!-- MENU DISCORD (Inséré ici) -->
-        <div id="discord-sidebar-panel" style="margin-top: 20px; margin-bottom: 20px;">
-          <div class="sidebar-title" style="display: flex; align-items: center; justify-content: space-between;">
-            <div style="cursor: pointer; display:flex; align-items:center; gap:6px;"
-              onclick="discordManager.openModal()">
-              <span id="discord-sidebar-icon">👾</span> Événements Discord <span
-                style="font-size:12px; opacity:0.7;">⚙️</span>
+      </div>
+
+      <!-- CYCLE JOUR/NUIT WIDGET -->
+      <div class="sidebar-panel" id="cycle-widget"
+        style="margin-top: 20px; background: rgba(5, 8, 20, 0.4); border: none;">
+        <div class="sidebar-title">🌕 Horloge TL</div>
+        <div id="cycle-status-panel"
+          style="padding: 10px 0; text-align: center; transition: all 0.5s; position: relative;">
+
+          <!-- HORLOGE STYLE TL -->
+          <div class="tl-clock-container"
+            style="position: relative; width: 130px; height: 130px; margin: 0 auto 15px; overflow: visible;">
+            <svg viewBox="0 0 100 100" style="transform: rotate(-90deg); width: 100%; height: 100%;">
+              <!-- Background Ring -->
+              <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="10" />
+
+              <!-- Progress Bar -->
+              <circle id="cycle-progress-bar" cx="50" cy="50" r="45" fill="none" stroke="#fbbf24" stroke-width="10"
+                stroke-dasharray="282.7" stroke-dashoffset="282.7" stroke-linecap="butt"
+                style="transition: stroke-dashoffset 1s linear, stroke 0.5s;" />
+
+              <!-- Overlay segments (Gaps) -->
+              <circle cx="50" cy="50" r="45" fill="none" stroke="#050814" stroke-width="12"
+                stroke-dasharray="1.5 7.92" />
+            </svg>
+
+            <!-- Central Icon Container -->
+            <div id="cycle-icon-center" style="
+              position: absolute; 
+              top: 50%; 
+              left: 50%; 
+              transform: translate(-50%, -50%); 
+              width: 80px; 
+              height: 80px; 
+              display: flex; 
+              align-items: center; 
+              justify-content: center;
+              z-index: 2;
+            ">
+              <div id="cycle-current-symbol"
+                style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: visible;">
+                <!-- Dynamically filled by JS -->
+              </div>
             </div>
-            <button onclick="discordManager.toggleSidebar()" id="discord-toggle-btn"
-              style="background:transparent; border:none; color:white; font-size:16px; cursor:pointer;"
-              title="Réduire/Agrandir">➖</button>
           </div>
-          <div class="tracked-events-list" id="discord-sidebar-list"
-            style="transition: max-height 0.3s ease-out; overflow: hidden;">
-            <!-- Rempli par JS -->
+
+          <div id="cycle-current-label"
+            style="font-weight: 800; font-size: 16px; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 1px;">
+            JOUR</div>
+          <div id="cycle-countdown" style="font-size: 14px; font-weight: 600; opacity: 0.9;">-- avant la nuit</div>
+        </div>
+
+        <div class="sidebar-title" style="font-size: 13px; opacity: 0.8; margin-top: 10px;">🔍 Prédicteur</div>
+        <div style="padding: 10px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+          <div style="display: flex; gap: 5px; margin-bottom: 8px;">
+            <input type="date" id="check-date"
+              style="flex: 2; padding: 5px; font-size: 12px; background: #1a1d29; border: 1px solid #374151; color: white; border-radius: 4px;">
+            <input type="time" id="check-time"
+              style="flex: 1; padding: 5px; font-size: 12px; background: #1a1d29; border: 1px solid #374151; color: white; border-radius: 4px;">
           </div>
+          <button onclick="cycleManager.checkFuture()"
+            style="width: 100%; padding: 8px; background: #3b82f6; border: none; color: white; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px;">Vérifier
+            cet horaire</button>
+          <div id="check-result"
+            style="margin-top: 8px; text-align: center; font-weight: bold; font-size: 13px; display: none;"></div>
+        </div>
+      </div>
+
+      <!-- MENU DISCORD (Inséré ici) -->
+      <div id="discord-sidebar-panel" style="margin-top: 20px; margin-bottom: 20px;">
+        <div class="sidebar-title" style="display: flex; align-items: center; justify-content: space-between;">
+          <div style="cursor: pointer; display:flex; align-items:center; gap:6px;" onclick="discordManager.openModal()">
+            <span id="discord-sidebar-icon">👾</span> Événements Discord <span
+              style="font-size:12px; opacity:0.7;">⚙️</span>
+          </div>
+          <button onclick="discordManager.toggleSidebar()" id="discord-toggle-btn"
+            style="background:transparent; border:none; color:white; font-size:16px; cursor:pointer;"
+            title="Réduire/Agrandir">➖</button>
+        </div>
+        <div class="tracked-events-list" id="discord-sidebar-list"
+          style="transition: max-height 0.3s ease-out; overflow: hidden;">
+          <!-- Rempli par JS -->
         </div>
       </div>
     </div>
+  </div>
   </div>
 
   <!-- ⚠️ ORDRE CRUCIAL : D'ABORD LES DONNÉES -->
@@ -225,6 +292,131 @@
       eventDate.setHours(h, m, 0, 0);
       return eventDate;
     }
+
+    const cycleDuration = 150;
+    const nightDuration = 30;
+
+    function getGameState(date) {
+      const reference = new Date(2026, 0, 22, 13, 0, 0); // 13:00 = Début Nuit
+      const diffMs = date.getTime() - reference.getTime();
+      const diffMinutes = Math.floor(diffMs / (1000 * 60));
+
+      let offset = diffMinutes % cycleDuration;
+      if (offset < 0) offset += cycleDuration;
+
+      if (offset < nightDuration) {
+        return { state: 'night', icon: '🌙', label: 'Nuit', timeLeft: nightDuration - offset };
+      } else {
+        return { state: 'day', icon: '☀️', label: 'Jour', timeLeft: cycleDuration - offset };
+      }
+    }
+
+    // ===== CYCLE MANAGER SIDEBAR =====
+    const cycleManager = {
+      init() {
+        // Set default date/time for checker
+        const now = new Date();
+        document.getElementById('check-date').valueAsDate = now;
+        document.getElementById('check-time').value = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+
+        this.update();
+        setInterval(() => this.update(), 1000);
+      },
+      update() {
+        const now = new Date();
+        const state = getGameState(now);
+
+        const panel = document.getElementById('cycle-status-panel');
+        const symbol = document.getElementById('cycle-current-symbol');
+        const label = document.getElementById('cycle-current-label');
+        const countdown = document.getElementById('cycle-countdown');
+        const progressBar = document.getElementById('cycle-progress-bar');
+
+        if (!panel) return;
+
+        // Met à jour le symbole (Soleil/Lune)
+        // Note: Glow retiré à la demande de l'utilisateur pour test
+        const sunSVG = `<svg width="70" height="70" viewBox="-4 -4 32 32" fill="currentColor" style="overflow:visible;"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
+        const moonSVG = `<svg width="70" height="70" viewBox="-4 -4 32 32" fill="currentColor" style="overflow:visible;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+
+        if (state.state === 'night') {
+          symbol.innerHTML = moonSVG;
+          symbol.style.color = '#818cf8';
+          label.textContent = 'NUIT';
+          label.style.color = '#c7d2fe';
+        } else {
+          symbol.innerHTML = sunSVG;
+          symbol.style.color = '#fbbf24';
+          label.textContent = 'JOUR';
+          label.style.color = '#fef3c7';
+        }
+
+        // Calcul du progrès (0 à 100)
+        // Cycle total = 150 min. Progress = (150 - timeLeft) / 150
+        const progressPercent = (cycleDuration - state.timeLeft) / cycleDuration;
+        const circumference = 2 * Math.PI * 45; // r=45
+        const offset = circumference * (1 - progressPercent);
+        progressBar.style.strokeDashoffset = offset;
+
+        const diffMs = (state.timeLeft * 60 * 1000) - (now.getTime() % 60000);
+        const h = Math.floor(diffMs / 3600000);
+        const m = Math.floor((diffMs % 3600000) / 60000);
+        const nextState = state.state === 'night' ? 'jour' : 'nuit';
+
+        if (h > 0) {
+          countdown.textContent = `${h}h ${m}min avant ${nextState}`;
+        } else {
+          countdown.textContent = `${m}min avant ${nextState}`;
+        }
+
+        if (state.state === 'night') {
+          panel.style.background = 'transparent';
+          panel.style.boxShadow = 'none';
+          panel.style.border = 'none';
+          progressBar.style.stroke = '#818cf8';
+        } else {
+          panel.style.background = 'transparent';
+          panel.style.boxShadow = 'none';
+          panel.style.border = 'none';
+          progressBar.style.stroke = '#fbbf24';
+        }
+      },
+      checkFuture() {
+        const dateInput = document.getElementById('check-date').value;
+        const timeInput = document.getElementById('check-time').value;
+        const resultDiv = document.getElementById('check-result');
+
+        if (!dateInput || !timeInput) return;
+
+        const d = new Date(dateInput + 'T' + timeInput);
+        const state = getGameState(d);
+        const nextState = state.state === 'night' ? 'jour' : 'nuit';
+
+        resultDiv.style.display = 'block';
+
+        let timeStr = "";
+        const h = Math.floor(state.timeLeft / 60);
+        const m = state.timeLeft % 60;
+        if (h > 0) timeStr = `${h}h ${m}min`;
+        else timeStr = `${m}min`;
+
+        resultDiv.innerHTML = `
+          <div style="color: ${state.state === 'night' ? '#c7d2fe' : '#fef3c7'}">
+            ${state.icon} ${state.label}
+          </div>
+          <div style="font-weight: normal; font-size: 11px; opacity: 0.8; margin-top: 2px;">
+            (Il restera ${timeStr} avant le ${nextState})
+          </div>
+        `;
+
+        setTimeout(() => {
+          resultDiv.animate([{ opacity: 0.5 }, { opacity: 1 }], 300);
+        }, 0);
+      }
+    };
+
+    // On lance l'horloge Tyria après le chargement
+    window.addEventListener('DOMContentLoaded', () => cycleManager.init());
 
     function showNotificationPopup(itemName, day, time) {
       const existingPopup = document.querySelector(`[data-event="${itemName}-${day}-${time}"]`);
