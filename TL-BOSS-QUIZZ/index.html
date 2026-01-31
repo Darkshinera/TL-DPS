@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TL Boss Quiz | Mécaniques de Boss</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-overlay"></div>
+
+    <div class="app-container">
+        <!-- USERNAME LOGIN SCREEN -->
+        <div id="username-screen" class="screen active">
+            <header>
+                <div class="logo">
+                    <span class="highlight">THRONE</span> AND <span class="highlight">LIBERTY</span>
+                </div>
+                <h1>Quiz Mécaniques <span class="version">Boss</span></h1>
+                <p class="subtitle">Testez vos connaissances sur les boss du jeu</p>
+            </header>
+
+            <main>
+                <section class="username-section card">
+                    <div class="welcome-icon">🎮</div>
+                    <h2>Bienvenue !</h2>
+                    <p class="welcome-text">Entrez votre pseudo pour sauvegarder vos scores</p>
+
+                    <div class="username-input-container">
+                        <input type="text" id="username-input" placeholder="Votre pseudo Discord" maxlength="32"
+                            autocomplete="off">
+                        <p class="input-hint">Ex: PlayerName#1234</p>
+                    </div>
+
+                    <button id="start-btn" class="start-btn">Commencer</button>
+
+                    <p class="privacy-note">💾 Vos scores seront sauvegardés en ligne</p>
+                </section>
+            </main>
+
+            <footer>
+                <p>© 2026 TL Boss Quiz - Maîtrisez les mécaniques</p>
+            </footer>
+        </div>
+
+        <!-- BOSS SELECTION SCREEN -->
+        <div id="boss-selection" class="screen">
+            <header>
+                <div class="user-info-bar">
+                    <span id="display-username">Connecté en tant que : <strong>...</strong></span>
+                    <div class="user-actions">
+                        <button id="get-admin-code-btn" class="admin-action-btn" style="display: none;">🔑 Code du
+                            jour</button>
+                        <button id="logout-btn" class="logout-btn">Changer de pseudo</button>
+                    </div>
+                </div>
+                <div class="logo">
+                    <span class="highlight">THRONE</span> AND <span class="highlight">LIBERTY</span>
+                </div>
+                <h1>Quiz Mécaniques <span class="version">Boss</span></h1>
+                <p class="subtitle">Testez vos connaissances sur les boss du jeu</p>
+            </header>
+
+            <main>
+                <section class="category-section">
+                    <h2 class="category-title">Dim 6+</h2>
+                    <div class="boss-grid" id="boss-grid-dim6"></div>
+                </section>
+
+                <section class="category-section">
+                    <h2 class="category-title">Raid Difficile</h2>
+                    <div class="boss-grid" id="boss-grid-hard"></div>
+                </section>
+
+                <section class="category-section">
+                    <h2 class="category-title">Raid Nightmare</h2>
+                    <div class="boss-grid" id="boss-grid-nightmare"></div>
+                </section>
+            </main>
+
+            <footer>
+                <p>© 2026 TL Boss Quiz - Maîtrisez les mécaniques</p>
+            </footer>
+        </div>
+
+        <!-- QUIZ SCREEN -->
+        <div id="quiz-screen" class="screen">
+            <header>
+                <button id="back-btn" class="back-btn">← Retour</button>
+                <div class="quiz-header-info">
+                    <h2 id="boss-name">Nom du Boss</h2>
+                    <div class="question-counter">
+                        Question <span id="current-q">1</span> / <span id="total-q">10</span>
+                    </div>
+                </div>
+            </header>
+
+            <main>
+                <div class="progress-bar-container">
+                    <div id="quiz-progress-bar" class="progress-bar"></div>
+                </div>
+
+                <section class="question-section card">
+                    <div class="timer-container">
+                        <div class="timer-circle">
+                            <svg class="timer-ring" width="80" height="80">
+                                <circle id="timer-circle" cx="40" cy="40" r="35" />
+                            </svg>
+                            <span id="timer-text" class="timer-text">20</span>
+                        </div>
+                        <span class="timer-label">secondes restantes</span>
+                    </div>
+                    <h3 id="question-text" class="question-text">Question ici ?</h3>
+                    <div id="options-container" class="options-container">
+                        <!-- Options will be injected here -->
+                    </div>
+                    <button id="submit-answer" class="submit-btn" disabled>Valider</button>
+                </section>
+            </main>
+        </div>
+
+        <!-- RESULTS SCREEN -->
+        <div id="results-screen" class="screen">
+            <header>
+                <div class="logo">
+                    <span class="highlight">RÉSULTATS</span>
+                </div>
+                <h1 id="results-boss-name">Nom du Boss</h1>
+            </header>
+
+            <main>
+                <section class="results-section card">
+                    <div class="score-display">
+                        <div class="score-circle">
+                            <span id="score-value">0</span>
+                            <span class="score-total">/ 10</span>
+                        </div>
+                        <p id="score-message" class="score-message">Excellent !</p>
+                    </div>
+
+                    <div class="results-actions">
+                        <button id="retry-btn" class="action-btn primary">Recommencer</button>
+                        <button id="home-btn" class="action-btn secondary">Retour à l'accueil</button>
+                    </div>
+                </section>
+            </main>
+
+            <footer>
+                <p>© 2026 TL Boss Quiz - Maîtrisez les mécaniques</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Firebase SDK (Compat Version for local file support) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+    <!-- Main Script -->
+    <script src="script.js"></script>
+</body>
+
+</html>
