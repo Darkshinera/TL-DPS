@@ -1150,12 +1150,12 @@ const CALENDARDATA = {
             { name: "Tchernobog", type: "ascendant" }
           ],
           "03h": [
-            { name: "Toucher curatif pour les betes celestes", type: "event" },
+            { name: "Fete des recoltes de peipors", type: "event" },
             { name: "Mica brun cache", type: "event" },
             { name: "Rituel des pierres stellaires", type: "event" },
             { name: "Toucher curatif pour les betes celestes", type: "event" },
-            { name: "Fete des recoltes de peipors", type: "event" },
-            { name: "Destructeurs des tenebres", type: "event" }
+            { name: "Destructeurs des tenebres", type: "event" },
+            { name: "Requiem de lumiere", type: "event" }
           ],
           "06h": [
             { name: "Le meilleur moyen d'empecher le pire", type: "event" },
@@ -1208,7 +1208,7 @@ const CALENDARDATA = {
           "20h": [
             { name: "Manticus", type: "normal" },
             { name: "Grand Aelon", type: "ascendant" },
-            { name: "Cordy Ascendant", type: "ascendant" },
+            { name: "Bellandir Ascendant", type: "ascendant" },
             { name: "Tevent Ascendant", type: "ascendant" }
           ],
           "22h": [
