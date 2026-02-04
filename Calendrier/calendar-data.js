@@ -1186,10 +1186,10 @@ const CALENDARDATA = {
             { name: "Ahzreil", type: "ascendant" }
           ],
           "15h": [
-            { name: "Le sceau du blizzard", type: "event" },
-            { name: "Mica brun cache", type: "event" },
-            { name: "Concours de louveterie", type: "event" },
-            { name: "Requiem de lumiere", type: "event" },
+            { name: "Operation Acquisition d'obsidienne", type: "event" },
+            { name: "Operation : Livraison de talismans", type: "event" },
+            { name: "Rituel des pierres stellaires", type: "event" },
+            { name: "Fete du feu", type: "event" },
             { name: "Le sceau du blizzard", type: "event" },
             { name: "Le meilleur moyen d'empecher le pire", type: "event" }
           ],
