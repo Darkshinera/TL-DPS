@@ -1391,75 +1391,73 @@
           return;
         }
 
-        const targetUrl = `https://raid-helper.dev/api/v3/servers/${sid}/events?t=${Date.now()}`;
-        const scheduledUrl = `https://raid-helper.dev/api/v3/servers/${sid}/scheduledevents?t=${Date.now()}`;
+        const nowTs = Date.now();
+        const urls = [
+          `https://raid-helper.dev/api/v3/servers/${sid}/events?t=${nowTs}`,
+          `https://raid-helper.dev/api/v3/servers/${sid}/scheduledevents?t=${nowTs}`
+        ];
 
         try {
-          const tryFetch = async (url) => {
+          const fetchWithRetry = async (targetUrl) => {
             const proxies = [
-              { name: 'Direct', url: url },
-              { name: 'Proxy 1 (corsproxy.io)', url: `https://corsproxy.io/?url=${encodeURIComponent(url)}` },
-              { name: 'Proxy 2 (cors.lol)', url: `https://api.cors.lol/?url=${encodeURIComponent(url)}` },
-              { name: 'Proxy 3 (allorigins)', url: `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`, isWrapper: true }
+              { name: 'Proxy Principal', url: `https://corsproxy.io/?url=${encodeURIComponent(targetUrl)}` },
+              { name: 'Proxy Secondaire', url: `https://api.cors.lol/?url=${encodeURIComponent(targetUrl)}` },
+              { name: 'Proxy Tertiaire', url: `https://api.codetabs.com/v1/proxy?url=${encodeURIComponent(targetUrl)}` }
             ];
 
-            // If proxy is disabled, only use direct
-            const fetchList = useProxyVal ? proxies : [proxies[0]];
-            let lastError = null;
+            const fetchList = useProxyVal ? proxies : [{ name: 'Direct', url: targetUrl }];
+            let lastErr = "";
 
             for (const p of fetchList) {
               try {
-                if (!isBackground) console.log(`Attempting Discord Fetch via ${p.name}...`);
+                if (!isBackground && resultsDiv) {
+                  resultsDiv.innerHTML += `<div style="font-size:10px; color:#5865f2; margin:2px 0;">📡 Essai via ${p.name}...</div>`;
+                }
 
                 const resp = await fetch(p.url, {
-                  headers: p.isWrapper ? {} : { 'Authorization': this.apiKey, 'Content-Type': 'application/json' }
+                  // minimal headers to avoid complex preflight if possible
+                  headers: { 'Authorization': this.apiKey }
                 });
 
                 if (resp.ok) {
                   const data = await resp.json();
-                  // AllOrigins returns the result in data.contents as a string
-                  if (p.isWrapper) {
-                    if (!data.contents) throw new Error("Empty wrapper contents");
-                    return JSON.parse(data.contents);
-                  }
+                  if (!isBackground && resultsDiv) resultsDiv.innerHTML += `<div style="font-size:10px; color:#10b981; margin:2px 0;">✅ ${p.name} OK</div>`;
                   return data;
                 }
-
-                console.warn(`${p.name} returned status ${resp.status}`);
+                lastErr = `Status ${resp.status}`;
               } catch (e) {
-                console.error(`${p.name} failed:`, e.message);
-                lastError = e;
-                continue; // Try next proxy
+                lastErr = e.message;
+                console.warn(`${p.name} failed:`, e.message);
               }
             }
-            throw new Error(lastError ? lastError.message : "All connection attempts failed");
+            throw new Error(`Échec via tous les proxies: ${lastErr}`);
           };
 
-          // Background auto-refresh usually only fetches posted events to save bandwidth? 
-          // No, let's keep it complete.
-          const [postedData, scheduledData] = await Promise.all([
-            tryFetch(targetUrl).catch(e => ({ postedEvents: [] })),
-            tryFetch(scheduledUrl).catch(e => ({ scheduledevents: [] }))
-          ]);
+          if (!isBackground && resultsDiv) resultsDiv.innerHTML = '<div style="color:white;text-align:center;">Chargement...</div>';
 
-          let events = [];
-          if (postedData.postedEvents) events = events.concat(postedData.postedEvents);
-          else if (Array.isArray(postedData)) events = events.concat(postedData);
+          let allEvents = [];
+          for (const url of urls) {
+            try {
+              const data = await fetchWithRetry(url);
+              if (data && data.postedEvents) allEvents = allEvents.concat(data.postedEvents);
+              if (data && data.scheduledevents) allEvents = allEvents.concat(data.scheduledevents);
+              if (data && Array.isArray(data)) allEvents = allEvents.concat(data);
+            } catch (e) {
+              console.error("Fetch partial error:", e);
+            }
+          }
 
-          if (scheduledData.scheduledevents) events = events.concat(scheduledData.scheduledevents);
-          else if (Array.isArray(scheduledData)) events = events.concat(scheduledData);
-
-          const uniqueEvents = Array.from(new Map(events.map(item => [item.id || item.event_id || item.title + (item.startTime || ''), item])).values());
+          const uniqueEvents = Array.from(new Map(allEvents.map(item => [item.id || item.event_id || (item.title + (item.startTime || '')), item])).values());
 
           if (uniqueEvents.length === 0 && !isBackground && resultsDiv) {
-            resultsDiv.innerHTML = '<div style="color:#f59e0b;text-align:center;">Aucun événement trouvé.<br><small>Cela peut arriver si les proxies sont saturés ou si l\'ID est incorrect.</small></div>';
+            resultsDiv.innerHTML = '<div style="color:#f59e0b;text-align:center;">Aucun événement trouvé.<br><small>Vérifiez vos identifiants ou le proxy.</small></div>';
           } else {
             this.renderList(uniqueEvents, isBackground);
           }
         } catch (err) {
-          console.error("Discord Fetch Final Error:", err);
+          console.error("Discord Final Fetch Error:", err);
           if (!isBackground && resultsDiv) {
-            resultsDiv.innerHTML = `<div style="color:#ef4444;text-align:center;">Erreur: Échec de connexion réseau.<br><small>Les proxies sont peut-être bloqués par votre réseau ou saturés.</small></div>`;
+            resultsDiv.innerHTML = `<div style="color:#ef4444;text-align:center;">Erreur: Échec de connexion.<br><small>${err.message}</small></div>`;
           }
         }
       },
