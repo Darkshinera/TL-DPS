@@ -1296,6 +1296,9 @@
                 <div class="discord-input-group">
                   <label>🆔 ID Serveur Discord</label>
                   <input type="text" id="discord-server-id" placeholder="Entrez l'ID du serveur..." value="${this.serverId}">
+                  <div style="font-size:10px; color:#99aab5; margin-top:2px;">
+                    💡 <b>Comment trouver ?</b> Activez le "Mode Développeur" dans Discord (Paramètres > Avancé), puis clic-droit sur l'icône de votre serveur > "Copier l'identifiant du serveur".
+                  </div>
                 </div>
                 
                 <div style="margin-bottom: 15px;">
@@ -1475,15 +1478,32 @@
           return;
         }
 
+        // Helper to normalize time to seconds
+        const getUnixTime = (e) => {
+          let val = e.unix_start_time || e.startTime || e.start_time || e.event_time || e.eventtime;
+          if (!val) return 0;
+
+          // If it's a string (ISO, etc), convert it
+          if (typeof val === 'string') {
+            const d = new Date(val);
+            if (!isNaN(d.getTime())) return Math.floor(d.getTime() / 1000);
+            // If it's a string representing a number, convert it
+            if (!isNaN(val)) val = Number(val);
+            else return 0;
+          }
+
+          // If it's in milliseconds (larger than possible Unix seconds for now)
+          if (val > 20000000000) return Math.floor(val / 1000);
+          return val;
+        };
+
         // Filter valid events
         const futureEvents = events.filter(e => {
-          const start = e.unix_start_time || e.startTime || e.start_time;
+          const start = getUnixTime(e);
           const now = Date.now() / 1000;
-          return start > (now - 86400); // Keep events from last 24h just in case, or strictly future? Let's keep strictly future for Sidebar
+          return start > (now - 86400); // Keep events from last 24h
         }).sort((a, b) => {
-          const tA = a.unix_start_time || a.startTime || a.start_time;
-          const tB = b.unix_start_time || b.startTime || b.start_time;
-          return tA - tB;
+          return getUnixTime(a) - getUnixTime(b);
         });
 
         // Save to cache for Sidebar
@@ -1495,7 +1515,7 @@
         futureEvents.forEach((evt, idx) => {
           // RaidHelper fields
           const title = evt.title || evt.name || 'Événement Discord';
-          const startUnix = evt.unix_start_time || evt.startTime || evt.start_time;
+          const startUnix = getUnixTime(evt);
           const leader = evt.leader_name || evt.leaderName || 'Inconnu';
 
           const dateObj = new Date(startUnix * 1000);
@@ -1537,8 +1557,21 @@
       },
 
       addEventToCalendar(evt) {
+        // Helper to normalize time to seconds (same as in renderList)
+        const getUnixTime = (e) => {
+          let val = e.unix_start_time || e.startTime || e.start_time || e.event_time || e.eventtime;
+          if (!val) return 0;
+          if (typeof val === 'string') {
+            const d = new Date(val);
+            if (!isNaN(d.getTime())) return Math.floor(d.getTime() / 1000);
+            if (!isNaN(val)) val = Number(val); else return 0;
+          }
+          if (val > 20000000000) return Math.floor(val / 1000);
+          return val;
+        };
+
         const title = evt.title || evt.name || 'Import Discord';
-        const startUnix = evt.unix_start_time || evt.startTime || evt.start_time;
+        const startUnix = getUnixTime(evt);
 
         const dateObj = new Date(startUnix * 1000);
 
@@ -1625,7 +1658,20 @@
         const now = Date.now() / 1000;
 
         cached.forEach((evt, idx) => {
-          const startUnix = evt.unix_start_time || evt.startTime || evt.start_time;
+          // Normalization check in Sidebar too
+          const getUnixTime = (e) => {
+            let val = e.unix_start_time || e.startTime || e.start_time || e.event_time || e.eventtime;
+            if (!val) return 0;
+            if (typeof val === 'string') {
+              const d = new Date(val);
+              if (!isNaN(d.getTime())) return Math.floor(d.getTime() / 1000);
+              if (!isNaN(val)) val = Number(val); else return 0;
+            }
+            if (val > 20000000000) return Math.floor(val / 1000);
+            return val;
+          };
+
+          const startUnix = getUnixTime(evt);
           if (startUnix < now) return; // Don't show old events in sidebar
 
           const dateObj = new Date(startUnix * 1000);
