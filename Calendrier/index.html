@@ -1382,47 +1382,69 @@
           return;
         }
 
+        const sid = this.serverId;
+        if (!sid) {
+          if (!isBackground && resultsDiv) resultsDiv.innerHTML = '<div style="color:#ef4444;text-align:center;">⚠️ ID Serveur manquant (Remplissez le champ ci-dessus)</div>';
+          return;
+        }
+
+        const targetUrl = `https://raid-helper.dev/api/v3/servers/${sid}/events`;
+        const scheduledUrl = `https://raid-helper.dev/api/v3/servers/${sid}/scheduledevents`;
+
         try {
-          let sid = this.serverId;
-          if (!sid) {
-            if (!isBackground && resultsDiv) resultsDiv.innerHTML = '<div style="color:#ef4444;text-align:center;">⚠️ ID Serveur manquant (Remplissez le champ ci-dessus)</div>';
-            return;
-          }
-
-          const targetUrl = `https://raid-helper.dev/api/v3/servers/${sid}/events`;
-          // Use corsproxy.io if checked. 
-          const finalUrl = useProxyVal ? `https://corsproxy.io/?${encodeURIComponent(targetUrl)}` : targetUrl;
-
-          if (!isBackground) console.log("Fetching:", finalUrl);
-
-          const response = await fetch(finalUrl, {
-            headers: {
-              'Authorization': this.apiKey,
-              'Content-Type': 'application/json'
-            }
-          });
-
-          if (!response.ok) throw new Error(`Erreur API: ${response.status}`);
-
-          const data = await response.json();
-          // Endpoint /events returns { postedEvents: [...] } or { results: [...] } depending on version
-          // Common RaidHelper format: { status: "success", postedEvents: [...] }
-
           let events = [];
-          if (data.postedEvents) events = data.postedEvents;
-          else if (data.scheduledevents) events = data.scheduledevents;
-          else if (Array.isArray(data)) events = data;
+
+          const tryFetch = async (url) => {
+            let finalUrl = url;
+            if (useProxyVal) {
+              // Try corsproxy.io first (with correct ?url= parameter)
+              finalUrl = `https://corsproxy.io/?url=${encodeURIComponent(url)}`;
+            }
+
+            console.log("Fetching:", finalUrl);
+            let resp = await fetch(finalUrl, {
+              headers: { 'Authorization': this.apiKey, 'Content-Type': 'application/json' }
+            });
+
+            if (!resp.ok && useProxyVal) {
+              console.warn("Primary proxy failed, trying fallback...");
+              // Fallback to allorigins.win
+              finalUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+              const fallbackResp = await fetch(finalUrl);
+              if (!fallbackResp.ok) throw new Error(`Proxy fallback error: ${fallbackResp.status}`);
+              const fallbackData = await fallbackResp.json();
+              return JSON.parse(fallbackData.contents);
+            }
+
+            if (!resp.ok) throw new Error(`Erreur API: ${resp.status}`);
+            return await resp.json();
+          };
+
+          // Fetch both posted and scheduled events
+          const [postedData, scheduledData] = await Promise.all([
+            tryFetch(targetUrl).catch(e => { console.error("Posted events error:", e); return { postedEvents: [] }; }),
+            tryFetch(scheduledUrl).catch(e => { console.error("Scheduled events error:", e); return { scheduledevents: [] }; })
+          ]);
+
+          if (postedData.postedEvents) events = events.concat(postedData.postedEvents);
+          else if (Array.isArray(postedData)) events = events.concat(postedData);
+
+          if (scheduledData.scheduledevents) events = events.concat(scheduledData.scheduledevents);
+          else if (Array.isArray(scheduledData)) events = events.concat(scheduledData);
+
+          // Deduplicate by id if possible
+          const uniqueEvents = Array.from(new Map(events.map(item => [item.id || item.event_id || JSON.stringify(item), item])).values());
 
           if (isBackground) {
-            console.log(`🔄 Auto-Refresh Discord: ${events.length} événements trouvés.`);
+            console.log(`🔄 Auto-Refresh Discord: ${uniqueEvents.length} événements trouvés.`);
           }
 
-          this.renderList(events, isBackground);
+          this.renderList(uniqueEvents, isBackground);
 
         } catch (err) {
           console.error("Discord Fetch Error:", err);
           if (!isBackground && resultsDiv) {
-            resultsDiv.innerHTML = `<div style="color:#ef4444;text-align:center;">Erreur: ${err.message}<br><small>Essayez de cocher la case Proxy ou vérifiez vos identifiants.</small></div>`;
+            resultsDiv.innerHTML = `<div style="color:#ef4444;text-align:center;">Erreur: ${err.message}<br><small>Vérifiez vos identifiants ou essayez le mode manuel si le proxy échoue.</small></div>`;
           }
         }
       },
