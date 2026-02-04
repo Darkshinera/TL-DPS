@@ -1400,10 +1400,9 @@
           const fetchWithRetry = async (targetUrl) => {
             const proxies = [
               { name: 'Proxy 1 (Standard)', url: `https://corsproxy.io/?url=${encodeURIComponent(targetUrl)}` },
-              { name: 'Proxy 2 (Legacy)', url: `https://corsproxy.io/${targetUrl}` },
-              { name: 'Proxy 3 (Permissif)', url: `https://api.cors.lol/?url=${encodeURIComponent(targetUrl)}` },
-              { name: 'Proxy 4 (Codetabs)', url: `https://api.codetabs.com/v1/proxy?url=${encodeURIComponent(targetUrl)}` },
-              { name: 'Proxy 5 (Heroku)', url: `https://cors-anywhere.herokuapp.com/${targetUrl}`, needsNotice: true }
+              { name: 'Proxy 2 (Cloudflare)', url: `https://cors-anywhere.azm.workers.dev/${targetUrl}` },
+              { name: 'Proxy 3 (Heroku)', url: `https://cors-anywhere.herokuapp.com/${targetUrl}`, needsNotice: true },
+              { name: 'Proxy 4 (Codetabs)', url: `https://api.codetabs.com/v1/proxy?url=${encodeURIComponent(targetUrl)}` }
             ];
 
             const fetchList = useProxyVal ? proxies : [{ name: 'Direct', url: targetUrl }];
@@ -1416,8 +1415,8 @@
                   resultsDiv.scrollTop = resultsDiv.scrollHeight;
                 }
 
-                if (p.needsNotice && !localStorage.getItem('corsAnywhereNoticed')) {
-                  if (!isBackground && resultsDiv) resultsDiv.innerHTML += `<div style="font-size:10px; color:#f59e0b; margin:2px 0;">⚠️ Si l'essai Heroku échoue, visitez <a href="https://cors-anywhere.herokuapp.com/corsdemo" target="_blank" style="color:#3b82f6;">ce lien</a> et cliquez sur "Request access".</div>`;
+                if (p.needsNotice && !isBackground && resultsDiv) {
+                  resultsDiv.innerHTML += `<div style="font-size:10px; color:#f59e0b; margin:5px 0; border:1px dashed #f59e0b; padding:5px; border-radius:4px;">💡 Si Proxy 3 bloque (403), cliquez ici :<br><a href="https://cors-anywhere.herokuapp.com/corsdemo" target="_blank" style="color:#3b82f6; text-decoration:underline;">Activer l'accès temporaire</a><br>(Puis recliquez sur Charger)</div>`;
                 }
 
                 const resp = await fetch(p.url, {
@@ -1438,7 +1437,7 @@
             throw new Error(lastErr);
           };
 
-          if (!isBackground && resultsDiv) resultsDiv.innerHTML = '<div style="color:white;text-align:center;margin-bottom:10px;">Chargement API...</div>';
+          if (!isBackground && resultsDiv) resultsDiv.innerHTML = '<div style="color:white;text-align:center;margin-bottom:10px; font-weight:bold;">🔄 Connexion inter-serveur...</div>';
 
           let allEvents = [];
           for (const url of urls) {
@@ -1455,14 +1454,14 @@
           const uniqueEvents = Array.from(new Map(allEvents.map(item => [item.id || item.event_id || (item.title + (item.startTime || '')), item])).values());
 
           if (uniqueEvents.length === 0 && !isBackground && resultsDiv) {
-            resultsDiv.innerHTML = '<div style="color:#f59e0b;text-align:center;padding:10px;">❌ Aucun événement trouvé.<br><small style="opacity:0.7;">Vérifiez vos identifiants ou utilisez le Mode Manuel ci-dessous.</small></div>';
+            resultsDiv.innerHTML = '<div style="color:#f59e0b;text-align:center;padding:10px;">❌ Aucun événement trouvé sur GitHub Pages.<br><small style="opacity:0.7;">Les proxies gratuits sont bloqués par sécurité.</small><br><br><button onclick="document.getElementById(\'discord-modal\').scrollTop = 1000" style="background:#5865f2; color:white; border:none; padding:5px 10px; border-radius:4px; font-size:11px; cursor:pointer;">Utiliser le Mode Manuel 📋</button></div>';
           } else {
             this.renderList(uniqueEvents, isBackground);
           }
         } catch (err) {
           console.error("Discord Final Fetch Error:", err);
           if (!isBackground && resultsDiv) {
-            resultsDiv.innerHTML = `<div style="color:#ef4444;text-align:center;padding:10px;">Erreur de connexion.<br><small>${err.message}</small></div>`;
+            resultsDiv.innerHTML = `<div style="color:#ef4444;text-align:center;padding:10px;">🛑 Sécurité Navigateur active.<br><small>${err.message}</small><br><br>Utilisez le <b>Mode Manuel</b> ci-dessous pour importer vos événements sur GitHub.</div>`;
           }
         }
       },
