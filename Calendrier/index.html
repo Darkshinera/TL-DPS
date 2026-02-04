@@ -1391,8 +1391,9 @@
           return;
         }
 
-        const targetUrl = `https://raid-helper.dev/api/v3/servers/${sid}/events`;
-        const scheduledUrl = `https://raid-helper.dev/api/v3/servers/${sid}/scheduledevents`;
+        // Add a timestamp to bypass local/proxy cache
+        const targetUrl = `https://raid-helper.dev/api/v3/servers/${sid}/events?t=${Date.now()}`;
+        const scheduledUrl = `https://raid-helper.dev/api/v3/servers/${sid}/scheduledevents?t=${Date.now()}`;
 
         try {
           let events = [];
@@ -1400,26 +1401,31 @@
           const tryFetch = async (url) => {
             let finalUrl = url;
             if (useProxyVal) {
-              // Try corsproxy.io first (with correct ?url= parameter)
               finalUrl = `https://corsproxy.io/?url=${encodeURIComponent(url)}`;
             }
 
-            console.log("Fetching:", finalUrl);
+            if (!isBackground) console.log("Fetching Discord events from:", finalUrl);
+
             let resp = await fetch(finalUrl, {
               headers: { 'Authorization': this.apiKey, 'Content-Type': 'application/json' }
             });
 
             if (!resp.ok && useProxyVal) {
-              console.warn("Primary proxy failed, trying fallback...");
-              // Fallback to allorigins.win
+              console.warn(`Primary proxy failed (Status: ${resp.status}), trying fallback...`);
               finalUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
               const fallbackResp = await fetch(finalUrl);
-              if (!fallbackResp.ok) throw new Error(`Proxy fallback error: ${fallbackResp.status}`);
               const fallbackData = await fallbackResp.json();
-              return JSON.parse(fallbackData.contents);
+              if (fallbackData.contents && fallbackData.contents.includes('"status":"success"')) {
+                return JSON.parse(fallbackData.contents);
+              }
+              throw new Error(`Proxy fallback error or unauthorized content via allorigins.`);
             }
 
-            if (!resp.ok) throw new Error(`Erreur API: ${resp.status}`);
+            if (!resp.ok) {
+              const errText = await resp.text().catch(() => "Unknown error");
+              console.error(`API Error Response: ${errText}`);
+              throw new Error(`Erreur API: ${resp.status}`);
+            }
             return await resp.json();
           };
 
@@ -1435,19 +1441,23 @@
           if (scheduledData.scheduledevents) events = events.concat(scheduledData.scheduledevents);
           else if (Array.isArray(scheduledData)) events = events.concat(scheduledData);
 
-          // Deduplicate by id if possible
-          const uniqueEvents = Array.from(new Map(events.map(item => [item.id || item.event_id || JSON.stringify(item), item])).values());
+          // Deduplicate by id
+          const uniqueEvents = Array.from(new Map(events.map(item => [item.id || item.event_id || item.title + item.startTime, item])).values());
 
           if (isBackground) {
             console.log(`🔄 Auto-Refresh Discord: ${uniqueEvents.length} événements trouvés.`);
           }
 
-          this.renderList(uniqueEvents, isBackground);
+          if (uniqueEvents.length === 0 && !isBackground && resultsDiv) {
+            resultsDiv.innerHTML = '<div style="color:#f59e0b;text-align:center;">Aucun événement trouvé.<br><small>Vérifiez que le serveur a bien des événements Raid-Helper actifs.</small></div>';
+          } else {
+            this.renderList(uniqueEvents, isBackground);
+          }
 
         } catch (err) {
           console.error("Discord Fetch Error:", err);
           if (!isBackground && resultsDiv) {
-            resultsDiv.innerHTML = `<div style="color:#ef4444;text-align:center;">Erreur: ${err.message}<br><small>Vérifiez vos identifiants ou essayez le mode manuel si le proxy échoue.</small></div>`;
+            resultsDiv.innerHTML = `<div style="color:#ef4444;text-align:center;">Erreur: ${err.message}<br><small>Vérifiez la console (F12) pour plus de détails.</small></div>`;
           }
         }
       },
