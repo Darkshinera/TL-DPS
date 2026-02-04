@@ -1399,10 +1399,9 @@
         try {
           const fetchWithRetry = async (targetUrl) => {
             const proxies = [
-              { name: 'Proxy 1 (Standard)', url: `https://corsproxy.io/?url=${encodeURIComponent(targetUrl)}` },
-              { name: 'Proxy 2 (Cloudflare)', url: `https://cors-anywhere.azm.workers.dev/${targetUrl}` },
-              { name: 'Proxy 3 (Heroku)', url: `https://cors-anywhere.herokuapp.com/${targetUrl}`, needsNotice: true },
-              { name: 'Proxy 4 (Codetabs)', url: `https://api.codetabs.com/v1/proxy?url=${encodeURIComponent(targetUrl)}` }
+              { name: 'Proxy Principal', url: `https://corsproxy.io/?url=${encodeURIComponent(targetUrl)}` },
+              { name: 'Proxy Cloudflare', url: `https://cors-anywhere.azm.workers.dev/${targetUrl}` },
+              { name: 'Proxy Heroku', url: `https://cors-anywhere.herokuapp.com/${targetUrl}`, needsNotice: true }
             ];
 
             const fetchList = useProxyVal ? proxies : [{ name: 'Direct', url: targetUrl }];
@@ -1411,57 +1410,56 @@
             for (const p of fetchList) {
               try {
                 if (!isBackground && resultsDiv) {
-                  resultsDiv.innerHTML += `<div style="font-size:10px; color:#5865f2; margin:2px 0;">📡 Essai via ${p.name}...</div>`;
-                  resultsDiv.scrollTop = resultsDiv.scrollHeight;
+                  resultsDiv.innerHTML = `<div style="text-align:center;color:#5865f2;font-size:11px;">� Connexion : ${p.name}...</div>`;
                 }
 
-                if (p.needsNotice && !isBackground && resultsDiv) {
-                  resultsDiv.innerHTML += `<div style="font-size:10px; color:#f59e0b; margin:5px 0; border:1px dashed #f59e0b; padding:5px; border-radius:4px;">💡 Si Proxy 3 bloque (403), cliquez ici :<br><a href="https://cors-anywhere.herokuapp.com/corsdemo" target="_blank" style="color:#3b82f6; text-decoration:underline;">Activer l'accès temporaire</a><br>(Puis recliquez sur Charger)</div>`;
-                }
+                const resp = await fetch(p.url, { headers: { 'Authorization': this.apiKey } });
+                if (resp.ok) return await resp.json();
 
-                const resp = await fetch(p.url, {
-                  headers: { 'Authorization': this.apiKey }
-                });
-
-                if (resp.ok) {
-                  const data = await resp.json();
-                  if (!isBackground && resultsDiv) resultsDiv.innerHTML += `<div style="font-size:10px; color:#10b981; margin:2px 0;">✅ ${p.name} SUCCÈS</div>`;
-                  return data;
-                }
-                lastErr = `Erreur ${resp.status}`;
+                lastErr = (resp.status === 403 && p.needsNotice) ? "Activation nécessaire" : `Erreur ${resp.status}`;
               } catch (e) {
                 lastErr = e.message;
-                console.warn(`${p.name} failed:`, e.name, e.message);
               }
             }
             throw new Error(lastErr);
           };
 
-          if (!isBackground && resultsDiv) resultsDiv.innerHTML = '<div style="color:white;text-align:center;margin-bottom:10px; font-weight:bold;">🔄 Connexion inter-serveur...</div>';
+          if (!isBackground && resultsDiv) resultsDiv.innerHTML = '<div style="color:white;text-align:center;font-weight:bold;">� Récupération...</div>';
 
           let allEvents = [];
           for (const url of urls) {
-            try {
-              const data = await fetchWithRetry(url);
-              if (data && data.postedEvents) allEvents = allEvents.concat(data.postedEvents);
-              if (data && data.scheduledevents) allEvents = allEvents.concat(data.scheduledevents);
-              if (data && Array.isArray(data)) allEvents = allEvents.concat(data);
-            } catch (e) {
-              console.error("Fetch partial error:", e);
-            }
+            const data = await fetchWithRetry(url);
+            if (data && data.postedEvents) allEvents = allEvents.concat(data.postedEvents);
+            if (data && data.scheduledevents) allEvents = allEvents.concat(data.scheduledevents);
+            if (data && Array.isArray(data)) allEvents = allEvents.concat(data);
           }
 
           const uniqueEvents = Array.from(new Map(allEvents.map(item => [item.id || item.event_id || (item.title + (item.startTime || '')), item])).values());
-
           if (uniqueEvents.length === 0 && !isBackground && resultsDiv) {
-            resultsDiv.innerHTML = '<div style="color:#f59e0b;text-align:center;padding:10px;">❌ Aucun événement trouvé sur GitHub Pages.<br><small style="opacity:0.7;">Les proxies gratuits sont bloqués par sécurité.</small><br><br><button onclick="document.getElementById(\'discord-modal\').scrollTop = 1000" style="background:#5865f2; color:white; border:none; padding:5px 10px; border-radius:4px; font-size:11px; cursor:pointer;">Utiliser le Mode Manuel 📋</button></div>';
+            resultsDiv.innerHTML = '<div style="color:#f59e0b;text-align:center;padding:10px;">Aucun événement trouvé.</div>';
           } else {
             this.renderList(uniqueEvents, isBackground);
           }
         } catch (err) {
-          console.error("Discord Final Fetch Error:", err);
           if (!isBackground && resultsDiv) {
-            resultsDiv.innerHTML = `<div style="color:#ef4444;text-align:center;padding:10px;">🛑 Sécurité Navigateur active.<br><small>${err.message}</small><br><br>Utilisez le <b>Mode Manuel</b> ci-dessous pour importer vos événements sur GitHub.</div>`;
+            if (err.message === "Activation nécessaire" || err.message.includes("403")) {
+              resultsDiv.innerHTML = `
+                <div style="text-align:center; padding:12px; background:rgba(245,158,11,0.1); border-radius:8px; border:1px solid #f59e0b;">
+                  <div style="color:#f59e0b; font-weight:bold; margin-bottom:8px;">🛠️ Connexion bloquée par GitHub</div>
+                  <p style="font-size:11px; color:#ccc; margin-bottom:10px;">Les sécurités de GitHub empêchent le chargement direct. Cliquez ci-dessous :</p>
+                  <a href="https://cors-anywhere.herokuapp.com/corsdemo" target="_blank" 
+                     style="display:block; background:#f59e0b; color:black; padding:8px; border-radius:5px; text-decoration:none; font-weight:bold; font-size:12px; margin-bottom:10px;">
+                    1. ACTIVER L'ACCÈS (24h)
+                  </a>
+                  <button id="discord-retry-btn" onclick="document.getElementById('discord-fetch-btn').click()" 
+                     style="display:block; width:100%; background:#5865f2; color:white; border:none; padding:8px; border-radius:5px; font-weight:bold; font-size:12px; cursor:pointer;">
+                    2. RECLIKER ICI SUR CHARGER
+                  </button>
+                  <p style="font-size:10px; color:#666; margin-top:10px;">(Une fois l'accès activé sur l'autre page, revenez ici)</p>
+                </div>`;
+            } else {
+              resultsDiv.innerHTML = `<div style="color:#ef4444;text-align:center;padding:10px;">❌ Erreur: ${err.message}<br><small>Vérifiez votre clé API.</small></div>`;
+            }
           }
         }
       },
