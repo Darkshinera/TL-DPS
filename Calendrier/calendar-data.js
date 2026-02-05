@@ -1060,11 +1060,11 @@ const CALENDARDATA = {
             { name: "Minezerok", type: "ascendant" }
           ],
           "03h": [
-            { name: "Toucher curatif pour les betes celestes", type: "event" },
+            { name: "La ceremonie de passage du Grand arbre", type: "event" },
             { name: "Mettre fin a la frenesie de mana", type: "event" },
             { name: "Concours de louveterie", type: "event" },
-            { name: "Requiem de lumiere", type: "event" },
-            { name: "Operation : Livraison de talismans", type: "event" },
+            { name: "Toucher curatif pour les betes celestes", type: "event" },
+            { name: "Rituel des pierres stellaires", type: "event" },
             { name: "Fete des recoltes de peipors", type: "event" }
           ],
           "06h": [
