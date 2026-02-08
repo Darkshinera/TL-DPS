@@ -180,19 +180,27 @@
 
     function getMondayOfWeek(date) {
       const d = new Date(date);
-      const day = d.getDay();
-      const diff = d.getDate() - day + (day === 0 ? -6 : 1);
-      return new Date(d.setDate(diff));
+      const day = d.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+
+      // Calculate days to subtract to get to Monday
+      // If Sunday (0), go back 6 days
+      // If Monday (1), go back 0 days
+      // If Tuesday (2), go back 1 day, etc.
+      const diff = day === 0 ? -6 : -(day - 1);
+
+      d.setDate(d.getDate() + diff);
+      return d;
     }
 
     function getWeekDates(weekType) {
       const monday = getMondayOfWeek(currentRealDate);
-      const currentIsPair = isEvenWeek(currentRealDate);
-      if (weekType === 'impair' && currentIsPair) {
-        monday.setDate(monday.getDate() + 7);
-      } else if (weekType === 'pair' && !currentIsPair) {
+
+      // If weekType is 'next', add 7 days to get next week
+      if (weekType === 'next') {
         monday.setDate(monday.getDate() + 7);
       }
+      // Otherwise, weekType is 'current', use current week
+
       const dates = [];
       for (let i = 0; i < 7; i++) {
         const date = new Date(monday);
@@ -250,18 +258,22 @@
     }
 
     function isNotificationEnabled(day, time, itemName) {
-      return notificationPreferences.some(n => n.day === day && n.time === time && n.itemName === itemName && n.week === currentWeek);
+      const dataWeek = getDataWeek(currentWeek);
+      return notificationPreferences.some(n => n.day === day && n.time === time && n.itemName === itemName && n.week === dataWeek);
     }
 
     function toggleNotification(day, time, itemName, itemType) {
       requestNotificationPermission();
-      const existingIndex = notificationPreferences.findIndex(n => n.day === day && n.time === time && n.itemName === itemName && n.week === currentWeek);
+
+      // Determine which data week this event belongs to
+      const dataWeek = getDataWeek(currentWeek);
+
+      const existingIndex = notificationPreferences.findIndex(n => n.day === day && n.time === time && n.itemName === itemName && n.week === dataWeek);
       if (existingIndex !== -1) {
         notificationPreferences.splice(existingIndex, 1);
       } else {
-        notificationPreferences.push({ week: currentWeek, day: day, time: time, itemName: itemName, itemType: itemType });
+        notificationPreferences.push({ week: dataWeek, day: day, time: time, itemName: itemName, itemType: itemType });
       }
-      localStorage.setItem('calendarNotifications', JSON.stringify(notificationPreferences));
       localStorage.setItem('calendarNotifications', JSON.stringify(notificationPreferences));
       renderCalendar();
       setupNotificationTimers();
@@ -271,7 +283,21 @@
     function getEventDateTime(day, time, weekType) {
       const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
       const dayIndex = days.indexOf(day);
-      const weekDates = getWeekDates(weekType);
+
+      // Convert weekType if it's in old format (pair/impair) to new format (current/next)
+      let displayWeek = weekType;
+      if (weekType === 'pair' || weekType === 'impair') {
+        const realWeekIsPair = isEvenWeek(currentRealDate);
+        // If weekType matches current real week type, it's current week
+        // Otherwise it's next week
+        if ((weekType === 'pair' && realWeekIsPair) || (weekType === 'impair' && !realWeekIsPair)) {
+          displayWeek = 'next';  // Due to inversion, pair data is next week when we're in pair week
+        } else {
+          displayWeek = 'current';  // impair data is current week when we're in pair week
+        }
+      }
+
+      const weekDates = getWeekDates(displayWeek);
 
       if (dayIndex === -1 || !weekDates[dayIndex]) return new Date(); // Fallback
 
@@ -704,19 +730,60 @@
       return str && (str.startsWith('http://') || str.startsWith('https://') || str.startsWith('//'));
     }
 
-    // Helper pour récupérer le type de semaine (plus d'inversion)
+    // Helper pour récupérer le type de semaine dans les données (pair/impair)
+    // basé sur le type d'affichage (current/next)
     function getDataWeek(displayWeek) {
-      return displayWeek;
+      const realWeekIsPair = isEvenWeek(currentRealDate);
+
+      if (displayWeek === 'current') {
+        // Semaine actuelle → utiliser le type OPPOSÉ (inversion découverte)
+        return realWeekIsPair ? 'impair' : 'pair';
+      } else {
+        // Semaine suivante → utiliser le type réel
+        return realWeekIsPair ? 'pair' : 'impair';
+      }
     }
 
-    // Initialisation dynamique de la semaine en fonction de la date réelle
-    let currentWeek = isEvenWeek(new Date()) ? 'pair' : 'impair';
+    // Initialisation: toujours démarrer sur la semaine actuelle
+    let currentWeek = 'current';
 
     // ===== FONCTION RENDRE CALENDRIER =====
     function renderCalendar() {
       const calendar = document.getElementById('calendar');
       let html = '';
       const weekDates = getWeekDates(currentWeek);
+
+      // ===== FIND NEXT EVENT =====
+      let nextEventInfo = null;
+      const now = new Date();
+      const currentDayIndex = now.getDay() === 0 ? 6 : now.getDay() - 1; // 0=Monday
+      const currentHour = now.getHours();
+      const currentMinute = now.getMinutes();
+      const daysOfWeek = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+      const times = ['00h', '01h', '03h', '06h', '09h', '12h', '13h', '15h', '16h', '19h', '20h', '22h', '23h'];
+      const timeToHour = { '00h': 0, '01h': 1, '03h': 3, '06h': 6, '09h': 9, '12h': 12, '13h': 13, '15h': 15, '16h': 16, '19h': 19, '20h': 20, '22h': 22, '23h': 23 };
+
+      // Search in displayed week first
+      const dataWeek = getDataWeek(currentWeek);
+
+      outerLoop: for (let dayOffset = 0; dayOffset < 7; dayOffset++) {
+        const dayIndex = (currentDayIndex + dayOffset) % 7;
+        const dayName = daysOfWeek[dayIndex];
+
+        for (let timeIdx = 0; timeIdx < times.length; timeIdx++) {
+          const time = times[timeIdx];
+          const hour = timeToHour[time];
+
+          // Skip if it's today and the hour has passed
+          if (dayOffset === 0 && hour <= currentHour) continue;
+
+          const items = CALENDARDATA[dataWeek][dayName][time] || [];
+          if (items.length > 0 && items[0].name) {
+            nextEventInfo = { day: dayName, time: time, name: items[0].name };
+            break outerLoop;
+          }
+        }
+      }
 
       html += '<div class="calendar-header"></div>';
       for (let i = 0; i < 7; i++) {
@@ -777,6 +844,12 @@
                   const hasNotif = isNotificationEnabled(day, time, item.name);
                   const safeName = item.name.replace(/'/g, "\\'");
 
+                  // Check if this is the next event
+                  const isNextEvent = nextEventInfo &&
+                    nextEventInfo.day === day &&
+                    nextEventInfo.time === time &&
+                    nextEventInfo.name === item.name;
+
                   // ✅ CORRECTION : Détecter URL vs Emoji
                   // Check for Panel Mode
                   const showAsPanel = ['01h', '13h', '16h', '20h', '23h'].includes(time);
@@ -786,21 +859,35 @@
                     if (isURL(bossIcon)) {
                       cellContent += `<div class="boss-full ${hasNotif ? 'has-notification' : ''}" data-boss-type="${item.type}" onclick="toggleNotification('${day}', '${time}', '${safeName}', '${item.type}')">
                          <div class="boss-full-icon"><img src="${bossIcon}" alt="${item.name}" /></div>
-                         <div class="boss-full-name">${item.name}</div>
+                         <div class="boss-full-name">${item.name}${isNextEvent ? '<div style="position:absolute;top:5px;right:5px;background:#3b82f6;color:white;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:bold;">PROCHAIN</div>' : ''}</div>
                        </div>`;
                     } else {
                       cellContent += `<div class="boss-full ${hasNotif ? 'has-notification' : ''}" data-boss-type="${item.type}" onclick="toggleNotification('${day}', '${time}', '${safeName}', '${item.type}')">
                          <div class="boss-full-icon" style="display:flex;align-items:center;justify-content:center;">${bossIcon}</div>
-                         <div class="boss-full-name">${item.name}</div>
+                         <div class="boss-full-name">${item.name}${isNextEvent ? '<div style="position:absolute;top:5px;right:5px;background:#3b82f6;color:white;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:bold;">PROCHAIN</div>' : ''}</div>
                        </div>`;
                     }
 
                   } else {
                     // RENDER AS ICON (Small)
                     if (isURL(bossIcon)) {
-                      cellContent += `<div class="boss-small ${hasNotif ? 'has-notification' : ''}" data-boss-type="${item.type}" data-tooltip="${item.name}" onclick="toggleNotification('${day}', '${time}', '${safeName}', '${item.type}')"><img src="${bossIcon}" alt="${item.name}" onerror="this.parentElement.innerHTML='${item.name.substring(0, 3)}';" /></div>`;
+                      cellContent += `<div class="boss-icon ${hasNotif ? 'has-notification' : ''}" 
+                          data-tooltip="${item.name}" 
+                          data-boss-type="${item.type}" 
+                          onclick="toggleNotification('${day}', '${time}', '${safeName}', '${item.type}')" 
+                          style="position:relative;">
+                          <img src="${bossIcon}" alt="${item.name}" />
+                          ${isNextEvent ? '<div style="position:absolute;top:-5px;right:-5px;background:#3b82f6;color:white;padding:1px 3px;border-radius:3px;font-size:8px;font-weight:bold;line-height:1;">NEXT</div>' : ''}
+                        </div>`;
                     } else {
-                      cellContent += `<div class="boss-small ${hasNotif ? 'has-notification' : ''}" data-boss-type="${item.type}" data-tooltip="${item.name}" onclick="toggleNotification('${day}', '${time}', '${safeName}', '${item.type}')" style="display: flex; align-items: center; justify-content: center; font-size: 20px;">${bossIcon}</div>`;
+                      cellContent += `<div class="boss-icon ${hasNotif ? 'has-notification' : ''}" 
+                          data-tooltip="${item.name}" 
+                          data-boss-type="${item.type}" 
+                          onclick="toggleNotification('${day}', '${time}', '${safeName}', '${item.type}')" 
+                          style="position:relative;">
+                          ${bossIcon}
+                          ${isNextEvent ? '<div style="position:absolute;top:-5px;right:-5px;background:#3b82f6;color:white;padding:1px 3px;border-radius:3px;font-size:8px;font-weight:bold;line-height:1;">NEXT</div>' : ''}
+                        </div>`;
                     }
                   }
                 }
@@ -1754,9 +1841,44 @@
       }
     };
 
+    // ===== FONCTION POUR CHANGER DE SEMAINE =====
+    function switchWeek(weekType) {
+      // weekType can be 'impair' (Semaine 1) or 'pair' (Semaine 2)
+      // Map to 'current' or 'next'
+      currentWeek = (weekType === 'impair') ? 'current' : 'next';
+
+      // Update button states
+      const btnImpair = document.getElementById('btn-impair');
+      const btnPair = document.getElementById('btn-pair');
+
+      if (weekType === 'impair') {
+        btnImpair.classList.add('active');
+        btnPair.classList.remove('active');
+      } else {
+        btnPair.classList.add('active');
+        btnImpair.classList.remove('active');
+      }
+
+      // Re-render calendar with new week
+      renderCalendar();
+      setupNotificationTimers();
+      updateNotificationSidebar();
+    }
+
+    // ===== INITIALISATION DES BOUTONS =====
+    function initWeekButtons() {
+      const btnImpair = document.getElementById('btn-impair');
+      const btnPair = document.getElementById('btn-pair');
+
+      // Semaine 1 (Impair) = Current week, always selected by default
+      btnImpair.classList.add('active');
+      btnPair.classList.remove('active');
+    }
+
     // INIT
     console.log('✅ Initialisation du calendrier...');
     console.log('📊 Données chargées:', typeof CALENDARDATA !== 'undefined');
+    console.log('📅 Semaine actuelle détectée:', currentWeek);
 
     // Check local storage for Discord cache and Refresh
     discordManager.updateSidebar();
@@ -1771,6 +1893,8 @@
       }, 300000); // Every 5 minutes
     }
 
+    // Initialize buttons and render
+    initWeekButtons();
     renderCalendar();
     setupNotificationTimers();
     updateNotificationSidebar();
