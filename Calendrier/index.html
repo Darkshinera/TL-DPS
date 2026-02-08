@@ -753,33 +753,30 @@
       let html = '';
       const weekDates = getWeekDates(currentWeek);
 
-      // ===== FIND NEXT EVENT (ABSOLUTE) =====
+      // ===== FIND NEXT EVENT (ABSOLUTE) - Including Custom Events =====
       let nextEventInfo = null;
       const now = new Date();
-      const currentDayIndex = now.getDay() === 0 ? 6 : now.getDay() - 1; // 0=Monday
+      const currentDayIndex = now.getDay() === 0 ? 6 : now.getDay() - 1;
       const currentHour = now.getHours();
-      const currentMinute = now.getMinutes();
       const daysOfWeek = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
       const times = ['00h', '01h', '03h', '06h', '09h', '12h', '13h', '15h', '16h', '19h', '20h', '22h', '23h'];
       const timeToHour = { '00h': 0, '01h': 1, '03h': 3, '06h': 6, '09h': 9, '12h': 12, '13h': 13, '15h': 15, '16h': 16, '19h': 19, '20h': 20, '22h': 22, '23h': 23 };
 
-      // Search in BOTH weeks to find the absolute next event
       const realWeekIsPair = isEvenWeek(currentRealDate);
-      const currentDataWeek = realWeekIsPair ? 'impair' : 'pair';  // Current week uses opposite
-      const nextDataWeek = realWeekIsPair ? 'pair' : 'impair';     // Next week uses real
+      const currentDataWeek = realWeekIsPair ? 'impair' : 'pair';
+      const nextDataWeek = realWeekIsPair ? 'pair' : 'impair';
 
+      // Search through 14 days (current + next week)
       outerLoop: for (let dayOffset = 0; dayOffset < 14; dayOffset++) {
         const dayIndex = (currentDayIndex + dayOffset) % 7;
         const dayName = daysOfWeek[dayIndex];
-
-        // Determine which data week this day belongs to
         const weekToCheck = dayOffset < 7 ? currentDataWeek : nextDataWeek;
+        const displayWeek = dayOffset < 7 ? 'current' : 'next';
 
+        // Check boss events at standard times
         for (let timeIdx = 0; timeIdx < times.length; timeIdx++) {
           const time = times[timeIdx];
           const hour = timeToHour[time];
-
-          // Skip if it's today and the hour has passed
           if (dayOffset === 0 && hour <= currentHour) continue;
 
           const items = CALENDARDATA[weekToCheck][dayName][time] || [];
@@ -788,7 +785,32 @@
               day: dayName,
               time: time,
               name: items[0].name,
-              dataWeek: weekToCheck  // IMPORTANT: store which data week this event is from
+              dataWeek: weekToCheck,
+              type: 'boss'
+            };
+            break outerLoop;
+          }
+        }
+
+        // Also check custom events for this day
+        const customsForDay = CUSTOM_EVENTS.filter(e => {
+          const isWeekMatch = (e.week === displayWeek || e.recurrence === 'every');
+          const isDayMatch = (e.days && e.days.includes(dayName)) || e.day === dayName;
+          return isWeekMatch && isDayMatch;
+        });
+
+        for (let evt of customsForDay) {
+          for (let slot of evt.timeSlots) {
+            const slotHour = parseInt(slot.start.split(/[h:]/)[0], 10);
+            if (dayOffset === 0 && slotHour <= currentHour) continue;
+
+            // Found a custom event
+            nextEventInfo = {
+              day: dayName,
+              time: slot.start,
+              name: evt.name,
+              dataWeek: displayWeek,
+              type: 'custom'
             };
             break outerLoop;
           }
@@ -928,6 +950,15 @@
                   const hasNotif = isNotificationEnabled(day, slot.start, evt.name);
                   const safeName = evt.name.replace(/'/g, "\\'");
 
+                  // Check if this is the next event
+                  const currentDisplayWeek = currentWeek;
+                  const isNextEvent = nextEventInfo &&
+                    nextEventInfo.type === 'custom' &&
+                    nextEventInfo.day === day &&
+                    nextEventInfo.time === slot.start &&
+                    nextEventInfo.name === evt.name &&
+                    nextEventInfo.dataWeek === currentDisplayWeek;
+
                   cellContent += `<div class="boss-full custom-event-panel ${hasNotif ? 'has-notification' : ''}" 
                      data-tooltip="${evt.name}" 
                      onclick="toggleNotification('${day}', '${slot.start}', '${safeName}', 'event')">
@@ -935,7 +966,7 @@
                        📌
                      </div>
                      <div class="boss-full-name">
-                        <div style="line-height:1.2">${evt.name}</div>
+                        <div style="line-height:1.2">${evt.name}${isNextEvent ? '<div style="position:absolute;top:5px;right:5px;background:#3b82f6;color:white;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:bold;">PROCHAIN</div>' : ''}</div>
                         <div style="font-size: 11px; opacity: 0.8; margin-top: 2px;">⏰ ${timeLabel}</div>
                      </div>
                    </div>`;
@@ -944,6 +975,15 @@
                   // Custom event AVEC icone -> Render as CARD (boss-full)
                   const hasNotif = isNotificationEnabled(day, slot.start, evt.name);
                   const safeName = evt.name.replace(/'/g, "\\'");
+
+                  // Check if this is the next event
+                  const currentDisplayWeek = currentWeek;
+                  const isNextEvent = nextEventInfo &&
+                    nextEventInfo.type === 'custom' &&
+                    nextEventInfo.day === day &&
+                    nextEventInfo.time === slot.start &&
+                    nextEventInfo.name === evt.name &&
+                    nextEventInfo.dataWeek === currentDisplayWeek;
 
                   let iconHtml = '';
                   if (isURL(evt.icon)) {
@@ -959,7 +999,7 @@
                        ${iconHtml}
                      </div>
                      <div class="boss-full-name">
-                        <div style="line-height:1.2">${evt.name}</div>
+                        <div style="line-height:1.2">${evt.name}${isNextEvent ? '<div style="position:absolute;top:5px;right:5px;background:#3b82f6;color:white;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:bold;">PROCHAIN</div>' : ''}</div>
                         <div style="font-size: 11px; opacity: 0.8; margin-top: 2px;">⏰ ${timeLabel}</div>
                      </div>
                    </div>`;
