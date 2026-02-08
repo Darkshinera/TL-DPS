@@ -1305,7 +1305,7 @@ const CALENDARDATA = {
             { name: "Rituel des pierres stellaires", type: "event" },
             { name: "Fete des graines de campanule", type: "event" },
             { name: "Fete des recoltes de peipors", type: "event" },
-            { name: "Rompre le charme du clair de lune", type: "event" }
+            { name: "Requiem de lumiere", type: "event" }
           ],
           "23h": [
             { name: "Leviathan", type: "normal" },
