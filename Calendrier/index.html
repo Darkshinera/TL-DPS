@@ -833,8 +833,10 @@
       let allTimes = new Set(['00h', '01h', '03h', '06h', '09h', '12h', '13h', '15h', '16h', '19h', '20h', '22h', '23h']);
 
       // 2. Add custom event times
+      const dataWeekForTimes = getDataWeek(currentWeek);
       CUSTOM_EVENTS.forEach(evt => {
-        if (evt.week === currentWeek || evt.recurrence === 'every') {
+        // Match against dataWeek (legacy/discord) OR currentWeek (semantic)
+        if (evt.week === dataWeekForTimes || evt.week === currentWeek || evt.recurrence === 'every') {
           evt.timeSlots.forEach(slot => {
             // Use full start time (e.g. "10:05" or "10h")
             // If input was "10:05", keep it. 
@@ -932,7 +934,10 @@
 
           // === ÉVÉNEMENTS PERSO PRO ===
           const customEventsThisWeek = CUSTOM_EVENTS.filter(e => {
-            const isWeekMatch = (e.week === currentWeek || e.recurrence === 'every');
+            const dataWeek = getDataWeek(currentWeek); // 'pair' or 'impair'
+            // Match against dataWeek (legacy/discord) OR currentWeek (semantic)
+            const isWeekMatch = (e.week === dataWeek || e.week === currentWeek || e.recurrence === 'every');
+
             // Support ancienne structure (e.day) ET nouvelle (e.days array)
             const isDayMatch = (e.days && e.days.includes(day)) || e.day === day;
             return isWeekMatch && isDayMatch;
