@@ -753,7 +753,7 @@
       let html = '';
       const weekDates = getWeekDates(currentWeek);
 
-      // ===== FIND NEXT EVENT =====
+      // ===== FIND NEXT EVENT (ABSOLUTE) =====
       let nextEventInfo = null;
       const now = new Date();
       const currentDayIndex = now.getDay() === 0 ? 6 : now.getDay() - 1; // 0=Monday
@@ -763,12 +763,17 @@
       const times = ['00h', '01h', '03h', '06h', '09h', '12h', '13h', '15h', '16h', '19h', '20h', '22h', '23h'];
       const timeToHour = { '00h': 0, '01h': 1, '03h': 3, '06h': 6, '09h': 9, '12h': 12, '13h': 13, '15h': 15, '16h': 16, '19h': 19, '20h': 20, '22h': 22, '23h': 23 };
 
-      // Search in displayed week first
-      const dataWeek = getDataWeek(currentWeek);
+      // Search in BOTH weeks to find the absolute next event
+      const realWeekIsPair = isEvenWeek(currentRealDate);
+      const currentDataWeek = realWeekIsPair ? 'impair' : 'pair';  // Current week uses opposite
+      const nextDataWeek = realWeekIsPair ? 'pair' : 'impair';     // Next week uses real
 
-      outerLoop: for (let dayOffset = 0; dayOffset < 7; dayOffset++) {
+      outerLoop: for (let dayOffset = 0; dayOffset < 14; dayOffset++) {
         const dayIndex = (currentDayIndex + dayOffset) % 7;
         const dayName = daysOfWeek[dayIndex];
+
+        // Determine which data week this day belongs to
+        const weekToCheck = dayOffset < 7 ? currentDataWeek : nextDataWeek;
 
         for (let timeIdx = 0; timeIdx < times.length; timeIdx++) {
           const time = times[timeIdx];
@@ -777,9 +782,14 @@
           // Skip if it's today and the hour has passed
           if (dayOffset === 0 && hour <= currentHour) continue;
 
-          const items = CALENDARDATA[dataWeek][dayName][time] || [];
+          const items = CALENDARDATA[weekToCheck][dayName][time] || [];
           if (items.length > 0 && items[0].name) {
-            nextEventInfo = { day: dayName, time: time, name: items[0].name };
+            nextEventInfo = {
+              day: dayName,
+              time: time,
+              name: items[0].name,
+              dataWeek: weekToCheck  // IMPORTANT: store which data week this event is from
+            };
             break outerLoop;
           }
         }
@@ -845,10 +855,13 @@
                   const safeName = item.name.replace(/'/g, "\\'");
 
                   // Check if this is the next event
+                  // IMPORTANT: Also check the data week to avoid duplicates
+                  const currentDisplayDataWeek = getDataWeek(currentWeek);
                   const isNextEvent = nextEventInfo &&
                     nextEventInfo.day === day &&
                     nextEventInfo.time === time &&
-                    nextEventInfo.name === item.name;
+                    nextEventInfo.name === item.name &&
+                    nextEventInfo.dataWeek === currentDisplayDataWeek;
 
                   // ✅ CORRECTION : Détecter URL vs Emoji
                   // Check for Panel Mode
