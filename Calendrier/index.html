@@ -194,12 +194,13 @@
 
     function getWeekDates(weekType) {
       const monday = getMondayOfWeek(currentRealDate);
+      const realWeekIsPair = isEvenWeek(currentRealDate);
+      const realWeekType = realWeekIsPair ? 'impair' : 'pair';
 
-      // If weekType is 'next', add 7 days to get next week
-      if (weekType === 'next') {
+      // If weekType is different from current real week, show next week
+      if (weekType !== realWeekType) {
         monday.setDate(monday.getDate() + 7);
       }
-      // Otherwise, weekType is 'current', use current week
 
       const dates = [];
       for (let i = 0; i < 7; i++) {
@@ -219,11 +220,10 @@
     function findNextEvent() {
       const now = new Date();
       const currentIsPair = isEvenWeek(now);
-      const currentRealDataWeek = currentIsPair ? 'impair' : 'pair';
-      const currentDisplayDataWeek = getDataWeek(currentWeek);
+      const currentRealWeek = currentIsPair ? 'impair' : 'pair';
 
       // Only search for next event if we're displaying the current real week
-      if (currentDisplayDataWeek !== currentRealDataWeek) return null;
+      if (currentWeek !== currentRealWeek) return null;
 
       const currentDay = now.getDay() === 0 ? 6 : now.getDay() - 1;
       const currentHour = now.getHours();
@@ -238,7 +238,7 @@
           const time = times[timeIdx];
           const hour = timeToHour[time];
           if (dayOffset === 0 && hour <= currentHour) continue;
-          const data = CALENDARDATA[getDataWeek(currentWeek)];
+          const data = CALENDARDATA[currentWeek];
           const items = data[dayName][time];
           if (items.length > 0) {
             return { day: dayName, time: time };
@@ -261,15 +261,14 @@
     }
 
     function isNotificationEnabled(day, time, itemName) {
-      const dataWeek = getDataWeek(currentWeek);
-      return notificationPreferences.some(n => n.day === day && n.time === time && n.itemName === itemName && n.week === dataWeek);
+      return notificationPreferences.some(n => n.day === day && n.time === time && n.itemName === itemName && n.week === currentWeek);
     }
 
     function toggleNotification(day, time, itemName, itemType) {
       requestNotificationPermission();
 
       // Determine which data week this event belongs to
-      const dataWeek = getDataWeek(currentWeek);
+      const dataWeek = currentWeek;
 
       const existingIndex = notificationPreferences.findIndex(n => n.day === day && n.time === time && n.itemName === itemName && n.week === dataWeek);
       if (existingIndex !== -1) {
@@ -287,20 +286,8 @@
       const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
       const dayIndex = days.indexOf(day);
 
-      // Convert weekType if it's in old format (pair/impair) to new format (current/next)
-      let displayWeek = weekType;
-      if (weekType === 'pair' || weekType === 'impair') {
-        const realWeekIsPair = isEvenWeek(currentRealDate);
-        // If weekType matches current real week type, it's current week
-        // Otherwise it's next week
-        if ((weekType === 'pair' && realWeekIsPair) || (weekType === 'impair' && !realWeekIsPair)) {
-          displayWeek = 'next';  // Due to inversion, pair data is next week when we're in pair week
-        } else {
-          displayWeek = 'current';  // impair data is current week when we're in pair week
-        }
-      }
-
-      const weekDates = getWeekDates(displayWeek);
+      // weekType is directly 'pair' or 'impair', use it as is
+      const weekDates = getWeekDates(weekType);
 
       if (dayIndex === -1 || !weekDates[dayIndex]) return new Date(); // Fallback
 
@@ -728,27 +715,15 @@
     }
 
 
+
     // ✅ FONCTION POUR DÉTECTER SI C'EST UNE URL OU UN EMOJI
     function isURL(str) {
       return str && (str.startsWith('http://') || str.startsWith('https://') || str.startsWith('//'));
     }
 
-    // Helper pour récupérer le type de semaine dans les données (pair/impair)
-    // basé sur le type d'affichage (current/next)
-    function getDataWeek(displayWeek) {
-      const realWeekIsPair = isEvenWeek(currentRealDate);
-
-      if (displayWeek === 'current') {
-        // Semaine actuelle → utiliser le type OPPOSÉ (inversion découverte)
-        return realWeekIsPair ? 'impair' : 'pair';
-      } else {
-        // Semaine suivante → utiliser le type réel
-        return realWeekIsPair ? 'pair' : 'impair';
-      }
-    }
-
-    // Initialisation: toujours démarrer sur la semaine actuelle
-    let currentWeek = 'current';
+    // Initialisation: Déterminer directement la semaine actuelle (pair ou impair)
+    const realWeekIsPair = isEvenWeek(currentRealDate);
+    let currentWeek = realWeekIsPair ? 'impair' : 'pair';
 
     // ===== FONCTION RENDRE CALENDRIER =====
     function renderCalendar() {
@@ -797,7 +772,7 @@
 
         // Also check custom events for this day
         const customsForDay = CUSTOM_EVENTS.filter(e => {
-          const isWeekMatch = (e.week === displayWeek || e.recurrence === 'every');
+          const isWeekMatch = (e.week === weekToCheck || e.recurrence === 'every');
           const isDayMatch = (e.days && e.days.includes(dayName)) || e.day === dayName;
           return isWeekMatch && isDayMatch;
         });
@@ -836,10 +811,9 @@
       let allTimes = new Set(['00h', '01h', '03h', '06h', '09h', '12h', '13h', '15h', '16h', '19h', '20h', '22h', '23h']);
 
       // 2. Add custom event times
-      const dataWeekForTimes = getDataWeek(currentWeek);
       CUSTOM_EVENTS.forEach(evt => {
-        // Match against dataWeek (legacy/discord) OR currentWeek (semantic)
-        if (evt.week === dataWeekForTimes || evt.week === currentWeek || evt.recurrence === 'every') {
+        // Match against currentWeek (pair/impair) or recurrence
+        if (evt.week === currentWeek || evt.recurrence === 'every') {
           evt.timeSlots.forEach(slot => {
             // Use full start time (e.g. "10:05" or "10h")
             // If input was "10:05", keep it. 
@@ -867,7 +841,7 @@
 
         days.forEach(day => {
           let cellContent = '';
-          const data = CALENDARDATA[getDataWeek(currentWeek)];
+          const data = CALENDARDATA[currentWeek];
           const items = data[day][time] || [];
           let events = [];
 
@@ -883,7 +857,7 @@
 
                   // Check if this is the next event
                   // IMPORTANT: Also check the data week to avoid duplicates
-                  const currentDisplayDataWeek = getDataWeek(currentWeek);
+                  const currentDisplayDataWeek = currentWeek;
                   const isNextEvent = nextEventInfo &&
                     nextEventInfo.day === day &&
                     nextEventInfo.time === time &&
@@ -937,9 +911,8 @@
 
           // === ÉVÉNEMENTS PERSO PRO ===
           const customEventsThisWeek = CUSTOM_EVENTS.filter(e => {
-            const dataWeek = getDataWeek(currentWeek); // 'pair' or 'impair'
-            // Match against dataWeek (legacy/discord) OR currentWeek (semantic)
-            const isWeekMatch = (e.week === dataWeek || e.week === currentWeek || e.recurrence === 'every');
+            // Match against currentWeek (pair/impair) or recurrence
+            const isWeekMatch = (e.week === currentWeek || e.recurrence === 'every');
 
             // Support ancienne structure (e.day) ET nouvelle (e.days array)
             const isDayMatch = (e.days && e.days.includes(day)) || e.day === day;
@@ -959,13 +932,12 @@
                   const safeName = evt.name.replace(/'/g, "\\'");
 
                   // Check if this is the next event
-                  const currentDisplayDataWeek = getDataWeek(currentWeek);
                   const isNextEvent = nextEventInfo &&
                     nextEventInfo.type === 'custom' &&
                     nextEventInfo.day === day &&
                     nextEventInfo.time === slot.start &&
                     nextEventInfo.name === evt.name &&
-                    nextEventInfo.dataWeek === currentDisplayDataWeek;
+                    nextEventInfo.dataWeek === currentWeek;
 
                   cellContent += `<div class="boss-full custom-event-panel ${hasNotif ? 'has-notification' : ''}" 
                      data-tooltip="${evt.name}" 
@@ -985,13 +957,12 @@
                   const safeName = evt.name.replace(/'/g, "\\'");
 
                   // Check if this is the next event
-                  const currentDisplayDataWeek = getDataWeek(currentWeek);
                   const isNextEvent = nextEventInfo &&
                     nextEventInfo.type === 'custom' &&
                     nextEventInfo.day === day &&
                     nextEventInfo.time === slot.start &&
                     nextEventInfo.name === evt.name &&
-                    nextEventInfo.dataWeek === currentDisplayDataWeek;
+                    nextEventInfo.dataWeek === currentWeek;
 
                   let iconHtml = '';
                   if (isURL(evt.icon)) {
@@ -1750,7 +1721,7 @@
         const diff = eventWeekNumber - refWeekNumber;
         const isPair = (diff % 2) === 0;
 
-        const weekType = isPair ? 'pair' : 'impair';
+        const weekType = isPair ? 'impair' : 'pair';
 
         // Add to CUSTOM_EVENTS
         const newItemName = `[D] ${title}`;
@@ -1904,9 +1875,8 @@
 
     // ===== FONCTION POUR CHANGER DE SEMAINE =====
     function switchWeek(weekType) {
-      // weekType can be 'impair' (Semaine 1) or 'pair' (Semaine 2)
-      // Map to 'current' or 'next'
-      currentWeek = (weekType === 'impair') ? 'current' : 'next';
+      // weekType is directly 'impair' (Semaine 1) or 'pair' (Semaine 2)
+      currentWeek = weekType;
 
       // Update button states
       const btnImpair = document.getElementById('btn-impair');
