@@ -219,8 +219,11 @@
     function findNextEvent() {
       const now = new Date();
       const currentIsPair = isEvenWeek(now);
-      const weekType = currentIsPair ? 'pair' : 'impair';
-      if (currentWeek !== weekType) return null;
+      const currentRealDataWeek = currentIsPair ? 'impair' : 'pair';
+      const currentDisplayDataWeek = getDataWeek(currentWeek);
+
+      // Only search for next event if we're displaying the current real week
+      if (currentDisplayDataWeek !== currentRealDataWeek) return null;
 
       const currentDay = now.getDay() === 0 ? 6 : now.getDay() - 1;
       const currentHour = now.getHours();
@@ -809,7 +812,7 @@
               day: dayName,
               time: slot.start,
               name: evt.name,
-              dataWeek: displayWeek,
+              dataWeek: weekToCheck,
               type: 'custom'
             };
             break outerLoop;
@@ -956,13 +959,13 @@
                   const safeName = evt.name.replace(/'/g, "\\'");
 
                   // Check if this is the next event
-                  const currentDisplayWeek = currentWeek;
+                  const currentDisplayDataWeek = getDataWeek(currentWeek);
                   const isNextEvent = nextEventInfo &&
                     nextEventInfo.type === 'custom' &&
                     nextEventInfo.day === day &&
                     nextEventInfo.time === slot.start &&
                     nextEventInfo.name === evt.name &&
-                    nextEventInfo.dataWeek === currentDisplayWeek;
+                    nextEventInfo.dataWeek === currentDisplayDataWeek;
 
                   cellContent += `<div class="boss-full custom-event-panel ${hasNotif ? 'has-notification' : ''}" 
                      data-tooltip="${evt.name}" 
@@ -982,13 +985,13 @@
                   const safeName = evt.name.replace(/'/g, "\\'");
 
                   // Check if this is the next event
-                  const currentDisplayWeek = currentWeek;
+                  const currentDisplayDataWeek = getDataWeek(currentWeek);
                   const isNextEvent = nextEventInfo &&
                     nextEventInfo.type === 'custom' &&
                     nextEventInfo.day === day &&
                     nextEventInfo.time === slot.start &&
                     nextEventInfo.name === evt.name &&
-                    nextEventInfo.dataWeek === currentDisplayWeek;
+                    nextEventInfo.dataWeek === currentDisplayDataWeek;
 
                   let iconHtml = '';
                   if (isURL(evt.icon)) {
