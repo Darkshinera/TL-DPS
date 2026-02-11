@@ -57,9 +57,7 @@ const EVENTICONS = {
 
 // ===== DONNÉES CALENDRIER =====
 const CALENDARDATA = {
-"pair": {
-
-        //  LUNDI 
+  "impair": {
         "Lundi": {
           "00h": [
             { name: "La ceremonie de passage du Grand arbre", type: "event" },
@@ -682,14 +680,9 @@ const CALENDARDATA = {
             { name: "Junobote", type: "ascendant" }
           ]
         }
-      },
+  },
 
-      // 
-      // SEMAINE IMPAIRE
-      // 
-       "impair": {
-
-        //  LUNDI 
+  "pair": {
         "Lundi": {
           "00h": [
             { name: "Fete des recoltes de peipors", type: "event" },
@@ -1312,5 +1305,5 @@ const CALENDARDATA = {
             { name: "Ahzreil", type: "ascendant" }
           ]
         }
-      }
-    };
+  }
+};
