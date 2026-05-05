@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Boss Score Calculator – Throne & Liberty</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Text:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #c9a227;
+      --gold-light: #f0d060;
+      --gold-dim: #7a5f10;
+      --bg: #0b0916;
+      --bg2: #130f24;
+      --bg3: #1c1535;
+      --row: rgba(30,22,55,0.85);
+      --row-alt: rgba(20,15,40,0.7);
+      --border: rgba(180,140,40,0.35);
+      --text: #e0d4b0;
+      --text-dim: #8a7a55;
+      --purple: #7b3fbe;
+      --purple-glow: rgba(120,60,200,0.4);
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--bg);
+      background-image:
+        radial-gradient(ellipse at 20% 10%, rgba(80,30,150,0.25) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 90%, rgba(60,20,120,0.2) 0%, transparent 60%),
+        radial-gradient(ellipse at 50% 50%, rgba(20,10,50,0.8) 0%, transparent 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 30px 16px 60px;
+      font-family: 'Crimson Text', Georgia, serif;
+      color: var(--text);
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    canvas#stars {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 0; opacity: 0.5;
+    }
+
+    .panel {
+      position: relative; z-index: 1;
+      width: 100%; max-width: 680px;
+      background: linear-gradient(160deg, #1a1135 0%, #0f0b22 100%);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      box-shadow:
+        0 0 40px rgba(100,50,200,0.25),
+        0 0 0 1px rgba(120,80,20,0.15),
+        inset 0 1px 0 rgba(200,160,50,0.1);
+      padding: 0 0 28px;
+      overflow: hidden;
+    }
+
+    /* ── Top ornament bar ── */
+    .top-bar {
+      width: 100%;
+      background: linear-gradient(90deg, transparent, rgba(100,60,180,0.3), transparent);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      padding: 14px 20px 10px;
+    }
+    .top-bar h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      letter-spacing: 6px;
+      text-shadow: 0 0 20px rgba(240,200,80,0.5), 0 2px 4px rgba(0,0,0,0.8);
+    }
+    .ornament { color: var(--gold-dim); font-size: 0.9rem; letter-spacing: 3px; margin-bottom: 2px; }
+
+    /* ── Wings + Final Score ── */
+    .score-section {
+      position: relative;
+      text-align: center;
+      padding: 22px 20px 18px;
+      border-bottom: 1px solid var(--border);
+    }
+    .wings-wrap {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      margin-bottom: 4px;
+    }
+    .wing { font-size: 3rem; line-height: 1; opacity: 0.7; filter: drop-shadow(0 0 8px rgba(140,80,220,0.6)); }
+    .wing.left { transform: scaleX(-1); }
+    .final-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      letter-spacing: 4px;
+      color: var(--gold);
+      text-shadow: 0 0 10px rgba(200,160,40,0.4);
+    }
+    .score-deco { font-size: 1.2rem; color: var(--gold-dim); letter-spacing: 4px; margin: 2px 0; }
+
+    .final-score-display {
+      font-family: 'Cinzel', serif;
+      font-size: 3rem;
+      font-weight: 900;
+      color: var(--gold-light);
+      text-shadow:
+        0 0 30px rgba(240,200,60,0.8),
+        0 0 60px rgba(200,140,20,0.4),
+        0 2px 8px rgba(0,0,0,0.9);
+      letter-spacing: 3px;
+      transition: all 0.3s ease;
+      min-height: 3.5rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .separator {
+      width: 70%; margin: 6px auto 0;
+      border: none; border-top: 1px solid var(--border);
+      position: relative;
+    }
+    .separator::after {
+      content: '✦';
+      position: absolute; top: -0.6em; left: 50%; transform: translateX(-50%);
+      color: var(--gold-dim); font-size: 0.75rem; background: var(--bg2);
+      padding: 0 6px;
+    }
+
+    /* ── Stats rows ── */
+    .stats-section { padding: 0 20px; }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      padding: 8px 14px;
+      background: var(--row);
+      border: 1px solid rgba(120,90,30,0.2);
+      border-radius: 3px;
+      margin-bottom: 3px;
+    }
+    .stat-row.alt { background: var(--row-alt); }
+
+    .stat-label {
+      font-size: 0.95rem;
+      color: var(--text);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .stat-icon { font-size: 1.1rem; }
+    .stat-value {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      color: var(--gold-light);
+      font-weight: 600;
+      text-align: right;
+      min-width: 70px;
+    }
+    .stat-value.red { color: #e05555; }
+    .stat-value.dim { color: var(--text-dim); font-size: 0.85rem; }
+
+    .sub-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px;
+      margin-bottom: 3px;
+    }
+
+    /* ── Section title ── */
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 3px;
+      color: var(--gold-dim);
+      padding: 10px 20px 4px;
+      text-transform: uppercase;
+    }
+
+    /* ── Mob row ── */
+    .mob-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 20px;
+      margin: 15px 20px 25px;
+    }
+
+    .mob-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .mob-icon-wrap {
+      width: 54px; height: 54px;
+      border-radius: 50%;
+      border: 2px solid currentColor;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem;
+      position: relative;
+      box-shadow: 0 0 12px currentColor, inset 0 0 8px currentColor;
+      margin-bottom: 6px;
+    }
+    .mob-green  { color: #62d87e; }
+    .mob-blue   { color: #5aa1e8; }
+    .mob-purple { color: #b768f2; }
+    .mob-orange { color: #f5953b; }
+
+    .mob-pts-label {
+      font-size: 0.75rem;
+      color: var(--gold-dim);
+      text-align: center;
+      font-family: 'Crimson Text', serif;
+      margin: 2px 0 -2px;
+    }
+
+    /* ── Inputs ── */
+    input[type="number"], input[type="text"] {
+      background: #0a0812;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--gold-light);
+      font-family: 'Cinzel', serif;
+      font-size: 0.95rem;
+      padding: 6px 4px;
+      text-align: center;
+      width: 80px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+    }
+    input[type="number"]:focus, input[type="text"]:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 8px rgba(200,160,40,0.4), inset 0 0 10px rgba(0,0,0,0.5);
+    }
+    input.time-input { width: 72px; }
+    input.wide { width: 100px; }
+    
+    input.mob-input { 
+      width: 66px; 
+      font-size: 1.2rem; 
+      font-weight: 700;
+    }
+    input.pts-input { 
+      width: 66px; 
+      font-size: 0.9rem; 
+      color: var(--gold-dim); 
+    }
+
+    /* ── Tier Select ── */
+    select.tier-select {
+      background: rgba(10,8,22,0.85);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      color: var(--gold-light);
+      font-family: 'Cinzel', serif;
+      font-size: 0.95rem;
+      padding: 4px 8px;
+      outline: none;
+      cursor: pointer;
+    }
+    select.tier-select:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 8px rgba(200,160,40,0.3);
+    }
+
+    /* ── Multiplier row ── */
+    .multiplier-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: var(--row);
+      border: 1px solid rgba(120,90,30,0.2);
+      border-radius: 3px;
+      margin: 3px 20px;
+      padding: 10px 14px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+    .multiplier-row span.label { letter-spacing: 2px; }
+    .multiplier-row .mult-val {
+      color: var(--gold-light);
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    /* ── Calc button ── */
+    .btn-calc {
+      display: block;
+      margin: 18px auto 0;
+      padding: 12px 48px;
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: var(--bg);
+      background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, #a07010 100%);
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(200,160,40,0.4), 0 4px 12px rgba(0,0,0,0.6);
+      transition: all 0.2s ease;
+      text-transform: uppercase;
+    }
+    .btn-calc:hover {
+      background: linear-gradient(135deg, #fff0a0 0%, var(--gold-light) 50%, var(--gold) 100%);
+      box-shadow: 0 0 30px rgba(240,200,60,0.6), 0 4px 16px rgba(0,0,0,0.7);
+      transform: translateY(-1px);
+    }
+    .btn-calc:active { transform: translateY(1px); }
+
+    /* ── Reset link ── */
+    .reset-btn {
+      display: block; text-align: center; margin-top: 10px;
+      font-size: 0.78rem; color: var(--text-dim);
+      cursor: pointer; letter-spacing: 1px;
+      text-decoration: underline dotted;
+    }
+    .reset-btn:hover { color: var(--gold-dim); }
+
+    /* ── Score animated pulse ── */
+    @keyframes scoreGlow {
+      0%,100% { text-shadow: 0 0 30px rgba(240,200,60,0.8), 0 0 60px rgba(200,140,20,0.4), 0 2px 8px rgba(0,0,0,0.9); }
+      50% { text-shadow: 0 0 50px rgba(255,220,80,1), 0 0 100px rgba(220,160,30,0.6), 0 2px 8px rgba(0,0,0,0.9); }
+    }
+    .score-pulse { animation: scoreGlow 2s ease-in-out infinite; }
+
+    /* ── Info tooltip ── */
+    .info { font-size: 0.72rem; color: var(--text-dim); margin-left: 4px; cursor: help; }
+
+    .divider-row {
+      border: none; border-top: 1px solid var(--border);
+      margin: 8px 20px 6px; opacity: 0.5;
+    }
+  </style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+
+<div class="panel">
+
+  <!-- Title -->
+  <div class="top-bar">
+    <div class="ornament">✦ ── ── ── ✦</div>
+    <h1>Results</h1>
+    <div class="ornament">✦ ── ── ── ✦</div>
+  </div>
+
+  <!-- Final Score -->
+  <div class="score-section">
+    <div class="wings-wrap">
+      <span class="wing left">🦅</span>
+      <div>
+        <div class="final-label">Final Score</div>
+        <div class="score-deco">— ✦ ⁂ ✦ —</div>
+      </div>
+      <span class="wing">🦅</span>
+    </div>
+    <div class="final-score-display" id="finalScoreDisplay">0</div>
+    <hr class="separator"/>
+  </div>
+
+  <!-- Clear Results / Time -->
+  <div class="stats-section" style="margin-top:10px;">
+
+    <div class="stat-row">
+      <span class="stat-label">Clear Results</span>
+      <input type="text" class="time-input" id="clearTime" value="00:00" placeholder="MM:SS" title="Temps de clear affiché"/>
+    </div>
+
+    <hr class="divider-row"/>
+
+    <!-- Time Score & Death Reduction -->
+    <div class="sub-grid">
+      <div class="stat-row" style="margin:0;">
+        <span class="stat-label"><span class="stat-icon">⏳</span> Time Score</span>
+        <span class="stat-value" id="timeScoreVal">0</span>
+      </div>
+      <div class="stat-row" style="margin:0;">
+        <span class="stat-label" style="font-size:0.82rem;">Time Reduction (Deaths)</span>
+        <span class="stat-value red" id="deathReductionVal">0</span>
+      </div>
+    </div>
+
+    <!-- Time Remaining & Deaths -->
+    <div class="sub-grid" style="margin-top:3px;">
+      <div class="stat-row alt" style="margin:0;">
+        <span class="stat-label" style="font-size:0.85rem;">Time Remaining</span>
+        <input type="text" class="time-input" id="timeRemaining" value="60:00" placeholder="MM:SS"/>
+      </div>
+      <div class="stat-row alt" style="margin:0;">
+        <span class="stat-label" style="font-size:0.85rem;">Deaths</span>
+        <input type="number" id="deaths" value="0" min="0" style="width:60px;"/>
+      </div>
+    </div>
+
+    <!-- Score/sec & Deduction/attempt -->
+    <div class="sub-grid" style="margin-top:3px;">
+      <div class="stat-row alt" style="margin:0;">
+        <span class="stat-label" style="font-size:0.85rem;">Score per Second</span>
+        <input type="number" id="scorePerSec" value="10" min="1" style="width:60px;"/>
+      </div>
+      <div class="stat-row alt" style="margin:0;">
+        <span class="stat-label" style="font-size:0.82rem;">Deduction per Attempt</span>
+        <div style="display:flex;align-items:center;gap:4px;">
+          <span style="color:var(--text-dim);font-size:0.8rem;">-</span>
+          <input type="number" id="deductionPerAttempt" value="120" min="0" style="width:60px;"/>
+          <span style="color:var(--text-dim);font-size:0.75rem;">s</span>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider-row"/>
+  </div>
+
+  <!-- Dungeon Tier -->
+  <div style="text-align: center; margin-bottom: 8px;">
+    <span class="section-title" style="display:inline-block; padding: 0 10px 0 0;">Dungeon Tier</span>
+    <select id="dungeonTier" class="tier-select">
+      <option value="1">T1</option>
+      <option value="2">T2</option>
+      <option value="3">T3</option>
+      <option value="4">T4</option>
+      <option value="5">T5</option>
+      <option value="6">T6</option>
+      <option value="7">T7</option>
+      <option value="8">T8</option>
+      <option value="9">T9</option>
+      <option value="10" selected>T10</option>
+    </select>
+  </div>
+
+  <!-- Mob kills -->
+  <div class="section-title">Mob Kills</div>
+  <div class="mob-row">
+    <!-- Mob 1 Green -->
+    <div class="mob-item mob-green">
+      <div class="mob-icon-wrap mob-green">💀</div>
+      <input type="number" class="mob-input" id="mob1count" value="0" min="0"/>
+      <div class="mob-pts-label">pts/mob:</div>
+      <input type="number" class="pts-input" id="mob1pts" value="50" min="0" readonly tabindex="-1" title="5 x Tier"/>
+    </div>
+    <!-- Mob 2 Blue -->
+    <div class="mob-item mob-blue">
+      <div class="mob-icon-wrap mob-blue">💀</div>
+      <input type="number" class="mob-input" id="mob2count" value="0" min="0"/>
+      <div class="mob-pts-label">pts/mob:</div>
+      <input type="number" class="pts-input" id="mob2pts" value="100" min="0" readonly tabindex="-1" title="10 x Tier"/>
+    </div>
+    <!-- Mob 3 Purple -->
+    <div class="mob-item mob-purple">
+      <div class="mob-icon-wrap mob-purple">💀</div>
+      <input type="number" class="mob-input" id="mob3count" value="0" min="0"/>
+      <div class="mob-pts-label">pts/mob:</div>
+      <input type="number" class="pts-input" id="mob3pts" value="150" min="0" readonly tabindex="-1" title="15 x Tier"/>
+    </div>
+    <!-- Mob 4 Orange -->
+    <div class="mob-item mob-orange">
+      <div class="mob-icon-wrap mob-orange">💀</div>
+      <input type="number" class="mob-input" id="mob4count" value="0" min="0"/>
+      <div class="mob-pts-label">pts/mob:</div>
+      <input type="number" class="pts-input" id="mob4pts" value="250" min="0" readonly tabindex="-1" title="25 x Tier"/>
+    </div>
+  </div>
+
+  <!-- Additional Points -->
+  <div class="stats-section">
+    <div class="stat-row" style="margin-top:3px;">
+      <span class="stat-label">Additional Points</span>
+      <input type="text" id="mobTotalVal" value="0" readonly tabindex="-1" style="width: 80px; background: #0a0812; border: 1px solid rgba(180, 140, 40, 0.4); border-radius: 4px; color: var(--gold-light); font-family: 'Cinzel', serif; font-size: 1.1rem; padding: 6px 4px; text-align: center; box-shadow: inset 0 0 10px rgba(0,0,0,0.5); font-weight: 700;"/>
+    </div>
+  </div>
+
+  <!-- Multiplier -->
+  <div class="multiplier-row">
+    <span class="label">Score Multiplier</span>
+    <span style="color:var(--text-dim)">×</span>
+    <input type="number" id="multiplier" value="185" min="1" max="999" style="width:72px;"/>
+    <span style="color:var(--text-dim)">%</span>
+    <span class="mult-val" id="multDisplay">×1.85</span>
+  </div>
+
+  <!-- Calculate -->
+  <button class="btn-calc" onclick="calculate()">⚔ Calculate Score</button>
+  <span class="reset-btn" onclick="resetAll()">Reset all values</span>
+
+</div><!-- /panel -->
+
+<script>
+// ── Starfield ──
+(function(){
+  const c = document.getElementById('stars');
+  const ctx = c.getContext('2d');
+  function resize(){ c.width = window.innerWidth; c.height = window.innerHeight; }
+  resize(); window.addEventListener('resize', resize);
+  const stars = Array.from({length:200}, () => ({
+    x: Math.random(), y: Math.random(),
+    r: Math.random()*1.2+0.2, o: Math.random()*0.6+0.2,
+    s: Math.random()*0.0005+0.0001
+  }));
+  function draw(){
+    ctx.clearRect(0,0,c.width,c.height);
+    stars.forEach(s => {
+      s.o += s.s; if(s.o>0.8||s.o<0.1) s.s=-s.s;
+      ctx.beginPath(); ctx.arc(s.x*c.width, s.y*c.height, s.r, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(220,200,255,${s.o})`; ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ── Parse MM:SS → seconds ──
+function parseTime(val){
+  const parts = val.trim().split(':');
+  if(parts.length===2){
+    const m = parseInt(parts[0])||0, s = parseInt(parts[1])||0;
+    return m*60+s;
+  }
+  return parseInt(val)||0;
+}
+
+// ── Format number with commas ──
+function fmt(n){ return Math.max(0,Math.round(n)).toLocaleString('fr-FR').replace(/\s/g,','); }
+
+// ── Fixed Tier Scores ──
+const tierFixedScores = {
+  1: 2000, 2: 15000, 3: 35000, 4: 70000, 5: 120000,
+  6: 175000, 7: 250000, 8: 340000, 9: 445000, 10: 560000
+};
+
+// ── Main Calculate ──
+function calculate(){
+  const tier = parseInt(document.getElementById('dungeonTier').value) || 10;
+  const fixedTierScore = tierFixedScores[tier] || 0;
+
+  const timeRemSec   = parseTime(document.getElementById('timeRemaining').value);
+  const scorePerSec  = parseFloat(document.getElementById('scorePerSec').value)||tier;
+  const deaths       = parseInt(document.getElementById('deaths').value)||0;
+  const deduction    = parseFloat(document.getElementById('deductionPerAttempt').value)||120;
+  const multiplierPct= parseFloat(document.getElementById('multiplier').value)||100;
+
+  const timeScore      = timeRemSec * scorePerSec;
+  const deathReduction = deaths * deduction * scorePerSec;
+
+  const m1 = (parseInt(document.getElementById('mob1count').value)||0) * (parseFloat(document.getElementById('mob1pts').value)||0);
+  const m2 = (parseInt(document.getElementById('mob2count').value)||0) * (parseFloat(document.getElementById('mob2pts').value)||0);
+  const m3 = (parseInt(document.getElementById('mob3count').value)||0) * (parseFloat(document.getElementById('mob3pts').value)||0);
+  const m4 = (parseInt(document.getElementById('mob4count').value)||0) * (parseFloat(document.getElementById('mob4pts').value)||0);
+  const mobTotal = m1+m2+m3+m4;
+
+  const additionalPoints = mobTotal;
+
+  const multiplier = multiplierPct / 100;
+  
+  // 1. Time Score (with deduction) * Multiplier
+  const calc1 = Math.max(0, timeScore - deathReduction) * multiplier;
+  
+  // 2. Mobs / Additional Points
+  const calc2 = additionalPoints;
+  
+  // 3. Fixed Tier Score + Hidden Base Bonus (3000)
+  const calc3 = fixedTierScore + 3000;
+
+  const final = calc1 + calc2 + calc3;
+
+  // Update UI
+  document.getElementById('timeScoreVal').textContent    = fmt(timeScore);
+  document.getElementById('deathReductionVal').textContent = deathReduction > 0 ? '-'+fmt(deathReduction) : '0';
+  document.getElementById('mobTotalVal').value           = fmt(mobTotal);
+  document.getElementById('multDisplay').textContent     = '×'+multiplier.toFixed(2);
+
+  const el = document.getElementById('finalScoreDisplay');
+  el.textContent = fmt(final);
+  el.classList.remove('score-pulse');
+  void el.offsetWidth;
+  el.classList.add('score-pulse');
+}
+
+// ── Tier Points Logic ──
+function updateTierPoints() {
+  const tier = parseInt(document.getElementById('dungeonTier').value) || 10;
+  document.getElementById('mob1pts').value = 5 * tier;
+  document.getElementById('mob2pts').value = 10 * tier;
+  document.getElementById('mob3pts').value = 15 * tier;
+  document.getElementById('mob4pts').value = 25 * tier;
+  document.getElementById('scorePerSec').value = tier;
+}
+
+document.getElementById('dungeonTier').addEventListener('change', function() {
+  updateTierPoints();
+  calculate();
+});
+
+// ── Live multiplier display ──
+document.getElementById('multiplier').addEventListener('input', function(){
+  const v = parseFloat(this.value)||100;
+  document.getElementById('multDisplay').textContent = '×'+(v/100).toFixed(2);
+});
+
+// ── Auto-calc on any input change ──
+document.querySelectorAll('input').forEach(inp => {
+  inp.addEventListener('input', calculate);
+  inp.addEventListener('change', calculate);
+});
+
+// ── Auto-format Time Inputs ──
+document.querySelectorAll('.time-input').forEach(inp => {
+  inp.addEventListener('input', function(e) {
+    if (e.inputType === 'deleteContentBackward') return;
+    let v = this.value.replace(/\D/g, '');
+    if (v.length > 4) v = v.slice(0, 4);
+    if (v.length >= 3) {
+      this.value = v.slice(0, v.length - 2) + ':' + v.slice(v.length - 2);
+    } else {
+      this.value = v;
+    }
+  });
+});
+
+// ── Reset ──
+function resetAll(){
+  document.getElementById('clearTime').value          = '00:00';
+  document.getElementById('timeRemaining').value      = '60:00';
+  document.getElementById('deaths').value             = '0';
+  document.getElementById('scorePerSec').value        = '10';
+  document.getElementById('deductionPerAttempt').value= '120';
+  document.getElementById('mob1count').value          = '0';
+  document.getElementById('mob2count').value          = '0';
+  document.getElementById('mob3count').value          = '0';
+  document.getElementById('mob4count').value          = '0';
+  document.getElementById('mob1pts').value            = '50';
+  document.getElementById('mob2pts').value            = '100';
+  document.getElementById('mob3pts').value            = '150';
+  document.getElementById('mob4pts').value            = '200';
+  document.getElementById('multiplier').value         = '185';
+  document.getElementById('dungeonTier').value        = '10';
+  updateTierPoints();
+  calculate();
+}
+
+// Init
+calculate();
+</script>
+</body>
+</html>
