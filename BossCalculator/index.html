@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Boss Score Calculator – Throne & Liberty</title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Text:wght@400;600&display=swap" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -401,15 +402,11 @@
     <div class="sub-grid" style="margin-top:3px;">
       <div class="stat-row alt" style="margin:0;">
         <span class="stat-label" style="font-size:0.85rem;">Score per Second</span>
-        <input type="number" id="scorePerSec" value="10" min="1" style="width:60px;"/>
+        <span class="stat-value dim" id="scorePerSecDisplay" style="font-size:0.9rem;">x10</span>
       </div>
       <div class="stat-row alt" style="margin:0;">
         <span class="stat-label" style="font-size:0.82rem;">Deduction per Attempt</span>
-        <div style="display:flex;align-items:center;gap:4px;">
-          <span style="color:var(--text-dim);font-size:0.8rem;">-</span>
-          <input type="number" id="deductionPerAttempt" value="120" min="0" style="width:60px;"/>
-          <span style="color:var(--text-dim);font-size:0.75rem;">s</span>
-        </div>
+        <span class="stat-value dim" style="font-size:0.9rem;">-120s</span>
       </div>
     </div>
 
@@ -483,8 +480,11 @@
     <span class="mult-val" id="multDisplay">×1.85</span>
   </div>
 
-  <!-- Calculate -->
-  <button class="btn-calc" onclick="calculate()">⚔ Calculate Score</button>
+  <!-- Calculate & Screenshot -->
+  <div style="display: flex; justify-content: center; gap: 15px; margin-top: 18px;">
+    <button class="btn-calc" onclick="calculate()" style="margin: 0;">⚔ Calculate Score</button>
+    <button class="btn-calc" onclick="takeScreenshot()" style="margin: 0; background: linear-gradient(135deg, var(--purple) 0%, #502080 100%);">📸 Save Image</button>
+  </div>
   <span class="reset-btn" onclick="resetAll()">Reset all values</span>
 
 </div><!-- /panel -->
@@ -538,9 +538,9 @@ function calculate(){
   const fixedTierScore = tierFixedScores[tier] || 0;
 
   const timeRemSec   = parseTime(document.getElementById('timeRemaining').value);
-  const scorePerSec  = parseFloat(document.getElementById('scorePerSec').value)||tier;
+  const scorePerSec  = tier;
   const deaths       = parseInt(document.getElementById('deaths').value)||0;
-  const deduction    = parseFloat(document.getElementById('deductionPerAttempt').value)||120;
+  const deduction    = 120;
   const multiplierPct= parseFloat(document.getElementById('multiplier').value)||100;
 
   const timeScore      = timeRemSec * scorePerSec;
@@ -587,7 +587,7 @@ function updateTierPoints() {
   document.getElementById('mob2pts').value = 10 * tier;
   document.getElementById('mob3pts').value = 15 * tier;
   document.getElementById('mob4pts').value = 25 * tier;
-  document.getElementById('scorePerSec').value = tier;
+  document.getElementById('scorePerSecDisplay').textContent = 'x' + tier;
 }
 
 document.getElementById('dungeonTier').addEventListener('change', function() {
@@ -626,8 +626,6 @@ function resetAll(){
   document.getElementById('clearTime').value          = '00:00';
   document.getElementById('timeRemaining').value      = '60:00';
   document.getElementById('deaths').value             = '0';
-  document.getElementById('scorePerSec').value        = '10';
-  document.getElementById('deductionPerAttempt').value= '120';
   document.getElementById('mob1count').value          = '0';
   document.getElementById('mob2count').value          = '0';
   document.getElementById('mob3count').value          = '0';
@@ -644,6 +642,56 @@ function resetAll(){
 
 // Init
 calculate();
+
+// ── Screenshot ──
+function takeScreenshot() {
+  const panel = document.querySelector('.panel');
+  const buttonsRow = document.querySelector('.btn-calc').parentElement;
+  const resetBtn = document.querySelector('.reset-btn');
+  const copyBtn = buttonsRow.children[1];
+  const originalText = copyBtn.innerHTML;
+  
+  buttonsRow.style.display = 'none';
+  resetBtn.style.display = 'none';
+
+  // Correction du bug visuel de html2canvas (barre verticale / fond coupé)
+  // On retire totalement le background, le flou et les ombres du panel
+  panel.style.background = 'none';
+  panel.style.backdropFilter = 'none';
+  panel.style.boxShadow = 'none';
+
+  html2canvas(panel, {
+    backgroundColor: '#130f24', // On force un fond global uni opaque via html2canvas
+    scale: 2
+  }).then(canvas => {
+    // Restauration du style d'origine
+    panel.style.background = '';
+    panel.style.backdropFilter = '';
+    panel.style.boxShadow = '';
+    
+    buttonsRow.style.display = 'flex';
+    resetBtn.style.display = 'block';
+
+    canvas.toBlob(blob => {
+      try {
+        navigator.clipboard.write([
+          new ClipboardItem({ 'image/png': blob })
+        ]).then(() => {
+          copyBtn.innerHTML = '✅ Copié !';
+          setTimeout(() => { copyBtn.innerHTML = originalText; }, 2000);
+        }).catch(err => {
+          console.error('Erreur Clipboard:', err);
+          copyBtn.innerHTML = '❌ Erreur';
+          setTimeout(() => { copyBtn.innerHTML = originalText; }, 2000);
+        });
+      } catch (err) {
+        console.error('API Non supportée:', err);
+        copyBtn.innerHTML = '❌ Erreur';
+        setTimeout(() => { copyBtn.innerHTML = originalText; }, 2000);
+      }
+    }, 'image/png');
+  });
+}
 </script>
 </body>
 </html>
