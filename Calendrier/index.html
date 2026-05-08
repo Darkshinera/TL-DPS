@@ -313,8 +313,12 @@
     const nightDuration = 30;
 
     function getGameState(date) {
-      const reference = new Date(2026, 0, 22, 13, 0, 0); // 13:00 = Début Nuit
-      const diffMs = date.getTime() - reference.getTime();
+      const reference = new Date(2026, 0, 22, 13, 0, 0); // 13:00 = Début Nuit en heure d'hiver
+      
+      // Ajustement dynamique pour le changement d'heure (heure d'été / heure d'hiver)
+      const dstOffsetMs = (reference.getTimezoneOffset() - date.getTimezoneOffset()) * 60 * 1000;
+      
+      const diffMs = date.getTime() - reference.getTime() + dstOffsetMs;
       const diffMinutes = Math.floor(diffMs / (1000 * 60));
 
       let offset = diffMinutes % cycleDuration;
